@@ -1978,7 +1978,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #fff;
+  background: #78f9be;
 }
 .links-of-blogroll {
   font-size: 13px;
@@ -2828,8 +2828,12 @@ body .header {
 body .header .site-meta .brand {
   background: transparent;
 }
-body .header .sit-nav ul {
+body .header .site-nav ul {
   margin-left: 125px;
   margin-right: 125px;
   background: rgba(255,255,255,0.65);
+}
+body .header .site-nav ul a {
+  font-size: 16px;
+  color: rgba(0,0,0,0.9);
 }
