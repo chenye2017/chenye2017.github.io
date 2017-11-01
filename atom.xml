@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-  <title>Hexo</title>
+  <title>语法糖的博客</title>
   
-  
+  <subtitle>爱动漫，热爱LOL</subtitle>
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2017-10-25T02:15:53.219Z</updated>
+  <updated>2017-11-01T16:03:44.919Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -17,23 +17,35 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>‘‘&#39;第二篇博客&#39;</title>
+    <link href="http://yoursite.com/2017/11/02/%E2%80%98%E2%80%98-%E7%AC%AC%E4%BA%8C%E7%AF%87%E5%8D%9A%E5%AE%A2/"/>
+    <id>http://yoursite.com/2017/11/02/‘‘-第二篇博客/</id>
+    <published>2017-11-01T16:03:44.000Z</published>
+    <updated>2017-11-01T16:03:44.919Z</updated>
+    
+    <summary type="html">
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
     <title>第一篇博客</title>
     <link href="http://yoursite.com/2017/10/25/%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/"/>
     <id>http://yoursite.com/2017/10/25/第一篇博客/</id>
     <published>2017-10-25T02:12:24.000Z</published>
-    <updated>2017-10-25T02:15:53.219Z</updated>
+    <updated>2017-11-01T16:04:39.858Z</updated>
     
-    <content type="html"><![CDATA[<p>哈哈哈</p><p>就是为了测试</p><p><a href="https://www.baidu.com" target="_blank" rel="external">百度</a></p>]]></content>
+    <content type="html"><![CDATA[<p>哈哈哈</p><p>就是为了测试</p><p><a href="https://www.baidu.com" target="_blank" rel="external">百度</a></p><p>啦啦啦</p><p>啦啦啦</p><a id="more"></a><p>拉拉</p>]]></content>
     
     <summary type="html">
     
-      
-      
-        &lt;p&gt;哈哈哈&lt;/p&gt;
+      &lt;p&gt;哈哈哈&lt;/p&gt;
 &lt;p&gt;就是为了测试&lt;/p&gt;
 &lt;p&gt;&lt;a href=&quot;https://www.baidu.com&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;百度&lt;/a&gt;&lt;/p&gt;
-
-      
+&lt;p&gt;啦啦啦&lt;/p&gt;
+&lt;p&gt;啦啦啦&lt;/p&gt;
     
     </summary>
     
