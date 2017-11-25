@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="markdown 语法 文档 工具," />
+  <meta name="keywords" content="linux apache 框架 php," />
 
 
 
@@ -81,18 +81,21 @@
 
 
 
-<meta name="description" content="关于段落，不用使用 &amp;lt;p&amp;gt; 直接使用换行 关于首行缩进中文两字符 &amp;amp;emsp 后面加上 ; 代表缩进一个，因为这个; 如果直接写在&amp;amp;emsp 后面会直接不显示，所以我分开来写 如果是英文字符，肯定就是 &amp;amp;nbsp 啦 *** *** 两个星号之间的内容是加粗, ** ** 代表泄题 `` 两个点好之间代表标记，比如我这上面想显示的md标记都是放在标签里面显示出">
-<meta name="keywords" content="markdown 语法 文档 工具">
+<meta name="description" content="这篇文章主要是对于php运行环境的搭建中运行起来框架的总结，其实运行框架，不管是yii，还是tp，还是laravel，还是我们那个项目框架，与其说是运行起来，不如说是找到框架的入口文件，然后剩下的就直接交给了框架进行处理（route.php的处理，restful api等等，通过解析模块，控制器，方法），绝大部分时候就这这么简单，至少上面三个都不用对apache**进行特殊的配置（目前的这篇文章只">
+<meta name="keywords" content="linux apache 框架 php">
 <meta property="og:type" content="article">
-<meta property="og:title" content="markdown语法使用记录">
-<meta property="og:url" content="http://yoursite.com/2017/11/16/markdown语法使用记录/index.html">
+<meta property="og:title" content="window下运行各种框架总结">
+<meta property="og:url" content="http://yoursite.com/2017/11/25/window下运行各种框架总结/index.html">
 <meta property="og:site_name" content="语法糖的博客">
-<meta property="og:description" content="关于段落，不用使用 &amp;lt;p&amp;gt; 直接使用换行 关于首行缩进中文两字符 &amp;amp;emsp 后面加上 ; 代表缩进一个，因为这个; 如果直接写在&amp;amp;emsp 后面会直接不显示，所以我分开来写 如果是英文字符，肯定就是 &amp;amp;nbsp 啦 *** *** 两个星号之间的内容是加粗, ** ** 代表泄题 `` 两个点好之间代表标记，比如我这上面想显示的md标记都是放在标签里面显示出">
+<meta property="og:description" content="这篇文章主要是对于php运行环境的搭建中运行起来框架的总结，其实运行框架，不管是yii，还是tp，还是laravel，还是我们那个项目框架，与其说是运行起来，不如说是找到框架的入口文件，然后剩下的就直接交给了框架进行处理（route.php的处理，restful api等等，通过解析模块，控制器，方法），绝大部分时候就这这么简单，至少上面三个都不用对apache**进行特殊的配置（目前的这篇文章只">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-11-25T09:56:31.663Z">
+<meta property="og:image" content="http://ozys8fka7.bkt.clouddn.com/TIM%E5%9B%BE%E7%89%8720171125172354.png">
+<meta property="og:image" content="http://ozys8fka7.bkt.clouddn.com/TIM%E5%9B%BE%E7%89%8720171125172431.png">
+<meta property="og:updated_time" content="2017-11-25T09:55:34.784Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="markdown语法使用记录">
-<meta name="twitter:description" content="关于段落，不用使用 &amp;lt;p&amp;gt; 直接使用换行 关于首行缩进中文两字符 &amp;amp;emsp 后面加上 ; 代表缩进一个，因为这个; 如果直接写在&amp;amp;emsp 后面会直接不显示，所以我分开来写 如果是英文字符，肯定就是 &amp;amp;nbsp 啦 *** *** 两个星号之间的内容是加粗, ** ** 代表泄题 `` 两个点好之间代表标记，比如我这上面想显示的md标记都是放在标签里面显示出">
+<meta name="twitter:title" content="window下运行各种框架总结">
+<meta name="twitter:description" content="这篇文章主要是对于php运行环境的搭建中运行起来框架的总结，其实运行框架，不管是yii，还是tp，还是laravel，还是我们那个项目框架，与其说是运行起来，不如说是找到框架的入口文件，然后剩下的就直接交给了框架进行处理（route.php的处理，restful api等等，通过解析模块，控制器，方法），绝大部分时候就这这么简单，至少上面三个都不用对apache**进行特殊的配置（目前的这篇文章只">
+<meta name="twitter:image" content="http://ozys8fka7.bkt.clouddn.com/TIM%E5%9B%BE%E7%89%8720171125172354.png">
 
 
 
@@ -122,13 +125,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/11/16/markdown语法使用记录/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/11/25/window下运行各种框架总结/"/>
 
 
 
 
 
-  <title>markdown语法使用记录 | 语法糖的博客</title>
+  <title>window下运行各种框架总结 | 语法糖的博客</title>
   
 
 
@@ -293,7 +296,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/16/markdown语法使用记录/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/25/window下运行各种框架总结/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="chenye2017">
@@ -310,7 +313,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">markdown语法使用记录</h1>
+          <h1 class="post-title" itemprop="name headline">window下运行各种框架总结</h1>
         
 
         <div class="post-meta">
@@ -322,8 +325,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-16T00:07:55+08:00">
-                2017-11-16
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-25T17:53:43+08:00">
+                2017-11-25
               </time>
             
 
@@ -345,8 +348,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/工具/" itemprop="url" rel="index">
-                    <span itemprop="name">工具</span>
+                  <a href="/categories/php/" itemprop="url" rel="index">
+                    <span itemprop="name">php</span>
                   </a>
                 </span>
 
@@ -382,17 +385,23 @@
       
 
       
-        <ol>
-<li>关于段落，不用使用 <code>&lt;p&gt;</code> 直接使用换行</li>
-<li>关于首行缩进中文两字符 <code>&amp;emsp</code> 后面加上 ; 代表缩进一个，因为这个; 如果直接写在&amp;emsp 后面会直接不显示，所以我分开来写</li>
-<li>如果是英文字符，肯定就是 <code>&amp;nbsp</code> 啦</li>
-<li><code>*** ***</code> 两个星号之间的内容是加粗, <code>** **</code> 代表泄题</li>
-<li>`` 两个点好之间代表标记，比如我这上面想显示的md标记都是放在标签里面显示出来</li>
-<li>有序列表的话 <code>1.</code> 空格后会自动生成列表，以后想生成下一个列表，自动换行就可以了，不用一个个手敲</li>
-<li><code>``` </code> 代表下面的内容是代码块，结束也是 ```</li>
-<li><code>[]()</code> 插入超链接，中括号里面是要显示的文本内容， <code>！[]()</code>插入图片，[]也是文本内容</li>
-<li><code>&lt;!--more--&gt;</code>nexo 产生阅读全文的按钮</li>
-</ol>
+        <p>这篇文章主要是<strong>对于php运行环境的搭建中运行起来框架的总结，其实运行框架，不管是yii，还是tp，还是laravel，还是我们那个项目框架，与其说是运行起来，不如</strong>说是找到框架的入口文件<strong>，然后剩下的就直接交给了框架进行处理（route.php的处理，restful api等等，通过解析模块，控制器，方法），绝大部分时候就这这么简单，至少上面三个都不用对</strong>apache**进行特殊的配置（目前的这篇文章只是单纯的针对Apache）。</p>
+<a id="more"></a>
+<p>so，简化的思考了一下，就是找public下面的index.php 文件（tp  laravel都是这个文件 yii是在web目录下，其实找一下就行了，大部分都是reqire项目的核心库这种东西。例如yii</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line"></div><div class="line">// comment out the following two lines when deployed to production</div><div class="line">defined(&apos;YII_DEBUG&apos;) or define(&apos;YII_DEBUG&apos;, true);</div><div class="line">defined(&apos;YII_ENV&apos;) or define(&apos;YII_ENV&apos;, &apos;dev&apos;);</div><div class="line"></div><div class="line">require(__DIR__ . &apos;/../vendor/autoload.php&apos;);</div><div class="line">require(__DIR__ . &apos;/../vendor/yiisoft/yii2/Yii.php&apos;);</div><div class="line"></div><div class="line">$config = require(__DIR__ . &apos;/../config/web.php&apos;);</div><div class="line"></div><div class="line">(new yii\web\Application($config))-&gt;run();</div></pre></td></tr></table></figure>
+<p>），所以只要配置好了一个环境，剩下的框架的运行基本就一样了。<br>上面已经说了我们这片文章的目的了，运行起来框架，通过的是直接下载代码的这种方式（现在绝大部分框架都是支持composer来安装），我们先安装好xampp，xampp会帮我们集成安装好apache和mysql，他们和在linux下是一样的，至少我到现在还没有发现什么不同，so，因为太过相似了，导致我从前以为xampp是在window环境下集成安装了lamp这种，其实这个l（linux是没有的），他的环境准确说是wamp（我代表 window这种架构）。他把php，mysql还有apache都放在了他自己也就是xampp的安装目录下，我们找到apache的安装目录，在conf文件夹里面找到（httpd-vhosts.conf）这个配置虚拟域名的文件，我记得以前apache配置虚拟域名是在一块的，都是写在httpd.conf文件里面，现在分开了，其实是包含了conf文件下的所有文件，但这样更清楚。<br>接下来我们就开始配置虚拟主机了（意思就是在一个服务器上配置多域名访问的站点，其实端口号啊什么的都可以，本质上就是把不同的请求分发到不同的目录下）。<br>添加<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">&lt;VirtualHost *:800&gt;</div><div class="line">    ##ServerAdmin webmaster@dummy-host2.example.com</div><div class="line">    ##DocumentRoot &quot;D:/xampp/htdocs/dummy-host2.example.com&quot;</div><div class="line">    ##ServerName dummy-host2.example.com</div><div class="line">    ##ErrorLog &quot;logs/dummy-host2.example.com-error.log&quot;</div><div class="line">    ##CustomLog &quot;logs/dummy-host2.example.com-access.log&quot; common</div><div class="line">     DocumentRoot &quot;D:\code\laravel-v5.1.11\laravel-v5.1.11\public&quot;  </div><div class="line">    ServerName laravel.app  </div><div class="line">        &lt;Directory &quot;D:\code\laravel-v5.1.11\laravel-v5.1.11\public&quot;&gt;  </div><div class="line">            Options Indexes FollowSymLinks Includes ExecCGI  </div><div class="line">            AllowOverride All  </div><div class="line">            Require all granted  </div><div class="line">        &lt;/Directory&gt;</div><div class="line">&lt;/VirtualHost&gt;</div></pre></td></tr></table></figure></p>
+<p>简单的记录下apache的语法 DocumentRoot 代表根目录<br>配置虚拟域名要写在virtualHost标签之间，后面的代表端口号，servername代表域名，directory里面allow代表接受任何的请求，之前安装larave的时候代开index.php嫌弃我权限不够，其实是这个directory标签的内容写错了，注意这个如果说打开文件夹没有权限，在window下你改这个目录的什么所有者权限啊什么都是没用的，我的理解是web请求的时候打开这个文件夹的用户不是我们能预测的，应该是other什么的，因为加了这句话，所以我们在window下安装这些框架不用修改日志文件，要么在linux下安装yii，laravel都要修改log日志文件夹的权限（感觉是因为写日志的操作是来自http的请求，像我们之前安装seaslog第三方的日志的时候，也得修改那个文件夹的权限，道理是一样的）<br>（yii框架的话conf文佳佳下web.php cookiekey要随便填一个数，）</p>
+<p>当然还要配置个虚拟域名，因为之前apache里面填写的域名如果是假的话，在本地host文件里面配置一下（因为浏览器解析是通过缓存（贼端）host文件，dns解析来找的，配置之后ping一下能不能同，就可以啦）</p>
+<p>大功告成。</p>
+<p>总结一下,本机运行起来一个框架。</p>
+<p>1.安装集成环境（xampp）<br>2.修改apache配置文件，配置虚拟主机<br>3.修改host文件，修改域名到本机127.0.0.1</p>
+<p>注意的点：<br>1.配置虚拟主机之后，xampp原先那个localhost直接就访问不了了，所以把那个localhost也配置一个虚拟主机（localhost也属于一个域名）<br>2.如果访问不了，先ping一下域名，看是否能ping通，然后查看apache的access日志和error日志，如果没有，确认http服务是否起起来了，如果有查看日志（linux下tail -f 动态看），window下在文件的最下面，像我现在这个window下环境，就是因为端口号被占了，改成800，所以每次访问域名后面都得加 ： 800，这个Apache的错误日志里面会记录的很清楚</p>
+<p>附上三张框架图<br>1.<img src="http://ozys8fka7.bkt.clouddn.com/TIM%E5%9B%BE%E7%89%8720171125172354.png" alt="laravel"><br>2.<img src="http://ozys8fka7.bkt.clouddn.com/TIM%E5%9B%BE%E7%89%8720171125172431.png" alt="yii2"></p>
+<p>(其实在用外链的时候想到了树洞外链，GitHub上一个关于php的开源项目)<br>对了突然想起来yaf框架，其实因为yaf框架是需要扩展模块支持，所以得先安装php扩展（php扩展大部分都是c开发的，），然后原理是一样的（只是yaf框架需要手动生成基本目录）</p>
+<p><a href="http://blog.csdn.net/underclound/article/details/76835318" target="_blank" rel="external">地址</a></p>
+<p>简单记录下window下安装php扩展（phpinfo能输出php的详细信息，在框架的index.php目录下是唯一所有人都能访问的）然后去pecl下载php扩展，下载dll文件的时候要注意那个什么tc之类的，注意好，下载好放在php的扩展目录下ext，再在php.ini 里面模仿之前的php扩展，加上相应的话就好了，那个扩展还是可以配置一些属性的<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">zend_extension = D:\xampp\php\ext\php_xdebug-2.5.4-7.0-vc14.dll</div></pre></td></tr></table></figure></p>
+<p>像mysql这种，都是可以添加配置信息的<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">[MSSQL]</div><div class="line">mssql.allow_persistent=On</div><div class="line">mssql.max_persistent=-1</div><div class="line">mssql.max_links=-1</div><div class="line">mssql.min_error_severity=10</div><div class="line">mssql.min_message_severity=10</div><div class="line">mssql.compatability_mode=Off</div><div class="line">mssql.secure_connection=Off</div></pre></td></tr></table></figure></p>
+<p>yaf好像不配置，不能再生产环境下用，有个参数</p>
 
       
     </div>
@@ -450,7 +459,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/markdown-语法-文档-工具/" rel="tag"><i class="fa fa-tag"></i> markdown 语法 文档 工具</a>
+            <a href="/tags/linux-apache-框架-php/" rel="tag"><i class="fa fa-tag"></i> linux apache 框架 php</a>
           
         </div>
       
@@ -463,8 +472,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/11/15/写博客的原因/" rel="next" title="写博客的原因">
-                <i class="fa fa-chevron-left"></i> 写博客的原因
+              <a href="/2017/11/25/11-25/" rel="next" title="11.25">
+                <i class="fa fa-chevron-left"></i> 11.25
               </a>
             
           </div>
@@ -472,10 +481,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/11/25/11-25/" rel="prev" title="11.25">
-                11.25 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
