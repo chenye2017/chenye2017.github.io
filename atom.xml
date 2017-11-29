@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2017-11-28T12:20:22.021Z</updated>
+  <updated>2017-11-29T15:28:01.959Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -17,13 +17,38 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>工具分享</title>
+    <link href="http://yoursite.com/2017/11/29/%E5%B7%A5%E5%85%B7%E5%88%86%E4%BA%AB/"/>
+    <id>http://yoursite.com/2017/11/29/工具分享/</id>
+    <published>2017-11-29T15:06:18.000Z</published>
+    <updated>2017-11-29T15:28:01.959Z</updated>
+    
+    <content type="html"><![CDATA[<p>这篇博客的目的就是把自己平时用的比较顺手，方便能提升效率的工具分享给大家，互相交流，提升工作效率</p><ol><li><p>Evernote 一款记笔记的工具，之所以用这个，是因为刚开始编程的时候，有一次记笔记，当时用的还是word，然后没保存，然后····大家都懂得，记得那时写了挺久的关于php的笔记，不知道你们有没有相同的感觉，即使再看一遍书，很容易把笔记都能写回来，但是心里还是很难受，于是就开始用这款印象笔记了，不知道没网能不能用，···因为我一直在有网的情况下使用，然后他可以最多三个终端上使用（免费版），还有就是会有冲突的，记得冲突的时候及时查看，然后修改就好了，不要像我一样攒着很多（听说有道云也挺不错，但是没有用过）</p></li><li><p>简书  我用他主要是因为他上面写文章（编辑器可以调整成md）可以一边写，一遍预览</p></li><li><p>七牛云 主要用来做图床（写md的时候用的啦）</p></li><li><p>phpstorm  真的好好用（下面的terminal，还有新建文件能自动git添加等等）</p><p>可以快速打开文件，不用在项目中找（ctrl+alt+n）</p><p>本文搜索 ctrl + f</p><p>全局搜索 ctrl + shift +f </p><p>回退 ctrl + alt + 左方向键</p><p>大段注释 ctrl +shift + /</p><p>alt + 上下键  上下方法切换</p><p>alt + 左右键 左右tab页切换</p><p>本行注释  不太记得了</p><p>应该还有很多，但不太记得了（创建文件自动添加命名空间）</p><p>面板上的类的结构</p></li><li><p>​</p></li></ol>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;这篇博客的目的就是把自己平时用的比较顺手，方便能提升效率的工具分享给大家，互相交流，提升工作效率&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;Evernote 一款记笔记的工具，之所以用这个，是因为刚开始编程的时候，有一次记笔记，当时用的还是word，然后没保存，然后····大家都懂得
+      
+    
+    </summary>
+    
+      <category term="工具" scheme="http://yoursite.com/categories/%E5%B7%A5%E5%85%B7/"/>
+    
+    
+  </entry>
+  
+  <entry>
     <title>Linux常用命令总结</title>
     <link href="http://yoursite.com/2017/11/28/Linux%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E6%80%BB%E7%BB%93/"/>
     <id>http://yoursite.com/2017/11/28/Linux常用命令总结/</id>
     <published>2017-11-27T17:20:28.000Z</published>
-    <updated>2017-11-28T12:20:22.021Z</updated>
+    <updated>2017-11-29T15:35:25.319Z</updated>
     
-    <content type="html"><![CDATA[<ol><li>netstat -an 展示所有的端口号，-a 表示包括tcp和utp，-n表示不用域名代替ip地址</li><li>ll -a ls-la  展示该目录下所有文件包括隐藏文件</li><li>cd  进入目录</li><li>pwd 展示路径</li></ol><p>常用端口号 ：http 80 https 443</p><p>mysql  3306</p><p>redis 忘记了</p><p>ssh 22</p><p>~代表家目录，root用户 /root,普通用户/home/用户名</p>]]></content>
+    <content type="html"><![CDATA[<ol><li>netstat -an 展示所有的端口号，-a 表示包括tcp和utp，-n表示不用域名代替ip地址</li><li>ll -a ls-la  展示该目录下所有文件包括隐藏文件</li><li>cd  进入目录</li><li>pwd 展示路径</li><li>mkdir  创建目录</li><li>chmod -R (文件夹)  755 修改权限</li><li>chown root:root 文件名 修改文件所有者和组</li><li>chgrp  修改组</li><li>useradd  添加用户</li><li>passwd 修改密码  （切换到当前用户下就可以修改了哦，不知道怎么修改别的用户的）</li><li>groupadd 添加组 </li><li>touch 新建文件</li><li>echo 11 &gt;&gt; 文件名 把这个内容输出到文件中</li><li>vim  i 修改模式 ：wq 保存  ：q 退出不保存 ：q！强制退出  /  查找  ：num 多少行  ：$末尾  </li><li>cat  查看</li><li>​</li></ol><p>常用端口号 ：http 80 https 443</p><p>mysql  3306</p><p>redis 忘记了</p><p>ssh 22</p><p>~代表家目录，root用户 /root,普通用户/home/用户名</p>]]></content>
     
     <summary type="html">
     

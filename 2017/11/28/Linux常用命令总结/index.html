@@ -81,17 +81,17 @@
 
 
 
-<meta name="description" content="netstat -an 展示所有的端口号，-a 表示包括tcp和utp，-n表示不用域名代替ip地址 ll -a ls-la  展示该目录下所有文件包括隐藏文件 cd  进入目录 pwd 展示路径  常用端口号 ：http 80 https 443 mysql  3306 redis 忘记了 ssh 22 ~代表家目录，root用户 /root,普通用户/home/用户名">
+<meta name="description" content="netstat -an 展示所有的端口号，-a 表示包括tcp和utp，-n表示不用域名代替ip地址 ll -a ls-la  展示该目录下所有文件包括隐藏文件 cd  进入目录 pwd 展示路径 mkdir  创建目录 chmod -R (文件夹)  755 修改权限 chown root:root 文件名 修改文件所有者和组 chgrp  修改组 useradd  添加用户 passwd 修">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Linux常用命令总结">
 <meta property="og:url" content="http://yoursite.com/2017/11/28/Linux常用命令总结/index.html">
 <meta property="og:site_name" content="语法糖的博客">
-<meta property="og:description" content="netstat -an 展示所有的端口号，-a 表示包括tcp和utp，-n表示不用域名代替ip地址 ll -a ls-la  展示该目录下所有文件包括隐藏文件 cd  进入目录 pwd 展示路径  常用端口号 ：http 80 https 443 mysql  3306 redis 忘记了 ssh 22 ~代表家目录，root用户 /root,普通用户/home/用户名">
+<meta property="og:description" content="netstat -an 展示所有的端口号，-a 表示包括tcp和utp，-n表示不用域名代替ip地址 ll -a ls-la  展示该目录下所有文件包括隐藏文件 cd  进入目录 pwd 展示路径 mkdir  创建目录 chmod -R (文件夹)  755 修改权限 chown root:root 文件名 修改文件所有者和组 chgrp  修改组 useradd  添加用户 passwd 修">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-11-28T12:20:22.021Z">
+<meta property="og:updated_time" content="2017-11-29T15:35:25.319Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linux常用命令总结">
-<meta name="twitter:description" content="netstat -an 展示所有的端口号，-a 表示包括tcp和utp，-n表示不用域名代替ip地址 ll -a ls-la  展示该目录下所有文件包括隐藏文件 cd  进入目录 pwd 展示路径  常用端口号 ：http 80 https 443 mysql  3306 redis 忘记了 ssh 22 ~代表家目录，root用户 /root,普通用户/home/用户名">
+<meta name="twitter:description" content="netstat -an 展示所有的端口号，-a 表示包括tcp和utp，-n表示不用域名代替ip地址 ll -a ls-la  展示该目录下所有文件包括隐藏文件 cd  进入目录 pwd 展示路径 mkdir  创建目录 chmod -R (文件夹)  755 修改权限 chown root:root 文件名 修改文件所有者和组 chgrp  修改组 useradd  添加用户 passwd 修">
 
 
 
@@ -364,6 +364,18 @@
 <li>ll -a ls-la  展示该目录下所有文件包括隐藏文件</li>
 <li>cd  进入目录</li>
 <li>pwd 展示路径</li>
+<li>mkdir  创建目录</li>
+<li>chmod -R (文件夹)  755 修改权限</li>
+<li>chown root:root 文件名 修改文件所有者和组</li>
+<li>chgrp  修改组</li>
+<li>useradd  添加用户</li>
+<li>passwd 修改密码  （切换到当前用户下就可以修改了哦，不知道怎么修改别的用户的）</li>
+<li>groupadd 添加组 </li>
+<li>touch 新建文件</li>
+<li>echo 11 &gt;&gt; 文件名 把这个内容输出到文件中</li>
+<li>vim  i 修改模式 ：wq 保存  ：q 退出不保存 ：q！强制退出  /  查找  ：num 多少行  ：$末尾  </li>
+<li>cat  查看</li>
+<li>​</li>
 </ol>
 <p>常用端口号 ：http 80 https 443</p>
 <p>mysql  3306</p>
@@ -443,6 +455,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/11/29/工具分享/" rel="prev" title="工具分享">
+                工具分享 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -540,7 +556,7 @@ var jiathis_config={
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-count">8</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -681,7 +697,7 @@ var jiathis_config={
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count"> | 博客全站共4.4k字</span>
+  <span class="post-count"> | 博客全站共5.0k字</span>
 </div>
 
 
