@@ -135,11 +135,11 @@
   </entry>
   
   <entry>
-    <title>11.25</title>
-    <link href="http://yoursite.com/2017/11/25/11-25/"/>
-    <id>http://yoursite.com/2017/11/25/11-25/</id>
+    <title>hexo常用</title>
+    <link href="http://yoursite.com/2017/11/25/hexo%E5%B8%B8%E7%94%A8/"/>
+    <id>http://yoursite.com/2017/11/25/hexo常用/</id>
     <published>2017-11-25T09:47:21.000Z</published>
-    <updated>2017-11-30T15:49:31.271Z</updated>
+    <updated>2017-12-02T09:26:58.096Z</updated>
     
     <content type="html"><![CDATA[<p>感觉七牛云和我们公司的产品datrix做的东西是一样的，都是用来做存储的，还有树洞外链（GitHub上一个php star很高的项目）</p><p>hexo server -port 4000 启动服务器，因为我改了端口，导致得换端口</p><p><code>hexo new “文章名称”</code>产生新的文章，注意这个地方一定要是双引号，单引号会出错</p><p>hexo  g 产生静态文件</p><p>hexo c  清理缓存</p><p>hexo d 部署到github上 （这个其实就是代码提交，以前很傻比，每次提交代码都用git，其实这个就是把一些静态文件代码git到GitHub上，只是封装了一些操作而已）</p><p>注意经常写好了，命名没问题，但是本地测试显示不出来，其实有时候是type那个save快捷键的问题，手动点击保存</p><p>还有经常显示不出来都是语法啊什么问题（md语法），不要总怀疑缓存，服务器，注意下md语法和是否保存好了，刷新就可以了</p>]]></content>
     
@@ -154,7 +154,7 @@
     
     </summary>
     
-      <category term="日记" scheme="http://yoursite.com/categories/%E6%97%A5%E8%AE%B0/"/>
+      <category term="工具" scheme="http://yoursite.com/categories/%E5%B7%A5%E5%85%B7/"/>
     
     
       <category term="hexo datrix 七牛云 存储" scheme="http://yoursite.com/tags/hexo-datrix-%E4%B8%83%E7%89%9B%E4%BA%91-%E5%AD%98%E5%82%A8/"/>
