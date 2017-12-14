@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2017-12-13T15:55:11.048Z</updated>
+  <updated>2017-12-14T16:20:25.978Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,30 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Git使用教程</title>
+    <link href="http://yoursite.com/2017/12/15/Git%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/"/>
+    <id>http://yoursite.com/2017/12/15/Git使用教程/</id>
+    <published>2017-12-14T16:14:16.000Z</published>
+    <updated>2017-12-14T16:20:25.978Z</updated>
+    
+    <content type="html"><![CDATA[<p>感觉有必要写一篇关于git的使用教程，其实像我现在根本用不到git，平时公司用的是svn，然后还是一个人做项目，对于版本控制工具那些处理冲突，回退基本用不到，对于修bug开新的分支，也是没有那个需求，因为一般的bug都比较简单，而且也没那么急。</p><p>之所以用git，主要还是因为github吧，上面优秀的代码太多了，（其实是不会写，主要用来下插件）关于git的教程有很多，本身基本的用法也不是很难，写这个文章主要是为了记录我平常的一些基本操作，因为有些东西不用了，就忘记了，然后重新查找，坑爹的Google，每次查找相同的东西总出来不同的结果，坑爹啊，又得重新看一遍，不如自己总结下。</p><p>因为自己平时不用git，所以对git很多用法理解的不是很深，只是为了基本的日常写下了这篇文章。</p><a id="more"></a>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;感觉有必要写一篇关于git的使用教程，其实像我现在根本用不到git，平时公司用的是svn，然后还是一个人做项目，对于版本控制工具那些处理冲突，回退基本用不到，对于修bug开新的分支，也是没有那个需求，因为一般的bug都比较简单，而且也没那么急。&lt;/p&gt;
+&lt;p&gt;之所以用git，主要还是因为github吧，上面优秀的代码太多了，（其实是不会写，主要用来下插件）关于git的教程有很多，本身基本的用法也不是很难，写这个文章主要是为了记录我平常的一些基本操作，因为有些东西不用了，就忘记了，然后重新查找，坑爹的Google，每次查找相同的东西总出来不同的结果，坑爹啊，又得重新看一遍，不如自己总结下。&lt;/p&gt;
+&lt;p&gt;因为自己平时不用git，所以对git很多用法理解的不是很深，只是为了基本的日常写下了这篇文章。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="工具" scheme="http://yoursite.com/categories/%E5%B7%A5%E5%85%B7/"/>
+    
+    
+      <category term="版本控制工具 Git" scheme="http://yoursite.com/tags/%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6%E5%B7%A5%E5%85%B7-Git/"/>
+    
+  </entry>
   
   <entry>
     <title>vagrant使用</title>
