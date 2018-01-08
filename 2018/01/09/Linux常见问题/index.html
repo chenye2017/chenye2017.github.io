@@ -81,18 +81,18 @@
 
 
 
-<meta name="description" content="因为linux平时用的不是很频繁，所以经常会遇见一些问题，然后很容易忘记，然后还经常遇到，所以记录下来。 1.yum源的替换我们每次安装centos的时候，如果不是打包安装，是从新安装的话，为了安装软件速度快点，我们通常会替换yum源，把国外的镜像替换成国内的yum源镜像。常用的有163，阿里云啊。首先我们进入 /etc/yum.repos.d 文件夹下面，查看repo文件，把centos-bas">
+<meta name="description" content="因为linux平时用的不是很频繁，所以经常会遇见一些问题，然后很容易忘记，然后还经常遇到，所以记录下来。 目录： 1.yum源替换 2.修改密码">
 <meta name="keywords" content="Linux 常见问题">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Linux常见问题">
 <meta property="og:url" content="http://yoursite.com/2018/01/09/Linux常见问题/index.html">
 <meta property="og:site_name" content="语法糖的博客">
-<meta property="og:description" content="因为linux平时用的不是很频繁，所以经常会遇见一些问题，然后很容易忘记，然后还经常遇到，所以记录下来。 1.yum源的替换我们每次安装centos的时候，如果不是打包安装，是从新安装的话，为了安装软件速度快点，我们通常会替换yum源，把国外的镜像替换成国内的yum源镜像。常用的有163，阿里云啊。首先我们进入 /etc/yum.repos.d 文件夹下面，查看repo文件，把centos-bas">
+<meta property="og:description" content="因为linux平时用的不是很频繁，所以经常会遇见一些问题，然后很容易忘记，然后还经常遇到，所以记录下来。 目录： 1.yum源替换 2.修改密码">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-01-08T16:18:12.736Z">
+<meta property="og:updated_time" content="2018-01-08T16:20:54.258Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linux常见问题">
-<meta name="twitter:description" content="因为linux平时用的不是很频繁，所以经常会遇见一些问题，然后很容易忘记，然后还经常遇到，所以记录下来。 1.yum源的替换我们每次安装centos的时候，如果不是打包安装，是从新安装的话，为了安装软件速度快点，我们通常会替换yum源，把国外的镜像替换成国内的yum源镜像。常用的有163，阿里云啊。首先我们进入 /etc/yum.repos.d 文件夹下面，查看repo文件，把centos-bas">
+<meta name="twitter:description" content="因为linux平时用的不是很频繁，所以经常会遇见一些问题，然后很容易忘记，然后还经常遇到，所以记录下来。 目录： 1.yum源替换 2.修改密码">
 
 
 
@@ -383,6 +383,10 @@
 
       
         <p>因为linux平时用的不是很频繁，所以经常会遇见一些问题，然后很容易忘记，然后还经常遇到，所以记录下来。</p>
+<p>目录：</p>
+<p>1.yum源替换</p>
+<p>2.修改密码</p>
+<a id="more"></a>
 <p>1.yum源的替换<br>我们每次安装centos的时候，如果不是打包安装，是从新安装的话，为了安装软件速度快点，我们通常会替换yum源，把国外的镜像替换成国内的yum源镜像。常用的有163，阿里云啊。<br>首先我们进入 /etc/yum.repos.d 文件夹下面，查看repo文件，把centos-base 这个yum源文件改名，作为备份文件（mv,剪贴，又能当做重命名来用，注意不是复制哦）。然后wget，国内的yum源地址，yum clean all 清除缓存，yum makecache 在本地生成源的软件信息，方便软件的查找。<br>总结：<br>        1.cd /etc/yum.repos.d  进入目录</p>
 <pre><code>2. mv centos-base.repo centos-base.repo.bak  备份文件
 3. wget -nc http://mirrors.aliyun.com/repo/Centos-7.repo   下载原文件
