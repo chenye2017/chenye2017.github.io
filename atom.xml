@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2017-12-20T14:08:24.825Z</updated>
+  <updated>2018-01-08T16:18:12.736Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -17,11 +17,37 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>Linux常见问题</title>
+    <link href="http://yoursite.com/2018/01/09/Linux%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/"/>
+    <id>http://yoursite.com/2018/01/09/Linux常见问题/</id>
+    <published>2018-01-08T16:17:31.000Z</published>
+    <updated>2018-01-08T16:18:12.736Z</updated>
+    
+    <content type="html"><![CDATA[<p>因为linux平时用的不是很频繁，所以经常会遇见一些问题，然后很容易忘记，然后还经常遇到，所以记录下来。</p><p>1.yum源的替换<br>我们每次安装centos的时候，如果不是打包安装，是从新安装的话，为了安装软件速度快点，我们通常会替换yum源，把国外的镜像替换成国内的yum源镜像。常用的有163，阿里云啊。<br>首先我们进入 /etc/yum.repos.d 文件夹下面，查看repo文件，把centos-base 这个yum源文件改名，作为备份文件（mv,剪贴，又能当做重命名来用，注意不是复制哦）。然后wget，国内的yum源地址，yum clean all 清除缓存，yum makecache 在本地生成源的软件信息，方便软件的查找。<br>总结：<br>        1.cd /etc/yum.repos.d  进入目录</p><pre><code>2. mv centos-base.repo centos-base.repo.bak  备份文件3. wget -nc http://mirrors.aliyun.com/repo/Centos-7.repo   下载原文件4.yum clean all  清除缓存5.yum makecache  生成缓存</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">*   阿里yum源:[http://mirrors.aliyun.com/repo/](http://mirrors.aliyun.com/repo/)</div><div class="line">*   163(网易)yum源: [http://mirrors.163.com/.help/](http://mirrors.163.com/.help/)</div><div class="line">*   中科大的Linux安装镜像源：[http://centos.ustc.edu.cn/](http://centos.ustc.edu.cn/)</div><div class="line">*   搜狐的Linux安装镜像源：[http://mirrors.sohu.com/](http://mirrors.sohu.com/)</div><div class="line">*   北京首都在线科技：[http://mirrors.yun-idc.com/](http://mirrors.yun-idc.com/)</div></pre></td></tr></table></figure><p>2.修改密码<br>passwd 用户名 root用户，非root用户只能修改自己的密码哦，所以passwd后面不能加参数</p><p>​     </p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;因为linux平时用的不是很频繁，所以经常会遇见一些问题，然后很容易忘记，然后还经常遇到，所以记录下来。&lt;/p&gt;
+&lt;p&gt;1.yum源的替换&lt;br&gt;我们每次安装centos的时候，如果不是打包安装，是从新安装的话，为了安装软件速度快点，我们通常会替换yum源，把国外的镜像替换
+      
+    
+    </summary>
+    
+      <category term="Linux" scheme="http://yoursite.com/categories/Linux/"/>
+    
+    
+      <category term="Linux 常见问题" scheme="http://yoursite.com/tags/Linux-%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/"/>
+    
+  </entry>
+  
+  <entry>
     <title>svn Git 思考</title>
     <link href="http://yoursite.com/2017/12/20/svn-Git-%E6%80%9D%E8%80%83/"/>
     <id>http://yoursite.com/2017/12/20/svn-Git-思考/</id>
     <published>2017-12-20T13:41:18.000Z</published>
-    <updated>2017-12-20T14:08:24.825Z</updated>
+    <updated>2017-12-20T14:09:05.043Z</updated>
     
     <content type="html"><![CDATA[<p>···今天碰到一个问题，其实这个问题好久之前就没碰到了，只是之前可以通过别的方式化解，然后今天没法通过别的方式解决了，只能通过正确的方式解决。</p><p>问题描述：在线上修改了代码，怎么更新到本地。</p><a id="more"></a><p>直接通过小乌龟update，肯定不行。因为小乌龟是直接从svn服务器上更新内容，然而我是线上的代码修改了，而不是svn服务器上的文件修改了。</p><p>之前我们这个小项目提交代码到线上是这样的，本地修改后，用小乌龟提交，然后连接到服务器上，切换到网站根目录下，svn up，这样线上就能正常访问了。正是这个过程导致了我一个误区，我以为svn的工作流程是这样。</p><p><img src="http://ozys8fka7.bkt.clouddn.com/svn%E6%B5%81%E7%A8%8B%EF%BC%88%E9%94%99%E8%AF%AF%EF%BC%89.png" alt="svn错误流程"></p><p>但其实他应该是这样</p><p><img src="http://ozys8fka7.bkt.clouddn.com/svnl%E6%B5%81%E7%A8%8B%EF%BC%88%E6%96%B0%EF%BC%89.png" alt="svn正确流程"></p><p>其实线上网站根目录下文件夹也是svn客户端服务的内容，他只是svn服务器大脑下的一个分支</p><p>之前的错误概念还有就是把线上服务器的内容等同于svn大脑的内容。举个例子，在实际的大项目中，代码整理后，要经过测试环境等等多重步骤才能发布，放到正常的生产环境中，如果我们直接把大脑合并的内容放到生产环境中，这样是太不合理了，这样感觉会导致线上的代码太不稳定了。</p><p>所以，正如第二个图中看到的一样，网站根目录也是从线上代码往下拉的，所以我们对线上代码的提交，就应该和我们平时提交代码一样，只是我们平时用小乌龟习惯了，可能已经忘记命令了，还有svn up是svn update的缩写，这个up并不是提交的意思哦（···误导我一年了）。</p><p>所以，我们在线上svn commit（svn ci）缩写，必备参数 -m(我原先以为svn不需要，肯定是小乌龟做了处理)。这样就能把代码更新到svn服务器上，然后别的同事svn up就可以了</p>]]></content>
     
