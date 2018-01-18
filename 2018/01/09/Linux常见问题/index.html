@@ -81,18 +81,18 @@
 
 
 
-<meta name="description" content="因为linux平时用的不是很频繁，所以经常会遇见一些问题，然后很容易忘记，然后还经常遇到，所以记录下来。 目录： 1.yum源替换 2.修改密码">
+<meta name="description" content="因为linux平时用的不是很频繁，所以经常会遇见一些问题，然后很容易忘记，然后还经常遇到，所以记录下来。 目录：  yum源替换 修改密码 locate 查找文件 添加环境变量">
 <meta name="keywords" content="Linux 常见问题">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Linux常见问题">
 <meta property="og:url" content="http://yoursite.com/2018/01/09/Linux常见问题/index.html">
 <meta property="og:site_name" content="语法糖的博客">
-<meta property="og:description" content="因为linux平时用的不是很频繁，所以经常会遇见一些问题，然后很容易忘记，然后还经常遇到，所以记录下来。 目录： 1.yum源替换 2.修改密码">
+<meta property="og:description" content="因为linux平时用的不是很频繁，所以经常会遇见一些问题，然后很容易忘记，然后还经常遇到，所以记录下来。 目录：  yum源替换 修改密码 locate 查找文件 添加环境变量">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-01-08T16:20:54.258Z">
+<meta property="og:updated_time" content="2018-01-18T10:39:08.991Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linux常见问题">
-<meta name="twitter:description" content="因为linux平时用的不是很频繁，所以经常会遇见一些问题，然后很容易忘记，然后还经常遇到，所以记录下来。 目录： 1.yum源替换 2.修改密码">
+<meta name="twitter:description" content="因为linux平时用的不是很频繁，所以经常会遇见一些问题，然后很容易忘记，然后还经常遇到，所以记录下来。 目录：  yum源替换 修改密码 locate 查找文件 添加环境变量">
 
 
 
@@ -384,8 +384,12 @@
       
         <p>因为linux平时用的不是很频繁，所以经常会遇见一些问题，然后很容易忘记，然后还经常遇到，所以记录下来。</p>
 <p>目录：</p>
-<p>1.yum源替换</p>
-<p>2.修改密码</p>
+<ol>
+<li>yum源替换</li>
+<li>修改密码</li>
+<li>locate 查找文件</li>
+<li>添加环境变量</li>
+</ol>
 <a id="more"></a>
 <p>1.yum源的替换<br>我们每次安装centos的时候，如果不是打包安装，是从新安装的话，为了安装软件速度快点，我们通常会替换yum源，把国外的镜像替换成国内的yum源镜像。常用的有163，阿里云啊。<br>首先我们进入 /etc/yum.repos.d 文件夹下面，查看repo文件，把centos-base 这个yum源文件改名，作为备份文件（mv,剪贴，又能当做重命名来用，注意不是复制哦）。然后wget，国内的yum源地址，yum clean all 清除缓存，yum makecache 在本地生成源的软件信息，方便软件的查找。<br>总结：<br>        1.cd /etc/yum.repos.d  进入目录</p>
 <pre><code>2. mv centos-base.repo centos-base.repo.bak  备份文件
@@ -394,6 +398,17 @@
 5.yum makecache  生成缓存
 </code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">*   阿里yum源:[http://mirrors.aliyun.com/repo/](http://mirrors.aliyun.com/repo/)</div><div class="line">*   163(网易)yum源: [http://mirrors.163.com/.help/](http://mirrors.163.com/.help/)</div><div class="line">*   中科大的Linux安装镜像源：[http://centos.ustc.edu.cn/](http://centos.ustc.edu.cn/)</div><div class="line">*   搜狐的Linux安装镜像源：[http://mirrors.sohu.com/](http://mirrors.sohu.com/)</div><div class="line">*   北京首都在线科技：[http://mirrors.yun-idc.com/](http://mirrors.yun-idc.com/)</div></pre></td></tr></table></figure>
 <p>2.修改密码<br>passwd 用户名 root用户，非root用户只能修改自己的密码哦，所以passwd后面不能加参数</p>
+<p>3.locate查找文件</p>
+<p>locate 命令的使用<br>之前一直使用find / -name 文件名，太慢了，使用locate吧。<br>首先yum install mlocate,然后updatedb ,就可以使用locate 文件名称。每次使用前locate 文件名称。</p>
+<p>4.添加环境变量</p>
+<p>lamp环境如果通过源码编译安装，安装的位置一般是/usr/local,命令一般在/usr/local/软件/bin/命令，每次使用起来这么一大串，是在麻烦，加入环境变量效果棒棒的</p>
+<ol>
+<li>echo $PAHT 查看环境变量</li>
+<li>vim ~/.bashrc </li>
+<li>export PATH=路径：$PATH:</li>
+<li>source .bashrc 直接生效（不知道这里为啥不是~/.bashrc）</li>
+<li>echo $PATH 查看是否生效</li>
+</ol>
 <p>​     </p>
 
       
@@ -474,6 +489,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/01/18/php安装扩展/" rel="prev" title="php安装扩展">
+                php安装扩展 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -571,7 +590,7 @@ var jiathis_config={
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-count">14</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -582,7 +601,7 @@ var jiathis_config={
               
               <div class="site-state-item site-state-categories">
                 
-                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-count">6</span>
                   <span class="site-state-item-name">分类</span>
                 
               </div>
@@ -593,7 +612,7 @@ var jiathis_config={
               
               <div class="site-state-item site-state-tags">
                 
-                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-count">11</span>
                   <span class="site-state-item-name">标签</span>
                 
               </div>
@@ -712,7 +731,7 @@ var jiathis_config={
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count"> | 博客全站共12.6k字</span>
+  <span class="post-count"> | 博客全站共13.3k字</span>
 </div>
 
 
