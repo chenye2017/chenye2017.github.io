@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="markdown 语法 文档 工具," />
+  <meta name="keywords" content="Linux lamp 环境," />
 
 
 
@@ -81,18 +81,20 @@
 
 
 
-<meta name="description" content="关于段落，不用使用 &amp;lt;p&amp;gt; 直接使用换行 关于首行缩进中文两字符 &amp;amp;emsp 后面加上 ; 代表缩进一个，因为这个; 如果直接写在&amp;amp;emsp 后面会直接不显示，所以我分开来写 如果是英文字符，肯定就是 &amp;amp;nbsp 啦 *** *** 两个星号之间的内容是加粗, ** ** 代表泄题 `` 两个点好之间代表标记，比如我这上面想显示的md标记都是放在标签里面显示出">
-<meta name="keywords" content="markdown 语法 文档 工具">
+<meta name="description" content="lamp的源码编译安装。！！！注意哦，这里面是lamp，不是lnmp。之前的lamp中，apache和php的交流主要是apache把php作为自身的一个模块，而ngixn是通过cgi，php-fpm进行管理进程。所以lamp的编译安装是有顺序的，因为php在编译的过程中需要指定apache的apxs模块位置。">
+<meta name="keywords" content="Linux lamp 环境">
 <meta property="og:type" content="article">
-<meta property="og:title" content="markdown语法使用记录">
-<meta property="og:url" content="http://yoursite.com/2017/11/16/markdown语法使用记录/index.html">
+<meta property="og:title" content="lamp 源码编译">
+<meta property="og:url" content="http://yoursite.com/2018/01/19/lamp-源码编译/index.html">
 <meta property="og:site_name" content="语法糖的博客">
-<meta property="og:description" content="关于段落，不用使用 &amp;lt;p&amp;gt; 直接使用换行 关于首行缩进中文两字符 &amp;amp;emsp 后面加上 ; 代表缩进一个，因为这个; 如果直接写在&amp;amp;emsp 后面会直接不显示，所以我分开来写 如果是英文字符，肯定就是 &amp;amp;nbsp 啦 *** *** 两个星号之间的内容是加粗, ** ** 代表泄题 `` 两个点好之间代表标记，比如我这上面想显示的md标记都是放在标签里面显示出">
+<meta property="og:description" content="lamp的源码编译安装。！！！注意哦，这里面是lamp，不是lnmp。之前的lamp中，apache和php的交流主要是apache把php作为自身的一个模块，而ngixn是通过cgi，php-fpm进行管理进程。所以lamp的编译安装是有顺序的，因为php在编译的过程中需要指定apache的apxs模块位置。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-12-02T09:03:17.367Z">
+<meta property="og:image" content="http://ozys8fka7.bkt.clouddn.com/mysql-status.jpg">
+<meta property="og:updated_time" content="2018-01-19T07:24:33.968Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="markdown语法使用记录">
-<meta name="twitter:description" content="关于段落，不用使用 &amp;lt;p&amp;gt; 直接使用换行 关于首行缩进中文两字符 &amp;amp;emsp 后面加上 ; 代表缩进一个，因为这个; 如果直接写在&amp;amp;emsp 后面会直接不显示，所以我分开来写 如果是英文字符，肯定就是 &amp;amp;nbsp 啦 *** *** 两个星号之间的内容是加粗, ** ** 代表泄题 `` 两个点好之间代表标记，比如我这上面想显示的md标记都是放在标签里面显示出">
+<meta name="twitter:title" content="lamp 源码编译">
+<meta name="twitter:description" content="lamp的源码编译安装。！！！注意哦，这里面是lamp，不是lnmp。之前的lamp中，apache和php的交流主要是apache把php作为自身的一个模块，而ngixn是通过cgi，php-fpm进行管理进程。所以lamp的编译安装是有顺序的，因为php在编译的过程中需要指定apache的apxs模块位置。">
+<meta name="twitter:image" content="http://ozys8fka7.bkt.clouddn.com/mysql-status.jpg">
 
 
 
@@ -122,13 +124,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/11/16/markdown语法使用记录/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/01/19/lamp-源码编译/"/>
 
 
 
 
 
-  <title>markdown语法使用记录 | 语法糖的博客</title>
+  <title>lamp 源码编译 | 语法糖的博客</title>
   
 
 
@@ -293,7 +295,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/16/markdown语法使用记录/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/19/lamp-源码编译/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="chenye2017">
@@ -310,7 +312,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">markdown语法使用记录</h1>
+          <h1 class="post-title" itemprop="name headline">lamp 源码编译</h1>
         
 
         <div class="post-meta">
@@ -322,8 +324,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-16T00:07:55+08:00">
-                2017-11-16
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-19T15:21:41+08:00">
+                2018-01-19
               </time>
             
 
@@ -345,8 +347,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/工具/" itemprop="url" rel="index">
-                    <span itemprop="name">工具</span>
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
                   </a>
                 </span>
 
@@ -382,17 +384,44 @@
       
 
       
-        <ol>
-<li>关于段落，不用使用 <code>&lt;p&gt;</code> 直接使用换行</li>
-<li>关于首行缩进中文两字符 <code>&amp;emsp</code> 后面加上 ; 代表缩进一个，因为这个; 如果直接写在&amp;emsp 后面会直接不显示，所以我分开来写</li>
-<li>如果是英文字符，肯定就是 <code>&amp;nbsp</code> 啦</li>
-<li><code>*** ***</code> 两个星号之间的内容是加粗, <code>** **</code> 代表泄题</li>
-<li>`` 两个点好之间代表标记，比如我这上面想显示的md标记都是放在标签里面显示出来</li>
-<li>有序列表的话 <code>1.</code> 空格后会自动生成列表，以后想生成下一个列表，自动换行就可以了，不用一个个手敲（这个markdown语法都是空格后好像才能生效）</li>
-<li><code>``` </code> 代表下面的内容是代码块，结束也是 ```</li>
-<li><code>[]()</code> 插入超链接，中括号里面是要显示的文本内容， <code>！[]()</code>插入图片，[]也是文本内容</li>
-<li><code>&lt;!--more--&gt;</code>nexo 产生阅读全文的按钮</li>
-<li><code>*</code>代表无序列表，（小圆点图标）</li>
+        <p>lamp的源码编译安装。！！！注意哦，这里面是lamp，不是lnmp。之前的lamp中，apache和php的交流主要是apache把php作为自身的一个模块，而ngixn是通过cgi，php-fpm进行管理进程。所以lamp的编译安装是有顺序的，因为php在编译的过程中需要指定apache的apxs模块位置。<br><a id="more"></a></p>
+<ol>
+<li>apahce 的编译安装<br>apache2.4之后编译安装之前需要apr和apr-util的支持（这两个文件下载位置，百度，好像在apr.apache.org下面）apache在httpd.apache.org下面下载。<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">[root@localhost src]#pwd</div><div class="line">/usr/local/src</div><div class="line">[root@localhost src]#tar xvf apr-1.6.2.tar.gz </div><div class="line">[root@localhost src]#tar xvf apr-util-1.6.0.tar.gz </div><div class="line">[root@localhost src]#tar xvf httpd-2.4.27.tar.bz2</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>编译安装 :<br>   1.进入解压目录，./configure 配置路径，百度吧 （–prefix==/usr/local/apr）<br>   2.make<br>   3.make install<br>   4.查看<br>安装apr-util之前得先安装apr</p>
+<ol>
+<li><p>安装额外的包</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[root@localhost src]#yum install openssl-devel expat-devel pcre-devel</div></pre></td></tr></table></figure>
+</li>
+<li><p>编译httpd</p>
+</li>
+</ol>
+<p>参考文章：<a href="http://blog.csdn.net/leshami/article/details/50144179" target="_blank" rel="external">centos7 源码编译httpd7</a><br>其实这一块都不用lamp中安装apache和单独安转apache没啥区别。</p>
+<p>而且后来发现一个问题 apachectl start 这些用不了</p>
+<p>httpd -k start 这戏好用</p>
+<p>其实ps -efl|grep httpd ,也能看到这个httpd 的命令</p>
+<p>mysql 编译安装<br>失败，用的yum安装（直接下载编译好的二进制码比较好，比如subline下载之后直接就能使用，不用安装，这些java写的东西啊，好用，但是mysql不行，即使是编译过的二进制码，还要执行一些脚本）</p>
+<p>php编译安装</p>
+<ol>
+<li>php.net 上下载源文件</li>
+<li>安装额外的包<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">yum install libxml2-devel bzip2-devel libmcrypt-devel</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>3.编译安装php7<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">[root@localhost php-7.1.10]#./configure \</div><div class="line">&gt; --prefix=/app/php \</div><div class="line">&gt; --enable-mysqlnd \</div><div class="line">&gt; --with-mysqli=mysqlnd \</div><div class="line">&gt; --with-openssl \</div><div class="line">&gt; --with-pdo-mysql=mysqlnd \</div><div class="line">&gt; --enable-mbstring \</div><div class="line">&gt; --with-freetype-dir \</div><div class="line">&gt; --with-jpeg-dir \</div><div class="line">&gt; --with-png-dir \</div><div class="line">&gt; --with-zlib \</div><div class="line">&gt; --with-libxml-dir=/usr \</div><div class="line">&gt; --enable-xml \</div><div class="line">&gt; --enable-sockets \</div><div class="line">&gt; --with-apxs2=/app/httpd24/bin/apxs \</div><div class="line">&gt; --with-mcrypt \</div><div class="line">&gt; --with-config-file-path=/etc \</div><div class="line">&gt; --with-config-file-scan-dir=/etc/php.d \</div><div class="line">&gt; --enable-maintainer-zts \</div><div class="line">&gt; --disable-fileinfo</div><div class="line"></div><div class="line"></div><div class="line"># 进行编译安装</div><div class="line">[root@localhost php-7.1.10]#make -j 2 &amp;&amp; make install</div></pre></td></tr></table></figure></p>
+<p>注意那个with-apxs2 的选项<br>下面那个 make -j 2 指的是用两个cpu进行编译</p>
+<p>注意这时候时没有配置文件的，到解压的php文件夹下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[root@localhost php-7.1.10]#cp php.ini-production /etc/php.ini</div></pre></td></tr></table></figure></p>
+<p>编译php7的时候with-config-file-path 指定了配置文件的位置</p>
+<ol>
+<li>这时候在apache的根目录下访问phpinfo这种文件还是不幸的，需要支持对php的mime类型解析，修改httpd的配置文件<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">AddType application/x-httpd-php .php</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>5.测试phpinfo</p>
+<p>6.测试数据库连接</p>
+<p>之前测试测试数据库总的出错···总结了下原因</p>
+<ol>
+<li>不能清楚的认识到mysql怎么连接数据库的。其实换一种思路，php是怎么连接redis的，我们安装好redis服务，然后安装php的redis扩展，就可以了。什么连接函数啊和连接mysql是一样的。关于php连接mysql，现在主推两种方式，mysqli和pdo，分别对应两种扩展，具体的可以参考<a href="http://www.runoob.com/php/php-mysql-connect.html" target="_blank" rel="external">菜鸟教程里面的这个php连接mysql</a>。</li>
+<li>mysqli() 第一个参数’localhost’ 和’127.0.0.1’ 的区别，localhost 连接基于socket，这个文件的位置在php.ini有指定，如果换了位置，则找不到。127.0.0.1基于tcp，就可以啦，不用那个文件，参考链接<a href="https://segmentfault.com/q/1010000000328531" target="_blank" rel="external">segmentfault</a><br>mysql 这个status挺好用的哈哈<img src="http://ozys8fka7.bkt.clouddn.com/mysql-status.jpg" alt=""></li>
 </ol>
 
       
@@ -451,7 +480,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/markdown-语法-文档-工具/" rel="tag"><i class="fa fa-tag"></i> markdown 语法 文档 工具</a>
+            <a href="/tags/Linux-lamp-环境/" rel="tag"><i class="fa fa-tag"></i> Linux lamp 环境</a>
           
         </div>
       
@@ -464,8 +493,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/11/15/写博客的原因/" rel="next" title="写博客的原因">
-                <i class="fa fa-chevron-left"></i> 写博客的原因
+              <a href="/2018/01/19/lnmp-yum安装/" rel="next" title="lnmp yum安装">
+                <i class="fa fa-chevron-left"></i> lnmp yum安装
               </a>
             
           </div>
@@ -473,10 +502,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/11/25/hexo常用/" rel="prev" title="hexo常用">
-                hexo常用 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
