@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-01-19T07:24:33.968Z</updated>
+  <updated>2018-01-22T05:06:26.812Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,28 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>PHPStorm开启断点调试</title>
+    <link href="http://yoursite.com/2018/01/22/PHPStorm%E5%BC%80%E5%90%AF%E6%96%AD%E7%82%B9%E8%B0%83%E8%AF%95/"/>
+    <id>http://yoursite.com/2018/01/22/PHPStorm开启断点调试/</id>
+    <published>2018-01-22T05:05:02.000Z</published>
+    <updated>2018-01-22T05:06:26.812Z</updated>
+    
+    <content type="html"><![CDATA[<p>关于xdebug。作为一个phper，相信大家平时的调试用的都是var_dump,echo之类的，像我之前不知道var_dump可以打印出多个变量，在写代码的时候，经常为了打印多个变量，要写很多var_dump,后来无意间解除了xdebug，虽然现在还是经常用var_dump,但我感觉这类的辅助工具都是为了更好的，更高效率的完成工作，得变通，什么方便，什么自己用的舒服就用什么。平时的我感觉xdebug对于框架的学习，和自己平时不熟悉的代码的时候用的方便，var_dump,我一般用来进行简单的调试。<br><a id="more"></a><br>1.原理<br>没去看了</p><p>2.安装<br>首先得安装xdebug的php扩展。这个xdebug的安装真的方便，他的网站上对xdbug的安装简直是傻瓜式，百度他的网站，<a href="http://xdebug.org/wizard.php" target="_blank" rel="external">http://xdebug.org/wizard.php</a>，把你的pathinfo() 的内容粘贴过去，她能自动帮你选择扩展版本，其实window下要的就是之前文章里面提的四个版本，以及php的扩展存放路径，已经php.ini, linux下好文件，同之前的文章一下。安装完成之后pathinfo，查找xdebug。<br>这里注意下我们通过xampp这类软件安装的lamp其实不是lamp，这个l linux根本不存在，我们用的是w，windows。</p><p>具体的版本选择可以看这篇文章 帮<a href="http://blog.csdn.net/hel12he/article/details/44425781" target="_blank" rel="external">xdebug选择合适的安装版本</a></p><p>3.phpstorm的配置<br>之前的配置在网上找吧，因为懒得截图了<br><a href="https://www.jianshu.com/p/74a1d60ab5ef" target="_blank" rel="external">简书上的这篇文章对安装方法写的很详细</a></p><p>4.注意事项</p><ol><li>首先是关于断点的位置。代码会在断点之前结束，所以如果想要获取断点处的内容，务必在该内容之后打上断点。记得老师在将课程的时候甚至在这个方法结束处的 } 打了断点。</li><li>之前遇到的一个问题就是多个断点，只是执行了其中的几个断点，并没有执行完所有的断点，以为是使用的方法不对。后来发现其实是两个断点之间的代码又bug，导致后面的端点没有执行，··所以其实还是自身的问题。</li><li>断点调试的时候，所以的端点前面会有 √ 的标志，断点执行的那行代码会有颜色加深的标志。断点执行完，所有的 √ 的标志会没有。只要断点执行完了，接口才会有输出，并不是执行到哪个断点，哪个端点前面会有 √的标志。</li><li>代码可以一行一行的执行，也可以从这个断点直接跳转到下个断点，这样的好处是，对于复杂的框架可以知道代码是怎么执行的，然后断点间的跳转也可以迅速定位解决问题。但好像不同php文件断点间跳转，只有一个页面那个地方会对变量有输出。</li><li>变量的输出在下面那个debug tab标签处，开启断点调试，会在页面的url路径后面有xdebug_session 标志，把这个标志粘贴到不同的url，就能对不同的api进行测试，其实感觉这个就像一个接口一样，只要传递这个参数，就能执行这个debug接口的服务功能。</li><li>断点调试的关闭，··关闭那个phpstrom上方的类似电话的监听按钮肯定能关闭的，现在想了下，关闭下方tab肯定也是可以的，记得我每次close tab 他都会提醒是否close connect，断点调试的开始按钮是phpstorm的那个小瓢虫的标志。</li></ol>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;关于xdebug。作为一个phper，相信大家平时的调试用的都是var_dump,echo之类的，像我之前不知道var_dump可以打印出多个变量，在写代码的时候，经常为了打印多个变量，要写很多var_dump,后来无意间解除了xdebug，虽然现在还是经常用var_dump,但我感觉这类的辅助工具都是为了更好的，更高效率的完成工作，得变通，什么方便，什么自己用的舒服就用什么。平时的我感觉xdebug对于框架的学习，和自己平时不熟悉的代码的时候用的方便，var_dump,我一般用来进行简单的调试。&lt;br&gt;
+    
+    </summary>
+    
+      <category term="PHP" scheme="http://yoursite.com/categories/PHP/"/>
+    
+    
+      <category term="PHP Linux 调试 工具" scheme="http://yoursite.com/tags/PHP-Linux-%E8%B0%83%E8%AF%95-%E5%B7%A5%E5%85%B7/"/>
+    
+  </entry>
   
   <entry>
     <title>lamp 源码编译</title>

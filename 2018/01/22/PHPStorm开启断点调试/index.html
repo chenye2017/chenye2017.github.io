@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="linux apache 框架 php," />
+  <meta name="keywords" content="PHP Linux 调试 工具," />
 
 
 
@@ -81,21 +81,18 @@
 
 
 
-<meta name="description" content="这篇文章主要是对于php运行环境的搭建中运行起来框架的总结，其实运行框架，不管是yii，还是tp，还是laravel，还是我们那个项目框架，与其说是运行起来，不如说是找到框架的入口文件，然后剩下的就直接交给了框架进行处理（route.php的处理，restful api等等，通过解析模块，控制器，方法），绝大部分时候就这这么简单，至少上面三个都不用对apache进行特殊的配置（目前的这篇文章只是单">
-<meta name="keywords" content="linux apache 框架 php">
+<meta name="description" content="关于xdebug。作为一个phper，相信大家平时的调试用的都是var_dump,echo之类的，像我之前不知道var_dump可以打印出多个变量，在写代码的时候，经常为了打印多个变量，要写很多var_dump,后来无意间解除了xdebug，虽然现在还是经常用var_dump,但我感觉这类的辅助工具都是为了更好的，更高效率的完成工作，得变通，什么方便，什么自己用的舒服就用什么。平时的我感觉xdeb">
+<meta name="keywords" content="PHP Linux 调试 工具">
 <meta property="og:type" content="article">
-<meta property="og:title" content="window下运行各种框架总结">
-<meta property="og:url" content="http://yoursite.com/2017/11/25/window下运行各种框架总结/index.html">
+<meta property="og:title" content="PHPStorm开启断点调试">
+<meta property="og:url" content="http://yoursite.com/2018/01/22/PHPStorm开启断点调试/index.html">
 <meta property="og:site_name" content="语法糖的博客">
-<meta property="og:description" content="这篇文章主要是对于php运行环境的搭建中运行起来框架的总结，其实运行框架，不管是yii，还是tp，还是laravel，还是我们那个项目框架，与其说是运行起来，不如说是找到框架的入口文件，然后剩下的就直接交给了框架进行处理（route.php的处理，restful api等等，通过解析模块，控制器，方法），绝大部分时候就这这么简单，至少上面三个都不用对apache进行特殊的配置（目前的这篇文章只是单">
+<meta property="og:description" content="关于xdebug。作为一个phper，相信大家平时的调试用的都是var_dump,echo之类的，像我之前不知道var_dump可以打印出多个变量，在写代码的时候，经常为了打印多个变量，要写很多var_dump,后来无意间解除了xdebug，虽然现在还是经常用var_dump,但我感觉这类的辅助工具都是为了更好的，更高效率的完成工作，得变通，什么方便，什么自己用的舒服就用什么。平时的我感觉xdeb">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://ozys8fka7.bkt.clouddn.com/TIM%E5%9B%BE%E7%89%8720171125172354.png">
-<meta property="og:image" content="http://ozys8fka7.bkt.clouddn.com/TIM%E5%9B%BE%E7%89%8720171125172431.png">
-<meta property="og:updated_time" content="2017-12-02T09:04:32.201Z">
+<meta property="og:updated_time" content="2018-01-22T05:06:26.812Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="window下运行各种框架总结">
-<meta name="twitter:description" content="这篇文章主要是对于php运行环境的搭建中运行起来框架的总结，其实运行框架，不管是yii，还是tp，还是laravel，还是我们那个项目框架，与其说是运行起来，不如说是找到框架的入口文件，然后剩下的就直接交给了框架进行处理（route.php的处理，restful api等等，通过解析模块，控制器，方法），绝大部分时候就这这么简单，至少上面三个都不用对apache进行特殊的配置（目前的这篇文章只是单">
-<meta name="twitter:image" content="http://ozys8fka7.bkt.clouddn.com/TIM%E5%9B%BE%E7%89%8720171125172354.png">
+<meta name="twitter:title" content="PHPStorm开启断点调试">
+<meta name="twitter:description" content="关于xdebug。作为一个phper，相信大家平时的调试用的都是var_dump,echo之类的，像我之前不知道var_dump可以打印出多个变量，在写代码的时候，经常为了打印多个变量，要写很多var_dump,后来无意间解除了xdebug，虽然现在还是经常用var_dump,但我感觉这类的辅助工具都是为了更好的，更高效率的完成工作，得变通，什么方便，什么自己用的舒服就用什么。平时的我感觉xdeb">
 
 
 
@@ -125,13 +122,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/11/25/window下运行各种框架总结/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/01/22/PHPStorm开启断点调试/"/>
 
 
 
 
 
-  <title>window下运行各种框架总结 | 语法糖的博客</title>
+  <title>PHPStorm开启断点调试 | 语法糖的博客</title>
   
 
 
@@ -296,7 +293,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/25/window下运行各种框架总结/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/22/PHPStorm开启断点调试/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="chenye2017">
@@ -313,7 +310,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">window下运行各种框架总结</h1>
+          <h1 class="post-title" itemprop="name headline">PHPStorm开启断点调试</h1>
         
 
         <div class="post-meta">
@@ -325,8 +322,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-25T17:53:43+08:00">
-                2017-11-25
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-22T13:05:02+08:00">
+                2018-01-22
               </time>
             
 
@@ -348,8 +345,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/php/" itemprop="url" rel="index">
-                    <span itemprop="name">php</span>
+                  <a href="/categories/PHP/" itemprop="url" rel="index">
+                    <span itemprop="name">PHP</span>
                   </a>
                 </span>
 
@@ -385,23 +382,19 @@
       
 
       
-        <p>这篇文章主要是<strong>对于php运行环境的搭建中运行起来框架的总结，其实运行框架，不管是yii，还是tp，还是laravel，还是我们那个项目框架，与其说是运行起来，不如</strong>说是找到框架的入口文件<strong>，然后剩下的就直接交给了框架进行处理（route.php的处理，restful api等等，通过解析模块，控制器，方法），绝大部分时候就这这么简单，至少上面三个都不用对apache</strong>进行特殊的配置（目前的这篇文章只是单纯的针对Apache）。</p>
-<a id="more"></a>
-<p>so，简化的思考了一下，就是找public下面的index.php 文件（tp  laravel都是这个文件 yii是在web目录下，其实找一下就行了，大部分都是reqire项目的核心库这种东西。例如yii</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line"></div><div class="line">// comment out the following two lines when deployed to production</div><div class="line">defined(&apos;YII_DEBUG&apos;) or define(&apos;YII_DEBUG&apos;, true);</div><div class="line">defined(&apos;YII_ENV&apos;) or define(&apos;YII_ENV&apos;, &apos;dev&apos;);</div><div class="line"></div><div class="line">require(__DIR__ . &apos;/../vendor/autoload.php&apos;);</div><div class="line">require(__DIR__ . &apos;/../vendor/yiisoft/yii2/Yii.php&apos;);</div><div class="line"></div><div class="line">$config = require(__DIR__ . &apos;/../config/web.php&apos;);</div><div class="line"></div><div class="line">(new yii\web\Application($config))-&gt;run();</div></pre></td></tr></table></figure>
-<p>），所以只要配置好了一个环境，剩下的框架的运行基本就一样了。<br>上面已经说了我们这片文章的目的了，运行起来框架，通过的是直接下载代码的这种方式（现在绝大部分框架都是支持composer来安装）。我们先安装好xampp，xampp会帮我们集成安装好apache和mysql，他们和在linux下是一样的，至少我到现在还没有发现什么不同，so，因为太过相似了，导致我从前以为xampp是在window环境下集成安装了lamp这种，其实这个l（linux是没有的），他的环境准确说是wamp（我代表 window这种架构）。他把php，mysql还有apache都放在了他自己也就是xampp的安装目录下，我们找到apache的安装目录，在conf文件夹里面找到（httpd-vhosts.conf）这个配置虚拟域名的文件，我记得以前apache配置虚拟域名是在一块的，都是写在httpd.conf文件里面，现在分开了，其实是包含了conf文件下的所有文件，但这样更清楚。<br>接下来我们就开始配置虚拟主机了（配置虚拟主机的意思就是在一个服务器上配置多域名访问的站点，其实不通过域名通过端口号啊什么的都可以，本质上就是把不同的请求分发到不同的目录下。我们的itbasic就是通过Nginx通过域名的不同把对80端口不同的域名请求分发到不同的端口下，然后通过apache虚拟主机的配置（通过的是端口的不同）来达到发送到不同目录下）。<br>添加<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">&lt;VirtualHost *:800&gt;</div><div class="line">    ##ServerAdmin webmaster@dummy-host2.example.com</div><div class="line">    ##DocumentRoot &quot;D:/xampp/htdocs/dummy-host2.example.com&quot;</div><div class="line">    ##ServerName dummy-host2.example.com</div><div class="line">    ##ErrorLog &quot;logs/dummy-host2.example.com-error.log&quot;</div><div class="line">    ##CustomLog &quot;logs/dummy-host2.example.com-access.log&quot; common</div><div class="line">     DocumentRoot &quot;D:\code\laravel-v5.1.11\laravel-v5.1.11\public&quot;  </div><div class="line">    ServerName laravel.app  </div><div class="line">        &lt;Directory &quot;D:\code\laravel-v5.1.11\laravel-v5.1.11\public&quot;&gt;  </div><div class="line">            Options Indexes FollowSymLinks Includes ExecCGI  </div><div class="line">            AllowOverride All  </div><div class="line">            Require all granted  </div><div class="line">        &lt;/Directory&gt;</div><div class="line">&lt;/VirtualHost&gt;</div></pre></td></tr></table></figure></p>
-<p>简单的记录下apache的语法 DocumentRoot 代表根目录<br>配置虚拟域名要写在virtualHost标签之间，后面的代表端口号，servername代表域名，directory里面allow代表接受任何的请求，之前安装larave的时候代开index.php嫌弃我权限不够，其实是这个directory标签的内容写错了，注意这个如果说打开文件夹没有权限，在window下你改这个目录的什么所有者权限啊什么都是没用的，我的理解是web请求的时候打开这个文件夹的用户不是我们能预测的，应该是other什么的，因为加了这句话，所以我们在window下安装这些框架不用修改日志文件，要么在linux下安装yii，laravel都要修改log日志文件夹的权限（感觉是因为写日志的操作是来自http的请求，像我们之前安装seaslog第三方的日志的时候，也得修改那个文件夹的权限，道理是一样的）<br>（yii框架的话conf文件夹下web.php cookiekey要随便填一个数，）</p>
-<p>当然还要配置个虚拟域名，因为之前apache里面填写的域名如果是假的话，在本地host文件里面配置一下（因为浏览器解析是通过缓存（贼端）host文件，dns解析来找的，配置之后ping一下能不能同，就可以啦）</p>
-<p>大功告成。</p>
-<p>总结一下,本机运行起来一个框架。</p>
-<p>1.安装集成环境（xampp）<br>2.修改apache配置文件，配置虚拟主机<br>3.修改host文件，修改域名到本机127.0.0.1</p>
-<p>注意的点：<br>1.配置虚拟主机之后，xampp原先那个localhost直接就访问不了了，所以把那个localhost也配置一个虚拟主机（localhost也属于一个域名）<br>2.如果访问不了，先ping一下域名，看是否能ping通，然后查看apache的access日志和error日志，如果没有，确认http服务是否起起来了，如果有查看日志（linux下tail -f 动态看），window下在文件的最下面，像我现在这个window下环境，就是因为端口号被占了，改成800，所以每次访问域名后面都得加 ： 800，这个Apache的错误日志里面会记录的很清楚</p>
-<p>附上三张框架图<br>1.<img src="http://ozys8fka7.bkt.clouddn.com/TIM%E5%9B%BE%E7%89%8720171125172354.png" alt="laravel"><br>2.<img src="http://ozys8fka7.bkt.clouddn.com/TIM%E5%9B%BE%E7%89%8720171125172431.png" alt="yii2"></p>
-<p>(其实在用外链的时候想到了树洞外链，GitHub上一个关于php的开源项目)<br>对了突然想起来yaf框架，其实因为yaf框架是需要扩展模块支持，所以得先安装php扩展（php扩展大部分都是c开发的，），然后原理是一样的（只是yaf框架需要手动生成基本目录）</p>
-<p><a href="http://blog.csdn.net/underclound/article/details/76835318" target="_blank" rel="external">地址</a></p>
-<p>简单记录下window下安装php扩展（phpinfo能输出php的详细信息，在框架的index.php目录下是唯一所有人都能访问的）然后去pecl下载php扩展，下载dll文件的时候要注意那个什么tc之类的，注意好，下载好放在php的扩展目录下ext，再在php.ini 里面模仿之前的php扩展，加上相应的话就好了，那个扩展还是可以配置一些属性的<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">zend_extension = D:\xampp\php\ext\php_xdebug-2.5.4-7.0-vc14.dll</div></pre></td></tr></table></figure></p>
-<p>像mysql这种，都是可以添加配置信息的<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">[MSSQL]</div><div class="line">mssql.allow_persistent=On</div><div class="line">mssql.max_persistent=-1</div><div class="line">mssql.max_links=-1</div><div class="line">mssql.min_error_severity=10</div><div class="line">mssql.min_message_severity=10</div><div class="line">mssql.compatability_mode=Off</div><div class="line">mssql.secure_connection=Off</div></pre></td></tr></table></figure></p>
-<p>yaf好像不配置，不能再生产环境下用，有个参数，其实安装seaslog的时候那些日志模板啊，日志格式啊都是在这里配置的，就是初始化的感觉。linux下的安装扩展要先下载文件，然后编译成so文件放在对应目录下，然后配置php.ini，有机会再说。window下只要注意好下载对应的dll文件就可以了</p>
+        <p>关于xdebug。作为一个phper，相信大家平时的调试用的都是var_dump,echo之类的，像我之前不知道var_dump可以打印出多个变量，在写代码的时候，经常为了打印多个变量，要写很多var_dump,后来无意间解除了xdebug，虽然现在还是经常用var_dump,但我感觉这类的辅助工具都是为了更好的，更高效率的完成工作，得变通，什么方便，什么自己用的舒服就用什么。平时的我感觉xdebug对于框架的学习，和自己平时不熟悉的代码的时候用的方便，var_dump,我一般用来进行简单的调试。<br><a id="more"></a><br>1.原理<br>没去看了</p>
+<p>2.安装<br>首先得安装xdebug的php扩展。这个xdebug的安装真的方便，他的网站上对xdbug的安装简直是傻瓜式，百度他的网站，<a href="http://xdebug.org/wizard.php" target="_blank" rel="external">http://xdebug.org/wizard.php</a>，把你的pathinfo() 的内容粘贴过去，她能自动帮你选择扩展版本，其实window下要的就是之前文章里面提的四个版本，以及php的扩展存放路径，已经php.ini, linux下好文件，同之前的文章一下。安装完成之后pathinfo，查找xdebug。<br>这里注意下我们通过xampp这类软件安装的lamp其实不是lamp，这个l linux根本不存在，我们用的是w，windows。</p>
+<p>具体的版本选择可以看这篇文章 帮<a href="http://blog.csdn.net/hel12he/article/details/44425781" target="_blank" rel="external">xdebug选择合适的安装版本</a></p>
+<p>3.phpstorm的配置<br>之前的配置在网上找吧，因为懒得截图了<br><a href="https://www.jianshu.com/p/74a1d60ab5ef" target="_blank" rel="external">简书上的这篇文章对安装方法写的很详细</a></p>
+<p>4.注意事项</p>
+<ol>
+<li>首先是关于断点的位置。代码会在断点之前结束，所以如果想要获取断点处的内容，务必在该内容之后打上断点。记得老师在将课程的时候甚至在这个方法结束处的 } 打了断点。</li>
+<li>之前遇到的一个问题就是多个断点，只是执行了其中的几个断点，并没有执行完所有的断点，以为是使用的方法不对。后来发现其实是两个断点之间的代码又bug，导致后面的端点没有执行，··所以其实还是自身的问题。</li>
+<li>断点调试的时候，所以的端点前面会有 √ 的标志，断点执行的那行代码会有颜色加深的标志。断点执行完，所有的 √ 的标志会没有。只要断点执行完了，接口才会有输出，并不是执行到哪个断点，哪个端点前面会有 √的标志。</li>
+<li>代码可以一行一行的执行，也可以从这个断点直接跳转到下个断点，这样的好处是，对于复杂的框架可以知道代码是怎么执行的，然后断点间的跳转也可以迅速定位解决问题。但好像不同php文件断点间跳转，只有一个页面那个地方会对变量有输出。</li>
+<li>变量的输出在下面那个debug tab标签处，开启断点调试，会在页面的url路径后面有xdebug_session 标志，把这个标志粘贴到不同的url，就能对不同的api进行测试，其实感觉这个就像一个接口一样，只要传递这个参数，就能执行这个debug接口的服务功能。</li>
+<li>断点调试的关闭，··关闭那个phpstrom上方的类似电话的监听按钮肯定能关闭的，现在想了下，关闭下方tab肯定也是可以的，记得我每次close tab 他都会提醒是否close connect，断点调试的开始按钮是phpstorm的那个小瓢虫的标志。</li>
+</ol>
 
       
     </div>
@@ -459,7 +452,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/linux-apache-框架-php/" rel="tag"><i class="fa fa-tag"></i> linux apache 框架 php</a>
+            <a href="/tags/PHP-Linux-调试-工具/" rel="tag"><i class="fa fa-tag"></i> PHP Linux 调试 工具</a>
           
         </div>
       
@@ -472,8 +465,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/11/25/hexo常用/" rel="next" title="hexo常用">
-                <i class="fa fa-chevron-left"></i> hexo常用
+              <a href="/2018/01/19/lamp-源码编译/" rel="next" title="lamp 源码编译">
+                <i class="fa fa-chevron-left"></i> lamp 源码编译
               </a>
             
           </div>
@@ -481,10 +474,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/11/28/Linux网络管理/" rel="prev" title="Linux网络管理">
-                Linux网络管理 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
