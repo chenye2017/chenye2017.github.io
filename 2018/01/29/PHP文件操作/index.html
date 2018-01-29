@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="网络 https," />
+  <meta name="keywords" content="PHP 文件操作," />
 
 
 
@@ -81,20 +81,18 @@
 
 
 
-<meta name="description" content="参考：https://segmentfault.com/a/1190000012196642作为一个web开发者，对于https和http肯定要有所了解，现在的我对于深层次的https通信看着还不是太懂，但是对于https和http的差别，记得有一次去中科招商的时候面试有问到过。写这篇文章的时候，主要是方便自己看的时候理解。">
-<meta name="keywords" content="网络 https">
+<meta name="description" content="上篇文章里面写了关于文件上传。其实在做文件上传的功能的时候遇到很多php关于文件的处理，记录下来。其实文件处理在我们刚开始学习php的时候肯定学习过，可后来因为项目当中，做网站的时候关于文件的操作很少，所以很容易忘记这部分的内容，毕竟其实也挺枯燥的。">
+<meta name="keywords" content="PHP 文件操作">
 <meta property="og:type" content="article">
-<meta property="og:title" content="https通信原理">
-<meta property="og:url" content="http://yoursite.com/2017/12/02/https通信原理/index.html">
+<meta property="og:title" content="PHP文件操作">
+<meta property="og:url" content="http://yoursite.com/2018/01/29/PHP文件操作/index.html">
 <meta property="og:site_name" content="语法糖的博客">
-<meta property="og:description" content="参考：https://segmentfault.com/a/1190000012196642作为一个web开发者，对于https和http肯定要有所了解，现在的我对于深层次的https通信看着还不是太懂，但是对于https和http的差别，记得有一次去中科招商的时候面试有问到过。写这篇文章的时候，主要是方便自己看的时候理解。">
+<meta property="og:description" content="上篇文章里面写了关于文件上传。其实在做文件上传的功能的时候遇到很多php关于文件的处理，记录下来。其实文件处理在我们刚开始学习php的时候肯定学习过，可后来因为项目当中，做网站的时候关于文件的操作很少，所以很容易忘记这部分的内容，毕竟其实也挺枯燥的。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://ozys8fka7.bkt.clouddn.com/1336318852-5a1d155b41475_articlex.png">
-<meta property="og:updated_time" content="2017-12-02T09:03:55.290Z">
+<meta property="og:updated_time" content="2018-01-29T08:04:47.456Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="https通信原理">
-<meta name="twitter:description" content="参考：https://segmentfault.com/a/1190000012196642作为一个web开发者，对于https和http肯定要有所了解，现在的我对于深层次的https通信看着还不是太懂，但是对于https和http的差别，记得有一次去中科招商的时候面试有问到过。写这篇文章的时候，主要是方便自己看的时候理解。">
-<meta name="twitter:image" content="http://ozys8fka7.bkt.clouddn.com/1336318852-5a1d155b41475_articlex.png">
+<meta name="twitter:title" content="PHP文件操作">
+<meta name="twitter:description" content="上篇文章里面写了关于文件上传。其实在做文件上传的功能的时候遇到很多php关于文件的处理，记录下来。其实文件处理在我们刚开始学习php的时候肯定学习过，可后来因为项目当中，做网站的时候关于文件的操作很少，所以很容易忘记这部分的内容，毕竟其实也挺枯燥的。">
 
 
 
@@ -124,13 +122,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/12/02/https通信原理/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/01/29/PHP文件操作/"/>
 
 
 
 
 
-  <title>https通信原理 | 语法糖的博客</title>
+  <title>PHP文件操作 | 语法糖的博客</title>
   
 
 
@@ -295,7 +293,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/12/02/https通信原理/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/29/PHP文件操作/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="chenye2017">
@@ -312,7 +310,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">https通信原理</h1>
+          <h1 class="post-title" itemprop="name headline">PHP文件操作</h1>
         
 
         <div class="post-meta">
@@ -324,8 +322,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-02T17:01:31+08:00">
-                2017-12-02
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-29T16:04:01+08:00">
+                2018-01-29
               </time>
             
 
@@ -347,8 +345,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/网络/" itemprop="url" rel="index">
-                    <span itemprop="name">网络</span>
+                  <a href="/categories/PHP/" itemprop="url" rel="index">
+                    <span itemprop="name">PHP</span>
                   </a>
                 </span>
 
@@ -384,37 +382,19 @@
       
 
       
-        <p>参考：<a href="https://segmentfault.com/a/1190000012196642" target="_blank" rel="external">https://segmentfault.com/a/1190000012196642</a><br>作为一个web开发者，对于https和http肯定要有所了解，现在的我对于深层次的https通信看着还不是太懂，但是对于https和http的差别，记得有一次去中科招商的时候面试有问到过。写这篇文章的时候，主要是方便自己看的时候理解。</p>
-<a id="more"></a>
-<p>首先呢 https默认端口号是443，http是80，都知道http相比于http更加安全。但是安全主要在什么方面呢，http通过明文传输，post方式好像看不见，但是get方式可以通过在服务器上监听这个端口，就能看见甚至都不要解密传进来的数据。像之前的talent，远程连接（默认端口23），因为传输过程明文，而且远程连接主要就是用来远程登录，肯定要输入用户名和密码，so，通过对这个端口的监听，就能知道用户通过talent服务的这个端口传进来的用户名和密码，这个安全性的要求不言而喻，所以现在都不用了，现在用ssh。还记得每次连接服务器的时候，让你接受公钥的弹窗嘛，这是为了在传输过程中用服务器的公钥进行加密，然后数据到达服务器端，服务器可以通过私钥进行解密。之前看过一个很形象的比喻。公钥就相当于锁，私钥就相当于钥匙，我这个东西用锁锁起来了，当然就可以用钥匙打开了（这是公钥加密，私钥解密的比喻）</p>
-<p>https和http都是基于tcp/ip 协议，属于应用层，他们其实是一样的，只是https外层有个ssl包裹起来<img src="http://ozys8fka7.bkt.clouddn.com/1336318852-5a1d155b41475_articlex.png" alt=""></p>
-<p>其实本质上还是属于http协议。</p>
-<p>https在传输过程中使用了加密，有对称加密和非对称加密。</p>
-<p>对称加密就是在加密和加密过程中使用同一个密钥，但是这样有个不安全点就是，密钥需要进行传递，传递过程中，如果密钥被捕获了，那加密如同虚设，so，就产生了我们的非对称加密</p>
-<p>我所接触的非对称加密有ssh加密，这个因为不管是github上开始代码的提交，还是我们开始远程建立数据库的连接，都要用到。记得我第一次给github提交代码的时候，因为window默认不支持ssh，所以下载了git客户端，在gitbash上进行操作，生成了ssh密钥，把公钥贴在了github的setting里面。（非对称加密算法好像有个叫RSA）。</p>
-<p>因为非对称加密有些复杂，https通信过程中,注意是通信过程中，不用非对称加密，用的还是对称加密，因为我们只要保证通信过程中对称加密的密钥不被窃取捕获篡改，就可以了。所以我们在传输密钥的过程用的是非对称加密，这样就得需要服务器的公钥，我们用服务器的公钥加密我们传输数据石宏对称加密的密钥，然后传输到服务器端，服务器用他的私钥进行解密，这样密钥传输成功，我们进行通行的过程中就可以用对称加密了。</p>
-<p>那问题来了，服务器怎么传输过来他的公钥呢，怎么保证他传输过来的公钥的安全性呢，用对称加密？不行，无法保证密钥的准确，用非对称加密，也不行，这就陷入无限的死循环中了。</p>
-<p>其实非对称加密不仅可以用公钥加密，私钥解密，保证传输数据的数据不被获取（需要私钥解密，可是私钥是私密的东西哦，别人都不知道）到，但不能保证数据不被劫持篡改（但无法保证别人对你这个文件进行修改），还可以使用私钥加密，公钥解密，这样不能保证数据不被获取到，但是可以保证数据不被篡改（因为每个人都可能获取到公钥，然后用公钥解密你这个私钥解密的文件，但无法修改，因为一旦修改了，文件的内容和私钥加密的内容就不一样了，等到客户端接收到服务器端传过来的内容，用公钥解密后，发现内容不一样，就很容易判断到文件被修改，如果一样，则能保证传输过来文件的准确性（我对不能同时修改文件和私钥加密文件的看法是私钥是服务器所特有的，所以不能还原修改文件被私钥加密后的样子））</p>
-<ul>
-<li>首先，CA会向申请者颁发一个证书，这个证书里面的内容有：签发者、证书用途、服务器申请的时候附带的公钥、服务器的加密算法、使用的HASH算法、证书到期的时间等等。</li>
-<li>紧接着，把上面所提到的内容，做一次HASH求值，得到一个HASH值。</li>
-<li>再接着，用CA的私钥进行加密，这样就完成了数字签名。而用CA的私钥加密后，就生成了类似人体指纹的签名，任何篡改证书的尝试，都会被数字签名发现。</li>
-<li>最后，把数字签名，附在数字证书的末尾，传输给服务器</li>
-</ul>
-<p>因为这个传输服务器公钥的过程就是为了保证数据的不被篡改，不用管数据是否被窃取到，因为传输的是服务器的公钥，本身就是公开的，所以我们用私钥进行加密，公钥进行解密。</p>
-<ul>
-<li>客户端拿到这个数字证书以后，用CA私钥对应的公钥，可以解密数字证书末尾的数字签名，得到证书的内容以及原始的HASH值。</li>
-<li>紧接着，客户端按照证书中的HASH算法，对证书的内容求HASH值。如果通过CA公钥解密的HASH和通过计算求得的HASH值相同，那么认证通过，否则失败。</li>
-<li>如果认证通过，就可以取得服务器的公开密钥。</li>
-</ul>
-<p>所以对服务器公钥的传递本质上还是通过费对称加密算法，只是找了个中间机构ca，多数浏览器开发商发布版本时，会事先在内部植入常用认证机关的公开密钥。这样，就方便客户端对于数字证书真实性的验证。</p>
-<p>客户端证书<br>HTTPS中不仅可以使用服务器证书，还可以使用客户端证书。以客户端证书进行客户端认证，它的作用与服务器证书是相同的。<br>由于客户端获取证书需要用户自行安装客户端证书，同时也面临着费用的问题。<br>因此，现状是，安全性极高的认证机构可办法客户端证书但是仅用于特殊用途的业务。比如那些可支撑客户端证书支出费用的业务。<br>例如，银行的网上银行就采用了客户端证书。在登录网银时不仅要求用户确认输入ID和密码，还会要求用户的客户端证书，以确认用户是否从特定的终端访问网银。</p>
-<p>总结一下：</p>
+        <p>上篇文章里面写了关于文件上传。其实在做文件上传的功能的时候遇到很多php关于文件的处理，记录下来。其实文件处理在我们刚开始学习php的时候肯定学习过，可后来因为项目当中，做网站的时候关于文件的操作很少，所以很容易忘记这部分的内容，毕竟其实也挺枯燥的。<br><a id="more"></a><br>1.遍历文件夹下的所有文件。<br>在做大文件切割的时候，本来想用php做，可是php的fopen好像最多只能接受8000多个字节，就是8000B，而我们上传文件大小一般能达到4m,如果按照8000B的切割也就太多小文件了，于是用linux新建个文件夹，在文件夹中split -b  4m 文件名 （还有个参数代表切割文件的名称，我没有仔细看，使用的默认的，就会产生xaa,xab···这种的文件），然后删除原始文件，遍历文件夹下的所有文件，每次上传一个，像服务器上刚开始创建好的文件持续写入，这样就能实现php的大文件上传<br>php:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">$dir = &apos;/root/test&apos;;</div><div class="line">$handle = opendir($dir);</div><div class="line">$fileArr = [];</div><div class="line">while($filename = readdir($handle)) &#123;</div><div class="line">     if ($filename != &apos;.&apos; &amp;&amp; $filename != &apos;..&apos; &amp;&amp; !is_dir($filename)) &#123;</div><div class="line">            array_push($fileArr, $filename);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line">//var_dump($fileArr);exit;</div></pre></td></tr></table></figure></p>
+<p>2.遍历文件夹下所有文件<br>这个是面试题中经常考得一道题</p>
+<p>php<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">function listDir($dir)</div><div class="line">&#123;</div><div class="line">	if(is_dir($dir))</div><div class="line">   	&#123;</div><div class="line">     	if ($dh = opendir($dir)) </div><div class="line">		&#123;</div><div class="line">        	while (($file = readdir($dh)) !== false)</div><div class="line">			&#123;</div><div class="line">     			if((is_dir($dir.&quot;/&quot;.$file)) &amp;&amp; $file!=&quot;.&quot; &amp;&amp; $file!=&quot;..&quot;)</div><div class="line">				&#123;</div><div class="line">     				echo &quot;&lt;b&gt;&lt;font color=&apos;red&apos;&gt;文件名：&lt;/font&gt;&lt;/b&gt;&quot;,$file,&quot;&lt;br&gt;&lt;hr&gt;&quot;;</div><div class="line">     				listDir($dir.&quot;/&quot;.$file.&quot;/&quot;);</div><div class="line">     			&#125;</div><div class="line">				else</div><div class="line">				&#123;</div><div class="line">         			if($file!=&quot;.&quot; &amp;&amp; $file!=&quot;..&quot;)</div><div class="line">					&#123;</div><div class="line">         				echo $file.&quot;&lt;br&gt;&quot;;</div><div class="line">      				&#125;</div><div class="line">     			&#125;</div><div class="line">        	&#125;</div><div class="line">        	closedir($dh);</div><div class="line">     	&#125;</div><div class="line">   	&#125;</div><div class="line">&#125;</div><div class="line">//开始运行</div><div class="line">listDir(&quot;./nowamagic&quot;);</div></pre></td></tr></table></figure></p>
+<p>上面两个场景大致差不多，主要就是几个函数的使用。首先要明确读取文件夹的内容和读取文件的内容是不一样的。</p>
 <ol>
-<li>首先服务器端让ca用他的私钥对自己的公钥进行加密，然后传给客户端，客户端用ca的公钥进行解密，保证接收到服务器端公钥的准确性。</li>
-<li>然后客户端用服务器端公钥对自己传输过程中数据进行对称加密的密钥进行加密，传输给服务器端，因为只有服务器端有私钥，所以只能服务器能解密，保证数据传输过程中密钥的安全性。</li>
-<li>最后客户端通过对称加密的密钥给自己传输的数据进行加密，传输给服务器端，服务端用之前客户端传输过来的密钥进行对称结密，完成通信。</li>
+<li>is_dir 判断该文件是否是文件夹，注意的一点事一定要跟上文件名的前缀··，否则不能找到指定文件，会有奇怪的错误发生。</li>
+<li>is_file 判断是否是文件</li>
+<li>读取文件夹的内容，首先要打开文件夹,opendir() ,会产生一个资源型的数据类型，句柄，readdir() 会循环遍历文件夹的内容。closedir()读完文件之后关闭。</li>
+<li>注意每个文件夹下的两个特殊文件’.’ 和 ‘..’</li>
 </ol>
+<p>3.php合并文件<br>思路：其实就是打开一个文件，不断往里面写入。关于打开fopen() 参数很多，感觉很多都是遇到的时候再看吧，二进制文件记得加b。<br>php<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">$fb = fopen(&apos;/root/1.css&apos;, &apos;wb&apos;);</div><div class="line">foreach ($fileArr as $key=&gt;$value) &#123;</div><div class="line">    fwrite($fb, file_get_contents(&apos;/root/test/&apos;.$value));</div><div class="line">&#125;</div><div class="line">fclose($fopen);</div></pre></td></tr></table></figure></p>
+<p>每次的写入都是从尾部开始写入的。（相比较打开文件夹，他少了个readdir这种循环遍历文件夹的函数，好像fgets也有这种功能，但是用的不多，就没细看了）。</p>
+<p>4.还有一些关于文件的函数，比如获取文件内容file_get_contents,写入file_put_contents,获取fgets这种的好像是按照行获取的，一般读操作用file_get_contents,能读取全部的内容。</p>
 
       
     </div>
@@ -472,7 +452,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/网络-https/" rel="tag"><i class="fa fa-tag"></i> 网络 https</a>
+            <a href="/tags/PHP-文件操作/" rel="tag"><i class="fa fa-tag"></i> PHP 文件操作</a>
           
         </div>
       
@@ -485,8 +465,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/11/29/工具分享/" rel="next" title="工具分享">
-                <i class="fa fa-chevron-left"></i> 工具分享
+              <a href="/2018/01/26/文件上传/" rel="next" title="文件上传">
+                <i class="fa fa-chevron-left"></i> 文件上传
               </a>
             
           </div>
@@ -494,10 +474,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/12/13/vagrant使用/" rel="prev" title="vagrant使用">
-                vagrant使用 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
