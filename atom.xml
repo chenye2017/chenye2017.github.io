@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-02-07T08:07:40.277Z</updated>
+  <updated>2018-02-22T06:56:06.537Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -17,13 +17,40 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>python学习笔记</title>
+    <link href="http://yoursite.com/2018/02/22/python%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    <id>http://yoursite.com/2018/02/22/python学习笔记/</id>
+    <published>2018-02-22T01:52:26.000Z</published>
+    <updated>2018-02-22T06:56:06.537Z</updated>
+    
+    <content type="html"><![CDATA[<p>虽然自己是写php的，但现在python这么热门，而且想挑战一下自己，多学点东西，感觉python的用途非常广泛，反正就是能给自己加分的选项。</p><ol><li><p>运行环境<br>python和php一样，也是脚本语言，解释型语言， 翻译一行，执行一行。python运行环境的安装很简单，直接去官网上下载，我是windows，所以下载了合适的exe文件，双击运行就可以了。<br><img src="http://ozys8fka7.bkt.clouddn.com/python%E5%AE%89%E8%A3%85.png" alt="python安装界面"><br>勾选下面的添加到环境变量，直接在cmd中敲击python，就能进入交互界面，这个customize其实就是选择python的安装位置，放在c盘还是哪，别的没有多少变化。<br>想了一下关于php的，其实当时对php的安装理解错了，不管是xampp，还是lamp的编译安装，都是对整个架构lamp的安装，并不单单是php，所以相对而言复杂些。lamp整个架构安装的成功，可以通过浏览器去请求，php进行处理，从数据库中获取数据这些一系列的功能。如果我们单单只是想编译php代码（因为php大部分用来web，所以这种情况比较少，这也是我们一直用集成环境的原因），单单安装php就可以，同样也是去php的官网上下载exe文件。<br>python代码的执行python xx.py,php其实也是类似的，php -c 指定配置文件xx.php,lamp的本质执行php文件就是这样。<br>python，php，bash这些脚本文件还可以直接执行，并不用在前面加上解释器的名字，在文件的开头加上这些注释：#!/usr/bin/env python3，php，bash都可以，加上注释的好处是为了执行的时候的兼容性。<br>别用word和记事本写代码！！！</p></li><li><p>字符编码<br>廖雪峰的教程中提及的字符编码，ascii，utf-8,unicode,这三种，其实理解的并不是很深。后面的bytes类型，并不是很懂。<br>首先是ascii，早些时候，为了表示大小写字母，一些特殊符号，用8位二进制字符表示的东西，其实只有7位在用，最高的一位代表着正负号。<br>后来，为了表示中文，中文这么多汉字，ascii那点数量已经不够用了，出现了GB2312，可是日本韩国那些也出了对应自己文字的标准，为了实现兼容出现了Unicode，可是unicode中每个字符长度一致，导致很浪费，比如A你用一个很长的字符进行编码，后来就出现了针对节约空间的utf-8，字符变长。<br>其实Unicode还有utf-8都是兼容ascii的，对于ascii中已经存在的字符要么是没有变化，要么仅仅就是在前面补位0就可以了。<br><img src="http://ozys8fka7.bkt.clouddn.com/%E5%AD%97%E7%AC%A6%E8%BD%AC%E6%8D%A2.png" alt="字符编码关系"></p></li><li><p>重要的数据类型<br>首先是list，这个我得理解就是类似队列一样的东西，在php中可以看做索引数组。<br>初始化  a = [1,2,3,]<br>取元素 a[0]<br>末尾加元素  a.append(6)<br>删除元素  末尾直接删除 a.pop()  返回的是要删除的元素<br>删除特定的元素a.pop（0） 删除第一位元素<br>添加到特定位置元素a.insert(0,88) 在首位添加元素88</p></li></ol><p>tuple 不可变的链表，初始化 a=(0,)<br>注意只有一个元素的时候一定要在末尾加上逗号<br>tuple虽然不可以变化，但是这种（9，[1,2]）=&gt;(9, [2,3]) 还是可以的<br>但这个赋值还不能 a[1] = [2,3] 这种<br>只能a[1][0] = 2这种单独改变<br><img src="http://ozys8fka7.bkt.clouddn.com/tuple%E7%9A%84%E4%B8%8D%E5%8F%AF%E5%8F%98.png" alt="tuple的不可变"><br>只是针对第一层结构的不可变</p><p>dict 字典，类似php的关联数组，无序，类似数据结构的链表，查找添加速度元素块，类似字典中查找字的方法。<br>初始化 a =  {2:’222’}<br>获取元素和之前的还是一样 a[2]<br>因为是无序的，所以不能用数字啦<br>添加元素很简单，直接a[‘ll’] = ‘pp’ 这种方式<br>删除元素 a.pop(‘ll’)</p><p>set 集合，就是dict的key部分，so也是无序的<br>初始化 a = set([9,9,9])  感觉是强制转换<br>因为dict的key不能重复，所以上面的初始化后还是 9<br>添加元素 a.add(10)<br>删除元素 a.remove(10)<br>集合··差，并，交</p><p>不可变对象<br>str不可变，tuple不可变</p><p>可变<br>list可变，dict可变</p><p>str的不可变，其实在别的语言中也是，只是廖雪峰的教程中有强调，比如在js教程中，其实php中也是如此，对str本身的改变并不影响str本身，只是返回了一个新的str。<br>还有就是dict的key，必须是不可变对象，否则key的实际值总变换，查询到的value总在变化，那就乱了套了。</p><ol><li>常见的结构<br>if elif else<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">mod = 3</div><div class="line"></div><div class="line">if mod == 1:</div><div class="line">    print(&apos;cy is good&apos;)</div><div class="line">elif mod == 2:</div><div class="line">    print(&apos;cy is bad&apos;)</div><div class="line">else:</div><div class="line">    print(&apos;ccc&apos;)</div></pre></td></tr></table></figure></li></ol><p>感觉写python就不要在末尾加 ;<br>判断条件可以是表达式，不要加括号<br>注意条件语句末尾加：<br>用缩进代替 {}</p><p>for in 进行循环遍历<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">a = &#123;&apos;pp&apos;: &apos;oo&apos;, &apos;rr&apos;: &apos;pppp&apos;&#125;</div><div class="line">for x in a:</div><div class="line">    print(x)</div></pre></td></tr></table></figure></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;虽然自己是写php的，但现在python这么热门，而且想挑战一下自己，多学点东西，感觉python的用途非常广泛，反正就是能给自己加分的选项。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;运行环境&lt;br&gt;python和php一样，也是脚本语言，解释型语言， 翻译一行，执行一行。pyth
+      
+    
+    </summary>
+    
+      <category term="Python" scheme="http://yoursite.com/categories/Python/"/>
+    
+    
+      <category term="Python" scheme="http://yoursite.com/tags/Python/"/>
+    
+  </entry>
+  
+  <entry>
     <title>关于token</title>
     <link href="http://yoursite.com/2018/02/07/%E5%85%B3%E4%BA%8Etoken/"/>
     <id>http://yoursite.com/2018/02/07/关于token/</id>
     <published>2018-02-07T08:04:23.000Z</published>
-    <updated>2018-02-07T08:07:40.277Z</updated>
+    <updated>2018-02-07T14:11:40.753Z</updated>
     
-    <content type="html"><![CDATA[<p>关于token。<br>故事背景：itbasic用vue做了个手机版，之前是用jquery识别是手机还是web实现页面上元素的尺寸变化，实现兼容，但是页面其实还是同一个。所以通过dom元素绑定的后台请求ajax，api接口可以通用。现在用了vue，这种mvvm模式的框架，需要后台返回纯json格式的数据，并不需要之前接口中可能返回的html，实现页面元素的变化，这样一来，很多接口得重写。之前的itbasic更像是远古时代的web，调用接口的基本权限控制用的是session里面存储的登录用户信息，而itbasic的web端更像是现代的web网站，调用接口不需要用户登录，而是通过令牌，也就是token进行身份认证。</p><a id="more"></a><ol><li>token肯定要保存的啦,保存的内容有哪些？<br>从上面可以看出token的作用就和之前的session作用是一样的，因为session中存储了用户的基本信息，我们可以通过解析session数组，从中获取自己有用的东西，但我们的token一般只是一串无意义不重复的数字，所以光靠token是实现不了用户的区分的，所以我们一般在缓存中保存（为什么是缓存呢，我觉得首先返回给客户端的token信息不重要，并不用都保留下来，还有就是频繁的调用api接口，如果我们每次都去数据库中取缓存，太多的与数据库的交流并不好）。那我们需要保存的内容有哪些呢？最基本的用户的uid，因为我们一个token需要区分一个用户，我们得通过token知道这个用户是谁，当然你可以保存的不单单是uid，你可以理解成token是session数组的session_id,session数组就是我们token可以对应的内容，你可以在里面存放用户权限，登录时间，等一些常用的信息，这样就不需要为了取一些常用的信息的时候，先通过token找到用户id，再通过数据库查找这个用户的相关信息，再返回。token对应的内容只要你乐意，随便存储什么，但最基本的应该有个uid哦。</li></ol><p>总结：token保存在缓存中，并不用记录在数据库中，保存的内容是和uid的对应关系。</p><ol><li><p>token的产生<br>其实之前我一直纠结怎么生成一个token，网上有很多算法，后来呢，感觉如果安全性不用太高的话。取一堆字符串，从中随机取个，通过mt_rand()，然后拼接下，你也可以再拼接个你自己的盐，再加上时间戳这种的东西，再md5（）加密下。(js,php这些都有md5加密的，同样的内容，不管通过什么语言md5加密应该是一样的）。<br>总结：方法很多，自己想吧，别太纠结了</p></li><li><p>token有过期时间<br>和session一样啦，不能请求一次就一直可以使用啦。</p></li><li><p>token一般放在cookie里面，这样请求接口的时候就不用一直带上这个参数了。</p></li><li><p>token的申请。<br>token需要和用户相对应，这种对应关系怎么知道呢。在之前做的微信小程序登录接口中是这样做的。</p><ol><li>首先用户通过登录小程序获得一个code码（还记得我们每次进入小程序的时候都有个允许授权吗），这个码可以换取对应这个用户在这个小程序里面的一个独一无二的openid，可以理解成类似uid的东西，我们一旦获取到这个openid，意味着就相当于我们多了个用户uid，我们在自己的用户表中存储这个openid。（为什么要用code换区openid呢，可以理解成openid比较重要，包含用户的重要信息，而且类似uid，永远不会变，一旦获取，就代表永远知道了，这个不能用来表示身份，或者说通过openid不能换取表示身份的token，所以还是放在服务器端吧。古代的用户密码登录因为有只有自己知道的密码，所以可以通过固定不变的大家可能都知道的用户名换区session_id,现在通过变化的code同样的道理，code理解成密码，服务器端给这个密码给微信，微信通过自身维护的code和openid的对应关系，把用户openid返回给你，注意这个code只能用一次哦）</li><li>服务器收到这个openid， 生成和这个用户相匹配的token，存储对应关系在缓存中，再返回给客户端token。客户端拿着这个token再来服务器端请求数据，服务器端看token是否存在和token是否失效，如果没有，可以访问。如果过期了，需要重新走上面的流程生成新的token。可这个时候就不用在用户表里面添加新的用户了，因为用户已经存在了，可以生成新的key=》value对应关系，key=》代表新生成的token。</li></ol></li></ol><p>大致就这些了吧···</p>]]></content>
+    <content type="html"><![CDATA[<p>关于token。<br>故事背景：itbasic用vue做了个手机版，之前是用jquery识别是手机还是web实现页面上元素的尺寸变化，实现兼容，但是页面其实还是同一个。所以通过dom元素绑定的后台请求ajax，api接口可以通用。现在用了vue，这种mvvm模式的框架，需要后台返回纯json格式的数据，并不需要之前接口中可能返回的html，实现页面元素的变化，这样一来，很多接口得重写。之前的itbasic更像是远古时代的web，调用接口的基本权限控制用的是session里面存储的登录用户信息，而itbasic的web端更像是现代的web网站，调用接口不需要用户登录，而是通过令牌，也就是token进行身份认证。</p><a id="more"></a><ol><li>token肯定要保存的啦,保存的内容有哪些？<br>从上面可以看出token的作用就和之前的session作用是一样的，因为session中存储了用户的基本信息，我们可以通过解析session数组，从中获取自己有用的东西，但我们的token一般只是一串无意义不重复的数字，所以光靠token是实现不了用户的区分的，所以我们一般在缓存中保存（为什么是缓存呢，我觉得首先返回给客户端的token信息不重要，并不用都保留下来，还有就是频繁的调用api接口，如果我们每次都去数据库中取缓存，太多的与数据库的交流并不好）。那我们需要保存的内容有哪些呢？最基本的用户的uid，因为我们一个token需要区分一个用户，我们得通过token知道这个用户是谁，当然你可以保存的不单单是uid，你可以理解成token是session数组的session_id,session数组就是我们token可以对应的内容，你可以在里面存放用户权限，登录时间，等一些常用的信息，这样就不需要为了取一些常用的信息的时候，先通过token找到用户id，再通过数据库查找这个用户的相关信息，再返回。token对应的内容只要你乐意，随便存储什么，但最基本的应该有个uid哦。</li></ol><p>​    总结：token保存在缓存中，并不用记录在数据库中，保存的内容是和uid                     的对应关系。</p><ol><li><p>token的产生<br>其实之前我一直纠结怎么生成一个token，网上有很多算法，后来呢，感觉如果安全性不用太高的话。取一堆字符串，从中随机取个，通过mt_rand()，然后拼接下，你也可以再拼接个你自己的盐，再加上时间戳这种的东西，再md5（）加密下。(js,php这些都有md5加密的，同样的内容，不管通过什么语言md5加密应该是一样的）。<br>总结：方法很多，自己想吧，别太纠结了</p></li><li><p>token有过期时间<br>和session一样啦，不能请求一次就一直可以使用啦。</p></li><li><p>token一般放在cookie里面，这样请求接口的时候就不用一直带上这个参数了。</p></li><li><p>token的申请。<br>token需要和用户相对应，这种对应关系怎么知道呢。在之前做的微信小程序登录接口中是这样做的。</p><ol><li>首先用户通过登录小程序获得一个code码（还记得我们每次进入小程序的时候都有个允许授权吗），这个码可以换取对应这个用户在这个小程序里面的一个独一无二的openid，可以理解成类似uid的东西，我们一旦获取到这个openid，意味着就相当于我们多了个用户uid，我们在自己的用户表中存储这个openid。（为什么要用code换区openid呢，可以理解成openid比较重要，包含用户的重要信息，而且类似uid，永远不会变，一旦获取，就代表永远知道了，这个不能用来表示身份，或者说通过openid不能换取表示身份的token，所以还是放在服务器端吧。古代的用户密码登录因为有只有自己知道的密码，所以可以通过固定不变的大家可能都知道的用户名换区session_id,现在通过变化的code同样的道理，code理解成密码，服务器端给这个密码给微信，微信通过自身维护的code和openid的对应关系，把用户openid返回给你，注意这个code只能用一次哦）</li><li>服务器收到这个openid， 生成和这个用户相匹配的token，存储对应关系在缓存中，再返回给客户端token。客户端拿着这个token再来服务器端请求数据，服务器端看token是否存在和token是否失效，如果没有，可以访问。如果过期了，需要重新走上面的流程生成新的token。可这个时候就不用在用户表里面添加新的用户了，因为用户已经存在了，可以生成新的key=》value对应关系，key=》代表新生成的token。</li></ol></li></ol><p>大致就这些了吧···</p>]]></content>
     
     <summary type="html">
     
@@ -463,31 +490,6 @@
     
     
       <category term="markdown 语法 文档 工具" scheme="http://yoursite.com/tags/markdown-%E8%AF%AD%E6%B3%95-%E6%96%87%E6%A1%A3-%E5%B7%A5%E5%85%B7/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>写博客的原因</title>
-    <link href="http://yoursite.com/2017/11/15/%E5%86%99%E5%8D%9A%E5%AE%A2%E7%9A%84%E5%8E%9F%E5%9B%A0/"/>
-    <id>http://yoursite.com/2017/11/15/写博客的原因/</id>
-    <published>2017-11-15T15:36:12.000Z</published>
-    <updated>2017-11-15T16:06:47.709Z</updated>
-    
-    <content type="html"><![CDATA[<p>  之前学习hexo建站的原因很简单，一个朋友弄过，当第一次见得时候很好奇，好像是被h5那个背景图所吸引，还有一点就是相比于wordpress他更大方，更感觉是现代化的产物。随着进一步的了解，相比于wordpress他不用主机，对于我这种穷人来说就更有好啦，哈哈哈，而且还能在GitHub上混commit。</p><p>  但当我建出这个小站的时候，我却发现不知道写什么，难道纯粹是为了面试的时候简历上有个博客地址博取好感，感觉仅仅因为这个去经常写些文章花费太大，有些人说生活笔记，关于笔记我用的Evernote，这个随时随地都能同步，没有必要非得用这个。</p><p>  但不久之后我发现在学习的过程中我虽然记了很多的笔记，但我从来没有去总结，<strong>我的总结都是通过第二次第三次第四次去再次碰到这个问题</strong>，再去解决，而学会的这个问题，所以我觉得我这种记笔记的方法从根本上说并不是记笔记，而是自我安慰，所以<strong>我想通过写博客总结我写过的笔记，进行进一步的加工，还有列出关键的点，这样还能方便平时自己对问题的快速查找，这是我写博客的初衷，当然分享也是其中一点，希望如果有朋友能看见，能指出我的不足，或者我写的东西很方便的帮你找到了答案，这也是我最希望看到的</strong>。</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;  之前学习hexo建站的原因很简单，一个朋友弄过，当第一次见得时候很好奇，好像是被h5那个背景图所吸引，还有一点就是相比于wordpress他更大方，更感觉是现代化的产物。随着进一步的了解，相比于wordpress他不用主机，对于我这种穷人来说就更有好啦，哈哈哈，而且还能
-      
-    
-    </summary>
-    
-      <category term="杂谈" scheme="http://yoursite.com/categories/%E6%9D%82%E8%B0%88/"/>
-    
-    
-      <category term="编程 职业 生活" scheme="http://yoursite.com/tags/%E7%BC%96%E7%A8%8B-%E8%81%8C%E4%B8%9A-%E7%94%9F%E6%B4%BB/"/>
     
   </entry>
   

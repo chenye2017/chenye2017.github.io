@@ -89,7 +89,7 @@
 <meta property="og:site_name" content="语法糖的博客">
 <meta property="og:description" content="关于token。故事背景：itbasic用vue做了个手机版，之前是用jquery识别是手机还是web实现页面上元素的尺寸变化，实现兼容，但是页面其实还是同一个。所以通过dom元素绑定的后台请求ajax，api接口可以通用。现在用了vue，这种mvvm模式的框架，需要后台返回纯json格式的数据，并不需要之前接口中可能返回的html，实现页面元素的变化，这样一来，很多接口得重写。之前的itbasi">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-02-07T08:07:40.277Z">
+<meta property="og:updated_time" content="2018-02-07T14:11:40.753Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="关于token">
 <meta name="twitter:description" content="关于token。故事背景：itbasic用vue做了个手机版，之前是用jquery识别是手机还是web实现页面上元素的尺寸变化，实现兼容，但是页面其实还是同一个。所以通过dom元素绑定的后台请求ajax，api接口可以通用。现在用了vue，这种mvvm模式的框架，需要后台返回纯json格式的数据，并不需要之前接口中可能返回的html，实现页面元素的变化，这样一来，很多接口得重写。之前的itbasi">
@@ -387,7 +387,7 @@
 <ol>
 <li>token肯定要保存的啦,保存的内容有哪些？<br>从上面可以看出token的作用就和之前的session作用是一样的，因为session中存储了用户的基本信息，我们可以通过解析session数组，从中获取自己有用的东西，但我们的token一般只是一串无意义不重复的数字，所以光靠token是实现不了用户的区分的，所以我们一般在缓存中保存（为什么是缓存呢，我觉得首先返回给客户端的token信息不重要，并不用都保留下来，还有就是频繁的调用api接口，如果我们每次都去数据库中取缓存，太多的与数据库的交流并不好）。那我们需要保存的内容有哪些呢？最基本的用户的uid，因为我们一个token需要区分一个用户，我们得通过token知道这个用户是谁，当然你可以保存的不单单是uid，你可以理解成token是session数组的session_id,session数组就是我们token可以对应的内容，你可以在里面存放用户权限，登录时间，等一些常用的信息，这样就不需要为了取一些常用的信息的时候，先通过token找到用户id，再通过数据库查找这个用户的相关信息，再返回。token对应的内容只要你乐意，随便存储什么，但最基本的应该有个uid哦。</li>
 </ol>
-<p>总结：token保存在缓存中，并不用记录在数据库中，保存的内容是和uid的对应关系。</p>
+<p>​    总结：token保存在缓存中，并不用记录在数据库中，保存的内容是和uid                     的对应关系。</p>
 <ol>
 <li><p>token的产生<br>其实之前我一直纠结怎么生成一个token，网上有很多算法，后来呢，感觉如果安全性不用太高的话。取一堆字符串，从中随机取个，通过mt_rand()，然后拼接下，你也可以再拼接个你自己的盐，再加上时间戳这种的东西，再md5（）加密下。(js,php这些都有md5加密的，同样的内容，不管通过什么语言md5加密应该是一样的）。<br>总结：方法很多，自己想吧，别太纠结了</p>
 </li>
@@ -482,6 +482,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/02/22/python学习笔记/" rel="prev" title="python学习笔记">
+                python学习笔记 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -579,7 +583,7 @@ var jiathis_config={
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">21</span>
+                  <span class="site-state-item-count">22</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -590,7 +594,7 @@ var jiathis_config={
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-count">6</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -601,7 +605,7 @@ var jiathis_config={
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-count">19</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -720,7 +724,7 @@ var jiathis_config={
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count"> | 博客全站共23.5k字</span>
+  <span class="post-count"> | 博客全站共24.8k字</span>
 </div>
 
 

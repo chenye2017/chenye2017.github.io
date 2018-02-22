@@ -292,6 +292,175 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/22/python学习笔记/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="chenye2017">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/my.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="语法糖的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/02/22/python学习笔记/" itemprop="url">python学习笔记</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-22T09:52:26+08:00">
+                2018-02-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>虽然自己是写php的，但现在python这么热门，而且想挑战一下自己，多学点东西，感觉python的用途非常广泛，反正就是能给自己加分的选项。</p>
+<ol>
+<li><p>运行环境<br>python和php一样，也是脚本语言，解释型语言， 翻译一行，执行一行。python运行环境的安装很简单，直接去官网上下载，我是windows，所以下载了合适的exe文件，双击运行就可以了。<br><img src="http://ozys8fka7.bkt.clouddn.com/python%E5%AE%89%E8%A3%85.png" alt="python安装界面"><br>勾选下面的添加到环境变量，直接在cmd中敲击python，就能进入交互界面，这个customize其实就是选择python的安装位置，放在c盘还是哪，别的没有多少变化。<br>想了一下关于php的，其实当时对php的安装理解错了，不管是xampp，还是lamp的编译安装，都是对整个架构lamp的安装，并不单单是php，所以相对而言复杂些。lamp整个架构安装的成功，可以通过浏览器去请求，php进行处理，从数据库中获取数据这些一系列的功能。如果我们单单只是想编译php代码（因为php大部分用来web，所以这种情况比较少，这也是我们一直用集成环境的原因），单单安装php就可以，同样也是去php的官网上下载exe文件。<br>python代码的执行python xx.py,php其实也是类似的，php -c 指定配置文件xx.php,lamp的本质执行php文件就是这样。<br>python，php，bash这些脚本文件还可以直接执行，并不用在前面加上解释器的名字，在文件的开头加上这些注释：#!/usr/bin/env python3，php，bash都可以，加上注释的好处是为了执行的时候的兼容性。<br>别用word和记事本写代码！！！</p>
+</li>
+<li><p>字符编码<br>廖雪峰的教程中提及的字符编码，ascii，utf-8,unicode,这三种，其实理解的并不是很深。后面的bytes类型，并不是很懂。<br>首先是ascii，早些时候，为了表示大小写字母，一些特殊符号，用8位二进制字符表示的东西，其实只有7位在用，最高的一位代表着正负号。<br>后来，为了表示中文，中文这么多汉字，ascii那点数量已经不够用了，出现了GB2312，可是日本韩国那些也出了对应自己文字的标准，为了实现兼容出现了Unicode，可是unicode中每个字符长度一致，导致很浪费，比如A你用一个很长的字符进行编码，后来就出现了针对节约空间的utf-8，字符变长。<br>其实Unicode还有utf-8都是兼容ascii的，对于ascii中已经存在的字符要么是没有变化，要么仅仅就是在前面补位0就可以了。<br><img src="http://ozys8fka7.bkt.clouddn.com/%E5%AD%97%E7%AC%A6%E8%BD%AC%E6%8D%A2.png" alt="字符编码关系"></p>
+</li>
+<li><p>重要的数据类型<br>首先是list，这个我得理解就是类似队列一样的东西，在php中可以看做索引数组。<br>初始化  a = [1,2,3,]<br>取元素 a[0]<br>末尾加元素  a.append(6)<br>删除元素  末尾直接删除 a.pop()  返回的是要删除的元素<br>删除特定的元素a.pop（0） 删除第一位元素<br>添加到特定位置元素a.insert(0,88) 在首位添加元素88</p>
+</li>
+</ol>
+<p>tuple 不可变的链表，初始化 a=(0,)<br>注意只有一个元素的时候一定要在末尾加上逗号<br>tuple虽然不可以变化，但是这种（9，[1,2]）=&gt;(9, [2,3]) 还是可以的<br>但这个赋值还不能 a[1] = [2,3] 这种<br>只能a[1][0] = 2这种单独改变<br><img src="http://ozys8fka7.bkt.clouddn.com/tuple%E7%9A%84%E4%B8%8D%E5%8F%AF%E5%8F%98.png" alt="tuple的不可变"><br>只是针对第一层结构的不可变</p>
+<p>dict 字典，类似php的关联数组，无序，类似数据结构的链表，查找添加速度元素块，类似字典中查找字的方法。<br>初始化 a =  {2:’222’}<br>获取元素和之前的还是一样 a[2]<br>因为是无序的，所以不能用数字啦<br>添加元素很简单，直接a[‘ll’] = ‘pp’ 这种方式<br>删除元素 a.pop(‘ll’)</p>
+<p>set 集合，就是dict的key部分，so也是无序的<br>初始化 a = set([9,9,9])  感觉是强制转换<br>因为dict的key不能重复，所以上面的初始化后还是 9<br>添加元素 a.add(10)<br>删除元素 a.remove(10)<br>集合··差，并，交</p>
+<p>不可变对象<br>str不可变，tuple不可变</p>
+<p>可变<br>list可变，dict可变</p>
+<p>str的不可变，其实在别的语言中也是，只是廖雪峰的教程中有强调，比如在js教程中，其实php中也是如此，对str本身的改变并不影响str本身，只是返回了一个新的str。<br>还有就是dict的key，必须是不可变对象，否则key的实际值总变换，查询到的value总在变化，那就乱了套了。</p>
+<ol>
+<li>常见的结构<br>if elif else<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">mod = 3</div><div class="line"></div><div class="line">if mod == 1:</div><div class="line">    print(&apos;cy is good&apos;)</div><div class="line">elif mod == 2:</div><div class="line">    print(&apos;cy is bad&apos;)</div><div class="line">else:</div><div class="line">    print(&apos;ccc&apos;)</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>感觉写python就不要在末尾加 ;<br>判断条件可以是表达式，不要加括号<br>注意条件语句末尾加：<br>用缩进代替 {}</p>
+<p>for in 进行循环遍历<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">a = &#123;&apos;pp&apos;: &apos;oo&apos;, &apos;rr&apos;: &apos;pppp&apos;&#125;</div><div class="line">for x in a:</div><div class="line">    print(x)</div></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+  <div>
+  
+  </div>
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+
+
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/07/关于token/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1660,160 +1829,6 @@
 
 
     
-      
-
-
-
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/12/20/svn-Git-思考/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="chenye2017">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/my.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="语法糖的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/12/20/svn-Git-思考/" itemprop="url">svn Git 思考</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-20T21:41:18+08:00">
-                2017-12-20
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/工具/" itemprop="url" rel="index">
-                    <span itemprop="name">工具</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>···今天碰到一个问题，其实这个问题好久之前就没碰到了，只是之前可以通过别的方式化解，然后今天没法通过别的方式解决了，只能通过正确的方式解决。</p>
-<p>问题描述：在线上修改了代码，怎么更新到本地。</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/12/20/svn-Git-思考/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-  <div>
-  
-  </div>
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1868,7 +1883,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">21</span>
+                  <span class="site-state-item-count">22</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1879,7 +1894,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-count">6</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -1890,7 +1905,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-count">19</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -2009,7 +2024,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count"> | 博客全站共23.5k字</span>
+  <span class="post-count"> | 博客全站共24.8k字</span>
 </div>
 
 
