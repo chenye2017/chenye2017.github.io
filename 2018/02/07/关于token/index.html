@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="PHP token API," />
+  <meta name="keywords" content="PHP,token,API," />
 
 
 
@@ -82,14 +82,14 @@
 
 
 <meta name="description" content="关于token。故事背景：itbasic用vue做了个手机版，之前是用jquery识别是手机还是web实现页面上元素的尺寸变化，实现兼容，但是页面其实还是同一个。所以通过dom元素绑定的后台请求ajax，api接口可以通用。现在用了vue，这种mvvm模式的框架，需要后台返回纯json格式的数据，并不需要之前接口中可能返回的html，实现页面元素的变化，这样一来，很多接口得重写。之前的itbasi">
-<meta name="keywords" content="PHP token API">
+<meta name="keywords" content="PHP,token,API">
 <meta property="og:type" content="article">
 <meta property="og:title" content="关于token">
 <meta property="og:url" content="http://yoursite.com/2018/02/07/关于token/index.html">
 <meta property="og:site_name" content="语法糖的博客">
 <meta property="og:description" content="关于token。故事背景：itbasic用vue做了个手机版，之前是用jquery识别是手机还是web实现页面上元素的尺寸变化，实现兼容，但是页面其实还是同一个。所以通过dom元素绑定的后台请求ajax，api接口可以通用。现在用了vue，这种mvvm模式的框架，需要后台返回纯json格式的数据，并不需要之前接口中可能返回的html，实现页面元素的变化，这样一来，很多接口得重写。之前的itbasi">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-02-07T14:11:40.753Z">
+<meta property="og:updated_time" content="2018-02-23T12:50:02.865Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="关于token">
 <meta name="twitter:description" content="关于token。故事背景：itbasic用vue做了个手机版，之前是用jquery识别是手机还是web实现页面上元素的尺寸变化，实现兼容，但是页面其实还是同一个。所以通过dom元素绑定的后台请求ajax，api接口可以通用。现在用了vue，这种mvvm模式的框架，需要后台返回纯json格式的数据，并不需要之前接口中可能返回的html，实现页面元素的变化，这样一来，很多接口得重写。之前的itbasi">
@@ -385,10 +385,9 @@
         <p>关于token。<br>故事背景：itbasic用vue做了个手机版，之前是用jquery识别是手机还是web实现页面上元素的尺寸变化，实现兼容，但是页面其实还是同一个。所以通过dom元素绑定的后台请求ajax，api接口可以通用。现在用了vue，这种mvvm模式的框架，需要后台返回纯json格式的数据，并不需要之前接口中可能返回的html，实现页面元素的变化，这样一来，很多接口得重写。之前的itbasic更像是远古时代的web，调用接口的基本权限控制用的是session里面存储的登录用户信息，而itbasic的web端更像是现代的web网站，调用接口不需要用户登录，而是通过令牌，也就是token进行身份认证。</p>
 <a id="more"></a>
 <ol>
-<li>token肯定要保存的啦,保存的内容有哪些？<br>从上面可以看出token的作用就和之前的session作用是一样的，因为session中存储了用户的基本信息，我们可以通过解析session数组，从中获取自己有用的东西，但我们的token一般只是一串无意义不重复的数字，所以光靠token是实现不了用户的区分的，所以我们一般在缓存中保存（为什么是缓存呢，我觉得首先返回给客户端的token信息不重要，并不用都保留下来，还有就是频繁的调用api接口，如果我们每次都去数据库中取缓存，太多的与数据库的交流并不好）。那我们需要保存的内容有哪些呢？最基本的用户的uid，因为我们一个token需要区分一个用户，我们得通过token知道这个用户是谁，当然你可以保存的不单单是uid，你可以理解成token是session数组的session_id,session数组就是我们token可以对应的内容，你可以在里面存放用户权限，登录时间，等一些常用的信息，这样就不需要为了取一些常用的信息的时候，先通过token找到用户id，再通过数据库查找这个用户的相关信息，再返回。token对应的内容只要你乐意，随便存储什么，但最基本的应该有个uid哦。</li>
-</ol>
-<p>​    总结：token保存在缓存中，并不用记录在数据库中，保存的内容是和uid                     的对应关系。</p>
-<ol>
+<li><p>token肯定要保存的啦,保存的内容有哪些？<br>从上面可以看出token的作用就和之前的session作用是一样的，因为session中存储了用户的基本信息，我们可以通过解析session数组，从中获取自己有用的东西，但我们的token一般只是一串无意义不重复的数字，所以光靠token是实现不了用户的区分的，所以我们一般在缓存中保存（为什么是缓存呢，我觉得首先返回给客户端的token信息不重要，并不用都保留下来，还有就是频繁的调用api接口，如果我们每次都去数据库中取缓存，太多的与数据库的交流并不好）。那我们需要保存的内容有哪些呢？最基本的用户的uid，因为我们一个token需要区分一个用户，我们得通过token知道这个用户是谁，当然你可以保存的不单单是uid，你可以理解成token是session数组的session_id,session数组就是我们token可以对应的内容，你可以在里面存放用户权限，登录时间，等一些常用的信息，这样就不需要为了取一些常用的信息的时候，先通过token找到用户id，再通过数据库查找这个用户的相关信息，再返回。token对应的内容只要你乐意，随便存储什么，但最基本的应该有个uid哦。</p>
+<p>​总结：token保存在缓存中，并不用记录在数据库中，保存的内容是和uid                     的对应关系。</p>
+</li>
 <li><p>token的产生<br>其实之前我一直纠结怎么生成一个token，网上有很多算法，后来呢，感觉如果安全性不用太高的话。取一堆字符串，从中随机取个，通过mt_rand()，然后拼接下，你也可以再拼接个你自己的盐，再加上时间戳这种的东西，再md5（）加密下。(js,php这些都有md5加密的，同样的内容，不管通过什么语言md5加密应该是一样的）。<br>总结：方法很多，自己想吧，别太纠结了</p>
 </li>
 <li><p>token有过期时间<br>和session一样啦，不能请求一次就一直可以使用啦。</p>
@@ -460,7 +459,11 @@
       
         <div class="post-tags">
           
-            <a href="/tags/PHP-token-API/" rel="tag"><i class="fa fa-tag"></i> PHP token API</a>
+            <a href="/tags/PHP/" rel="tag"><i class="fa fa-tag"></i> PHP</a>
+          
+            <a href="/tags/token/" rel="tag"><i class="fa fa-tag"></i> token</a>
+          
+            <a href="/tags/API/" rel="tag"><i class="fa fa-tag"></i> API</a>
           
         </div>
       
@@ -605,7 +608,7 @@ var jiathis_config={
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-count">38</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
