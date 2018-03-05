@@ -81,21 +81,21 @@
 
 
 
-<meta name="description" content="虽然自己是写php的，但现在python这么热门，而且想挑战一下自己，多学点东西，感觉python的用途非常广泛，反正就是能给自己加分的选项。">
+<meta name="description" content="虽然自己是写php的，但现在python这么热门，而且想挑战一下自己，多学点东西，感觉python的用途非常广泛，反正就是能给自己加分的选项。  运行环境python和php一样，也是脚本语言，解释型语言， 翻译一行，执行一行。python运行环境的安装很简单，直接去官网上下载，我是windows，所以下载了合适的exe文件，双击运行就可以了。勾选下面的添加到环境变量，直接在cmd中敲击pytho">
 <meta name="keywords" content="Python">
 <meta property="og:type" content="article">
 <meta property="og:title" content="python学习笔记">
 <meta property="og:url" content="http://yoursite.com/2018/02/22/python学习笔记/index.html">
 <meta property="og:site_name" content="语法糖的博客">
-<meta property="og:description" content="虽然自己是写php的，但现在python这么热门，而且想挑战一下自己，多学点东西，感觉python的用途非常广泛，反正就是能给自己加分的选项。">
+<meta property="og:description" content="虽然自己是写php的，但现在python这么热门，而且想挑战一下自己，多学点东西，感觉python的用途非常广泛，反正就是能给自己加分的选项。  运行环境python和php一样，也是脚本语言，解释型语言， 翻译一行，执行一行。python运行环境的安装很简单，直接去官网上下载，我是windows，所以下载了合适的exe文件，双击运行就可以了。勾选下面的添加到环境变量，直接在cmd中敲击pytho">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://ozys8fka7.bkt.clouddn.com/python%E5%AE%89%E8%A3%85.png">
 <meta property="og:image" content="http://ozys8fka7.bkt.clouddn.com/%E5%AD%97%E7%AC%A6%E8%BD%AC%E6%8D%A2.png">
 <meta property="og:image" content="http://ozys8fka7.bkt.clouddn.com/tuple%E7%9A%84%E4%B8%8D%E5%8F%AF%E5%8F%98.png">
-<meta property="og:updated_time" content="2018-02-23T12:48:07.717Z">
+<meta property="og:updated_time" content="2018-03-05T03:16:32.907Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="python学习笔记">
-<meta name="twitter:description" content="虽然自己是写php的，但现在python这么热门，而且想挑战一下自己，多学点东西，感觉python的用途非常广泛，反正就是能给自己加分的选项。">
+<meta name="twitter:description" content="虽然自己是写php的，但现在python这么热门，而且想挑战一下自己，多学点东西，感觉python的用途非常广泛，反正就是能给自己加分的选项。  运行环境python和php一样，也是脚本语言，解释型语言， 翻译一行，执行一行。python运行环境的安装很简单，直接去官网上下载，我是windows，所以下载了合适的exe文件，双击运行就可以了。勾选下面的添加到环境变量，直接在cmd中敲击pytho">
 <meta name="twitter:image" content="http://ozys8fka7.bkt.clouddn.com/python%E5%AE%89%E8%A3%85.png">
 
 
@@ -387,7 +387,6 @@
 
       
         <p>虽然自己是写php的，但现在python这么热门，而且想挑战一下自己，多学点东西，感觉python的用途非常广泛，反正就是能给自己加分的选项。</p>
-<a id="more"></a>
 <ol>
 <li><p>运行环境<br>python和php一样，也是脚本语言，解释型语言， 翻译一行，执行一行。python运行环境的安装很简单，直接去官网上下载，我是windows，所以下载了合适的exe文件，双击运行就可以了。<br><img src="http://ozys8fka7.bkt.clouddn.com/python%E5%AE%89%E8%A3%85.png" alt="python安装界面"><br>勾选下面的添加到环境变量，直接在cmd中敲击python，就能进入交互界面，这个customize其实就是选择python的安装位置，放在c盘还是哪，别的没有多少变化。<br>想了一下关于php的，其实当时对php的安装理解错了，不管是xampp，还是lamp的编译安装，都是对整个架构lamp的安装，并不单单是php，所以相对而言复杂些。lamp整个架构安装的成功，可以通过浏览器去请求，php进行处理，从数据库中获取数据这些一系列的功能。如果我们单单只是想编译php代码（因为php大部分用来web，所以这种情况比较少，这也是我们一直用集成环境的原因），单单安装php就可以，同样也是去php的官网上下载exe文件。<br>python代码的执行python xx.py,php其实也是类似的，php -c 指定配置文件xx.php,lamp的本质执行php文件就是这样。<br>python，php，bash这些脚本文件还可以直接执行，并不用在前面加上解释器的名字，在文件的开头加上这些注释：#!/usr/bin/env python3，php，bash都可以，加上注释的好处是为了执行的时候的兼容性。<br>别用word和记事本写代码！！！</p>
 </li>
@@ -402,11 +401,46 @@
 <p>不可变对象<br>str不可变，tuple不可变</p>
 <p>可变<br>list可变，dict可变</p>
 <p>str的不可变，其实在别的语言中也是，只是廖雪峰的教程中有强调，比如在js教程中，其实php中也是如此，对str本身的改变并不影响str本身，只是返回了一个新的str。<br>还有就是dict的key，必须是不可变对象，否则key的实际值总变换，查询到的value总在变化，那就乱了套了。</p>
-<p>4.常见的结构</p>
-<p>if elif else</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">mod = 3</div><div class="line"></div><div class="line">if mod == 1:</div><div class="line">    print(&apos;cy is good&apos;)</div><div class="line">elif mod == 2:</div><div class="line">    print(&apos;cy is bad&apos;)</div><div class="line">else:</div><div class="line">    print(&apos;ccc&apos;)</div></pre></td></tr></table></figure>
+<ol>
+<li>常见的结构<br>if elif else<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">mod = 3</div><div class="line"></div><div class="line">if mod == 1:</div><div class="line">    print(&apos;cy is good&apos;)</div><div class="line">elif mod == 2:</div><div class="line">    print(&apos;cy is bad&apos;)</div><div class="line">else:</div><div class="line">    print(&apos;ccc&apos;)</div></pre></td></tr></table></figure>
+</li>
+</ol>
 <p>感觉写python就不要在末尾加 ;<br>判断条件可以是表达式，不要加括号<br>注意条件语句末尾加：<br>用缩进代替 {}</p>
 <p>for in 进行循环遍历<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">a = &#123;&apos;pp&apos;: &apos;oo&apos;, &apos;rr&apos;: &apos;pppp&apos;&#125;</div><div class="line">for x in a:</div><div class="line">    print(x)</div></pre></td></tr></table></figure></p>
+<p>函数的定义<br>def print_function(a):<br>      for key,value in a.items():<br>            print(a+’–’+value)</p>
+<p>类的定义<br>class  ClassName(object):</p>
+<ol>
+<li>零碎的知识点</li>
+</ol>
+<ul>
+<li>python中的注释，单行是 #，多行是 ``` ``` </li>
+<li>python的代码不能压缩，因为if 后面的空格是必须的，压缩之后就没有当初的意义了</li>
+<li>python里面的if 表达式好像不用用括号包围起来，然后表达式不能用赋值语句，感觉这些虽然在别的语言里面可以用，但是本质上用这个不规范，感觉还是不用比较好</li>
+<li>python里面变量的命名用驼峰法，然后如果变量位于模块里面而不是类下面，会被直接认为是常量</li>
+<li>python的代码规范是pylint，要求python代码结尾需要一个空行</li>
+<li>除了：，剩下的运算符两边好像都需要空格，python文件的开头（模块的开头），一般都有个doc文档描述</li>
+<li>python的缩进是4个空格</li>
+<li>感觉逻辑运算符应该就是 and or这种， 但是 &amp;和|挺方便所以用的比较多，所以以后感觉python中还是多使用 and 和 or比较好</li>
+<li>python中没有我们那种for（） 循环，只有一种循环就是for in，如果想用数字那种控制循环条件，可以通过range构造一个类似list的东西，rang（start, end, step）,包括开始，不包括结束，最后一个参数代表每步的大小，python中还有个切片，功能一致。a = [0:len(b):2],只是这个输出的直接是一个list</li>
+<li>python中的组织结构：包（文件夹）模块（文件）类，虽然python中一个模块可以包括多个类，但是最好还是只包括一个，这样更符合规范</li>
+<li>python中除了类名，首字母大写，后面用驼峰法，好像剩下的所有的都用_ 进行分割</li>
+<li>包在外表物理形式上是类似于文件夹的，但是文件夹并不一定是包，要想成为包，必须的有个<strong>init.py</strong> 这个文件夹（里面的内容是空的，可以随便写，现在我还不知道他有什么用）</li>
+<li>导入包邮两种形式  import a , from a import hello，hello2, hello3,第一种在使用变量的时候需要加上包的名称，第二种在使用的时候直接使用hello就可以了(连着导入了三个变量)</li>
+<li>__pycache__ 二进制文件夹，感觉应该是缓存文件，可以 加速python的编译执行,这个文件夹里面的内容是没有用的</li>
+<li>import 包名的时候也可以用 as，用来简化包名</li>
+<li>不管是导入包，还是导入包下面的文件 <strong>init.py</strong> 都会被自动的执行</li>
+<li>几个比较常见的内置变量<br><strong>doc</strong>: 文件的注释<br><strong>file</strong> : 文件的物理位置<br><strong>package</strong>: 代表文件的包名，文件外层文件夹的名称<br><strong>name</strong>:代表文件的名称，没有后缀</li>
+<li>python可以同时返回多个值，return a,b ，其实这是返回一个tuple，感觉是不是tuple可以不用（）包裹起来 a,b,c = (1,23,3) 这样赋值了，php也有类似的功能。list(a,b) = [0,1],只能用于索引数组</li>
+<li>python 中字符串的连接用的是 +， python中函数的调用参数可以不按照顺序返回，只需指定变量名就可以了</li>
+<li>python中的可变参数，比如print可以接受任意多个参数。def print_function(<em>param),这样打印出来的param是一个tuple，如果print_function(</em>(1,2,3)), 这样打印出来的依旧是tuple，但是如果直接print_function((1,2,3)),这样打印出来的就是二维数组了(不止是tuple，list这些也是可以的)</li>
+<li>作用域：python中for和php，js都一样，构成不了作用域，es6里面用的let。import代码的时候其实是把不同的代码拼装在了一起，import的文件里面如果有可执行的内容，都是会被执行的</li>
+<li>函数内部的变量本来是不能被执行的，但是如果在函数内部定义了global c.单独起一行，这样就能在函数外面也可以使用</li>
+<li>php类里面的定义没有参数（），python里面类的定义有（）</li>
+<li>类中方法的定义一定要传入参数，self</li>
+<li><strong>init</strong> 是类的构造方法，也要传入参数self感觉self在python类中属于实例。self.name  代表这个类的实例属性，即使这个类没有类变量name也没有关系（注意这个self只是一个变量的名称，是可以改变的，不属于关键字范畴）</li>
+<li>python中类Test().name 可以直接调用类属性</li>
+<li>上面这种直接使用类变量一般用在类的外部，如果在类的内部使用，一般是不可以的，如果实在想使用，用self.<strong>class</strong>.name  这样使用</li>
+</ul>
 
       
     </div>
@@ -486,6 +520,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/02/27/正则表达式/" rel="prev" title="正则表达式">
+                正则表达式 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -583,7 +621,7 @@ var jiathis_config={
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">22</span>
+                  <span class="site-state-item-count">23</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -605,7 +643,7 @@ var jiathis_config={
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">38</span>
+                  <span class="site-state-item-count">39</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -724,7 +762,7 @@ var jiathis_config={
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count"> | 博客全站共24.8k字</span>
+  <span class="post-count"> | 博客全站共26.0k字</span>
 </div>
 
 
