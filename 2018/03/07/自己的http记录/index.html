@@ -89,7 +89,7 @@
 <meta property="og:site_name" content="语法糖的博客">
 <meta property="og:description" content="1.http请求动作 移动互联网时代，不像之前web时代，实现了前后端的分离，前端请求后端接口从之前基于soap变成调用基于rest的restul api接口，restful api是基于资源，他对于不同的http请求方式有不同的含义，最常见的get，post，put，delete, option,。传统的get和post区别主要是一个是url明文传递，另一个是加密后传递更安全。但是restful">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-03-07T09:56:54.792Z">
+<meta property="og:updated_time" content="2018-03-07T10:20:23.475Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="自己的http记录">
 <meta name="twitter:description" content="1.http请求动作 移动互联网时代，不像之前web时代，实现了前后端的分离，前端请求后端接口从之前基于soap变成调用基于rest的restul api接口，restful api是基于资源，他对于不同的http请求方式有不同的含义，最常见的get，post，put，delete, option,。传统的get和post区别主要是一个是url明文传递，另一个是加密后传递更安全。但是restful">
@@ -427,6 +427,22 @@
 </ul>
 <p>itbasic.datatom.com中 com是一级域名，datatom是二级域名，itbasic是三级域名，同属于datatom,这个二级域名下还会有很多，比如blog.datatom.com,51dan.datatom.com,域名的不同会导致出现跨域的问题，之前看网上处理方式主要分为两大类，一种是jsonb,另一种是返回的请求头中添加</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&apos;Access-Control-Allow-Origin&apos;, &apos;*&apos;</div></pre></td></tr></table></figure>
+<p>7.请求头<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">GET /562f25980001b1b106000338.jpg HTTP/1.1</div><div class="line">Host    img.mukewang.com</div><div class="line">User-Agent  Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.106 Safari/537.36</div><div class="line">Accept  image/webp,image/*,*/*;q=0.8</div><div class="line">Referer http://www.imooc.com/</div><div class="line">Accept-Encoding gzip, deflate, sdch</div><div class="line">Accept-Language zh-CN,zh;q=0.8</div></pre></td></tr></table></figure></p>
+<p>第一行get代表请求方式， 后面那个是请求的资源，最后是http的版本号，话说http 1.0 和 http1.1 使用时间好长<br>第二行host 代表主机名<br>第三行 表示 访问的主机的系统，还有浏览器，经常通过这个来判断是手机还是电脑登录。其实这个在服务器端也是可以获取的，通过打印 $_SERVER 数组。<br>第四行<br>第五行 上一个链接地址，经常用来进行回退。<br>这个请求头和后面传递的数据需要空一行。<br>这个请求头里面还可以放置很多别的数据，比如laravel里面表单为了放置csrf攻击，在里面放置了额外的参数<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;meta name=&quot;csrf-token&quot; content=&quot;&#123;&#123; csrf_token() &#125;&#125;&quot;&gt;</div></pre></td></tr></table></figure></p>
+<p>请求的时候建立连接还会有4次握手</p>
+<ol>
+<li>你在吗</li>
+<li>我在</li>
+<li>那我给你发数据了</li>
+<li>好的，你发吧<br>虽然到今天还没用上过</li>
+</ol>
+<p>8.返回信息<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">HTTP/1.1 200 OK</div><div class="line">Date: Fri, 22 May 2009 06:07:21 GMT</div><div class="line">Content-Type: text/html; charset=UTF-8</div><div class="line"></div><div class="line">&lt;html&gt;</div><div class="line">      &lt;head&gt;&lt;/head&gt;</div><div class="line">      &lt;body&gt;</div><div class="line">            &lt;!--body goes here--&gt;</div><div class="line">      &lt;/body&gt;</div><div class="line">&lt;/html&gt;</div></pre></td></tr></table></figure></p>
+<p>这个和上面的请求消息差不多，断开链接需要3次握手</p>
+<ol>
+<li>我要断开链接了</li>
+<li>好的 （我不发送数据）</li>
+<li>我也要断开连接了（这下两条都断开了）</li>
+</ol>
 
       
     </div>
@@ -744,7 +760,7 @@ var jiathis_config={
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count"> | 博客全站共28.2k字</span>
+  <span class="post-count"> | 博客全站共28.6k字</span>
 </div>
 
 
