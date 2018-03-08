@@ -81,18 +81,18 @@
 
 
 
-<meta name="description" content="1.http请求动作 移动互联网时代，不像之前web时代，实现了前后端的分离，前端请求后端接口从之前基于soap变成调用基于rest的restul api接口，restful api是基于资源，他对于不同的http请求方式有不同的含义，最常见的get，post，put，delete, option,。传统的get和post区别主要是一个是url明文传递，另一个是加密后传递更安全。但是restful">
+<meta name="description" content="上周老师让我们写一个关于http的总结，记录下这些天来的自己关于http的认识。">
 <meta name="keywords" content="http">
 <meta property="og:type" content="article">
 <meta property="og:title" content="自己的http记录">
 <meta property="og:url" content="http://yoursite.com/2018/03/07/自己的http记录/index.html">
 <meta property="og:site_name" content="语法糖的博客">
-<meta property="og:description" content="1.http请求动作 移动互联网时代，不像之前web时代，实现了前后端的分离，前端请求后端接口从之前基于soap变成调用基于rest的restul api接口，restful api是基于资源，他对于不同的http请求方式有不同的含义，最常见的get，post，put，delete, option,。传统的get和post区别主要是一个是url明文传递，另一个是加密后传递更安全。但是restful">
+<meta property="og:description" content="上周老师让我们写一个关于http的总结，记录下这些天来的自己关于http的认识。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-03-07T10:20:23.475Z">
+<meta property="og:updated_time" content="2018-03-08T02:58:25.945Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="自己的http记录">
-<meta name="twitter:description" content="1.http请求动作 移动互联网时代，不像之前web时代，实现了前后端的分离，前端请求后端接口从之前基于soap变成调用基于rest的restul api接口，restful api是基于资源，他对于不同的http请求方式有不同的含义，最常见的get，post，put，delete, option,。传统的get和post区别主要是一个是url明文传递，另一个是加密后传递更安全。但是restful">
+<meta name="twitter:description" content="上周老师让我们写一个关于http的总结，记录下这些天来的自己关于http的认识。">
 
 
 
@@ -382,7 +382,9 @@
       
 
       
-        <p>1.http请求动作</p>
+        <p>上周老师让我们写一个关于http的总结，记录下这些天来的自己关于http的认识。</p>
+<a id="more"></a>
+<p>1.http请求动作</p>
 <p>移动互联网时代，不像之前web时代，实现了前后端的分离，前端请求后端接口从之前基于soap变成调用基于rest的restul api接口，restful api是基于资源，他对于不同的http请求方式有不同的含义，最常见的get，post，put，delete, option,。传统的get和post区别主要是一个是url明文传递，另一个是加密后传递更安全。但是restful api中常见的4中请求动作分别代表一下含义<br>get ： 对于资源的请求<br>post ： 对于资源的创建<br>put ： 对于资源的更新<br>delete ： 对于资源的删除<br>例如 : get  /users/1  代表获取用户1的信息<br>post /users/1 创建<br>put /users/1  更新<br>delete /users/1  删除<br>这样的好处之一就是更有利于语义化，而且更能指定统一的标准, 比如laravel里面Route的resource方法就能根据资源users统一生成一堆的url，而不是通过不同的方法名来区分。<br>但比如传统表单提交只能实现get 和 post方式，如果我们直接修改提交方式会报错</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;form action=&quot;/posts/62&quot; method=&quot;POST&quot;&gt;</div></pre></td></tr></table></figure>
 <p>我们只需要在里面增加一个隐藏的input<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;input type=&quot;hidden&quot; name=&quot;_method&quot; value=&quot;PUT&quot;&gt;</div></pre></td></tr></table></figure></p>
@@ -760,7 +762,7 @@ var jiathis_config={
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count"> | 博客全站共28.6k字</span>
+  <span class="post-count"> | 博客全站共28.8k字</span>
 </div>
 
 

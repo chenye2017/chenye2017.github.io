@@ -89,7 +89,7 @@
 <meta property="og:site_name" content="语法糖的博客">
 <meta property="og:description" content="使用vagrant的原因？ 其实主要是因为来公司的时候用的这个东西，相比于传统的xampp这种window下的一体化工具，vagrant其实是在vitrual box 之上的一种管理工具，他是基于虚拟机的，所以你可以在虚拟机上干的事他都能干。 首先xampp是window平台下的，他的lamp这个l不具备，所以，你xampp永远都接触不到linux，但是vagrant不同，他是基于虚拟机的，虚拟机">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-02-23T12:49:04.967Z">
+<meta property="og:updated_time" content="2018-03-08T02:32:18.730Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="vagrant使用">
 <meta name="twitter:description" content="使用vagrant的原因？ 其实主要是因为来公司的时候用的这个东西，相比于传统的xampp这种window下的一体化工具，vagrant其实是在vitrual box 之上的一种管理工具，他是基于虚拟机的，所以你可以在虚拟机上干的事他都能干。 首先xampp是window平台下的，他的lamp这个l不具备，所以，你xampp永远都接触不到linux，但是vagrant不同，他是基于虚拟机的，虚拟机">
@@ -400,7 +400,7 @@
 <p>这样把远端或者是本地的box文件加载到系统中，如果是下载的.box文件就可以删除啦</p>
 <p>镜像加载完成啦，接下来干嘛呢，就是在这个镜像的基础上构建虚拟环境，我们得用到vagrant的相关命令。</p>
 <p>然后呢，新建个文件夹，建议vitrual，代表虚拟环境，再在下面新建单个项目的文件夹，这样的好处是vagrant虚拟环境不容易到处都有</p>
-<p>进入对应文件夹</p>
+<p>进入对应文件夹（后面的这些vagrant操作命令都是在这个文件夹中进行的）</p>
 <p>vagrant init （add的box文件名） 初始化，会生成vagrant  file 文件，修改其中的</p>
 <p>config.vm.box = “new_itbasic”  这个代表box的名称</p>
 <p> config.vm.network “private_network”, ip: “192.168.33.10”  私有网络只能自己通讯，相当于虚拟机里面的桥接，不能和局域网中的别的电脑通信（这个ip地址有要求吗）</p>
@@ -412,6 +412,7 @@
 <p>不用的时候挂起 vagrant suspend，再启动 vagrant resume</p>
 <p>vagrant halt 是关闭，vagrant reload 重新加载配置文件</p>
 <p>vagrant status 查看虚拟机状态</p>
+<p>vagrant package –output itbasic.box 去自己的vitrual环境下，打包自己的环境成box文件，方便以后使用（好像vagrant 打包环境最好把虚拟机关掉）</p>
 <p>vagrant destroy 摧毁虚拟机镜像，这个是保存位置是第三个位置了，这个是由vitrual box决定的，在vitrual box的全局设定里面。</p>
 <p>总结一下：vagrant构建环境其实一共有4个文件夹的位置</p>
 <ol>
@@ -746,7 +747,7 @@ var jiathis_config={
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count"> | 博客全站共28.6k字</span>
+  <span class="post-count"> | 博客全站共28.8k字</span>
 </div>
 
 
