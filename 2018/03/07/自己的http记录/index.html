@@ -89,7 +89,7 @@
 <meta property="og:site_name" content="语法糖的博客">
 <meta property="og:description" content="上周老师让我们写一个关于http的总结，记录下这些天来的自己关于http的认识。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-03-08T02:58:25.945Z">
+<meta property="og:updated_time" content="2018-03-09T02:27:06.078Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="自己的http记录">
 <meta name="twitter:description" content="上周老师让我们写一个关于http的总结，记录下这些天来的自己关于http的认识。">
@@ -427,7 +427,7 @@
 <ul>
 <li>跨域</li>
 </ul>
-<p>itbasic.datatom.com中 com是一级域名，datatom是二级域名，itbasic是三级域名，同属于datatom,这个二级域名下还会有很多，比如blog.datatom.com,51dan.datatom.com,域名的不同会导致出现跨域的问题，之前看网上处理方式主要分为两大类，一种是jsonb,另一种是返回的请求头中添加</p>
+<p>itbasic.datatom.com中 com是一级域名，datatom是二级域名，itbasic是三级域名，同属于datatom,这个二级域名下还会有很多，比如blog.datatom.com,51dan.datatom.com,域名的不同会导致出现跨域的问题，之前看网上处理方式主要分为两大类，一种是jsonp,另一种是返回的请求头中添加</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&apos;Access-Control-Allow-Origin&apos;, &apos;*&apos;</div></pre></td></tr></table></figure>
 <p>7.请求头<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">GET /562f25980001b1b106000338.jpg HTTP/1.1</div><div class="line">Host    img.mukewang.com</div><div class="line">User-Agent  Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.106 Safari/537.36</div><div class="line">Accept  image/webp,image/*,*/*;q=0.8</div><div class="line">Referer http://www.imooc.com/</div><div class="line">Accept-Encoding gzip, deflate, sdch</div><div class="line">Accept-Language zh-CN,zh;q=0.8</div></pre></td></tr></table></figure></p>
 <p>第一行get代表请求方式， 后面那个是请求的资源，最后是http的版本号，话说http 1.0 和 http1.1 使用时间好长<br>第二行host 代表主机名<br>第三行 表示 访问的主机的系统，还有浏览器，经常通过这个来判断是手机还是电脑登录。其实这个在服务器端也是可以获取的，通过打印 $_SERVER 数组。<br>第四行<br>第五行 上一个链接地址，经常用来进行回退。<br>这个请求头和后面传递的数据需要空一行。<br>这个请求头里面还可以放置很多别的数据，比如laravel里面表单为了放置csrf攻击，在里面放置了额外的参数<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;meta name=&quot;csrf-token&quot; content=&quot;&#123;&#123; csrf_token() &#125;&#125;&quot;&gt;</div></pre></td></tr></table></figure></p>
@@ -445,6 +445,15 @@
 <li>好的 （我不发送数据）</li>
 <li>我也要断开连接了（这下两条都断开了）</li>
 </ol>
+<p>9.https</p>
+<p>https 默认端口443，其实他不是一种新的协议，他还是http协议，只是在外层包裹了ssl。</p>
+<p>https传输数据比http安全大家都知道，但原因呢，是由于数据进行了加密。很早之前有种协议talent，他也是通信协议，默认端口23，但现在这个端口默认都被禁止掉了，原因就是他传输数据的过程是明文传输，导致别人用抓包工具抓到了请求，或者监听这个端口，直接就能获取客户端传递过来的数据。想象一下，钓鱼网站如果用这个，很容易就能获取到用户的密码，太不安全了，于是ssh诞生了（我猜的）。ssh用的地方很多，比如我们用xshell时候建立的连接，还记得我们第一次连接新的服务器的时候的弹窗吗</p>
+<blockquote>
+<p>一次性接受密钥</p>
+</blockquote>
+<p>这是什么东西？这其实就是服务器的公钥。你发给服务器的内容，用服务器的公钥进行加密，服务器接收到你的内容用私钥进行解密，保证了数据传输的安全性（你发送的数据只有服务器能查看到，别人永远不能查看，因为你加密的媒介是计算机的公钥，能解密的只用服务器的私钥，而服务器的私钥只有你自己有，so，数据绝对安全。但有一点，数据的不可变性，就是数据的被篡改性不能得到保证）。或者你是否记得第一次对github进行提交的时候，或者换新的机器对github进行提交的时候，需要在github上贴你的公钥，为什么呢？因为我们git clone代码的时候，需要让github用我们的公钥加密，然后我们用自己的私钥进行解密（git clone 的时候的地址有ssh和https之分）</p>
+<p>上面说的公钥加密，私钥解密舒服非对称加密，记得有RSA算法之类的。但是我们在数据通信的过程中如果一直用非对称方式进行数据传输，消耗会很大。于是我们用了另一种对称加密。对称加密顾名思义就是：同一种密钥进行加密解密，简单。可问题来了，这个密钥如果被获取到，加密就毫无意义了，我们该如何传递这个密钥给客户端。我们不能预先在所有的客户端都放置所有的密钥吧，这样不现实，也不能变动。</p>
+<p>上面说的第一种非对称加密是公钥加密，私钥解密，保证数据的安全性。其实我们还可以通过私钥加密，公钥解密的方式，这样虽然不能保证数据的安全性（指的是被别人获取，因为公钥的公开性），但可以保证数据的不被篡改，因为私钥的私密性，一旦篡改内容，我们没法复原到私钥加密前的状态，我们只需要在私钥加密的内容中添加一些公共的东西，比如一个值，一个算法，这个值经过算法加密后的值，当我们通过公钥解密后这这个值加密后不等于这个算法加密后的值，那我们就能发现文件内容被篡改。</p>
 
       
     </div>
@@ -762,7 +771,7 @@ var jiathis_config={
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count"> | 博客全站共28.8k字</span>
+  <span class="post-count"> | 博客全站共29.7k字</span>
 </div>
 
 
