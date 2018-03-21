@@ -81,18 +81,18 @@
 
 
 
-<meta name="description" content="因为linux平时用的不是很频繁，所以经常会遇见一些问题，然后很容易忘记，然后还经常遇到，所以记录下来。 目录：  yum源替换 修改密码 locate 查找文件 添加环境变量">
+<meta name="description" content="因为linux平时用的不是很频繁，所以经常会遇见一些问题，然后很容易忘记，然后还经常遇到，所以记录下来。 目录：  yum源替换 修改密码 locate 查找文件 添加环境变量 ~ 普通用户和root用户">
 <meta name="keywords" content="Linux,常见问题">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Linux常见问题">
 <meta property="og:url" content="http://yoursite.com/2018/01/09/Linux常见问题/index.html">
 <meta property="og:site_name" content="语法糖的博客">
-<meta property="og:description" content="因为linux平时用的不是很频繁，所以经常会遇见一些问题，然后很容易忘记，然后还经常遇到，所以记录下来。 目录：  yum源替换 修改密码 locate 查找文件 添加环境变量">
+<meta property="og:description" content="因为linux平时用的不是很频繁，所以经常会遇见一些问题，然后很容易忘记，然后还经常遇到，所以记录下来。 目录：  yum源替换 修改密码 locate 查找文件 添加环境变量 ~ 普通用户和root用户">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-02-23T12:45:06.558Z">
+<meta property="og:updated_time" content="2018-03-21T06:58:44.413Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linux常见问题">
-<meta name="twitter:description" content="因为linux平时用的不是很频繁，所以经常会遇见一些问题，然后很容易忘记，然后还经常遇到，所以记录下来。 目录：  yum源替换 修改密码 locate 查找文件 添加环境变量">
+<meta name="twitter:description" content="因为linux平时用的不是很频繁，所以经常会遇见一些问题，然后很容易忘记，然后还经常遇到，所以记录下来。 目录：  yum源替换 修改密码 locate 查找文件 添加环境变量 ~ 普通用户和root用户">
 
 
 
@@ -389,6 +389,7 @@
 <li>修改密码</li>
 <li>locate 查找文件</li>
 <li>添加环境变量</li>
+<li>~ 普通用户和root用户</li>
 </ol>
 <a id="more"></a>
 <p>1.yum源的替换<br>我们每次安装centos的时候，如果不是打包安装，是从新安装的话，为了安装软件速度快点，我们通常会替换yum源，把国外的镜像替换成国内的yum源镜像。常用的有163，阿里云啊。<br>首先我们进入 /etc/yum.repos.d 文件夹下面，查看repo文件，把centos-base 这个yum源文件改名，作为备份文件（mv,剪贴，又能当做重命名来用，注意不是复制哦）。然后wget，国内的yum源地址，yum clean all 清除缓存，yum makecache 在本地生成源的软件信息，方便软件的查找。<br>总结：</p>
@@ -407,11 +408,12 @@
 <p>lamp环境如果通过源码编译安装，安装的位置一般是/usr/local,命令一般在/usr/local/软件/bin/命令，每次使用起来这么一大串，是在麻烦，加入环境变量效果棒棒的</p>
 <ol>
 <li>echo $PAHT 查看环境变量</li>
-<li>vim ~/.bashrc </li>
-<li>export PATH=路径：$PATH:</li>
-<li>source .bashrc 直接生效（不知道这里为啥不是~/.bashrc）</li>
+<li>vim ~/.bash_profile</li>
+<li>export PATH=路径:$PATH: (这个: 好像是分隔符, shell中变量的使用才会\$)</li>
+<li>source ~/.bash_profile 直接生效（不知道这里为啥不是~/.bashrc）</li>
 <li>echo $PATH 查看是否生效</li>
 </ol>
+<p>5.普通用户的 ~代表家目录，比如/home/vagrant,但是root用户的这个~代表根目录 /home</p>
 <p>​     </p>
 
       
@@ -736,7 +738,7 @@ var jiathis_config={
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count"> | 博客全站共29.7k字</span>
+  <span class="post-count"> | 博客全站共29.9k字</span>
 </div>
 
 
