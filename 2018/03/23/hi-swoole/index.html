@@ -89,7 +89,7 @@
 <meta property="og:site_name" content="语法糖的博客">
 <meta property="og:description" content="学习目的：想让自己从增删改查，做web，表单的生活中调出来。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-03-23T07:30:30.498Z">
+<meta property="og:updated_time" content="2018-03-24T07:15:07.336Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="hi , swoole">
 <meta name="twitter:description" content="学习目的：想让自己从增删改查，做web，表单的生活中调出来。">
@@ -401,7 +401,6 @@
 <p>上面就是基础环境的搭建，可以理解成系统的搭建，剩下的就要我们去虚拟机中进行处理了。</p>
 <p>首先是php的编译安装<br><a href="https://segmentfault.com/a/1190000004123048#articleHeader0" target="_blank" rel="external">这篇文章里面写的很清楚</a>，源码是我去php.net上面下载的。然后去swoole.php上面下载swoole的源码。phpize,这是php源码编译后的一个命令，按照上面那篇博客应该是在/usr/loca/php7/bin 下面，这是因为swoole的源码包下面没有configure文件，产生后./configure,可能会报找不到php-configure,注意这里面不是php 的配置文件，而是php7那个文件夹bin命令下面有个php-configure，直接写这个地址就可以了。</p>
 <p>遇到的坑。编译出错，直接执行make，显示找不到configure文件，··其实./configure那时候就报错了，我不知道，直接执行make，然后显示找不到目标，注意一下报错信息，其实这些编译的时候都没什么错误，或者把错误信息粘贴去百度google，很容出来。<br>注意要在php.ini 里面开启扩展 extension=swoole<br>因为我们这没有lamp环境嘛，不要想着在页面访问phpinfo,直接php -m,查看加载的扩展。</p>
-<p>](<a href="http://www.vagrantbox.es/" target="_blank" rel="external">http://www.vagrantbox.es/</a>)</p>
 
       
     </div>
