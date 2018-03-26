@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="PHP,函数," />
 
 
 
@@ -81,17 +81,18 @@
 
 
 
-<meta name="description" content="想用善良改变世界">
+<meta name="description" content="工作的久了，反而基本功没有原先好了，也许要记得东西很多，内存中不够放置那些无规律的参数位置，但至少不要混淆哪些是框架自带的，哪些是PHP原生的。">
+<meta name="keywords" content="PHP,函数">
 <meta property="og:type" content="article">
 <meta property="og:title" content="PHP函数">
 <meta property="og:url" content="http://yoursite.com/2018/03/26/PHP函数/index.html">
 <meta property="og:site_name" content="语法糖的博客">
-<meta property="og:description" content="想用善良改变世界">
+<meta property="og:description" content="工作的久了，反而基本功没有原先好了，也许要记得东西很多，内存中不够放置那些无规律的参数位置，但至少不要混淆哪些是框架自带的，哪些是PHP原生的。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-03-26T06:12:29.456Z">
+<meta property="og:updated_time" content="2018-03-26T14:19:30.258Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="PHP函数">
-<meta name="twitter:description" content="想用善良改变世界">
+<meta name="twitter:description" content="工作的久了，反而基本功没有原先好了，也许要记得东西很多，内存中不够放置那些无规律的参数位置，但至少不要混淆哪些是框架自带的，哪些是PHP原生的。">
 
 
 
@@ -332,6 +333,28 @@
           </span>
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/PHP/" itemprop="url" rel="index">
+                    <span itemprop="name">PHP</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -359,7 +382,26 @@
       
 
       
-        
+        <p>工作的久了，反而基本功没有原先好了，也许要记得东西很多，内存中不够放置那些无规律的参数位置，但至少不要混淆哪些是框架自带的，哪些是PHP原生的。</p>
+<a id="more"></a>
+<p>一年多了，重复相同的工作可能让之前很多学会的但没用到的PHP函数忘记了，但这些在modern PHP 中，在新的环境中可能都是很重要的，记录下来。<br><!--more--></p>
+<ol>
+<li>string</li>
+</ol>
+<ul>
+<li>str_repeat（’cy’, 10） //把cy这个字符串重复10次</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">var_dump(str_repeat（&apos;cy&apos;, 10）)   //注意一定要打印，这个函数的作用只是构成一个字符串</div></pre></td></tr></table></figure>
+<ul>
+<li>var_dump 和 var_export<br>先来说下以后的使用都是使用var_dump,而不要使用var_export,因为第一个已经很强大了。<br>var_dump 可以输出数据类型，但是var_export不可以。<br>var_export 第二个参数给true, 他会把这个变量的值存储起来，可以用于赋值，但是当变量是resource的时候，返回的总是null,但是此时var_dump 虽然也不能打印出来，但是能<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">resource(2) of type (stream) </div><div class="line">NULL</div><div class="line">$a = var_export([2,3], true);</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>综上，用var_dump</p>
+<ol>
+<li>面向对象</li>
+</ol>
+<p>is_callable()与method_exists()     //method_exists 只能判断方法是否存在，但如果比如父类的方法是protected这种，没权利执行也会返回true，这种情况就得callable了，他会返回false<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">class Foo &#123;</div><div class="line">    public function PublicMethod()&#123;&#125;</div><div class="line">    private function PrivateMethod()&#123;&#125;</div><div class="line">    public static function PublicStaticMethod()&#123;&#125;</div><div class="line">    private static function PrivateStaticMethod()&#123;&#125;</div><div class="line">&#125;</div><div class="line">$foo = new Foo();</div><div class="line">$callbacks = array(</div><div class="line">    array($foo, &apos;PublicMethod&apos;),</div><div class="line">    array($foo, &apos;PrivateMethod&apos;),</div><div class="line">    array($foo, &apos;PublicStaticMethod&apos;),</div><div class="line">    array($foo, &apos;PrivateStaticMethod&apos;),</div><div class="line">    array(&apos;Foo&apos;, &apos;PublicMethod&apos;),</div><div class="line">    array(&apos;Foo&apos;, &apos;PrivateMethod&apos;),</div><div class="line">    array(&apos;Foo&apos;, &apos;PublicStaticMethod&apos;),</div><div class="line">    array(&apos;Foo&apos;, &apos;PrivateStaticMethod&apos;),</div><div class="line">   );</div><div class="line">foreach ($callbacks as $callback)&#123;</div><div class="line">    var_dump($callback);</div><div class="line">    var_dump(method_exists($callback[0], $callback[1]));</div><div class="line">    var_dump(is_callable($callback));</div><div class="line">    echo str_repeat(&apos;-&apos;, 10);</div><div class="line">    echo &apos;&lt;br /&gt;&apos;;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+
       
     </div>
     
@@ -413,6 +455,14 @@
     
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/PHP/" rel="tag"><i class="fa fa-tag"></i> PHP</a>
+          
+            <a href="/tags/函数/" rel="tag"><i class="fa fa-tag"></i> 函数</a>
+          
+        </div>
       
 
       
@@ -555,7 +605,7 @@ var jiathis_config={
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">43</span>
+                  <span class="site-state-item-count">44</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -674,7 +724,7 @@ var jiathis_config={
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count"> | 博客全站共34.3k字</span>
+  <span class="post-count"> | 博客全站共34.7k字</span>
 </div>
 
 

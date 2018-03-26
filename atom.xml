@@ -69,12 +69,22 @@
     <link href="http://yoursite.com/2018/03/26/PHP%E5%87%BD%E6%95%B0/"/>
     <id>http://yoursite.com/2018/03/26/PHP函数/</id>
     <published>2018-03-26T06:12:29.000Z</published>
-    <updated>2018-03-26T06:12:29.456Z</updated>
+    <updated>2018-03-26T14:19:30.258Z</updated>
+    
+    <content type="html"><![CDATA[<p>工作的久了，反而基本功没有原先好了，也许要记得东西很多，内存中不够放置那些无规律的参数位置，但至少不要混淆哪些是框架自带的，哪些是PHP原生的。</p><a id="more"></a><p>一年多了，重复相同的工作可能让之前很多学会的但没用到的PHP函数忘记了，但这些在modern PHP 中，在新的环境中可能都是很重要的，记录下来。<br><!--more--></p><ol><li>string</li></ol><ul><li>str_repeat（’cy’, 10） //把cy这个字符串重复10次</li></ul><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">var_dump(str_repeat（&apos;cy&apos;, 10）)   //注意一定要打印，这个函数的作用只是构成一个字符串</div></pre></td></tr></table></figure><ul><li>var_dump 和 var_export<br>先来说下以后的使用都是使用var_dump,而不要使用var_export,因为第一个已经很强大了。<br>var_dump 可以输出数据类型，但是var_export不可以。<br>var_export 第二个参数给true, 他会把这个变量的值存储起来，可以用于赋值，但是当变量是resource的时候，返回的总是null,但是此时var_dump 虽然也不能打印出来，但是能<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">resource(2) of type (stream) </div><div class="line">NULL</div><div class="line">$a = var_export([2,3], true);</div></pre></td></tr></table></figure></li></ul><p>综上，用var_dump</p><ol><li>面向对象</li></ol><p>is_callable()与method_exists()     //method_exists 只能判断方法是否存在，但如果比如父类的方法是protected这种，没权利执行也会返回true，这种情况就得callable了，他会返回false<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">class Foo &#123;</div><div class="line">    public function PublicMethod()&#123;&#125;</div><div class="line">    private function PrivateMethod()&#123;&#125;</div><div class="line">    public static function PublicStaticMethod()&#123;&#125;</div><div class="line">    private static function PrivateStaticMethod()&#123;&#125;</div><div class="line">&#125;</div><div class="line">$foo = new Foo();</div><div class="line">$callbacks = array(</div><div class="line">    array($foo, &apos;PublicMethod&apos;),</div><div class="line">    array($foo, &apos;PrivateMethod&apos;),</div><div class="line">    array($foo, &apos;PublicStaticMethod&apos;),</div><div class="line">    array($foo, &apos;PrivateStaticMethod&apos;),</div><div class="line">    array(&apos;Foo&apos;, &apos;PublicMethod&apos;),</div><div class="line">    array(&apos;Foo&apos;, &apos;PrivateMethod&apos;),</div><div class="line">    array(&apos;Foo&apos;, &apos;PublicStaticMethod&apos;),</div><div class="line">    array(&apos;Foo&apos;, &apos;PrivateStaticMethod&apos;),</div><div class="line">   );</div><div class="line">foreach ($callbacks as $callback)&#123;</div><div class="line">    var_dump($callback);</div><div class="line">    var_dump(method_exists($callback[0], $callback[1]));</div><div class="line">    var_dump(is_callable($callback));</div><div class="line">    echo str_repeat(&apos;-&apos;, 10);</div><div class="line">    echo &apos;&lt;br /&gt;&apos;;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>]]></content>
     
     <summary type="html">
     
+      &lt;p&gt;工作的久了，反而基本功没有原先好了，也许要记得东西很多，内存中不够放置那些无规律的参数位置，但至少不要混淆哪些是框架自带的，哪些是PHP原生的。&lt;/p&gt;
+    
     </summary>
     
+      <category term="PHP" scheme="http://yoursite.com/categories/PHP/"/>
+    
+    
+      <category term="PHP" scheme="http://yoursite.com/tags/PHP/"/>
+    
+      <category term="函数" scheme="http://yoursite.com/tags/%E5%87%BD%E6%95%B0/"/>
     
   </entry>
   
@@ -83,12 +93,20 @@
     <link href="http://yoursite.com/2018/03/26/PHP%E7%9F%A5%E8%AF%86%E7%82%B9/"/>
     <id>http://yoursite.com/2018/03/26/PHP知识点/</id>
     <published>2018-03-26T06:08:38.000Z</published>
-    <updated>2018-03-26T06:08:38.135Z</updated>
+    <updated>2018-03-26T14:16:25.838Z</updated>
+    
+    <content type="html"><![CDATA[<p>PHP中很多新的知识点自己都不是很熟悉，trait, 闭包，又或者composer等， 记录下来，成为现代phper。</p><a id="more"></a><ol><li><a href="https://chenye2017.github.io/2018/03/26/PHP%E9%97%AD%E5%8C%85/#more" target="_blank" rel="external">PHP中闭包</a></li></ol>]]></content>
     
     <summary type="html">
     
+      &lt;p&gt;PHP中很多新的知识点自己都不是很熟悉，trait, 闭包，又或者composer等， 记录下来，成为现代phper。&lt;/p&gt;
+    
     </summary>
     
+      <category term="PHP" scheme="http://yoursite.com/categories/PHP/"/>
+    
+    
+      <category term="PHP" scheme="http://yoursite.com/tags/PHP/"/>
     
   </entry>
   
