@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-03-26T10:57:55.035Z</updated>
+  <updated>2018-03-26T14:11:30.145Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,30 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>PHP闭包</title>
+    <link href="http://yoursite.com/2018/03/26/PHP%E9%97%AD%E5%8C%85/"/>
+    <id>http://yoursite.com/2018/03/26/PHP闭包/</id>
+    <published>2018-03-26T14:10:03.000Z</published>
+    <updated>2018-03-26T14:11:30.145Z</updated>
+    
+    <content type="html"><![CDATA[<p>咱是写PHP的，可是PHP的很多特性咱都不是很熟，比如trait，闭包，咱不能只局限于表单的操作，不能只局限于面向过程的写法，记录下来那些年很少接触的特性。就从PHP的 <strong>闭包</strong> 开始咯<br><a id="more"></a></p><p>第一次接触闭包还是在js中，后来是在python中，最后才是php中！！!深刻的怀疑我是不是做php的。<br>php中闭包和js中还是不一样的，php中把匿名函数和闭包混为一谈，这让开始只知道js闭包的我好蛋疼，因为比如array_map 中经常写的回调（注意回调只是一种动作，匿名函数闭包或者是自定义函数只是实现回调的不同方法），还有最近很火的swoole，因为是异步的嘛，所以写了大量的回调函数，所以也属于闭包 ，虽然js和php的闭包有些不同但本质上还是封装函数的运行环境。<br>js:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">function out() &#123;</div><div class="line">        var a = 1;</div><div class="line">        var b = function(name) &#123;</div><div class="line">            console.log(a);</div><div class="line">            console.log(name)</div><div class="line">        &#125;</div><div class="line">        return b;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    var a = 2;</div><div class="line">    var name = &apos;cy&apos;;</div><div class="line">    var c= out();</div><div class="line">    c(name);</div></pre></td></tr></table></figure></p><p>上面这段代码虽然简单，但是包含了几个重要的知识点：</p><ol><li>js的闭包主要是靠两层函数的嵌套，然后通过调用外层的函数返回内层的函数，内层的函数可以调用外层函数中的变量，内层函数的执行可以通过后来调用的时候传入参数。</li></ol><p>php<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">class Foo</div><div class="line">&#123;</div><div class="line">    public function __call($method, $args)</div><div class="line">    &#123;</div><div class="line">        if(is_callable([$this, $method])) &#123;</div><div class="line">            return call_user_func_array($this-&gt;$method, $args);</div><div class="line">        &#125;</div><div class="line">        // else throw exception</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">$obj = new Foo(&apos;Sam&apos;);</div><div class="line">$obj-&gt;say = function () &#123;</div><div class="line">    return &apos;Hello World&apos;;</div><div class="line">&#125;;</div><div class="line">echo($obj-&gt;say());</div></pre></td></tr></table></figure></p><p>当执行的say() 方法不存在的时候会自动执行<strong>call方法，然后method 传入是say方法，这里面args 因为是空，所以自动传入为空。<br>is_callable 方法判断这个$obj 实例中是否有这个方法，因为后面有定义$obj-&gt;say ,所以会自动调用。<br>call_user_func_array 会把前面这个$this-&gt;method 执行，后面args是传入的参数，相比较js就多了</strong>call() 部分。<br>上面还有一点没体现出来就是，闭包可以引用的变量是自己定义时候的父亲变量，js中可以直接在函数中使用，但是php中要用use关键字引入。</p><p>后来的php<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">class Foo</div><div class="line">&#123;</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">$obj = new Foo(&apos;Sam&apos;);</div><div class="line">$obj-&gt;say = function () &#123;</div><div class="line">    return &apos;Hello World&apos;;</div><div class="line">&#125;;</div><div class="line">echo($obj-&gt;say-&gt;__invoke());</div></pre></td></tr></table></figure></p><p>因为php的闭包都是一个closure类，而invoke 是这个类除了（construct 不能实例化，bind bindto 绑定方法之外的一个方法）。<br>但是这个类中不能使用this关键字，主要是这个this指代的是closure自身，因为js中this关键字老变，虽然这都被别人诟病，但相比较于php，他还需要手动绑定呢。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">class Foo</div><div class="line">&#123;</div><div class="line">    private $name;</div><div class="line"></div><div class="line">    function __construct($name)</div><div class="line">    &#123;</div><div class="line">        $this-&gt;name = $name;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">$obj = new Foo(&apos;Sam&apos;);</div><div class="line"></div><div class="line">$cl = function() &#123;</div><div class="line">    return &quot;Hello &quot; . $this-&gt;name;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">$cl = $cl-&gt;bindTo($obj, $obj);</div><div class="line">echo($cl());</div></pre></td></tr></table></figure></p><blockquote><p>我們不再執著該closure一定要動態成為 $obj的method，但要存取$obj property的目標不變，程式也不變，一樣使用$this。<br>假如我們能將$obj以手動注入的方式，讓closure內部的$this改指向$obj，我們就能達到如JavaScript的效果了。<br>$cl = $cl-&gt;bindTo($obj, $obj);<br>bindTo()如同__invoke()一樣，是closure物件內建的method，它的目的就是讓我們能手動注入一個物件，讓closure物件的$this指向手動注入的物件$obj。<br>因為在closure中我們有$this-&gt;name，經過bindTo()去手動注入 $obj後，$this已經改指向$obj，所以$this-&gt;name就相當於$obj-&gt;name。<br>根據bindTo()文件 :<br>若要讓closure物件只能存取其他物件的public變數，只傳第1個參數即可。<br>若要讓closure物件存取其他物件的private或protected變數，就要傳第2個參數。<br>bindTo()對於第2個參數的要求不嚴，有幾種傳法 :<br>傳進欲存取物件的class名稱，是字串。<br>傳進欲存取的物件也可以，bindTo()會自動得知該物件的class名稱。<br>在此就一併傳進與第一個參數相同的$obj。<br>echo($cl());<br>因為$obj已經透過bindTo() 手動注入進$cl()，此時$this已經指向$obj，所以執行$cl()就可順利存$obj的property</p></blockquote><p>Modern PHP<br>中对php闭包的重要方法bindTo的解释(注意闭包closure的bindTo方法本身是三个参数的，但因为第一个参数是闭包自身，所以经常$this-&gt;bindTo(arg1,arg2)这样去掉用）。</p><p>接下来我们来看看bindTo方法，通过该方法，我们可以把闭包的内部状态绑定到其他对象上。这里bindTo方法的第二个参数显得尤为重要，其作用是指定绑定闭包的那个对象所属的PHP类，这样，闭包就可以在其他地方访问绑定闭包的对象中受保护和私有的成员变量。<br>你会发现，PHP框架经常使用bindTo方法把路由URL映射到匿名回调函数上，框架会把匿名回调函数绑定到应用对象上，这样在匿名函数中就可以使用$this关键字引用重要的应用对象：<br>class App {<br>    protected $routes = [];<br>    protected $responseStatus = ‘200 OK’;<br>    protected $responseContentType = ‘text/html’;<br>    protected $responseBody = ‘Hello World’;</p><pre><code>public function addRoute($path, $callback) {    $this-&gt;routes[$path] = $callback-&gt;bindTo($this, __CLASS__);}public function dispatch($path) {    foreach ($this-&gt;routes as $routePath =&gt; $callback) {        if( $routePath === $path) {            $callback();        }    }    header(&apos;HTTP/1.1 &apos; . $this-&gt;responseStatus);    header(&apos;Content-Type: &apos; . $this-&gt;responseContentType);    header(&apos;Content-Length: &apos; . mb_strlen($this-&gt;responseBody));    echo $this-&gt;responseBody;}</code></pre><p>}<br>这里我们需要重点关注addRoute方法，这个方法的参数分别是一个路由路径和一个路由回调，dispatch方法的参数是当前HTTP请求的路径，它会调用匹配的路由回调。第9行是重点所在，我们将路由回调绑定到了当前的App实例上。这么做能够在回调函数中处理App实例的状态：<br>$app = new App();<br>$app-&gt;addRoute(‘/user’, function(){<br>    $this-&gt;responseContentType = ‘application/json;charset=utf8’;<br>    $this-&gt;responseBody = ‘世界你好’;<br>});<br>$app-&gt;dispatch(‘/user’)</p><p>总结一下，闭包的bindTo方法的根本原因是闭包中$this关键字指向了自己，而不是指向某一个对象。</p><p>Laravel<br>中对闭包的使用<br>IoC 容器<br>匿名函数可以从父作用域继承变量，而这个父作用域是定义该闭包的函数（不一定是调用它的函数）。<br>利用这个特性，我们可以实现一个简单的控制反转IoC容器：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div></pre></td><td class="code"><pre><div class="line">class Container</div><div class="line">&#123;</div><div class="line">    protected static $bindings;</div><div class="line"> </div><div class="line">    public static function bind($abstract, Closure $concrete)</div><div class="line">    &#123;</div><div class="line">        static::$bindings[$abstract] = $concrete;</div><div class="line">    &#125;</div><div class="line"> </div><div class="line">    public static function make($abstract)</div><div class="line">    &#123;</div><div class="line">        return call_user_func(static::$bindings[$abstract]);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"> </div><div class="line">class talk</div><div class="line">&#123;</div><div class="line">    public function greet($target)</div><div class="line">    &#123;</div><div class="line">        echo &apos;Hello &apos; . $target-&gt;getName();</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">class A</div><div class="line">&#123;</div><div class="line">    public function getName()</div><div class="line">    &#123;</div><div class="line">        return &apos;World&apos;;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"> </div><div class="line">// 创建一个talk类的实例</div><div class="line">$talk = new talk();</div><div class="line"> </div><div class="line">// 将A类绑定至容器，命名为foo</div><div class="line">Container::bind(&apos;foo&apos;, function() &#123;</div><div class="line">    return new A;</div><div class="line">&#125;);</div><div class="line"> </div><div class="line">// 通过容器取出实例</div><div class="line">$talk-&gt;greet(Container::make(&apos;foo&apos;)); // Hello World</div></pre></td></tr></table></figure></p><p>上述例子中，只有在通过make方法获取实例的时候，实例才被创建，这样使得我们可以实现容器。<br>在Laravel框架底层也大量使用了闭包以及bindTo方法，利用好闭包可以实现更多的高级特性如事件触发等。</p><p>laravel中的控制反转还不是很熟，以后多了解下</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;咱是写PHP的，可是PHP的很多特性咱都不是很熟，比如trait，闭包，咱不能只局限于表单的操作，不能只局限于面向过程的写法，记录下来那些年很少接触的特性。就从PHP的 &lt;strong&gt;闭包&lt;/strong&gt; 开始咯&lt;br&gt;
+    
+    </summary>
+    
+      <category term="PHP" scheme="http://yoursite.com/categories/PHP/"/>
+    
+    
+      <category term="PHP" scheme="http://yoursite.com/tags/PHP/"/>
+    
+      <category term="闭包" scheme="http://yoursite.com/tags/%E9%97%AD%E5%8C%85/"/>
+    
+  </entry>
   
   <entry>
     <title>PHP魔术方法和魔术变量</title>
@@ -308,9 +332,9 @@
     
       <category term="Linux" scheme="http://yoursite.com/tags/Linux/"/>
     
-      <category term="环境" scheme="http://yoursite.com/tags/%E7%8E%AF%E5%A2%83/"/>
-    
       <category term="lamp" scheme="http://yoursite.com/tags/lamp/"/>
+    
+      <category term="环境" scheme="http://yoursite.com/tags/%E7%8E%AF%E5%A2%83/"/>
     
   </entry>
   
@@ -334,9 +358,9 @@
     
       <category term="Linux" scheme="http://yoursite.com/tags/Linux/"/>
     
-      <category term="lnmp" scheme="http://yoursite.com/tags/lnmp/"/>
-    
       <category term="环境" scheme="http://yoursite.com/tags/%E7%8E%AF%E5%A2%83/"/>
+    
+      <category term="lnmp" scheme="http://yoursite.com/tags/lnmp/"/>
     
   </entry>
   
@@ -478,30 +502,6 @@
       <category term="vagrant" scheme="http://yoursite.com/tags/vagrant/"/>
     
       <category term="虚拟环境" scheme="http://yoursite.com/tags/%E8%99%9A%E6%8B%9F%E7%8E%AF%E5%A2%83/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>https通信原理</title>
-    <link href="http://yoursite.com/2017/12/02/https%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86/"/>
-    <id>http://yoursite.com/2017/12/02/https通信原理/</id>
-    <published>2017-12-02T09:01:31.000Z</published>
-    <updated>2018-02-23T12:44:22.693Z</updated>
-    
-    <content type="html"><![CDATA[<p>参考：<a href="https://segmentfault.com/a/1190000012196642" target="_blank" rel="external">https://segmentfault.com/a/1190000012196642</a><br>作为一个web开发者，对于https和http肯定要有所了解，现在的我对于深层次的https通信看着还不是太懂，但是对于https和http的差别，记得有一次去中科招商的时候面试有问到过。写这篇文章的时候，主要是方便自己看的时候理解。</p><a id="more"></a><p>首先呢 https默认端口号是443，http是80，都知道http相比于http更加安全。但是安全主要在什么方面呢，http通过明文传输，post方式好像看不见，但是get方式可以通过在服务器上监听这个端口，就能看见甚至都不要解密传进来的数据。像之前的talent，远程连接（默认端口23），因为传输过程明文，而且远程连接主要就是用来远程登录，肯定要输入用户名和密码，so，通过对这个端口的监听，就能知道用户通过talent服务的这个端口传进来的用户名和密码，这个安全性的要求不言而喻，所以现在都不用了，现在用ssh。还记得每次连接服务器的时候，让你接受公钥的弹窗嘛，这是为了在传输过程中用服务器的公钥进行加密，然后数据到达服务器端，服务器可以通过私钥进行解密。之前看过一个很形象的比喻。公钥就相当于锁，私钥就相当于钥匙，我这个东西用锁锁起来了，当然就可以用钥匙打开了（这是公钥加密，私钥解密的比喻）</p><p>https和http都是基于tcp/ip 协议，属于应用层，他们其实是一样的，只是https外层有个ssl包裹起来<img src="http://ozys8fka7.bkt.clouddn.com/1336318852-5a1d155b41475_articlex.png" alt=""></p><p>其实本质上还是属于http协议。</p><p>https在传输过程中使用了加密，有对称加密和非对称加密。</p><p>对称加密就是在加密和加密过程中使用同一个密钥，但是这样有个不安全点就是，密钥需要进行传递，传递过程中，如果密钥被捕获了，那加密如同虚设，so，就产生了我们的非对称加密</p><p>我所接触的非对称加密有ssh加密，这个因为不管是github上开始代码的提交，还是我们开始远程建立数据库的连接，都要用到。记得我第一次给github提交代码的时候，因为window默认不支持ssh，所以下载了git客户端，在gitbash上进行操作，生成了ssh密钥，把公钥贴在了github的setting里面。（非对称加密算法好像有个叫RSA）。</p><p>因为非对称加密有些复杂，https通信过程中,注意是通信过程中，不用非对称加密，用的还是对称加密，因为我们只要保证通信过程中对称加密的密钥不被窃取捕获篡改，就可以了。所以我们在传输密钥的过程用的是非对称加密，这样就得需要服务器的公钥，我们用服务器的公钥加密我们传输数据石宏对称加密的密钥，然后传输到服务器端，服务器用他的私钥进行解密，这样密钥传输成功，我们进行通行的过程中就可以用对称加密了。</p><p>那问题来了，服务器怎么传输过来他的公钥呢，怎么保证他传输过来的公钥的安全性呢，用对称加密？不行，无法保证密钥的准确，用非对称加密，也不行，这就陷入无限的死循环中了。</p><p>其实非对称加密不仅可以用公钥加密，私钥解密，保证传输数据的数据不被获取（需要私钥解密，可是私钥是私密的东西哦，别人都不知道）到，但不能保证数据不被劫持篡改（但无法保证别人对你这个文件进行修改），还可以使用私钥加密，公钥解密，这样不能保证数据不被获取到，但是可以保证数据不被篡改（因为每个人都可能获取到公钥，然后用公钥解密你这个私钥解密的文件，但无法修改，因为一旦修改了，文件的内容和私钥加密的内容就不一样了，等到客户端接收到服务器端传过来的内容，用公钥解密后，发现内容不一样，就很容易判断到文件被修改，如果一样，则能保证传输过来文件的准确性（我对不能同时修改文件和私钥加密文件的看法是私钥是服务器所特有的，所以不能还原修改文件被私钥加密后的样子））</p><ul><li>首先，CA会向申请者颁发一个证书，这个证书里面的内容有：签发者、证书用途、服务器申请的时候附带的公钥、服务器的加密算法、使用的HASH算法、证书到期的时间等等。</li><li>紧接着，把上面所提到的内容，做一次HASH求值，得到一个HASH值。</li><li>再接着，用CA的私钥进行加密，这样就完成了数字签名。而用CA的私钥加密后，就生成了类似人体指纹的签名，任何篡改证书的尝试，都会被数字签名发现。</li><li>最后，把数字签名，附在数字证书的末尾，传输给服务器</li></ul><p>因为这个传输服务器公钥的过程就是为了保证数据的不被篡改，不用管数据是否被窃取到，因为传输的是服务器的公钥，本身就是公开的，所以我们用私钥进行加密，公钥进行解密。</p><ul><li>客户端拿到这个数字证书以后，用CA私钥对应的公钥，可以解密数字证书末尾的数字签名，得到证书的内容以及原始的HASH值。</li><li>紧接着，客户端按照证书中的HASH算法，对证书的内容求HASH值。如果通过CA公钥解密的HASH和通过计算求得的HASH值相同，那么认证通过，否则失败。</li><li>如果认证通过，就可以取得服务器的公开密钥。</li></ul><p>所以对服务器公钥的传递本质上还是通过费对称加密算法，只是找了个中间机构ca，多数浏览器开发商发布版本时，会事先在内部植入常用认证机关的公开密钥。这样，就方便客户端对于数字证书真实性的验证。</p><p>客户端证书<br>HTTPS中不仅可以使用服务器证书，还可以使用客户端证书。以客户端证书进行客户端认证，它的作用与服务器证书是相同的。<br>由于客户端获取证书需要用户自行安装客户端证书，同时也面临着费用的问题。<br>因此，现状是，安全性极高的认证机构可办法客户端证书但是仅用于特殊用途的业务。比如那些可支撑客户端证书支出费用的业务。<br>例如，银行的网上银行就采用了客户端证书。在登录网银时不仅要求用户确认输入ID和密码，还会要求用户的客户端证书，以确认用户是否从特定的终端访问网银。</p><p>总结一下：</p><ol><li>首先服务器端让ca用他的私钥对自己的公钥进行加密，然后传给客户端，客户端用ca的公钥进行解密，保证接收到服务器端公钥的准确性。</li><li>然后客户端用服务器端公钥对自己传输过程中数据进行对称加密的密钥进行加密，传输给服务器端，因为只有服务器端有私钥，所以只能服务器能解密，保证数据传输过程中密钥的安全性。</li><li>最后客户端通过对称加密的密钥给自己传输的数据进行加密，传输给服务器端，服务端用之前客户端传输过来的密钥进行对称结密，完成通信。</li></ol>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;参考：&lt;a href=&quot;https://segmentfault.com/a/1190000012196642&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://segmentfault.com/a/1190000012196642&lt;/a&gt;&lt;br&gt;作为一个web开发者，对于https和http肯定要有所了解，现在的我对于深层次的https通信看着还不是太懂，但是对于https和http的差别，记得有一次去中科招商的时候面试有问到过。写这篇文章的时候，主要是方便自己看的时候理解。&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="网络" scheme="http://yoursite.com/categories/%E7%BD%91%E7%BB%9C/"/>
-    
-    
-      <category term="网络" scheme="http://yoursite.com/tags/%E7%BD%91%E7%BB%9C/"/>
-    
-      <category term="https" scheme="http://yoursite.com/tags/https/"/>
     
   </entry>
   

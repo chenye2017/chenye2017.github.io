@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Linux,环境,lnmp," />
+  <meta name="keywords" content="PHP,闭包," />
 
 
 
@@ -81,18 +81,18 @@
 
 
 
-<meta name="description" content="关于lnmp环境的yum安装。作为一个phper，肯定得熟悉。之前写过关于在windows下php环境的搭建··咳咳咳，其实那根本算是搭建，像xampp都是把环境搭配好了，自己只是做了配置虚拟主机，然后运行框架。框架在我的理解中本身除了yaf之类的安装，主流的框架tp，yii，laravel更像是一个文件夹，代码的集合体，这个文件夹中各个子文件夹联系紧密，成为一个整体。当外来请求通过lamp进入到">
-<meta name="keywords" content="Linux,环境,lnmp">
+<meta name="description" content="咱是写PHP的，可是PHP的很多特性咱都不是很熟，比如trait，闭包，咱不能只局限于表单的操作，不能只局限于面向过程的写法，记录下来那些年很少接触的特性。就从PHP的 闭包 开始咯">
+<meta name="keywords" content="PHP,闭包">
 <meta property="og:type" content="article">
-<meta property="og:title" content="lnmp yum安装">
-<meta property="og:url" content="http://yoursite.com/2018/01/19/lnmp-yum安装/index.html">
+<meta property="og:title" content="PHP闭包">
+<meta property="og:url" content="http://yoursite.com/2018/03/26/PHP闭包/index.html">
 <meta property="og:site_name" content="语法糖的博客">
-<meta property="og:description" content="关于lnmp环境的yum安装。作为一个phper，肯定得熟悉。之前写过关于在windows下php环境的搭建··咳咳咳，其实那根本算是搭建，像xampp都是把环境搭配好了，自己只是做了配置虚拟主机，然后运行框架。框架在我的理解中本身除了yaf之类的安装，主流的框架tp，yii，laravel更像是一个文件夹，代码的集合体，这个文件夹中各个子文件夹联系紧密，成为一个整体。当外来请求通过lamp进入到">
+<meta property="og:description" content="咱是写PHP的，可是PHP的很多特性咱都不是很熟，比如trait，闭包，咱不能只局限于表单的操作，不能只局限于面向过程的写法，记录下来那些年很少接触的特性。就从PHP的 闭包 开始咯">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-02-23T12:46:31.141Z">
+<meta property="og:updated_time" content="2018-03-26T14:11:30.145Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="lnmp yum安装">
-<meta name="twitter:description" content="关于lnmp环境的yum安装。作为一个phper，肯定得熟悉。之前写过关于在windows下php环境的搭建··咳咳咳，其实那根本算是搭建，像xampp都是把环境搭配好了，自己只是做了配置虚拟主机，然后运行框架。框架在我的理解中本身除了yaf之类的安装，主流的框架tp，yii，laravel更像是一个文件夹，代码的集合体，这个文件夹中各个子文件夹联系紧密，成为一个整体。当外来请求通过lamp进入到">
+<meta name="twitter:title" content="PHP闭包">
+<meta name="twitter:description" content="咱是写PHP的，可是PHP的很多特性咱都不是很熟，比如trait，闭包，咱不能只局限于表单的操作，不能只局限于面向过程的写法，记录下来那些年很少接触的特性。就从PHP的 闭包 开始咯">
 
 
 
@@ -122,13 +122,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/01/19/lnmp-yum安装/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/03/26/PHP闭包/"/>
 
 
 
 
 
-  <title>lnmp yum安装 | 语法糖的博客</title>
+  <title>PHP闭包 | 语法糖的博客</title>
   
 
 
@@ -293,7 +293,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/19/lnmp-yum安装/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/26/PHP闭包/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="chenye2017">
@@ -310,7 +310,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">lnmp yum安装</h1>
+          <h1 class="post-title" itemprop="name headline">PHP闭包</h1>
         
 
         <div class="post-meta">
@@ -322,8 +322,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-19T15:21:24+08:00">
-                2018-01-19
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-26T22:10:03+08:00">
+                2018-03-26
               </time>
             
 
@@ -345,8 +345,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Linux/" itemprop="url" rel="index">
-                    <span itemprop="name">Linux</span>
+                  <a href="/categories/PHP/" itemprop="url" rel="index">
+                    <span itemprop="name">PHP</span>
                   </a>
                 </span>
 
@@ -382,29 +382,41 @@
       
 
       
-        <p>关于lnmp环境的yum安装。作为一个phper，肯定得熟悉。之前写过关于在windows下php环境的搭建··咳咳咳，其实那根本算是搭建，像xampp都是把环境搭配好了，自己只是做了配置虚拟主机，然后运行框架。<br>框架在我的理解中本身除了yaf之类的安装，主流的框架tp，yii，laravel更像是一个文件夹，代码的集合体，这个文件夹中各个子文件夹联系紧密，成为一个整体。当外来请求通过lamp进入到入口文件，路由进入到控制器，模型层，数据库，变成一个有用的数据返回出来，再通过lamp返回给浏览器，上面的流程就很容易发现，简单的像apache,nginx里面的配置文件定义，只是让外来请求找到这个入口文件，进入到入口文件里面之后就靠框架的路由寻找具体的控制器了。<br>lamp环境方便的让外来请求比如对于index.php的请求，如果是直接在linux中，我么需要php (编译器) 可能还需要 -c指定配置文件的位置 文件.php,这样。但是如果是lamp，我们可以通过浏览器直接访问这个php文件。<br><a id="more"></a></p>
+        <p>咱是写PHP的，可是PHP的很多特性咱都不是很熟，比如trait，闭包，咱不能只局限于表单的操作，不能只局限于面向过程的写法，记录下来那些年很少接触的特性。就从PHP的 <strong>闭包</strong> 开始咯<br><a id="more"></a></p>
+<p>第一次接触闭包还是在js中，后来是在python中，最后才是php中！！!深刻的怀疑我是不是做php的。<br>php中闭包和js中还是不一样的，php中把匿名函数和闭包混为一谈，这让开始只知道js闭包的我好蛋疼，因为比如array_map 中经常写的回调（注意回调只是一种动作，匿名函数闭包或者是自定义函数只是实现回调的不同方法），还有最近很火的swoole，因为是异步的嘛，所以写了大量的回调函数，所以也属于闭包 ，虽然js和php的闭包有些不同但本质上还是封装函数的运行环境。<br>js:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">function out() &#123;</div><div class="line">        var a = 1;</div><div class="line">        var b = function(name) &#123;</div><div class="line">            console.log(a);</div><div class="line">            console.log(name)</div><div class="line">        &#125;</div><div class="line">        return b;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    var a = 2;</div><div class="line">    var name = &apos;cy&apos;;</div><div class="line">    var c= out();</div><div class="line">    c(name);</div></pre></td></tr></table></figure></p>
+<p>上面这段代码虽然简单，但是包含了几个重要的知识点：</p>
 <ol>
-<li>首先是yum源的安装，更新。</li>
+<li>js的闭包主要是靠两层函数的嵌套，然后通过调用外层的函数返回内层的函数，内层的函数可以调用外层函数中的变量，内层函数的执行可以通过后来调用的时候传入参数。</li>
 </ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">[root@localhost ~]# rpm -Uvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm</div><div class="line">[root@localhost ~]# rpm -Uvh https://mirror.webtatic.com/yum/el7/webtatic-release.rpm</div><div class="line">[root@localhost ~]# rpm -Uvh  http://dev.mysql.com/get/mysql57-community-release-el7-9.noarch.rpm</div></pre></td></tr></table></figure>
-<p>先说这个mysql yum安装，现在要通过这个社区版。</p>
-<p>然后剩下两个是为了安装第三方软件用的。这个epel以后可能经常用到，虽然没lamp好像只要这个webtatic就可以了。之前添加源的时候看过一篇文章，好像是说最好不要和官方源里面有内容冲突。这个epel很合适，大家都在用，当然自己也就用咯。</p>
-<ol>
-<li>yum安装nginx，mysql，php<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">[root@localhost ~]# yum -y install nginx</div><div class="line">[root@localhost ~]# yum -y install mysql-community-server</div><div class="line">[root@localhost ~]# yum -y install php70w-devel php70w.x86_64 php70w-cli.x86_64 php70w-common.x86_64 php70w-gd.x86_64 php70w-ldap.x86_64 php70w-mbstring.x86_64 php70w-mcrypt.x86_64  php70w-pdo.x86_64   php70w-mysqlnd  php70w-fpm php70w-opcache php70w-pecl-redis php70w-pecl-mongo</div></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>其实这里面比如php7安装的那几个我也不懂，据说把70w改成71w就能装7.1版本了。</p>
-<p>3.yum安装的一个好处是通过systemctl enable 能控制软件的开机启动 关闭，通过systemctl status 能看软件的状态，启动，关闭。默认安装的mysql没有密码，可以直接登录进去。据说要配置默认编码，utf8，但我好像没有配置，它自动就是utf8。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">[root@localhost ~]# vim /etc/my.cnf</div><div class="line">[mysqld]</div><div class="line">character_set_server=utf8</div><div class="line">init_connect=&apos;SET NAMES utf8&apos;</div><div class="line">[root@localhost ~]# systemctl restart mysqld    # 重启 MySQL</div></pre></td></tr></table></figure></p>
-<ol>
-<li>nginx的配置<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"></div><div class="line">location / &#123;</div><div class="line">    #定义首页索引文件的名称</div><div class="line">    index index.php index.html index.htm;   </div><div class="line">&#125;</div><div class="line"></div><div class="line"># PHP 脚本请求全部转发到 FastCGI处理. 使用FastCGI默认配置.</div><div class="line">location ~ .php$ &#123;</div><div class="line">    fastcgi_pass 127.0.0.1:9000;</div><div class="line">    fastcgi_index index.php;</div><div class="line">    fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name;</div><div class="line">    include fastcgi_params;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>注意这块document root的位置，要卸载location外面，我之前写在上面那个location里面，下面那个location获取不到。</p>
-<p>重启nginx，重启php-fpm.</p>
-<ol>
-<li>测试是否成功。<br>在nginx根目录下 &lt;?php echo phpinfo();die;</li>
-</ol>
-<p>看能不能输出php信息咯。其实还可以检测下和mysql的连接。</p>
+<p>php<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">class Foo</div><div class="line">&#123;</div><div class="line">    public function __call($method, $args)</div><div class="line">    &#123;</div><div class="line">        if(is_callable([$this, $method])) &#123;</div><div class="line">            return call_user_func_array($this-&gt;$method, $args);</div><div class="line">        &#125;</div><div class="line">        // else throw exception</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">$obj = new Foo(&apos;Sam&apos;);</div><div class="line">$obj-&gt;say = function () &#123;</div><div class="line">    return &apos;Hello World&apos;;</div><div class="line">&#125;;</div><div class="line">echo($obj-&gt;say());</div></pre></td></tr></table></figure></p>
+<p>当执行的say() 方法不存在的时候会自动执行<strong>call方法，然后method 传入是say方法，这里面args 因为是空，所以自动传入为空。<br>is_callable 方法判断这个$obj 实例中是否有这个方法，因为后面有定义$obj-&gt;say ,所以会自动调用。<br>call_user_func_array 会把前面这个$this-&gt;method 执行，后面args是传入的参数，相比较js就多了</strong>call() 部分。<br>上面还有一点没体现出来就是，闭包可以引用的变量是自己定义时候的父亲变量，js中可以直接在函数中使用，但是php中要用use关键字引入。</p>
+<p>后来的php<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">class Foo</div><div class="line">&#123;</div><div class="line">	</div><div class="line">&#125;</div><div class="line"></div><div class="line">$obj = new Foo(&apos;Sam&apos;);</div><div class="line">$obj-&gt;say = function () &#123;</div><div class="line">    return &apos;Hello World&apos;;</div><div class="line">&#125;;</div><div class="line">echo($obj-&gt;say-&gt;__invoke());</div></pre></td></tr></table></figure></p>
+<p>因为php的闭包都是一个closure类，而invoke 是这个类除了（construct 不能实例化，bind bindto 绑定方法之外的一个方法）。<br>但是这个类中不能使用this关键字，主要是这个this指代的是closure自身，因为js中this关键字老变，虽然这都被别人诟病，但相比较于php，他还需要手动绑定呢。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">class Foo</div><div class="line">&#123;</div><div class="line">    private $name;</div><div class="line"></div><div class="line">    function __construct($name)</div><div class="line">    &#123;</div><div class="line">        $this-&gt;name = $name;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">$obj = new Foo(&apos;Sam&apos;);</div><div class="line"></div><div class="line">$cl = function() &#123;</div><div class="line">    return &quot;Hello &quot; . $this-&gt;name;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">$cl = $cl-&gt;bindTo($obj, $obj);</div><div class="line">echo($cl());</div></pre></td></tr></table></figure></p>
+<blockquote>
+<p>我們不再執著該closure一定要動態成為 $obj的method，但要存取$obj property的目標不變，程式也不變，一樣使用$this。<br>假如我們能將$obj以手動注入的方式，讓closure內部的$this改指向$obj，我們就能達到如JavaScript的效果了。<br>$cl = $cl-&gt;bindTo($obj, $obj);<br>bindTo()如同__invoke()一樣，是closure物件內建的method，它的目的就是讓我們能手動注入一個物件，讓closure物件的$this指向手動注入的物件$obj。<br>因為在closure中我們有$this-&gt;name，經過bindTo()去手動注入 $obj後，$this已經改指向$obj，所以$this-&gt;name就相當於$obj-&gt;name。<br>根據bindTo()文件 :<br>若要讓closure物件只能存取其他物件的public變數，只傳第1個參數即可。<br>若要讓closure物件存取其他物件的private或protected變數，就要傳第2個參數。<br>bindTo()對於第2個參數的要求不嚴，有幾種傳法 :<br>傳進欲存取物件的class名稱，是字串。<br>傳進欲存取的物件也可以，bindTo()會自動得知該物件的class名稱。<br>在此就一併傳進與第一個參數相同的$obj。<br>echo($cl());<br>因為$obj已經透過bindTo() 手動注入進$cl()，此時$this已經指向$obj，所以執行$cl()就可順利存$obj的property</p>
+</blockquote>
+<p>Modern PHP<br>中对php闭包的重要方法bindTo的解释(注意闭包closure的bindTo方法本身是三个参数的，但因为第一个参数是闭包自身，所以经常$this-&gt;bindTo(arg1,arg2)这样去掉用）。</p>
+<p>接下来我们来看看bindTo方法，通过该方法，我们可以把闭包的内部状态绑定到其他对象上。这里bindTo方法的第二个参数显得尤为重要，其作用是指定绑定闭包的那个对象所属的PHP类，这样，闭包就可以在其他地方访问绑定闭包的对象中受保护和私有的成员变量。<br>你会发现，PHP框架经常使用bindTo方法把路由URL映射到匿名回调函数上，框架会把匿名回调函数绑定到应用对象上，这样在匿名函数中就可以使用$this关键字引用重要的应用对象：<br>class App {<br>    protected $routes = [];<br>    protected $responseStatus = ‘200 OK’;<br>    protected $responseContentType = ‘text/html’;<br>    protected $responseBody = ‘Hello World’;</p>
+<pre><code>public function addRoute($path, $callback) {
+    $this-&gt;routes[$path] = $callback-&gt;bindTo($this, __CLASS__);
+}
+
+public function dispatch($path) {
+    foreach ($this-&gt;routes as $routePath =&gt; $callback) {
+        if( $routePath === $path) {
+            $callback();
+        }
+    }
+    header(&apos;HTTP/1.1 &apos; . $this-&gt;responseStatus);
+    header(&apos;Content-Type: &apos; . $this-&gt;responseContentType);
+    header(&apos;Content-Length: &apos; . mb_strlen($this-&gt;responseBody));
+    echo $this-&gt;responseBody;
+}
+</code></pre><p>}<br>这里我们需要重点关注addRoute方法，这个方法的参数分别是一个路由路径和一个路由回调，dispatch方法的参数是当前HTTP请求的路径，它会调用匹配的路由回调。第9行是重点所在，我们将路由回调绑定到了当前的App实例上。这么做能够在回调函数中处理App实例的状态：<br>$app = new App();<br>$app-&gt;addRoute(‘/user’, function(){<br>    $this-&gt;responseContentType = ‘application/json;charset=utf8’;<br>    $this-&gt;responseBody = ‘世界你好’;<br>});<br>$app-&gt;dispatch(‘/user’)</p>
+<p>总结一下，闭包的bindTo方法的根本原因是闭包中$this关键字指向了自己，而不是指向某一个对象。</p>
+<p>Laravel<br>中对闭包的使用<br>IoC 容器<br>匿名函数可以从父作用域继承变量，而这个父作用域是定义该闭包的函数（不一定是调用它的函数）。<br>利用这个特性，我们可以实现一个简单的控制反转IoC容器：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div></pre></td><td class="code"><pre><div class="line">class Container</div><div class="line">&#123;</div><div class="line">    protected static $bindings;</div><div class="line"> </div><div class="line">    public static function bind($abstract, Closure $concrete)</div><div class="line">    &#123;</div><div class="line">        static::$bindings[$abstract] = $concrete;</div><div class="line">    &#125;</div><div class="line"> </div><div class="line">    public static function make($abstract)</div><div class="line">    &#123;</div><div class="line">        return call_user_func(static::$bindings[$abstract]);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"> </div><div class="line">class talk</div><div class="line">&#123;</div><div class="line">    public function greet($target)</div><div class="line">    &#123;</div><div class="line">        echo &apos;Hello &apos; . $target-&gt;getName();</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">class A</div><div class="line">&#123;</div><div class="line">    public function getName()</div><div class="line">    &#123;</div><div class="line">        return &apos;World&apos;;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"> </div><div class="line">// 创建一个talk类的实例</div><div class="line">$talk = new talk();</div><div class="line"> </div><div class="line">// 将A类绑定至容器，命名为foo</div><div class="line">Container::bind(&apos;foo&apos;, function() &#123;</div><div class="line">    return new A;</div><div class="line">&#125;);</div><div class="line"> </div><div class="line">// 通过容器取出实例</div><div class="line">$talk-&gt;greet(Container::make(&apos;foo&apos;)); // Hello World</div></pre></td></tr></table></figure></p>
+<p>上述例子中，只有在通过make方法获取实例的时候，实例才被创建，这样使得我们可以实现容器。<br>在Laravel框架底层也大量使用了闭包以及bindTo方法，利用好闭包可以实现更多的高级特性如事件触发等。</p>
+<p>laravel中的控制反转还不是很熟，以后多了解下</p>
 
       
     </div>
@@ -462,11 +474,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Linux/" rel="tag"><i class="fa fa-tag"></i> Linux</a>
+            <a href="/tags/PHP/" rel="tag"><i class="fa fa-tag"></i> PHP</a>
           
-            <a href="/tags/环境/" rel="tag"><i class="fa fa-tag"></i> 环境</a>
-          
-            <a href="/tags/lnmp/" rel="tag"><i class="fa fa-tag"></i> lnmp</a>
+            <a href="/tags/闭包/" rel="tag"><i class="fa fa-tag"></i> 闭包</a>
           
         </div>
       
@@ -479,8 +489,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/01/18/php安装扩展/" rel="next" title="php安装扩展">
-                <i class="fa fa-chevron-left"></i> php安装扩展
+              <a href="/2018/03/26/PHP魔术方法和魔术变量/" rel="next" title="PHP魔术方法和魔术变量">
+                <i class="fa fa-chevron-left"></i> PHP魔术方法和魔术变量
               </a>
             
           </div>
@@ -488,10 +498,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/01/19/lamp-源码编译/" rel="prev" title="lamp 源码编译">
-                lamp 源码编译 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
