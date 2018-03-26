@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="PHP,面向对象," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="语法糖的博客" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="有些东西如果不是经常使用，很容易忘记，比如魔术方法和魔术常量。最主要是当看一些基本原理的代码的时候经常用到，比如闭包的时候，希望自己在学习过程中能对文章中的内容进行补充，改造，而不是单纯的靠这些简单例子来记忆&amp;gt;">
+<meta name="keywords" content="PHP,面向对象">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PHP魔术方法和魔术变量">
+<meta property="og:url" content="http://yoursite.com/2018/03/26/PHP魔术方法和魔术变量/index.html">
+<meta property="og:site_name" content="语法糖的博客">
+<meta property="og:description" content="有些东西如果不是经常使用，很容易忘记，比如魔术方法和魔术常量。最主要是当看一些基本原理的代码的时候经常用到，比如闭包的时候，希望自己在学习过程中能对文章中的内容进行补充，改造，而不是单纯的靠这些简单例子来记忆&amp;gt;">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-03-26T10:57:55.035Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="PHP魔术方法和魔术变量">
+<meta name="twitter:description" content="有些东西如果不是经常使用，很容易忘记，比如魔术方法和魔术常量。最主要是当看一些基本原理的代码的时候经常用到，比如闭包的时候，希望自己在学习过程中能对文章中的内容进行补充，改造，而不是单纯的靠这些简单例子来记忆&amp;gt;">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/03/26/PHP魔术方法和魔术变量/"/>
+
+
+
+
+
+  <title>PHP魔术方法和魔术变量 | 语法糖的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+
+    <script type="text/javascript" src="/live2d/script.js"></script>
+    <canvas id="live2dcanvas" width="150" height="300" class="live2d"></canvas>
+    <style>
+      #live2dcanvas {
+        position: fixed;
+        right: 0px;
+        z-index: 999;
+        pointer-events: none;
+        bottom: -40px;
+      }
+    </style>
+    <script>loadlive2d("live2dcanvas" ,"/live2d/assets/wanko/wanko.model.json",0.5)</script>
+  
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">语法糖的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">爱动漫，热爱LOL</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+
+
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/26/PHP魔术方法和魔术变量/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="chenye2017">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/my.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="语法糖的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">PHP魔术方法和魔术变量</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-26T15:36:28+08:00">
+                2018-03-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/PHP/" itemprop="url" rel="index">
+                    <span itemprop="name">PHP</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>有些东西如果不是经常使用，很容易忘记，比如魔术方法和魔术常量。<br>最主要是当看一些基本原理的代码的时候经常用到，比如闭包的时候，希望自己在学习过程中能对文章中的内容进行补充，改造，而不是单纯的靠这些简单例子来记忆&gt;</p>
+<a id="more"></a>
+<h2 id="魔术方法-Magic-methods"><a href="#魔术方法-Magic-methods" class="headerlink" title="魔术方法(Magic methods)"></a>魔术方法(Magic methods)</h2><p>PHP中把以两个下划线<code>__</code>开头的方法称为魔术方法，这些方法在PHP中充当了举足轻重的作用。 魔术方法包括：</p>
+<ul>
+<li><code>__construct()</code>，类的构造函数</li>
+<li><code>__destruct()</code>，类的析构函数</li>
+<li><code>__call()</code>，在对象中调用一个不可访问方法时调用</li>
+<li><code>__callStatic()</code>，用静态方式中调用一个不可访问方法时调用</li>
+<li><code>__get()</code>，获得一个类的成员变量时调用</li>
+<li><code>__set()</code>，设置一个类的成员变量时调用</li>
+<li><code>__isset()</code>，当对不可访问属性调用<code>isset()</code>或<code>empty()</code>时调用</li>
+<li><code>__unset()</code>，当对不可访问属性调用<code>unset()</code>时被调用。</li>
+<li><code>__sleep()</code>，执行<code>serialize()</code>时，先会调用这个函数</li>
+<li><code>__wakeup()</code>，执行<code>unserialize()</code>时，先会调用这个函数</li>
+<li><code>__toString()</code>，类被当成字符串时的回应方法</li>
+<li><code>__invoke()</code>，调用函数的方式调用一个对象时的回应方法</li>
+<li><code>__set_state()</code>，调用<code>var_export()</code>导出类时，此静态方法会被调用。</li>
+<li><code>__clone()</code>，当对象复制完成时调用</li>
+</ul>
+<h3 id="construct-和-destruct"><a href="#construct-和-destruct" class="headerlink" title="__construct()和__destruct()"></a><code>__construct()</code>和<code>__destruct()</code></h3><p>构造函数和析构函数应该不陌生，他们在对象创建和消亡时被调用。例如我们需要打开一个文件，在对象创建时打开，对象消亡时关闭</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">&lt;?php </div><div class="line">class FileRead</div><div class="line">&#123;</div><div class="line">    protected $handle = NULL;</div><div class="line"></div><div class="line">    function __construct()&#123;</div><div class="line">        $this-&gt;handle = fopen(...);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    function __destruct()&#123;</div><div class="line">        fclose($this-&gt;handle);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">?&gt;</div></pre></td></tr></table></figure>
+<p>这两个方法在继承时可以扩展，例如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">&lt;?php </div><div class="line">class TmpFileRead extends FileRead</div><div class="line">&#123;</div><div class="line">    function __construct()&#123;</div><div class="line">        parent::__construct();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    function __destruct()&#123;</div><div class="line">        parent::__destruct();</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">?&gt;</div></pre></td></tr></table></figure>
+<h3 id="call-和-callStatic"><a href="#call-和-callStatic" class="headerlink" title="__call()和__callStatic()"></a><code>__call()</code>和<code>__callStatic()</code></h3><p>在对象中调用一个不可访问方法时会调用这两个方法，后者为静态方法。这两个方法我们在可变方法（Variable functions）调用中可能会用到。<br>这个方法和is_callable经常配合调用，注意是callable，不是callback， 不是回调。<br>callback 回调更多的可以理解成一种使用方式，而匿名函数则是用来满足这种使用方式的一种途径，还有别的方式能满足callback,比如直接定义一个函数，传入函数的名称（字符串，如果是匿名函数的话，要把这个匿名函数对应的变量传进去，二者还是有些不同的），只是这种方式使用起来比较麻烦，比较少而已</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">class MethodTest </div><div class="line">&#123;</div><div class="line">    public function __call ($name, $arguments) &#123;</div><div class="line">        echo &quot;Calling object method &apos;$name&apos; &quot;. implode(&apos;, &apos;, $arguments). &quot;\n&quot;;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public static function __callStatic ($name, $arguments) &#123;</div><div class="line">        echo &quot;Calling static method &apos;$name&apos; &quot;. implode(&apos;, &apos;, $arguments). &quot;\n&quot;;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">$obj = new MethodTest;</div><div class="line">$obj-&gt;runTest(&apos;in object context&apos;);</div><div class="line">MethodTest::runTest(&apos;in static context&apos;);</div><div class="line">?&gt;</div></pre></td></tr></table></figure>
+<h3 id="get-，-set-，-isset-和-unset"><a href="#get-，-set-，-isset-和-unset" class="headerlink" title="__get()，__set()，__isset()和__unset()"></a><code>__get()</code>，<code>__set()</code>，<code>__isset()</code>和<code>__unset()</code></h3><p>当get/set一个类的成员变量时调用这两个函数。例如我们将对象变量保存在另外一个数组中，而不是对象本身的成员变量<br>var_dump($this-&gt;aa)<br>$this-&gt;aa = ‘pp’<br>isset($this-&gt;aa)<br>empty($this-&gt;aa)<br>值的注意的是 isset 和 empty 触发的魔术方法好像只能返回true和false<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">&lt;?php </div><div class="line">class MethodTest</div><div class="line">&#123;</div><div class="line">    private $data = array();</div><div class="line"></div><div class="line">    public function __set($name, $value)&#123;</div><div class="line">        $this-&gt;data[$name] = $value;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public function __get($name)&#123;</div><div class="line">        if(array_key_exists($name, $this-&gt;data))</div><div class="line">            return $this-&gt;data[$name];</div><div class="line">        return NULL;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public function __isset($name)&#123;</div><div class="line">        return isset($this-&gt;data[$name])</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public function unset($name)&#123;</div><div class="line">        unset($this-&gt;data[$name]);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">?&gt;</div></pre></td></tr></table></figure></p>
+<h3 id="sleep-和-wakeup"><a href="#sleep-和-wakeup" class="headerlink" title="__sleep()和__wakeup()"></a><code>__sleep()</code>和<code>__wakeup()</code></h3><p>当我们在执行<code>serialize()</code>和<code>unserialize()</code>时，会先调用这两个函数。例如我们在序列化一个对象时，这个对象有一个数据库链接，想要在反序列化中恢复链接状态，则可以通过重构这两个函数来实现链接的恢复。（还没有用到过）例子如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">class Connection </div><div class="line">&#123;</div><div class="line">    protected $link;</div><div class="line">    private $server, $username, $password, $db;</div><div class="line"></div><div class="line">    public function __construct($server, $username, $password, $db)</div><div class="line">    &#123;</div><div class="line">        $this-&gt;server = $server;</div><div class="line">        $this-&gt;username = $username;</div><div class="line">        $this-&gt;password = $password;</div><div class="line">        $this-&gt;db = $db;</div><div class="line">        $this-&gt;connect();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    private function connect()</div><div class="line">    &#123;</div><div class="line">        $this-&gt;link = mysql_connect($this-&gt;server, $this-&gt;username, $this-&gt;password);</div><div class="line">        mysql_select_db($this-&gt;db, $this-&gt;link);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public function __sleep()</div><div class="line">    &#123;</div><div class="line">        return array(&apos;server&apos;, &apos;username&apos;, &apos;password&apos;, &apos;db&apos;);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public function __wakeup()</div><div class="line">    &#123;</div><div class="line">        $this-&gt;connect();</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">?&gt;</div></pre></td></tr></table></figure>
+<h3 id="toString-NaN"><a href="#toString-NaN" class="headerlink" title="__toString()"></a><code>__toString()</code></h3><p>对象当成字符串时的回应方法。例如使用<code>echo $obj;</code>来输出一个对象</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">// Declare a simple class</div><div class="line">class TestClass</div><div class="line">&#123;</div><div class="line">    public function __toString() &#123;</div><div class="line">        return &apos;this is a object&apos;;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">$class = new TestClass();</div><div class="line">echo $class;</div><div class="line">?&gt;</div></pre></td></tr></table></figure>
+<p>这个方法只能返回字符串，而且不可以在这个方法中抛出异常，否则会出现致命错误。</p>
+<h3 id="invoke"><a href="#invoke" class="headerlink" title="__invoke()"></a><code>__invoke()</code></h3><p>调用函数的方式调用一个对象时的回应方法。如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">class CallableClass </div><div class="line">&#123;</div><div class="line">    function __invoke() &#123;</div><div class="line">        echo &apos;this is a object&apos;;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">$obj = new CallableClass;</div><div class="line">var_dump(is_callable($obj));</div><div class="line">?&gt;</div></pre></td></tr></table></figure>
+<h3 id="set-state"><a href="#set-state" class="headerlink" title="__set_state()"></a><code>__set_state()</code></h3><p>调用<code>var_export()</code>导出类时，此静态方法会被调用。注意var_dump很强大，直接输出了，并不会触发。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">class A</div><div class="line">&#123;</div><div class="line">    public $var1;</div><div class="line">    public $var2;</div><div class="line"></div><div class="line">    public static function __set_state ($an_array) &#123;</div><div class="line">        $obj = new A;</div><div class="line">        $obj-&gt;var1 = $an_array[&apos;var1&apos;];</div><div class="line">        $obj-&gt;var2 = $an_array[&apos;var2&apos;];</div><div class="line">        return $obj;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">$a = new A;</div><div class="line">$a-&gt;var1 = 5;</div><div class="line">$a-&gt;var2 = &apos;foo&apos;;</div><div class="line">var_dump(var_export($a));</div><div class="line">?&gt;</div></pre></td></tr></table></figure>
+<h3 id="clone"><a href="#clone" class="headerlink" title="__clone()"></a><code>__clone()</code></h3><p>当对象复制完成时调用。例如在<a href="http://yansu.org/2014/04/19/sigleton-design-pattern.html" target="_blank" rel="external">设计模式详解及PHP实现：单例模式</a>一文中提到的单例模式实现方式，利用这个函数来防止对象被克隆。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">&lt;?php </div><div class="line">public class Singleton &#123;</div><div class="line">    private static $_instance = NULL;</div><div class="line"></div><div class="line">    // 私有构造方法 </div><div class="line">    private function __construct() &#123;&#125;</div><div class="line"></div><div class="line">    public static function getInstance() &#123;</div><div class="line">        if (is_null(self::$_instance)) &#123;</div><div class="line">            self::$_instance = new Singleton();</div><div class="line">        &#125;</div><div class="line">        return self::$_instance;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    // 防止克隆实例</div><div class="line">    public function __clone()&#123;</div><div class="line">        die(&apos;Clone is not allowed.&apos; . E_USER_ERROR);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">?&gt;</div></pre></td></tr></table></figure>
+<h2 id="魔术常量-Magic-constants"><a href="#魔术常量-Magic-constants" class="headerlink" title="魔术常量(Magic constants)"></a>魔术常量(Magic constants)</h2><p>PHP中的常量大部分都是不变的，但是有8个常量会随着他们所在代码位置的变化而变化，这8个常量被称为魔术常量。</p>
+<ul>
+<li><code>__LINE__</code>，文件中的当前行号</li>
+<li><code>__FILE__</code>，文件的完整路径和文件名</li>
+<li><code>__DIR__</code>，文件所在的目录</li>
+<li><code>__FUNCTION__</code>，函数名称</li>
+<li><code>__CLASS__</code>，类的名称</li>
+<li><code>__TRAIT__</code>，Trait的名字</li>
+<li><code>__METHOD__</code>，类的方法名</li>
+<li><code>__NAMESPACE__</code>，当前命名空间的名称</li>
+</ul>
+<p>这些魔术常量常常被用于获得当前环境信息或者记录日志。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wp.png" alt="chenye2017 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/zp1.png" alt="chenye2017 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+  <div>
+  
+    <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+
+  
+  </div>
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/PHP/" rel="tag"><i class="fa fa-tag"></i> PHP</a>
+          
+            <a href="/tags/面向对象/" rel="tag"><i class="fa fa-tag"></i> 面向对象</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/26/PHP函数/" rel="next" title="PHP函数">
+                <i class="fa fa-chevron-left"></i> PHP函数
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+<span class="jiathis_txt">分享到：</span>
+<a class="jiathis_button_fav">收藏夹</a>
+<a class="jiathis_button_copy">复制网址</a>
+<a class="jiathis_button_email">邮件</a>
+<a class="jiathis_button_weixin">微信</a>
+<a class="jiathis_button_qzone">QQ空间</a>
+<a class="jiathis_button_tqq">腾讯微博</a>
+<a class="jiathis_button_douban">豆瓣</a>
+<a class="jiathis_button_share">一键分享</a>
+
+<a href="http://www.jiathis.com/share?uid=2140465" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+var jiathis_config={
+  data_track_clickback:true,
+  summary:"",
+  shortUrl:false,
+  hideMore:false
+}
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/my.png"
+                alt="chenye2017" />
+            
+              <p class="site-author-name" itemprop="name">chenye2017</p>
+              <p class="site-description motion-element" itemprop="description">想用善良改变世界</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">28</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">42</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/chenye2017" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:1967196626@qq.com" target="_blank" title="E-Mail">
+                    
+                      <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://weibo.com/3215254425" target="_blank" title="Weibo">
+                    
+                      <i class="fa fa-fw fa-globe"></i>Weibo</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-weibo"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.baidu.com/" title="百度" target="_blank">百度</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.google.com/" title="谷歌" target="_blank">谷歌</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#魔术方法-Magic-methods"><span class="nav-number">1.</span> <span class="nav-text">魔术方法(Magic methods)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#construct-和-destruct"><span class="nav-number">1.1.</span> <span class="nav-text">__construct()和__destruct()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#call-和-callStatic"><span class="nav-number">1.2.</span> <span class="nav-text">__call()和__callStatic()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#get-，-set-，-isset-和-unset"><span class="nav-number">1.3.</span> <span class="nav-text">__get()，__set()，__isset()和__unset()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sleep-和-wakeup"><span class="nav-number">1.4.</span> <span class="nav-text">__sleep()和__wakeup()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#toString-NaN"><span class="nav-number">1.5.</span> <span class="nav-text">__toString()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#invoke"><span class="nav-number">1.6.</span> <span class="nav-text">__invoke()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#set-state"><span class="nav-number">1.7.</span> <span class="nav-text">__set_state()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#clone"><span class="nav-number">1.8.</span> <span class="nav-text">__clone()</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#魔术常量-Magic-constants"><span class="nav-number">2.</span> <span class="nav-text">魔术常量(Magic constants)</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">chenye2017</span>
+
+  
+</div>
+
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span> |
+</span>
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.3</div>
+
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count"> | 博客全站共32.5k字</span>
+</div>
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

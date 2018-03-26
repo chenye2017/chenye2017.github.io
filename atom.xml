@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-03-24T07:15:07.336Z</updated>
+  <updated>2018-03-26T10:57:55.035Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,58 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>PHP魔术方法和魔术变量</title>
+    <link href="http://yoursite.com/2018/03/26/PHP%E9%AD%94%E6%9C%AF%E6%96%B9%E6%B3%95%E5%92%8C%E9%AD%94%E6%9C%AF%E5%8F%98%E9%87%8F/"/>
+    <id>http://yoursite.com/2018/03/26/PHP魔术方法和魔术变量/</id>
+    <published>2018-03-26T07:36:28.000Z</published>
+    <updated>2018-03-26T10:57:55.035Z</updated>
+    
+    <content type="html"><![CDATA[<p>有些东西如果不是经常使用，很容易忘记，比如魔术方法和魔术常量。<br>最主要是当看一些基本原理的代码的时候经常用到，比如闭包的时候，希望自己在学习过程中能对文章中的内容进行补充，改造，而不是单纯的靠这些简单例子来记忆&gt;</p><a id="more"></a><h2 id="魔术方法-Magic-methods"><a href="#魔术方法-Magic-methods" class="headerlink" title="魔术方法(Magic methods)"></a>魔术方法(Magic methods)</h2><p>PHP中把以两个下划线<code>__</code>开头的方法称为魔术方法，这些方法在PHP中充当了举足轻重的作用。 魔术方法包括：</p><ul><li><code>__construct()</code>，类的构造函数</li><li><code>__destruct()</code>，类的析构函数</li><li><code>__call()</code>，在对象中调用一个不可访问方法时调用</li><li><code>__callStatic()</code>，用静态方式中调用一个不可访问方法时调用</li><li><code>__get()</code>，获得一个类的成员变量时调用</li><li><code>__set()</code>，设置一个类的成员变量时调用</li><li><code>__isset()</code>，当对不可访问属性调用<code>isset()</code>或<code>empty()</code>时调用</li><li><code>__unset()</code>，当对不可访问属性调用<code>unset()</code>时被调用。</li><li><code>__sleep()</code>，执行<code>serialize()</code>时，先会调用这个函数</li><li><code>__wakeup()</code>，执行<code>unserialize()</code>时，先会调用这个函数</li><li><code>__toString()</code>，类被当成字符串时的回应方法</li><li><code>__invoke()</code>，调用函数的方式调用一个对象时的回应方法</li><li><code>__set_state()</code>，调用<code>var_export()</code>导出类时，此静态方法会被调用。</li><li><code>__clone()</code>，当对象复制完成时调用</li></ul><h3 id="construct-和-destruct"><a href="#construct-和-destruct" class="headerlink" title="__construct()和__destruct()"></a><code>__construct()</code>和<code>__destruct()</code></h3><p>构造函数和析构函数应该不陌生，他们在对象创建和消亡时被调用。例如我们需要打开一个文件，在对象创建时打开，对象消亡时关闭</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">&lt;?php </div><div class="line">class FileRead</div><div class="line">&#123;</div><div class="line">    protected $handle = NULL;</div><div class="line"></div><div class="line">    function __construct()&#123;</div><div class="line">        $this-&gt;handle = fopen(...);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    function __destruct()&#123;</div><div class="line">        fclose($this-&gt;handle);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">?&gt;</div></pre></td></tr></table></figure><p>这两个方法在继承时可以扩展，例如：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">&lt;?php </div><div class="line">class TmpFileRead extends FileRead</div><div class="line">&#123;</div><div class="line">    function __construct()&#123;</div><div class="line">        parent::__construct();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    function __destruct()&#123;</div><div class="line">        parent::__destruct();</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">?&gt;</div></pre></td></tr></table></figure><h3 id="call-和-callStatic"><a href="#call-和-callStatic" class="headerlink" title="__call()和__callStatic()"></a><code>__call()</code>和<code>__callStatic()</code></h3><p>在对象中调用一个不可访问方法时会调用这两个方法，后者为静态方法。这两个方法我们在可变方法（Variable functions）调用中可能会用到。<br>这个方法和is_callable经常配合调用，注意是callable，不是callback， 不是回调。<br>callback 回调更多的可以理解成一种使用方式，而匿名函数则是用来满足这种使用方式的一种途径，还有别的方式能满足callback,比如直接定义一个函数，传入函数的名称（字符串，如果是匿名函数的话，要把这个匿名函数对应的变量传进去，二者还是有些不同的），只是这种方式使用起来比较麻烦，比较少而已</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">class MethodTest </div><div class="line">&#123;</div><div class="line">    public function __call ($name, $arguments) &#123;</div><div class="line">        echo &quot;Calling object method &apos;$name&apos; &quot;. implode(&apos;, &apos;, $arguments). &quot;\n&quot;;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public static function __callStatic ($name, $arguments) &#123;</div><div class="line">        echo &quot;Calling static method &apos;$name&apos; &quot;. implode(&apos;, &apos;, $arguments). &quot;\n&quot;;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">$obj = new MethodTest;</div><div class="line">$obj-&gt;runTest(&apos;in object context&apos;);</div><div class="line">MethodTest::runTest(&apos;in static context&apos;);</div><div class="line">?&gt;</div></pre></td></tr></table></figure><h3 id="get-，-set-，-isset-和-unset"><a href="#get-，-set-，-isset-和-unset" class="headerlink" title="__get()，__set()，__isset()和__unset()"></a><code>__get()</code>，<code>__set()</code>，<code>__isset()</code>和<code>__unset()</code></h3><p>当get/set一个类的成员变量时调用这两个函数。例如我们将对象变量保存在另外一个数组中，而不是对象本身的成员变量<br>var_dump($this-&gt;aa)<br>$this-&gt;aa = ‘pp’<br>isset($this-&gt;aa)<br>empty($this-&gt;aa)<br>值的注意的是 isset 和 empty 触发的魔术方法好像只能返回true和false<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">&lt;?php </div><div class="line">class MethodTest</div><div class="line">&#123;</div><div class="line">    private $data = array();</div><div class="line"></div><div class="line">    public function __set($name, $value)&#123;</div><div class="line">        $this-&gt;data[$name] = $value;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public function __get($name)&#123;</div><div class="line">        if(array_key_exists($name, $this-&gt;data))</div><div class="line">            return $this-&gt;data[$name];</div><div class="line">        return NULL;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public function __isset($name)&#123;</div><div class="line">        return isset($this-&gt;data[$name])</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public function unset($name)&#123;</div><div class="line">        unset($this-&gt;data[$name]);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">?&gt;</div></pre></td></tr></table></figure></p><h3 id="sleep-和-wakeup"><a href="#sleep-和-wakeup" class="headerlink" title="__sleep()和__wakeup()"></a><code>__sleep()</code>和<code>__wakeup()</code></h3><p>当我们在执行<code>serialize()</code>和<code>unserialize()</code>时，会先调用这两个函数。例如我们在序列化一个对象时，这个对象有一个数据库链接，想要在反序列化中恢复链接状态，则可以通过重构这两个函数来实现链接的恢复。（还没有用到过）例子如下：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">class Connection </div><div class="line">&#123;</div><div class="line">    protected $link;</div><div class="line">    private $server, $username, $password, $db;</div><div class="line"></div><div class="line">    public function __construct($server, $username, $password, $db)</div><div class="line">    &#123;</div><div class="line">        $this-&gt;server = $server;</div><div class="line">        $this-&gt;username = $username;</div><div class="line">        $this-&gt;password = $password;</div><div class="line">        $this-&gt;db = $db;</div><div class="line">        $this-&gt;connect();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    private function connect()</div><div class="line">    &#123;</div><div class="line">        $this-&gt;link = mysql_connect($this-&gt;server, $this-&gt;username, $this-&gt;password);</div><div class="line">        mysql_select_db($this-&gt;db, $this-&gt;link);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public function __sleep()</div><div class="line">    &#123;</div><div class="line">        return array(&apos;server&apos;, &apos;username&apos;, &apos;password&apos;, &apos;db&apos;);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public function __wakeup()</div><div class="line">    &#123;</div><div class="line">        $this-&gt;connect();</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">?&gt;</div></pre></td></tr></table></figure><h3 id="toString-NaN"><a href="#toString-NaN" class="headerlink" title="__toString()"></a><code>__toString()</code></h3><p>对象当成字符串时的回应方法。例如使用<code>echo $obj;</code>来输出一个对象</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">// Declare a simple class</div><div class="line">class TestClass</div><div class="line">&#123;</div><div class="line">    public function __toString() &#123;</div><div class="line">        return &apos;this is a object&apos;;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">$class = new TestClass();</div><div class="line">echo $class;</div><div class="line">?&gt;</div></pre></td></tr></table></figure><p>这个方法只能返回字符串，而且不可以在这个方法中抛出异常，否则会出现致命错误。</p><h3 id="invoke"><a href="#invoke" class="headerlink" title="__invoke()"></a><code>__invoke()</code></h3><p>调用函数的方式调用一个对象时的回应方法。如下</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">class CallableClass </div><div class="line">&#123;</div><div class="line">    function __invoke() &#123;</div><div class="line">        echo &apos;this is a object&apos;;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">$obj = new CallableClass;</div><div class="line">var_dump(is_callable($obj));</div><div class="line">?&gt;</div></pre></td></tr></table></figure><h3 id="set-state"><a href="#set-state" class="headerlink" title="__set_state()"></a><code>__set_state()</code></h3><p>调用<code>var_export()</code>导出类时，此静态方法会被调用。注意var_dump很强大，直接输出了，并不会触发。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">class A</div><div class="line">&#123;</div><div class="line">    public $var1;</div><div class="line">    public $var2;</div><div class="line"></div><div class="line">    public static function __set_state ($an_array) &#123;</div><div class="line">        $obj = new A;</div><div class="line">        $obj-&gt;var1 = $an_array[&apos;var1&apos;];</div><div class="line">        $obj-&gt;var2 = $an_array[&apos;var2&apos;];</div><div class="line">        return $obj;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">$a = new A;</div><div class="line">$a-&gt;var1 = 5;</div><div class="line">$a-&gt;var2 = &apos;foo&apos;;</div><div class="line">var_dump(var_export($a));</div><div class="line">?&gt;</div></pre></td></tr></table></figure><h3 id="clone"><a href="#clone" class="headerlink" title="__clone()"></a><code>__clone()</code></h3><p>当对象复制完成时调用。例如在<a href="http://yansu.org/2014/04/19/sigleton-design-pattern.html" target="_blank" rel="external">设计模式详解及PHP实现：单例模式</a>一文中提到的单例模式实现方式，利用这个函数来防止对象被克隆。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">&lt;?php </div><div class="line">public class Singleton &#123;</div><div class="line">    private static $_instance = NULL;</div><div class="line"></div><div class="line">    // 私有构造方法 </div><div class="line">    private function __construct() &#123;&#125;</div><div class="line"></div><div class="line">    public static function getInstance() &#123;</div><div class="line">        if (is_null(self::$_instance)) &#123;</div><div class="line">            self::$_instance = new Singleton();</div><div class="line">        &#125;</div><div class="line">        return self::$_instance;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    // 防止克隆实例</div><div class="line">    public function __clone()&#123;</div><div class="line">        die(&apos;Clone is not allowed.&apos; . E_USER_ERROR);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">?&gt;</div></pre></td></tr></table></figure><h2 id="魔术常量-Magic-constants"><a href="#魔术常量-Magic-constants" class="headerlink" title="魔术常量(Magic constants)"></a>魔术常量(Magic constants)</h2><p>PHP中的常量大部分都是不变的，但是有8个常量会随着他们所在代码位置的变化而变化，这8个常量被称为魔术常量。</p><ul><li><code>__LINE__</code>，文件中的当前行号</li><li><code>__FILE__</code>，文件的完整路径和文件名</li><li><code>__DIR__</code>，文件所在的目录</li><li><code>__FUNCTION__</code>，函数名称</li><li><code>__CLASS__</code>，类的名称</li><li><code>__TRAIT__</code>，Trait的名字</li><li><code>__METHOD__</code>，类的方法名</li><li><code>__NAMESPACE__</code>，当前命名空间的名称</li></ul><p>这些魔术常量常常被用于获得当前环境信息或者记录日志。</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;有些东西如果不是经常使用，很容易忘记，比如魔术方法和魔术常量。&lt;br&gt;最主要是当看一些基本原理的代码的时候经常用到，比如闭包的时候，希望自己在学习过程中能对文章中的内容进行补充，改造，而不是单纯的靠这些简单例子来记忆&amp;gt;&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="PHP" scheme="http://yoursite.com/categories/PHP/"/>
+    
+    
+      <category term="PHP" scheme="http://yoursite.com/tags/PHP/"/>
+    
+      <category term="面向对象" scheme="http://yoursite.com/tags/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>PHP函数</title>
+    <link href="http://yoursite.com/2018/03/26/PHP%E5%87%BD%E6%95%B0/"/>
+    <id>http://yoursite.com/2018/03/26/PHP函数/</id>
+    <published>2018-03-26T06:12:29.000Z</published>
+    <updated>2018-03-26T06:12:29.456Z</updated>
+    
+    <summary type="html">
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>PHP知识点</title>
+    <link href="http://yoursite.com/2018/03/26/PHP%E7%9F%A5%E8%AF%86%E7%82%B9/"/>
+    <id>http://yoursite.com/2018/03/26/PHP知识点/</id>
+    <published>2018-03-26T06:08:38.000Z</published>
+    <updated>2018-03-26T06:08:38.135Z</updated>
+    
+    <summary type="html">
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>hi , swoole</title>
@@ -450,90 +502,6 @@
       <category term="网络" scheme="http://yoursite.com/tags/%E7%BD%91%E7%BB%9C/"/>
     
       <category term="https" scheme="http://yoursite.com/tags/https/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>工具分享</title>
-    <link href="http://yoursite.com/2017/11/29/%E5%B7%A5%E5%85%B7%E5%88%86%E4%BA%AB/"/>
-    <id>http://yoursite.com/2017/11/29/工具分享/</id>
-    <published>2017-11-29T15:06:18.000Z</published>
-    <updated>2018-03-08T03:02:17.090Z</updated>
-    
-    <content type="html"><![CDATA[<p>这篇博客的目的就是把自己平时用的比较顺手，方便能提升效率的工具分享给大家，互相交流，提升工作效率</p><ol><li><p>Evernote 一款记笔记的工具，之所以用这个，是因为刚开始编程的时候，有一次记笔记，当时用的还是word，然后没保存，然后····大家都懂得，记得那时写了挺久的关于php的笔记，不知道你们有没有相同的感觉，即使再看一遍书，很容易把笔记都能写回来，但是心里还是很难受，于是就开始用这款印象笔记了，不知道没网能不能用，···因为我一直在有网的情况下使用，然后他可以最多三个终端上使用（免费版），还有就是会有冲突的，记得冲突的时候及时查看，然后修改就好了，不要像我一样攒着很多（听说有道云也挺不错，但是没有用过）</p></li><li><p>简书  我用他主要是因为他上面写文章（编辑器可以调整成md）可以一边写，一遍预览</p></li><li><p>七牛云 主要用来做图床（写md的时候用的啦）</p></li><li><p>phpstorm  真的好好用（下面的terminal，还有新建文件能自动git添加等等）</p><p>可以快速打开文件，不用在项目中找（ctrl+alt+n）</p><p>本文搜索 ctrl + f</p><p>全局搜索 ctrl + shift +f </p><p>回退 ctrl + alt + 左方向键</p><p>大段注释 ctrl +shift + /</p><p>alt + 上下键  上下方法切换</p><p>alt + 左右键 左右tab页切换</p><p>本行注释  不太记得了</p><p>应该还有很多，但不太记得了（创建文件自动添加命名空间）</p><p>面板上的类的结构</p></li><li><p>百度云，现在的百度云下载速度受限制了，只有开通会员才会下载速度贼猛，百度干净云帮你解决疑难杂症， 链接: <a href="https://pan.baidu.com/s/1dFzqZK1" target="_blank" rel="external">https://pan.baidu.com/s/1dFzqZK1</a> 密码: cjrr，直接下载是个安装好的文件包，点击baiduyunguanjia.exe,，然后就当做普通的百度云用就好了，速度能到4 5m，··当然这和你本身的网速也有关（记得点击召唤大神提速）</p></li><li><p>git bash 命令行，有很多linux命令都可以使用，比如ll这种（直接在git官网下载git.exe,然后安装后就直接会撞上这个）windows有个很有用的命令,explorer .,这是打开当前文件夹，图形化界面的形式（记得xampp也有这个按钮）</p></li></ol>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;这篇博客的目的就是把自己平时用的比较顺手，方便能提升效率的工具分享给大家，互相交流，提升工作效率&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;Evernote 一款记笔记的工具，之所以用这个，是因为刚开始编程的时候，有一次记笔记，当时用的还是word，然后没保存，然后····大家都懂得
-      
-    
-    </summary>
-    
-      <category term="工具" scheme="http://yoursite.com/categories/%E5%B7%A5%E5%85%B7/"/>
-    
-    
-      <category term="工具" scheme="http://yoursite.com/tags/%E5%B7%A5%E5%85%B7/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Linux常用命令总结</title>
-    <link href="http://yoursite.com/2017/11/28/Linux%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E6%80%BB%E7%BB%93/"/>
-    <id>http://yoursite.com/2017/11/28/Linux常用命令总结/</id>
-    <published>2017-11-27T17:20:28.000Z</published>
-    <updated>2018-03-21T07:41:57.258Z</updated>
-    
-    <content type="html"><![CDATA[<ol><li>netstat -an 展示所有的端口号，-a 表示包括tcp和utp，-n表示不用域名代替ip地址</li><li>ll -a ls-la  展示该目录下所有文件包括隐藏文件</li><li>cd  进入目录，~ 普通用户的家目录 /home/vagrant, root用户 /home</li><li>pwd 展示路径</li><li>mkdir  创建目录</li><li>chmod -R (文件夹)  755 修改权限</li><li>chown root:root 文件名 修改文件所有者和组</li><li>chgrp  修改组</li><li>useradd  添加用户</li><li>passwd 修改密码  （切换到当前用户下就可以修改了哦，不知道怎么修改别的用户的）</li><li>groupadd 添加组 </li><li>touch 新建文件</li><li>echo 11 &gt;&gt; 文件名 把这个内容输出到文件中</li><li>vim  i 修改模式 ：wq 保存  ：q 退出不保存 ：q！强制退出  /  查找  ：num 多少行  ：$末尾  </li><li>cat  查看</li><li>echo 输出，比如输出当前进程号 echo  $$ (PID的值代表的就是进程号)</li><li>export 设置环境变量 export FOO = foo ,让当前环境变量立即生效，source ~/.bash_profile 执行这个脚本文件（source在当前进程中直接执行而不是复制子进程执行）感觉直接在命令行这样export FOO = foo 好像就直接生效了，但是如果修改bash_profile 文件的话，要执行source才能生效</li><li>env 查看环境变量，比如查看刚刚的环境变量是否生效 env | grep FOO </li></ol><p>常用端口号 ：http 80 https 443</p><p>mysql  3306</p><p>redis 忘记了</p><p>ssh 22</p><p>~代表家目录，root用户 /root,普通用户/home/用户名</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;ol&gt;
-&lt;li&gt;netstat -an 展示所有的端口号，-a 表示包括tcp和utp，-n表示不用域名代替ip地址&lt;/li&gt;
-&lt;li&gt;ll -a ls-la  展示该目录下所有文件包括隐藏文件&lt;/li&gt;
-&lt;li&gt;cd  进入目录，~ 普通用户的家目录 /home/vagran
-      
-    
-    </summary>
-    
-      <category term="Linux" scheme="http://yoursite.com/categories/Linux/"/>
-    
-    
-      <category term="Linux" scheme="http://yoursite.com/tags/Linux/"/>
-    
-      <category term="命令" scheme="http://yoursite.com/tags/%E5%91%BD%E4%BB%A4/"/>
-    
-      <category term="工具" scheme="http://yoursite.com/tags/%E5%B7%A5%E5%85%B7/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Linux网络管理</title>
-    <link href="http://yoursite.com/2017/11/28/Linux%E7%BD%91%E7%BB%9C%E7%AE%A1%E7%90%86/"/>
-    <id>http://yoursite.com/2017/11/28/Linux网络管理/</id>
-    <published>2017-11-27T17:17:16.000Z</published>
-    <updated>2018-02-23T12:46:15.239Z</updated>
-    
-    <content type="html"><![CDATA[<p>首先来介绍下有关网络的相关知识吧，iso，国际标准化组织  制定了 osi七层模型，但这个模型在现实生活中并没有使用，使用的是基于7层模型之上的tcp/ip 4层模型</p><p><img src="http://ozys8fka7.bkt.clouddn.com/Image2.png" alt="OSI七层模型"><br><a id="more"></a></p><p><img src="http://ozys8fka7.bkt.clouddn.com/Image.png" alt="tcp/ip四层模型"><br><img src="http://ozys8fka7.bkt.clouddn.com/Image1.png" alt="二者对应关系"></p><p>二者区别<br><img src="http://ozys8fka7.bkt.clouddn.com/Image6.png" alt=""></p><p>上三层是给用户提供服务的，下四层是数据传输用的（数据不传输的下4层不用了，但上3层还是要用的）</p><p>既然是数据传输，那必然就有单位，每一层传输的单位是不一样的，osi7层模型上都有标识，最底层的物理层单位比特，代表的就是0或者1这个单位<br>这些层在水平上的传输，然我们以为他们就是直接想通的，其实他们是从高到低，再从低到高这样传输的。</p><p>各个层的作用，感觉了解一些就可以了<br>1.物理层：底层传输<br>2.数据链路层：通过不同的mac地址，通过交换机进行传输，此时还没有ip地址，so交换机肯定是不认识ip地址的啦<br>3.网络层：ip地址，路由器，通过对不同路由器的选择，去寻找不同的主机服务器<br>4.传输层：tcp udp的定义，tcp安全可靠没有udp快，但udp不可靠，还有来确定端口号（端口号的理解，这封信送给你家，只有署名了，才知道给你家的某个人，外来的请求，只有确定了端口号，你才知道这个请求是给哪个服务的）<br>5.会话层：这个文件是直接存储呢，还是要进行网络传输呢<br>6.表示层：数据的表现形式，加密啊，我们window上文件的高级属性也能加密，但是秘钥保存在本机应该是c盘，一旦重装系统，秘钥丢失，那这个文件也可能就打不开了<br>7.应用层：用户接口</p><p>线面这张图能表名上面的作用<br><img src="http://ozys8fka7.bkt.clouddn.com/Image5.png" alt=""></p><p><img src="http://ozys8fka7.bkt.clouddn.com/Image3.png" alt="tcp的三次握手"><br>a: 你在吗？<br>b:我在，你还在吗？<br>a：我还在，我穿输了<br><img src="http://ozys8fka7.bkt.clouddn.com/Image4.png" alt="两军问题"></p><p>其实这个应答应该是没完没了的，但3次之后准确率就比较高了</p><p>下面介绍一下ip有关内容<br><img src="http://ozys8fka7.bkt.clouddn.com/Image7.png" alt=""><br>ipv4结构如上所示，图中可以看出选项有的有，有的没有，所以结构不唯一，需要检测，没有ipv6固定，速度快</p><p>可以看出32次方，一共2的32次方个<br>默认 0.0.0.0 到255.255.255.255<br>其实如下，很多不给用的，就a b c类能用，其中还包括一些私有的，只有局域网内网才能用<br><img src="http://ozys8fka7.bkt.clouddn.com/Image8.png" alt=""><br>127这个网段只有一个也就是自己<br>127.0.0.1</p><p>上面的ip地址第一个字段代表不同的网段，不同的网段需要通信，要用路由器</p><p>a类网段，拥有的主机数是 2的24次方<br>b类：前两个数代表不同网段，后面两个数代表不同的主机<br>c类：前三个数代表不同网段，后面1个数代表不同的主机<br>同一个网段交换只要交换机就可以了<br>这个网段是怎么决定的呢，是有子网掩码决定的，子网掩码的255代表网段，0代表主机，ip地址都是配合子网掩码使用的，没写是因为有默认</p><p>最大的主机数（-2 一个是网络地址，一个是广播地址）</p><p>私有ip不要钱，有效的保护公网ip不够用</p><p>缺点：不能访问公网ip，公网ip也不能访问私网ip（公网ip是互联网上唯一的门牌号）</p><p><img src="http://ozys8fka7.bkt.clouddn.com/Image9.png" alt=""></p><p>网络的计算：ip地址和子网掩码和，因为子网掩码前面全是1，所以网络地址网段和ip地址一样，后面子网掩码全是0，所以网络地址主机是0</p><p>广播地址怎么算呢，子网掩码有多少位是0，就换算多少位1，前面网段不变，这样就是广播地址</p><p><img src="http://ozys8fka7.bkt.clouddn.com/Image10.png" alt="tcp"><br><img src="http://ozys8fka7.bkt.clouddn.com/Image11.png" alt="udp"><br>udp 比tcp简单，所以udp比tcp块</p><p>常见端口号<br>http 80 https 443<br>mysql 3306<br>ssh 2222<br>redis 忘记了<br>smtp 25(简单邮件传输协议)</p><p>不管是window还是linux都禁止了23端口，因为telnet是明文传输，截获了都不用破解</p><p>DNS 进行域名解析</p><p> 虽然我们的端口分tcp和udp，但是系统怕我们弄混淆了，不管tcp的20 21还是udp的20 21都是分配给ftp使用的</p><p>DNS（尽然既可以接受tcp协议也可以接受udp协议）</p><p><img src="http://ozys8fka7.bkt.clouddn.com/Image12.png" alt="nestat -an"><br>listening 表示本机正在监听</p><p>establish 表示建立连接</p><p>udp的状态为空，因为udp不管你在不在，都会给你发送数据</p><p>（我想攻击一个游戏服务器，我把我所有的外部连接都关掉，然后登陆游戏，然后netstat 查看外部连接，就能知道对方的ip地址了）</p><p>关于DNS的知识</p><p>ip地址太难记，没有域名形象，so 产生了DNS</p><p>window的host文件是做静态ip和域名对应，优先于DNS匹配，so我们经常本地测试绑定虚拟域名的时候都是这么干的</p><p>早期就是通过host文件这么解析的，坏处<br><img src="http://ozys8fka7.bkt.clouddn.com/Image13.png" alt=""></p><p>dns原理<br><img src="http://ozys8fka7.bkt.clouddn.com/Image14.png" alt=""></p><p><img src="http://ozys8fka7.bkt.clouddn.com/Image15.png" alt=""></p><p>域名解析原来是从后往前的，··顶级域名在后面</p><p><img src="http://ozys8fka7.bkt.clouddn.com/Image16.png" alt=""><br><img src="http://ozys8fka7.bkt.clouddn.com/Image17.png" alt=""><br>原先有个.me 的国家域名可以申请</p><p>这个是全球唯一的（比如www.sina.com 和www.sina.cn就是两个域名，为了防止别人误入错误的地址，大公司会把那些顶级域名都注册了，以免坏人的误导）</p><p>三级+二级+顶级+组成完整的域名</p><p>根域名管理一级域名，一级域名管理二级域名，二级域名管理三级域名，这种层层管理</p><p>dns一般劫持被误导非常难，你只要确保imooc.com 这个二级域名是否是这个网站的，就能确保是否是钓鱼网站（确保二级域和顶级域一致）</p><p>域名解析过程<br>主要分为开始的递归查询和后面的迭代查询<br><img src="http://ozys8fka7.bkt.clouddn.com/Image20.png" alt=""><br>默认本地域名服务器解析的域名保留3天</p><p>（这种分级的更有利管理）</p><p><img src="http://ozys8fka7.bkt.clouddn.com/Image21.png" alt=""><br>迭代查询允许返回一个最优的值，比如顶级域名不知道，让本地域名服务器去找cn解析</p><p>全球所有的域名服务器都知道13台根域名服务器</p><p>但是递归查询不可以，递归要么返回一个准确值，要么返回错误</p><p>所以，递归查询一般用作客户机和本地域名服务器之间进行查找（注意这个查找虽然图中只是一台，其实会有很多台）<br>而迭代查询一般用在根dns和cn，com这些之间进行查找</p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;首先来介绍下有关网络的相关知识吧，iso，国际标准化组织  制定了 osi七层模型，但这个模型在现实生活中并没有使用，使用的是基于7层模型之上的tcp/ip 4层模型&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://ozys8fka7.bkt.clouddn.com/Image2.png&quot; alt=&quot;OSI七层模型&quot;&gt;&lt;br&gt;
-    
-    </summary>
-    
-      <category term="Linux" scheme="http://yoursite.com/categories/Linux/"/>
-    
-    
-      <category term="Linux" scheme="http://yoursite.com/tags/Linux/"/>
-    
-      <category term="网络" scheme="http://yoursite.com/tags/%E7%BD%91%E7%BB%9C/"/>
     
   </entry>
   
