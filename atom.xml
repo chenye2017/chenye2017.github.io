@@ -93,13 +93,13 @@
     <link href="http://yoursite.com/2018/03/26/PHP%E7%9F%A5%E8%AF%86%E7%82%B9/"/>
     <id>http://yoursite.com/2018/03/26/PHP知识点/</id>
     <published>2018-03-26T06:08:38.000Z</published>
-    <updated>2018-03-26T14:16:25.838Z</updated>
+    <updated>2018-03-26T14:22:12.108Z</updated>
     
-    <content type="html"><![CDATA[<p>PHP中很多新的知识点自己都不是很熟悉，trait, 闭包，又或者composer等， 记录下来，成为现代phper。</p><a id="more"></a><ol><li><a href="https://chenye2017.github.io/2018/03/26/PHP%E9%97%AD%E5%8C%85/#more" target="_blank" rel="external">PHP中闭包</a></li></ol>]]></content>
+    <content type="html"><![CDATA[<p>PHP中很多稍微高级的知识点自己都不是很熟悉，trait, 闭包，又或者composer等， 记录下来，成为现代phper。</p><a id="more"></a><ol><li><a href="https://chenye2017.github.io/2018/03/26/PHP%E9%97%AD%E5%8C%85/#more" target="_blank" rel="external">PHP中闭包</a></li></ol>]]></content>
     
     <summary type="html">
     
-      &lt;p&gt;PHP中很多新的知识点自己都不是很熟悉，trait, 闭包，又或者composer等， 记录下来，成为现代phper。&lt;/p&gt;
+      &lt;p&gt;PHP中很多稍微高级的知识点自己都不是很熟悉，trait, 闭包，又或者composer等， 记录下来，成为现代phper。&lt;/p&gt;
     
     </summary>
     
