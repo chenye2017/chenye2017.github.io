@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Laravel,orm," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="语法糖的博客" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="orm并不是一个新兴的概念，他出现很久了，只是刚开始学习的自己并没有接触到，他能帮我们少写很多代码，让我们能以更面向对象的方式来处理关于数据库的操作。">
+<meta name="keywords" content="Laravel,orm">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Laravel ORM">
+<meta property="og:url" content="http://yoursite.com/2018/03/30/Laravel-ORM/index.html">
+<meta property="og:site_name" content="语法糖的博客">
+<meta property="og:description" content="orm并不是一个新兴的概念，他出现很久了，只是刚开始学习的自己并没有接触到，他能帮我们少写很多代码，让我们能以更面向对象的方式来处理关于数据库的操作。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-03-30T07:57:06.921Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Laravel ORM">
+<meta name="twitter:description" content="orm并不是一个新兴的概念，他出现很久了，只是刚开始学习的自己并没有接触到，他能帮我们少写很多代码，让我们能以更面向对象的方式来处理关于数据库的操作。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/03/30/Laravel-ORM/"/>
+
+
+
+
+
+  <title>Laravel ORM | 语法糖的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+
+    <script type="text/javascript" src="/live2d/script.js"></script>
+    <canvas id="live2dcanvas" width="150" height="300" class="live2d"></canvas>
+    <style>
+      #live2dcanvas {
+        position: fixed;
+        right: 0px;
+        z-index: 999;
+        pointer-events: none;
+        bottom: -40px;
+      }
+    </style>
+    <script>loadlive2d("live2dcanvas" ,"/live2d/assets/wanko/wanko.model.json",0.5)</script>
+  
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">语法糖的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">爱动漫，热爱LOL</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+
+
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/30/Laravel-ORM/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="chenye2017">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/my.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="语法糖的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Laravel ORM</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-30T11:30:05+08:00">
+                2018-03-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Laravel/" itemprop="url" rel="index">
+                    <span itemprop="name">Laravel</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>orm并不是一个新兴的概念，他出现很久了，只是刚开始学习的自己并没有接触到，他能帮我们少写很多代码，让我们能以更面向对象的方式来处理关于数据库的操作。</p>
+<a id="more"></a>
+<p>Eloquent 是laravel的orm，我们通过</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">php artisan make:model User</div></pre></td></tr></table></figure>
+<p>生成的类虽然是继承Model，但本质上都是继承这个Eloquent，他把我们每张表看做一个类，表里面的数据看做一个实例，我们对其进行操作的时候，更类似于面向对象的操作</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">$user = User::find(1);</div><div class="line">$user-&gt;name = &apos;cy&apos;;</div><div class="line">$user-&gt;city = &apos;shanghai&apos;;</div><div class="line">$user-&gt;save();</div></pre></td></tr></table></figure>
+<p>更便于理解。</p>
+<p>生成的model很简单，大致</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line"></div><div class="line">class Article extends \Eloquent &#123;</div><div class="line"></div><div class="line">protected $fillable = [];</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这个fillable里面就是可以批量操作的字段，批量操作在我之前的文章里面有提到过，我觉得更通俗的理解是可更新的字段。只需要继承一下 Eloquent 类，就可以干 ‘first() find() where() orderBy()’ 等非常非常多的事情，这就是面向对象的强大威力。</p>
+<p>通过</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">php artisan tinker</div></pre></td></tr></table></figure>
+<p>可以开启一个交互环境进行orm的调试，其实我感觉不止是orm，别的代码也都是可以执行的，只是方便了orm的打印操作，能很方便的看到执行结果。有一点需要注意的就是tinker是基于当前代码的，如果代码重新修改来了，我们需要重启tinker来加载新的代码。</p>
+<p>还有我们会利用composer安装laravel-debugbar，来进行orm的调试，当我发现在别的项目中使用不了这个插件的时候，我改变了对composer的看法，他安装的东西更类似于代码，而不是软件，我们如果要在不同的项目中也使用这个插件，我们同样需要在另一个项目目录线面进行composer安装</p>
+<p>介绍几个常用的函数</p>
+<ul>
+<li><p>find()</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">User::find(1)</div><div class="line">App\User &#123;#764</div><div class="line">     id: 1,</div><div class="line">     name: &quot;cy&quot;,</div><div class="line">     email: &quot;1967196626@qq.com&quot;,</div><div class="line">     created_at: &quot;2018-03-30 01:42:40&quot;,</div><div class="line">     updated_at: &quot;2018-03-30 01:59:51&quot;,</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
+<p>这个1是主键</p>
+</li>
+</ul>
+<ul>
+<li><p>first()</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">User::where(&apos;id&apos;, &apos;&gt;&apos;, 1)-&gt;first()</div><div class="line">App\User &#123;#771</div><div class="line">     id: 2,</div><div class="line">     name: &quot;Bella Lebsack&quot;,</div><div class="line">     email: &quot;cristobal58@example.net&quot;,</div><div class="line">     created_at: &quot;2018-03-30 01:59:51&quot;,</div><div class="line">     updated_at: &quot;2018-03-30 01:59:51&quot;,</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
+<p>上面两个获取的内容都是对象，可以直接使用</p>
+</li>
+<li><p>get()  获取的是一个collection</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"> User::where(&apos;id&apos;, &apos;&gt;&apos;, 1)-&gt;where(&apos;id&apos;, &apos;&lt;&apos;, 3)-&gt;get()</div><div class="line">=&gt; Illuminate\Database\Eloquent\Collection &#123;#773</div><div class="line">     all: [</div><div class="line">       App\User &#123;#778</div><div class="line">         id: 2,</div><div class="line">         name: &quot;Bella Lebsack&quot;,</div><div class="line">         email: &quot;cristobal58@example.net&quot;,</div><div class="line">         created_at: &quot;2018-03-30 01:59:51&quot;,</div><div class="line">         updated_at: &quot;2018-03-30 01:59:51&quot;,</div><div class="line">       &#125;,</div><div class="line">     ],</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>all() 获取的是一个collection</p>
+</li>
+</ul>
+<p>​    all的使用好像不能加条件</p>
+<p>​    上面的collection可以通过toArray() 方法转换成数组，但其实我们平时用的时候没用toArray也是可以的</p>
+<p>上面需要注意的点就是：</p>
+<ol>
+<li>所有的中间方法如 ‘where()’ ‘orderBy()’ 等都能够同时支持 ‘静态’ 和 ‘非静态链式’ 两种方式调用，即 ‘Article::where()…’ 和 ‘Article::….-&gt;where()’。</li>
+<li>所有的 ‘非固定用法’ 的调用最后都需要一个操作来 ‘收尾’，本片教程中有两个 ‘收尾操作’：’-&gt;get()’ 和 ‘-&gt;first()’。</li>
+<li>每一个继承了 Eloquent 的类都有两个 ‘固定用法’ ‘Article::find($number)’ ‘Article::all()’，前者会得到一个带有数据库中取出来值的对象，后者会得到一个包含整个数据库的对象合集。</li>
+</ol>
+<p>Builder</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Article::where(&apos;id&apos;, &apos;&gt;&apos;, 10)-&gt;where(&apos;id&apos;, &apos;&lt;&apos;, 20)-&gt;orderBy(&apos;updated_at&apos;, &apos;desc&apos;)-&gt;get();</div></pre></td></tr></table></figure>
+<p>这段代码的 <code>::where()-&gt;where()-&gt;orderBy()</code> 就是Builder。用面向对象的方法来理解，可以总结成一句话：创建一个对象，并不断修改它的属性，最后用一个操作来触发数据库操作。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">User::orderBy(&apos;id&apos;, &apos;desc&apos;);</div><div class="line">=&gt; Illuminate\Database\Eloquent\Builder &#123;#817&#125;</div></pre></td></tr></table></figure>
+<p>这个get() 就是那个最后的方法。</p>
+<p>值的思考的一个问题</p>
+<blockquote>
+<p>如果直接用 :: 来访问某个 function，无论这个 function 是否为 static，构造函数 __construct() 都不会被调用，那么创建对象是如何实现的呢？请看：<a href="https://github.com/illuminate/database/blob/master/Eloquent/Model.php#L3354" target="_blank" rel="external">https://github.com/illuminate/database/blob/master/Eloquent/Model.php#L3354</a></p>
+</blockquote>
+<p>所谓 “终结者” 方法，指的是在 N 个中间操作流方法对某个 Eloquent 对象进行加工以后，触发最终的数据库查询操作，得到返回值。</p>
+<p><code>first()</code> <code>get()</code> <code>paginate()</code> <code>count()</code> <code>delete()</code> 是用的比较多的一些 “终结者” 方法，他们会在中间操作流的最后出现，把 SQL 打给数据库，得到返回数据，经过加工返回一个 Article 对象或者一群 Article 对象的集合。</p>
+<p>all() 方法好像不是，因为all() 好像不能跟着条件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"> User::orderBy(&apos;id&apos;, &apos;desc&apos;)-&gt;all();</div><div class="line">BadMethodCallException with message &apos;Call to undefined method Illuminate\Database\Query\Builder::all()</div></pre></td></tr></table></figure>
+<p>关系</p>
+<p>1 对 1 关系</p>
+<p>做了个试验，发现如果通过传统的生成迁移文件，生成model，进行数据填充真的挺麻烦的，不如在数据库中快速建表来的容易</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">public function hasOne1()</div><div class="line">    &#123;</div><div class="line">        return $this-&gt;hasOne(TestOneToOne::class, &apos;user_id&apos;, &apos;id&apos;);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public function belongsTo1()</div><div class="line">    &#123;</div><div class="line">        return $this-&gt;belongsTo(TestOneToOne::class, &apos;id&apos;, &apos;user_id&apos;);</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<p>这是User 中的两个方法</p>
+<p>User::with(‘hasOne1’)-&gt;find(1)</p>
+<p>User::with(‘belongsTo1’)-&gt;find(1)</p>
+<p>获取的数据是一样的，说一下我的记忆方法。hasOne 的时候，对方表中的字段在前面，belongsTo的时候自己表中的数据在前面。（我一般喜欢用with表示模型的结合）</p>
+<p>还有第一个参数注意一下，话说这个::class出现好久了，而我却很少用，真的很方便哦。</p>
+<p>还有默认的orm模型名称都是表名的单数，这个是一定要注意的哦。除非自己重新定义。（many 都能识别成功manies,牛逼）</p>
+<p>1对多</p>
+<p>这个时候的belongsTo 只有一种了，和上面的一样，hasMany() 和上面也类似。值的注意的一点就是那个表::with就成主体了，还有一点的就是使用with的时候并不是和我们传统的那种使用left join，而是先计算出主表，再根据主表中的数据，就算从表中对应数据in() 这个集合中，我不能理解的一点就是这样通过in，怎么完成了数据的连接。</p>
+<p>多对多</p>
+<p>这个时候经常需要第三张表来存储数据，值的注意的一点就是第三张表往往不需要生成model。</p>
+<p>第三张表值记录对应关系，感觉默认的就是主键id</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">public function belongsToMany1()</div><div class="line">    &#123;</div><div class="line">        return $this-&gt;belongsToMany(\App\User::class, &apos;test_many_to_many&apos;, &apos;user_id&apos;, &apos;test_id&apos;);</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<p>上面是一种我的粉丝，比如我是users 表中的一员，我的粉丝也是这张表中的数据，注意存储数据关系的表不要用::class，因为不存在这个class，还有如果要加where条件，里面的条件用调用主题的字段，比如users中的字段id。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wp.png" alt="chenye2017 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/zp1.png" alt="chenye2017 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+  <div>
+  
+    <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+
+  
+  </div>
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Laravel/" rel="tag"><i class="fa fa-tag"></i> Laravel</a>
+          
+            <a href="/tags/orm/" rel="tag"><i class="fa fa-tag"></i> orm</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/30/Laravel-数据填充/" rel="next" title="Laravel 数据填充">
+                <i class="fa fa-chevron-left"></i> Laravel 数据填充
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+<span class="jiathis_txt">分享到：</span>
+<a class="jiathis_button_fav">收藏夹</a>
+<a class="jiathis_button_copy">复制网址</a>
+<a class="jiathis_button_email">邮件</a>
+<a class="jiathis_button_weixin">微信</a>
+<a class="jiathis_button_qzone">QQ空间</a>
+<a class="jiathis_button_tqq">腾讯微博</a>
+<a class="jiathis_button_douban">豆瓣</a>
+<a class="jiathis_button_share">一键分享</a>
+
+<a href="http://www.jiathis.com/share?uid=2140465" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+var jiathis_config={
+  data_track_clickback:true,
+  summary:"",
+  shortUrl:false,
+  hideMore:false
+}
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/my.png"
+                alt="chenye2017" />
+            
+              <p class="site-author-name" itemprop="name">chenye2017</p>
+              <p class="site-description motion-element" itemprop="description">想用善良改变世界</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">31</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">47</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/chenye2017" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:1967196626@qq.com" target="_blank" title="E-Mail">
+                    
+                      <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://weibo.com/3215254425" target="_blank" title="Weibo">
+                    
+                      <i class="fa fa-fw fa-globe"></i>Weibo</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-weibo"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.baidu.com/" title="百度" target="_blank">百度</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.google.com/" title="谷歌" target="_blank">谷歌</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">chenye2017</span>
+
+  
+</div>
+
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span> |
+</span>
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.3</div>
+
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count"> | 博客全站共37.2k字</span>
+</div>
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
