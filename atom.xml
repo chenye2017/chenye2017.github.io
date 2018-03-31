@@ -218,9 +218,9 @@
       <category term="工具" scheme="http://yoursite.com/categories/%E5%B7%A5%E5%85%B7/"/>
     
     
-      <category term="PHP" scheme="http://yoursite.com/tags/PHP/"/>
-    
       <category term="工具" scheme="http://yoursite.com/tags/%E5%B7%A5%E5%85%B7/"/>
+    
+      <category term="PHP" scheme="http://yoursite.com/tags/PHP/"/>
     
       <category term="Python" scheme="http://yoursite.com/tags/Python/"/>
     
@@ -368,11 +368,11 @@
       <category term="PHP" scheme="http://yoursite.com/categories/PHP/"/>
     
     
-      <category term="PHP" scheme="http://yoursite.com/tags/PHP/"/>
-    
       <category term="Linux" scheme="http://yoursite.com/tags/Linux/"/>
     
       <category term="工具" scheme="http://yoursite.com/tags/%E5%B7%A5%E5%85%B7/"/>
+    
+      <category term="PHP" scheme="http://yoursite.com/tags/PHP/"/>
     
       <category term="调试" scheme="http://yoursite.com/tags/%E8%B0%83%E8%AF%95/"/>
     
@@ -400,9 +400,9 @@
     
       <category term="Linux" scheme="http://yoursite.com/tags/Linux/"/>
     
-      <category term="环境" scheme="http://yoursite.com/tags/%E7%8E%AF%E5%A2%83/"/>
-    
       <category term="lamp" scheme="http://yoursite.com/tags/lamp/"/>
+    
+      <category term="环境" scheme="http://yoursite.com/tags/%E7%8E%AF%E5%A2%83/"/>
     
   </entry>
   
@@ -426,9 +426,9 @@
     
       <category term="Linux" scheme="http://yoursite.com/tags/Linux/"/>
     
-      <category term="lnmp" scheme="http://yoursite.com/tags/lnmp/"/>
-    
       <category term="环境" scheme="http://yoursite.com/tags/%E7%8E%AF%E5%A2%83/"/>
+    
+      <category term="lnmp" scheme="http://yoursite.com/tags/lnmp/"/>
     
   </entry>
   
@@ -450,9 +450,9 @@
       <category term="PHP" scheme="http://yoursite.com/categories/PHP/"/>
     
     
-      <category term="PHP" scheme="http://yoursite.com/tags/PHP/"/>
-    
       <category term="Linux" scheme="http://yoursite.com/tags/Linux/"/>
+    
+      <category term="PHP" scheme="http://yoursite.com/tags/PHP/"/>
     
       <category term="扩展" scheme="http://yoursite.com/tags/%E6%89%A9%E5%B1%95/"/>
     
