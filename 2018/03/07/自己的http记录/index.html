@@ -89,7 +89,7 @@
 <meta property="og:site_name" content="语法糖的博客">
 <meta property="og:description" content="上周老师让我们写一个关于http的总结，记录下这些天来的自己关于http的认识。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-03-09T02:42:53.923Z">
+<meta property="og:updated_time" content="2018-04-01T02:46:23.845Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="自己的http记录">
 <meta name="twitter:description" content="上周老师让我们写一个关于http的总结，记录下这些天来的自己关于http的认识。">
@@ -391,6 +391,23 @@
 <p>就可以改变原先的form表单提交方式了</p>
 <p>2.content-type的作用</p>
 <ul>
+<li><p>对于接口返回数据的处理</p>
+<p>以python flask为例</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">from flask import Flask, make_response</div><div class="line"></div><div class="line">app = Flask(__name__)</div><div class="line"></div><div class="line">@app.route(&apos;/hello&apos;)</div><div class="line">def hello():</div><div class="line">    response = make_response(&apos;&lt;html&gt;&lt;/html&gt;&apos;)</div><div class="line">    return response</div><div class="line"></div><div class="line">app.run(host=&apos;0.0.0.0&apos;, debug=True)</div></pre></td></tr></table></figure>
+<p>默认浏览器是按照html的格式解析的，上面当我们访问/hello的时候输出是空，因为html标签里面什么也没有</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">app = Flask(__name__)</div><div class="line"></div><div class="line">@app.route(&apos;/hello&apos;)</div><div class="line">def hello():</div><div class="line">    headers = &#123;</div><div class="line">        &apos;content-type&apos;:&apos;text/plain&apos;,</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    response = make_response(&apos;&lt;html&gt;&lt;/html&gt;&apos;)</div><div class="line">    return response</div><div class="line">app.run(host=&apos;0.0.0.0&apos;, debug=True)</div></pre></td></tr></table></figure>
+<p>但这样就能输出 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;html&gt;&lt;/html&gt;</div></pre></td></tr></table></figure>
+<p>因为我们让浏览器按照字符串的形式来解析</p>
+<p>itbasic中也对header信息做了设置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$response-&gt;header(&apos;Content-Type&apos;, &apos;text/json&apos;);</div><div class="line">        $response-&gt;header(&apos;Access-Control-Allow-Origin&apos;, &apos;*&apos;);</div><div class="line">        return json_encode($res);</div></pre></td></tr></table></figure>
+<p>这就是为什么我们每次调用接口的时候返回的都是json数据的原因</p>
+<p>但是当我们输出模板的时候，观察控制台返回的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Content-Type: text/html; charset=UTF-8</div></pre></td></tr></table></figure>
+<p>应该是模板在哪里进行了处理</p>
+</li>
+</ul>
+<ul>
 <li>常见的输出图片</li>
 </ul>
 <p>content-type 属于返回内容的一部分，主要是用来告诉浏览器返回的数据应该怎么解析，比如你访问 homestead.app/1.jpg,并不是根据文件的后缀名解析的成相应的文件，而是根据resresponse headers里面的内容，<a href="http://tool.oschina.net/commons" target="_blank" rel="external">常见的mini type</a>。例如php输出一张图片</p>
@@ -412,6 +429,7 @@
 <p>4.http 状态码<br>http状态码表示这个请求的状态，常用的有200成功 ，3xx 资源的重定向，4xx客户端的错误（404 请求的文件找不到 403 没有权限 401 没有登录）， 5xx服务器端错误（500 经常代码的错误  502 网关，经常nginx出错）。然后现在的restful api在我们返回客户端的请求内容的时候经常也会携带着一个状态码，比如 </p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">return json_encode([</div><div class="line">      &apos;errorCode&apos;=&gt;10001,</div><div class="line">      &apos;errorMsg&apos;=&gt; &apos;xxx&apos;,</div><div class="line">      &apos;result&apos;=&gt;[]</div><div class="line">])</div></pre></td></tr></table></figure>
 <p>errorCode一般是我们内部定义的错误状态码，可以展示给用户看，让用户更能清楚的了解问题的所在，举个例子就是文章的创建，可能title不合法，过长了，文章删除的时候没有传递id，都可以以一个具体位数开头的错误码，归于一类。<br>不管是http状态码，还是我们传递给用户的状态码，都是可以改变的，比如tp里面的json方法，第一个参数就是http状态码的参数，第二个参数才是要返回的具体的内容。</p>
+<p>location也是返回信息中的一个字段，虽然状态码和我们的返回信息没有关系，即使正常调用接口我们返回一个404也是可以的，但是location必须得配合30x才能实现页面的跳转。</p>
 <p>5.无连接<br>无连接的含义是限制每次连接只处理一个请求。服务器处理完客户的请求，并收到客户的应答后，即断开连接。采用这种方式可以节省传输时间。记得之前好像看过一篇文章说现在的http协议支持长连接了</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Connection:keep-alive</div></pre></td></tr></table></figure>
 <p>在请求头里面包括这个东西，虽然自己平时好像从来也没感受到，但还是记录下</p>
@@ -775,7 +793,7 @@ var jiathis_config={
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count"> | 博客全站共37.2k字</span>
+  <span class="post-count"> | 博客全站共37.5k字</span>
 </div>
 
 
