@@ -89,7 +89,7 @@
 <meta property="og:site_name" content="语法糖的博客">
 <meta property="og:description" content="因为linux平时用的不是很频繁，所以经常会遇见一些问题，然后很容易忘记，然后还经常遇到，所以记录下来。 目录：  yum源替换 修改密码 locate 查找文件 添加环境变量 ~ 普通用户和root用户">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-03-23T07:33:28.703Z">
+<meta property="og:updated_time" content="2018-04-17T07:46:05.616Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linux常见问题">
 <meta name="twitter:description" content="因为linux平时用的不是很频繁，所以经常会遇见一些问题，然后很容易忘记，然后还经常遇到，所以记录下来。 目录：  yum源替换 修改密码 locate 查找文件 添加环境变量 ~ 普通用户和root用户">
@@ -403,7 +403,7 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">*   阿里yum源:[http://mirrors.aliyun.com/repo/](http://mirrors.aliyun.com/repo/)</div><div class="line">*   163(网易)yum源: [http://mirrors.163.com/.help/](http://mirrors.163.com/.help/)</div><div class="line">*   中科大的Linux安装镜像源：[http://centos.ustc.edu.cn/](http://centos.ustc.edu.cn/)</div><div class="line">*   搜狐的Linux安装镜像源：[http://mirrors.sohu.com/](http://mirrors.sohu.com/)</div><div class="line">*   北京首都在线科技：[http://mirrors.yun-idc.com/](http://mirrors.yun-idc.com/)</div></pre></td></tr></table></figure>
 <p>2.修改密码<br>passwd 用户名 root用户，非root用户只能修改自己的密码哦，所以passwd后面不能加参数</p>
 <p>3.locate查找文件</p>
-<p>locate 命令的使用<br>之前一直使用find / -name 文件名，太慢了，使用locate吧。<br>首先yum install mlocate,然后updatedb ,就可以使用locate 文件名称。每次使用前locate 文件名称。</p>
+<p>locate 命令的使用<br>之前一直使用find / -name 文件名，太慢了，使用locate吧。<br>首先yum install mlocate,然后updatedb ,就可以使用locate 文件名称。每次使用前locate 文件名称。（如果是安转好了，每次使用前只用updatedb,然后再locate 寻找就好了）</p>
 <p>4.添加环境变量</p>
 <p>lamp环境如果通过源码编译安装，安装的位置一般是/usr/local,命令一般在/usr/local/软件/bin/命令，每次使用起来这么一大串，是在麻烦，加入环境变量效果棒棒的</p>
 <ol>
@@ -599,7 +599,7 @@ var jiathis_config={
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-count">33</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -610,7 +610,7 @@ var jiathis_config={
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-count">10</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -621,7 +621,7 @@ var jiathis_config={
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">47</span>
+                  <span class="site-state-item-count">49</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -740,7 +740,7 @@ var jiathis_config={
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count"> | 博客全站共41.6k字</span>
+  <span class="post-count"> | 博客全站共42.5k字</span>
 </div>
 
 

@@ -89,7 +89,7 @@
 <meta property="og:site_name" content="语法糖的博客">
 <meta property="og:description" content="使用vagrant的原因？ 其实主要是因为来公司的时候用的这个东西，相比于传统的xampp这种window下的一体化工具，vagrant其实是在vitrual box 之上的一种管理工具，他是基于虚拟机的，所以你可以在虚拟机上干的事他都能干。 首先xampp是window平台下的，他的lamp这个l不具备，所以，你xampp永远都接触不到linux，但是vagrant不同，他是基于虚拟机的，虚拟机">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-03-08T02:32:18.730Z">
+<meta property="og:updated_time" content="2018-04-17T07:36:16.419Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="vagrant使用">
 <meta name="twitter:description" content="使用vagrant的原因？ 其实主要是因为来公司的时候用的这个东西，相比于传统的xampp这种window下的一体化工具，vagrant其实是在vitrual box 之上的一种管理工具，他是基于虚拟机的，所以你可以在虚拟机上干的事他都能干。 首先xampp是window平台下的，他的lamp这个l不具备，所以，你xampp永远都接触不到linux，但是vagrant不同，他是基于虚拟机的，虚拟机">
@@ -412,8 +412,14 @@
 <p>不用的时候挂起 vagrant suspend，再启动 vagrant resume</p>
 <p>vagrant halt 是关闭，vagrant reload 重新加载配置文件</p>
 <p>vagrant status 查看虚拟机状态</p>
-<p>vagrant package –output itbasic.box 去自己的vitrual环境下，打包自己的环境成box文件，方便以后使用（好像vagrant 打包环境最好把虚拟机关掉）</p>
+<p>vagrant package - -output itbasic.box 去自己的vitrual环境下，打包自己的环境成box文件，方便以后使用（好像vagrant 打包环境最好把虚拟机关掉，省略后面 - - output itbasic.box 默认生成package.box）</p>
 <p>vagrant destroy 摧毁虚拟机镜像，这个是保存位置是第三个位置了，这个是由vitrual box决定的，在vitrual box的全局设定里面。</p>
+<p>几个坑</p>
+<ol>
+<li>vagrant box 可能就2.5g，可是新建的虚拟机可能要10g，这就是我之前环境一直错误，以为是虚拟机的错误之类的，其实报错信息很明显，是我的磁盘空间不足，这里不是指虚拟环境vagrant up的那个文件夹，而是c盘装的virtual box 装的虚拟环境的文件夹。</li>
+<li>新导入的虚拟机，可能没有mac地址，需要在网卡配置里面加入对应的mac地址，通过tail -f /var/logs/message 查看启动错误日志，看启动了哪些网卡，把不用的网卡onboot = no就好了，然后再systemctl start network,还可以systemctl stop networkmanger, systemctl disabled networkmanger, 这些不用的东西。</li>
+<li>关掉网卡之后可能ssh有问题。config.ssh.host=”192.168.33.10” config.ssh.port=”22” config.ssh.username=”root” config.ssh.password=”root”  把ssh先配置好，要不然改了网卡之后可能连接不上。config.vm.boot_timeout=100 配置好超时时间，这样就不用一直等了。</li>
+</ol>
 <p>总结一下：vagrant构建环境其实一共有4个文件夹的位置</p>
 <ol>
 <li>vagrant box的文件位置，box add镜像之后，.box文件就可以不要了（如果以后要用，可以直接打包生成）</li>
@@ -606,7 +612,7 @@ var jiathis_config={
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-count">33</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -617,7 +623,7 @@ var jiathis_config={
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-count">10</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -628,7 +634,7 @@ var jiathis_config={
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">47</span>
+                  <span class="site-state-item-count">49</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -747,7 +753,7 @@ var jiathis_config={
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count"> | 博客全站共41.6k字</span>
+  <span class="post-count"> | 博客全站共42.5k字</span>
 </div>
 
 

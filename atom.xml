@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-04-17T01:22:55.117Z</updated>
+  <updated>2018-04-17T08:13:39.583Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,30 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>postgresql常见问题总结</title>
+    <link href="http://yoursite.com/2018/04/17/postgresql%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93/"/>
+    <id>http://yoursite.com/2018/04/17/postgresql常见问题总结/</id>
+    <published>2018-04-17T07:47:01.000Z</published>
+    <updated>2018-04-17T08:13:39.583Z</updated>
+    
+    <content type="html"><![CDATA[<p>本来是不想写这篇文章的，因为感觉自己对于postgresql理解不够深入，但因为生活中对于postgresql有些问题总是遇到，所以记录下来，方便以后查找。</p><a id="more"></a><p>1.navicate连接postgresql</p><p>第一次建立连接肯定会报错啦</p><p><img src="http://ozys8fka7.bkt.clouddn.com/TIM%E6%88%AA%E5%9B%BE20180417155030.png" alt="navicate连接postgresql属性"></p><p>上面初始数据库的意思并不是数据库的名称。毕竟这次连接成功后，里面有一堆的数据库</p><blockquote><p>The server doesn’t grant access to the database: the server reports<br>FATAL: no pg_hba.conf entry for host “192.168.0.123”, user “postgres”, database “postgres” FATAL: no pg_hba.conf entry for host “192.168.0.123”, user “postgres”, database “postgres”</p></blockquote><p>谷歌翻译</p><blockquote><p>服务器不授予对数据库的访问权限：服务器报告<br>FATAL：主机“192.168.0.123”，用户“postgres”，数据库“postgres”没有pg_hba.conf条目FATAL：主机“192.168.0.123”没有pg_hba.conf条目，用户“postgres”，数据库“postgres”</p></blockquote><p>其实字面意思就很容易理解，虽然我还是百度的错误答案。我自己理解就是入口不被允许,就觉办法如下</p><blockquote><p>PostgreSQL数据库为了安全，它不会监听除本地以外的所有连接请求，当用户通过JDBC访问是，会报一些如下的异常：</p><p>org.postgresql.util.PSQLException: FATAL: no pg_hba.conf entry for host</p><p>要解决这个问题，只需要在PostgreSQL数据库的安装目录下找到/data/pg_hba.conf,找到“# IPv4 local connections:”</p><p>在其下加上请求连接的机器IP</p><p>host all all 127.0.0.1/32 md5 //坑爹，那里面对于192.168.23.10当做192.168.23.1</p><p>32是子网掩码的网段；md5是密码验证方法，可以改为trust</p></blockquote><p>一个服务器，有内网ip（类似192.168这些，有外网ip 211.这种，有127.0.0.1 这种，如果要包括所有的，就得用0.0.0.0，感觉如果你访问一个服务器用的是内网ip，应该意思就是你们在同一个局域网中吧。很奇怪的一点是，之前说vagrant会把ssh的22端口映射到host的2222端口，导致了127.0.0.1:2222或者192.168.23.10:22都能访问，其实不太懂这个原理，但好像这是由两个不同的网卡决定的，我好像把itbasic那上面一个网卡禁止了，导致127那种ssh访问不了，感觉就是虽然内网ip和外网ip可以对应同一个端口，但也可以对应不同的端口）</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;本来是不想写这篇文章的，因为感觉自己对于postgresql理解不够深入，但因为生活中对于postgresql有些问题总是遇到，所以记录下来，方便以后查找。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="postgresql" scheme="http://yoursite.com/categories/postgresql/"/>
+    
+    
+      <category term="postgresql" scheme="http://yoursite.com/tags/postgresql/"/>
+    
+      <category term="数据库" scheme="http://yoursite.com/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
+    
+  </entry>
   
   <entry>
     <title>apache简单配置</title>
@@ -34,11 +58,11 @@
       <category term="apache" scheme="http://yoursite.com/categories/apache/"/>
     
     
+      <category term="框架" scheme="http://yoursite.com/tags/%E6%A1%86%E6%9E%B6/"/>
+    
       <category term="apache" scheme="http://yoursite.com/tags/apache/"/>
     
       <category term="linux" scheme="http://yoursite.com/tags/linux/"/>
-    
-      <category term="框架" scheme="http://yoursite.com/tags/%E6%A1%86%E6%9E%B6/"/>
     
   </entry>
   
@@ -370,9 +394,9 @@
     
       <category term="PHP" scheme="http://yoursite.com/tags/PHP/"/>
     
-      <category term="框架" scheme="http://yoursite.com/tags/%E6%A1%86%E6%9E%B6/"/>
-    
       <category term="ThinkPHP5" scheme="http://yoursite.com/tags/ThinkPHP5/"/>
+    
+      <category term="框架" scheme="http://yoursite.com/tags/%E6%A1%86%E6%9E%B6/"/>
     
   </entry>
   
@@ -481,38 +505,6 @@
       <category term="PHP" scheme="http://yoursite.com/tags/PHP/"/>
     
       <category term="扩展" scheme="http://yoursite.com/tags/%E6%89%A9%E5%B1%95/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Linux常见问题</title>
-    <link href="http://yoursite.com/2018/01/09/Linux%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/"/>
-    <id>http://yoursite.com/2018/01/09/Linux常见问题/</id>
-    <published>2018-01-08T16:17:31.000Z</published>
-    <updated>2018-03-23T07:33:28.703Z</updated>
-    
-    <content type="html"><![CDATA[<p>因为linux平时用的不是很频繁，所以经常会遇见一些问题，然后很容易忘记，然后还经常遇到，所以记录下来。</p><p>目录：</p><ol><li>yum源替换</li><li>修改密码</li><li>locate 查找文件</li><li>添加环境变量</li><li>~ 普通用户和root用户</li></ol><a id="more"></a><p>1.yum源的替换<br>我们每次安装centos的时候，如果不是打包安装，是从新安装的话，为了安装软件速度快点，我们通常会替换yum源，把国外的镜像替换成国内的yum源镜像。常用的有163，阿里云啊。<br>首先我们进入 /etc/yum.repos.d 文件夹下面，查看repo文件，把centos-base 这个yum源文件改名，作为备份文件（mv,剪贴，又能当做重命名来用，注意不是复制哦）。然后wget，国内的yum源地址，yum clean all 清除缓存，yum makecache 在本地生成源的软件信息，方便软件的查找。<br>总结：</p><ol><li>cd /etc/yum.repos.d  进入目录</li><li>mv centos-base.repo centos-base.repo.bak  备份文件</li><li>wget -nc <a href="http://mirrors.aliyun.com/repo/Centos-7.repo" target="_blank" rel="external">http://mirrors.aliyun.com/repo/Centos-7.repo</a>   下载原文</li><li>yum clean all  清除缓存</li><li>yum makecache  生成缓存</li></ol><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">*   阿里yum源:[http://mirrors.aliyun.com/repo/](http://mirrors.aliyun.com/repo/)</div><div class="line">*   163(网易)yum源: [http://mirrors.163.com/.help/](http://mirrors.163.com/.help/)</div><div class="line">*   中科大的Linux安装镜像源：[http://centos.ustc.edu.cn/](http://centos.ustc.edu.cn/)</div><div class="line">*   搜狐的Linux安装镜像源：[http://mirrors.sohu.com/](http://mirrors.sohu.com/)</div><div class="line">*   北京首都在线科技：[http://mirrors.yun-idc.com/](http://mirrors.yun-idc.com/)</div></pre></td></tr></table></figure><p>2.修改密码<br>passwd 用户名 root用户，非root用户只能修改自己的密码哦，所以passwd后面不能加参数</p><p>3.locate查找文件</p><p>locate 命令的使用<br>之前一直使用find / -name 文件名，太慢了，使用locate吧。<br>首先yum install mlocate,然后updatedb ,就可以使用locate 文件名称。每次使用前locate 文件名称。</p><p>4.添加环境变量</p><p>lamp环境如果通过源码编译安装，安装的位置一般是/usr/local,命令一般在/usr/local/软件/bin/命令，每次使用起来这么一大串，是在麻烦，加入环境变量效果棒棒的</p><ol><li><p>echo $PAHT 查看环境变量</p></li><li><p>编辑/etc/environment文件，在里面更改PATH环境变量。</p><p>例如：向环境变量中添加 /home/YRS/Nim/bin</p><p>/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/bin:/sbin:/home/YRS/Nim/bin，保存后记得source /etc/environment 。重新启动后就不用source 。</p><p>​</p></li></ol><p>5.普通用户的 ~代表家目录，比如/home/vagrant,但是root用户的这个~代表根目录 /home</p><p>​     </p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;因为linux平时用的不是很频繁，所以经常会遇见一些问题，然后很容易忘记，然后还经常遇到，所以记录下来。&lt;/p&gt;
-&lt;p&gt;目录：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;yum源替换&lt;/li&gt;
-&lt;li&gt;修改密码&lt;/li&gt;
-&lt;li&gt;locate 查找文件&lt;/li&gt;
-&lt;li&gt;添加环境变量&lt;/li&gt;
-&lt;li&gt;~ 普通用户和root用户&lt;/li&gt;
-&lt;/ol&gt;
-    
-    </summary>
-    
-      <category term="Linux" scheme="http://yoursite.com/categories/Linux/"/>
-    
-    
-      <category term="Linux" scheme="http://yoursite.com/tags/Linux/"/>
-    
-      <category term="常见问题" scheme="http://yoursite.com/tags/%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/"/>
     
   </entry>
   
