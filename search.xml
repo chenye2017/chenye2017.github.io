@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[微信开发]]></title>
+    <url>%2F2018%2F04%2F18%2F%E5%BE%AE%E4%BF%A1%E5%BC%80%E5%8F%91%2F</url>
+    <content type="text"></content>
+      <categories>
+        <category>微信</category>
+      </categories>
+      <tags>
+        <tag>PHP</tag>
+        <tag>微信</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[postgresql常见问题总结]]></title>
     <url>%2F2018%2F04%2F17%2Fpostgresql%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93%2F</url>
     <content type="text"><![CDATA[本来是不想写这篇文章的，因为感觉自己对于postgresql理解不够深入，但因为生活中对于postgresql有些问题总是遇到，所以记录下来，方便以后查找。 1.navicate连接postgresql 第一次建立连接肯定会报错啦 上面初始数据库的意思并不是数据库的名称。毕竟这次连接成功后，里面有一堆的数据库 The server doesn’t grant access to the database: the server reportsFATAL: no pg_hba.conf entry for host “192.168.0.123”, user “postgres”, database “postgres” FATAL: no pg_hba.conf entry for host “192.168.0.123”, user “postgres”, database “postgres” 谷歌翻译 服务器不授予对数据库的访问权限：服务器报告FATAL：主机“192.168.0.123”，用户“postgres”，数据库“postgres”没有pg_hba.conf条目FATAL：主机“192.168.0.123”没有pg_hba.conf条目，用户“postgres”，数据库“postgres” 其实字面意思就很容易理解，虽然我还是百度的错误答案。我自己理解就是入口不被允许,就觉办法如下 PostgreSQL数据库为了安全，它不会监听除本地以外的所有连接请求，当用户通过JDBC访问是，会报一些如下的异常： org.postgresql.util.PSQLException: FATAL: no pg_hba.conf entry for host 要解决这个问题，只需要在PostgreSQL数据库的安装目录下找到/data/pg_hba.conf,找到“# IPv4 local connections:” 在其下加上请求连接的机器IP host all all 127.0.0.1/32 md5 //坑爹，那里面对于192.168.23.10当做192.168.23.1 32是子网掩码的网段；md5是密码验证方法，可以改为trust 一个服务器，有内网ip（类似192.168这些，有外网ip 211.这种，有127.0.0.1 这种，如果要包括所有的，就得用0.0.0.0，感觉如果你访问一个服务器用的是内网ip，应该意思就是你们在同一个局域网中吧。很奇怪的一点是，之前说vagrant会把ssh的22端口映射到host的2222端口，导致了127.0.0.1:2222或者192.168.23.10:22都能访问，其实不太懂这个原理，但好像这是由两个不同的网卡决定的，我好像把itbasic那上面一个网卡禁止了，导致127那种ssh访问不了，感觉就是虽然内网ip和外网ip可以对应同一个端口，但也可以对应不同的端口）]]></content>
@@ -20,9 +32,9 @@
         <category>apache</category>
       </categories>
       <tags>
-        <tag>框架</tag>
         <tag>apache</tag>
         <tag>linux</tag>
+        <tag>框架</tag>
       </tags>
   </entry>
   <entry>
@@ -45,8 +57,8 @@
         <category>Laravel</category>
       </categories>
       <tags>
-        <tag>PHP</tag>
         <tag>Laravel</tag>
+        <tag>PHP</tag>
       </tags>
   </entry>
   <entry>
@@ -190,8 +202,8 @@
       </categories>
       <tags>
         <tag>PHP</tag>
-        <tag>ThinkPHP5</tag>
         <tag>框架</tag>
+        <tag>ThinkPHP5</tag>
       </tags>
   </entry>
   <entry>
@@ -238,7 +250,7 @@
   <entry>
     <title><![CDATA[php安装扩展]]></title>
     <url>%2F2018%2F01%2F18%2Fphp%E5%AE%89%E8%A3%85%E6%89%A9%E5%B1%95%2F</url>
-    <content type="text"><![CDATA[好久没有写文章了，今天来说一下关于php的扩展，虽然自己理解的不是很深，也没有仔细去研究，只是把平时工作中遇到的情况，解决途径写下来，还有很多不足的地方，以后去补充 php的扩展大部分都是c编写的，php -m 可以列出我们php中安装的扩展 其中swoole就是现在很火的php扩展。以这个为例子Linux下安装 获取tar.gz压缩包（可以去github上直接下载，或者去pecl（php 扩展库里面搜索））。 解压缩 tar xvf 进入解压缩目录（如果进入解压缩目录内部文件是so结尾的，不是.c 之类的结尾的，不用进行后面的操作） phpize (这个命令在php的安装目录下，bin目录下，和php命令在一个目录下) ./configure 生成配置文件，之前安装swoole的时候需要指定php-config,这可不是php的配置文件，也是一个命令，和上面的php，phpize在同一个bin目录下，如果想看更多参数可以 –help, make make install (安装失败make clean，重新再来呗)8.生成的so文件自动放到了/usr/local/php/lib/php/extensions/no-debug-zts-20160303，然后在php.ini 文件里面加上一句extension = swoole.so就可以了 windows下安装 大部分都是xampp的这种集成环境，首先去pecl上下载dll文件，··像swoole我是没找到windows下的扩展文件，需要根据php版本 vc版本 TS Windows版本（windows一般是x86 和64，操作系统位数） 来选择 扩展文件的版本 解压后，把dll文件放到php的扩展目录下ext下面，然后在php.ini里面加上zend_exten```= 这个扩展文件名。就可以了 之前安装redis扩展的时候，···当时用的是xampp，··然后安装好了redis扩展，可是使用不了。坑爹啊，window下我都没安装redis，光安装redis扩展有什么用，····其实这个扩展知识为了让php能操作redis，像apache，在编译安装php7的时候，也要指定apache的apxs之类的位置。]]></content>
+    <content type="text"><![CDATA[好久没有写文章了，今天来说一下关于php的扩展，虽然自己理解的不是很深，也没有仔细去研究，只是把平时工作中遇到的情况，解决途径写下来，还有很多不足的地方，以后去补充 php的扩展大部分都是c编写的，php -m 可以列出我们php中安装的扩展 其中swoole就是现在很火的php扩展。以这个为例子Linux下安装 获取tar.gz压缩包（可以去github上直接下载，或者去pecl（php 扩展库里面搜索））。 解压缩 tar xvf 进入解压缩目录（如果进入解压缩目录内部文件是so结尾的，不是.c 之类的结尾的，不用进行后面的操作） phpize (这个命令在php的安装目录下，bin目录下，和php命令在一个目录下) ./configure 生成配置文件，之前安装swoole的时候需要指定php-config,这可不是php的配置文件，也是一个命令，和上面的php，phpize在同一个bin目录下，如果想看更多参数可以 –help, make make install (安装失败make clean，重新再来呗)8.生成的so文件自动放到了/usr/local/php/lib/php/extensions/no-debug-zts-20160303，然后在php.ini 文件里面加上一句extension = swoole.so就可以了 可能需要ldconfig下，http://man.linuxde.net/ldconfig windows下安装 大部分都是xampp的这种集成环境，首先去pecl上下载dll文件，··像swoole我是没找到windows下的扩展文件，需要根据php版本 vc版本 TS Windows版本（windows一般是x86 和64，操作系统位数） 来选择 扩展文件的版本 解压后，把dll文件放到php的扩展目录下ext下面，然后在php.ini里面加上zend_exten```= 这个扩展文件名。就可以了 之前安装redis扩展的时候，···当时用的是xampp，··然后安装好了redis扩展，可是使用不了。坑爹啊，window下我都没安装redis，光安装redis扩展有什么用，····其实这个扩展知识为了让php能操作redis，像apache，在编译安装php7的时候，也要指定apache的apxs之类的位置。 坑： 机器上安装了挺多php的，有5.6，有7，因为7编译安装的时候没有填写配置文件的位置，默认应该是放在/usr/local/lib目录下（php -r “phpinfo();”|grep configure, 注意一定要在phpinfo();后面加引号，查看编译安装参数，像apache，直接去安装目录下的build文件夹里面，查看就可以了），而我的机器上一直还有/etc/php/php.ini 这个配置文件，因为php安装的时候是不存在配置文件，讲道理编译的时候没有写配置文件的位置，应该放在/usr/local/lib目录下，但他还是放在了/etc/php/php.ini,聪明的apache自动去找到了这个配置文件，但当我在默认/usr/local/lib目录下放置了php.ini的时候，他是去这下面寻找的，以前的那个就废弃了。apache可以指定php配置文件，只需要在apache的配置文件里面指定下，地址：[http://www.jb51.net/article/106111.htm] php -m 的好处就在于不用重启服务器，就能看到已经加载的php模块，php -r “phpinfo();” 执行后面的函数返回结果。 php -c 指定配置文件的位置，注意 php -m -c 加载扩展的时候默认使用的是默认配置文件的位置，php -c 文件位置 -m 这里才是新的配置文件位置方式加载扩展。 遗留的问题： php -m显示出扩展swoole ， phpinfo 页面没有这个扩展]]></content>
       <categories>
         <category>PHP</category>
       </categories>
@@ -324,7 +336,7 @@
   <entry>
     <title><![CDATA[Linux常用命令总结]]></title>
     <url>%2F2017%2F11%2F28%2FLinux%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E6%80%BB%E7%BB%93%2F</url>
-    <content type="text"><![CDATA[netstat -an 展示所有的端口号，-a 表示包括tcp和utp，-n表示不用域名代替ip地址 ll -a ls-la 展示该目录下所有文件包括隐藏文件 cd 进入目录，~ 普通用户的家目录 /home/vagrant, root用户 /home pwd 展示路径 mkdir 创建目录 chmod -R (文件夹) 755 修改权限 chown root:root 文件名 修改文件所有者和组 chgrp 修改组 useradd 添加用户 passwd 修改密码 （切换到当前用户下就可以修改了哦，不知道怎么修改别的用户的） groupadd 添加组 touch 新建文件 echo 11 &gt;&gt; 文件名 把这个内容输出到文件中 vim i 修改模式 ：wq 保存 ：q 退出不保存 ：q！强制退出 / 查找 ：num 多少行 ：$末尾 cat 查看 echo 输出，比如输出当前进程号 echo $$ (PID的值代表的就是进程号) export 设置环境变量 export FOO = foo ,让当前环境变量立即生效，source ~/.bash_profile 执行这个脚本文件（source在当前进程中直接执行而不是复制子进程执行）感觉直接在命令行这样export FOO = foo 好像就直接生效了，但是如果修改bash_profile 文件的话，要执行source才能生效 env 查看环境变量，比如查看刚刚的环境变量是否生效 env | grep FOO 常用端口号 ：http 80 https 443 mysql 3306 redis 忘记了 ssh 22 ~代表家目录，root用户 /root,普通用户/home/用户名]]></content>
+    <content type="text"><![CDATA[netstat -an 展示所有的端口号，-a 表示包括tcp和utp，-n表示不用域名代替ip地址 ll -a ls-la 展示该目录下所有文件包括隐藏文件 cd 进入目录，~ 普通用户的家目录 /home/vagrant, root用户 /home pwd 展示路径 mkdir 创建目录 chmod -R (文件夹) 755 修改权限 chown root:root 文件名 修改文件所有者和组 chgrp 修改组 useradd 添加用户 passwd 修改密码 （切换到当前用户下就可以修改了哦，不知道怎么修改别的用户的） groupadd 添加组 touch 新建文件 echo 11 &gt;&gt; 文件名 把这个内容输出到文件中 vim i 修改模式 ：wq 保存 ：q 退出不保存 ：q！强制退出 / 查找 ：num 多少行 ：$末尾 cat 查看 echo 输出，比如输出当前进程号 echo $$ (PID的值代表的就是进程号) export 设置环境变量 export FOO = foo ,让当前环境变量立即生效，source ~/.bash_profile 执行这个脚本文件（source在当前进程中直接执行而不是复制子进程执行）感觉直接在命令行这样export FOO = foo 好像就直接生效了，但是如果修改bash_profile 文件的话，要执行source才能生效 env 查看环境变量，比如查看刚刚的环境变量是否生效 env | grep FOO cp 复制文件 cp 源文件 目标文件 ，如果是文件夹 记得带上 -r 参数 常用端口号 ：http 80 https 443 mysql 3306 redis 忘记了 ssh 22 ~代表家目录，root用户 /root,普通用户/home/用户名]]></content>
       <categories>
         <category>Linux</category>
       </categories>
@@ -354,9 +366,9 @@
         <category>PHP</category>
       </categories>
       <tags>
-        <tag>框架</tag>
         <tag>apache</tag>
         <tag>linux</tag>
+        <tag>框架</tag>
         <tag>php</tag>
       </tags>
   </entry>
