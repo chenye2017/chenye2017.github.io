@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[异常处理]]></title>
+    <url>%2F2018%2F04%2F19%2F%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86%2F</url>
+    <content type="text"><![CDATA[异常处理其实是我一直很少接触的，之前是因为异常处理相比较于php的基础知识更高一层，大学时就有个习惯，越到后面的内容看的越少，比如c语言的指针，每学期的专业课，都是只能讲完前面的语法部分，运算符？if？else？for循环？后面就没了。 但当我学习tp5的时候，发现tp5的所有错误都会以异常的形式抛出，然后在7月老师的指导下，认识到了AOP思想，了解了统一异常处理类的时候，我才逐渐重视了这个东西。 新项目中：因为我希望把每个函数写的尽量短些，虽然以后追踪问题的时候可能会跳来跳去，但如果单单只靠函数的名称就能了解到函数的作用，这将是多么美好的一件事，于是产生了一个问题：一般只有最外层的函数才能决定最终抛给客户端的内容，但如果我们在内部自己调用的函数中也这么写，比如 12345678910111213141516public function father()&#123; $res = $this-&gt;children(); return [ &apos;code&apos; =&gt; 200, &apos;msg&apos; =&gt; $res ]&#125;public function children()&#123; return [ &apos;code&apos; =&gt; 500, &apos;msg&apos; =&gt; &apos;你有毒&apos; ]&#125; 这个样子返回的结果肯定不是我们希望的，你可以说我可以处理啊，但其实如果层次深了之类的，处理是很麻烦的，如果我能立刻把结果给到前端，那该多棒啊，这时候就可以通过抛出异常，最外层统一对异常进行处理，比如抛出异常的时候 1throw new ControllerException(404, &apos;controller not exist.&apos;); 这个ControllerException 是继承于基本的\Exception，php自带的。然后我们在最外层进行捕获 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990&lt;?phpdate_default_timezone_set(&apos;Asia/Shanghai&apos;);include_once(&apos;vendor/autoload.php&apos;);include_once &apos;./Libs/Eagles/Document.php&apos;;define(&apos;SWOOLE_PORT&apos;, 56732);define(&apos;SWOOLE_ERROR_LOG&apos;, &apos;/var/log/swoole_error.log&apos;);define(&apos;EAGLES_SERVER&apos;, &apos;211.144.114.26&apos;);define(&apos;EAGLES_PORT&apos;, &apos;17200&apos;);// error_reporting(0);// http服务的配置$http = new swoole_http_server(&quot;0.0.0.0&quot;, SWOOLE_PORT);$http-&gt;set([ &apos;worker_num&apos; =&gt; 20, // cpu 6核 默认启动6个, 1-4 倍合适 占用：40M内存*20 // &apos;task_worker_num&apos; =&gt; 6, //开启task功能 // &apos;daemonize&apos; =&gt; true, // 守护进程 &apos;log_file&apos; =&gt; SWOOLE_ERROR_LOG, &apos;buffer_output_size&apos; =&gt; 8 * 1024 *1024, // 8M 缓冲区。占用 8*12M,api接口可最大返回8M的数据内容 &apos;package_max_length&apos;=&gt; 5 * 1024 * 1024, // 最大数据块是5M。上传可上传4M大小文件 // 配置静态文件根目录 // &apos;enable_static_handler&apos; =&gt; true, // &apos;document_root&apos; =&gt; &apos;/home/projectx/server/upload&apos; // &apos;daemonize&apos; =&gt; true, // &apos;pid_file&apos; =&gt; __DIR__.&apos;/server.pid&apos;]);use Framework\Base\Route as Router;use Framework\DB\ConnectionManager as ConnectionManager;use Framework\Log\Logger as Logger;$config = include_once(&apos;config/config.php&apos;);Logger::logfile($config[&apos;logfile&apos;]);ConnectionManager::db_config($config[&apos;db&apos;]);$http-&gt;on(&apos;request&apos;, function ($request, $response) &#123; try&#123; if ($request-&gt;server[&apos;path_info&apos;] == &apos;/favicon.ico&apos; || $request-&gt;server[&apos;request_uri&apos;] == &apos;/favicon.ico&apos;) &#123; return $response-&gt;end(); &#125; $param = $request-&gt;server[&apos;request_method&apos;] == &apos;POST&apos; ? @$request-&gt;post : @$request-&gt;get; $data = \Libs\Common::getCallData(@$request-&gt;header[&apos;www-authorization&apos;], $request-&gt;header[&apos;host&apos;], $request-&gt;server[&apos;request_uri&apos;], $param, $request-&gt;server[&apos;remote_addr&apos;], $request-&gt;server[&apos;request_method&apos;]); //\Libs\ElasticSearch::setIndexTableDoc(&apos;projectx_log&apos;, &apos;call_log&apos;, $data[&apos;doc_id&apos;], $data[&apos;data&apos;]); $allow_method = [&apos;POST&apos;, &apos;GET&apos;, &apos;OPTIONS&apos;]; if(!in_array($request-&gt;server[&apos;request_method&apos;], $allow_method))&#123; $response-&gt;status(405); return $response-&gt;end(); &#125; //如果需要设置允许所有域名发起的跨域请求，可以使用通配符 * $response-&gt;header(&quot;Access-Control-Allow-Origin&quot;, &apos;*&apos;); $response-&gt;header(&apos;Access-Control-Allow-Methods&apos;, &apos;POST, GET&apos;); $response-&gt;header(&apos;Access-Control-Allow-Headers&apos;, &apos;Origin, X-Requested-With, Content-Type, Accept, www-authorization&apos;); $uri = $request-&gt;server[&apos;request_uri&apos;]; $uri = $uri; $res = Router::dispatch($uri, $request, $response); @$response-&gt;header(&apos;Content-Type&apos;, &apos;application/json&apos;); @$response-&gt;end(json_encode($res)); &#125;catch(\Framework\Exception\ControllerException $ce)&#123; $status = $ce-&gt;getStatusCode(); $response-&gt;status($status); $errorcode = $ce-&gt;getErrorCode(); $msg = $ce-&gt;getMsg(); $response-&gt;header(&quot;Access-Control-Allow-Origin&quot;, &apos;*&apos;); $response-&gt;header(&apos;Content-Type&apos;, &apos;application/json&apos;); $response-&gt;end(json_encode([&apos;code&apos;=&gt;$errorcode, &apos;msg&apos;=&gt;$msg])); &#125;catch(\Framework\Exception\RouteException $re)&#123; $status = $re-&gt;getStatusCode(); @$response-&gt;header(&quot;Access-Control-Allow-Origin&quot;, &apos;*&apos;); @$response-&gt;status($status); @$response-&gt;end(); &#125;catch(Exception $e)&#123; @$response-&gt;header(&quot;Access-Control-Allow-Origin&quot;, &apos;*&apos;); @$response-&gt;status(500); @$response-&gt;end(&apos;exceptions:&apos; . $e-&gt;getMessage()); &#125;&#125;);echo &quot;server start listening port:&quot; . SWOOLE_PORT . PHP_EOL;$http-&gt;start(); 看见了嘛，最外层的几个catch就是对他的捕获，注意最大的要写在外面哦，因为前面的如果捕获了，后面的就不会处理了呢。 其实通过上面的例子我们还能了解到其实一个php项目说到底还是一个脚本，上面代码是我用swoole搭建的webserver时候的启动脚本，其实用swoole能更好的帮助phper理解web是怎么样运行的，当服务器监听到request过来的时候，我们通过这个 1Router::dispatch($uri, $request, $response); 去执行对应的项目里面的代码，这就是我们平时经常写的工程，大部分用的是面向对象的思想，定义一个类啊，方法啊，因为这里面就像一个仓库，是我们用来取东西的，所以没有那种流程的概念，唯一的流程概念应该在我们这个启动脚本里，这也是我们把try catch 写在这里面的一个原因（这也是我找php统一异常处理的方法应该定义在哪的时候发现的），后来继续思考了下，感觉不管是我之前做的那个itbasic，还是现在这个bbs，其实都是脚本+类库合在一起的，因为很多时候我们往往都是在写类库，而忽略了脚本的存在（一般都是写好的，很少需要改），甚至把一个项目就当做一个面向对象，而忘记了面向过程的存在，之前群里面有个朋友不知道在哪定义通过哪个搜素引擎查找到自己网站的网上百度的方法，根源也是因为不理解一个项目的脚本到底存在于什么地方。 wait: 1.异常处理的细节]]></content>
+      <categories>
+        <category>PHP</category>
+      </categories>
+      <tags>
+        <tag>PHP</tag>
+        <tag>异常处理</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[微信开发]]></title>
     <url>%2F2018%2F04%2F18%2F%E5%BE%AE%E4%BF%A1%E5%BC%80%E5%8F%91%2F</url>
     <content type="text"></content>
@@ -32,9 +44,9 @@
         <category>apache</category>
       </categories>
       <tags>
-        <tag>框架</tag>
         <tag>apache</tag>
         <tag>linux</tag>
+        <tag>框架</tag>
       </tags>
   </entry>
   <entry>
@@ -139,8 +151,8 @@
         <category>工具</category>
       </categories>
       <tags>
-        <tag>工具</tag>
         <tag>PHP</tag>
+        <tag>工具</tag>
         <tag>Python</tag>
         <tag>正则表达式</tag>
       </tags>
@@ -202,8 +214,8 @@
       </categories>
       <tags>
         <tag>PHP</tag>
-        <tag>ThinkPHP5</tag>
         <tag>框架</tag>
+        <tag>ThinkPHP5</tag>
       </tags>
   </entry>
   <entry>
@@ -214,9 +226,9 @@
         <category>PHP</category>
       </categories>
       <tags>
+        <tag>PHP</tag>
         <tag>Linux</tag>
         <tag>工具</tag>
-        <tag>PHP</tag>
         <tag>调试</tag>
         <tag>Xdebug</tag>
       </tags>
@@ -230,8 +242,8 @@
       </categories>
       <tags>
         <tag>Linux</tag>
-        <tag>lamp</tag>
         <tag>环境</tag>
+        <tag>lamp</tag>
       </tags>
   </entry>
   <entry>
@@ -243,8 +255,8 @@
       </categories>
       <tags>
         <tag>Linux</tag>
-        <tag>环境</tag>
         <tag>lnmp</tag>
+        <tag>环境</tag>
       </tags>
   </entry>
   <entry>
@@ -255,8 +267,8 @@
         <category>PHP</category>
       </categories>
       <tags>
-        <tag>Linux</tag>
         <tag>PHP</tag>
+        <tag>Linux</tag>
         <tag>扩展</tag>
       </tags>
   </entry>
@@ -366,9 +378,9 @@
         <category>PHP</category>
       </categories>
       <tags>
-        <tag>框架</tag>
         <tag>apache</tag>
         <tag>linux</tag>
+        <tag>框架</tag>
         <tag>php</tag>
       </tags>
   </entry>
