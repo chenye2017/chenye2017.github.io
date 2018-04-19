@@ -90,7 +90,7 @@
 <meta property="og:description" content="本来是不想写这篇文章的，因为感觉自己对于postgresql理解不够深入，但因为生活中对于postgresql有些问题总是遇到，所以记录下来，方便以后查找。">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://ozys8fka7.bkt.clouddn.com/TIM%E6%88%AA%E5%9B%BE20180417155030.png">
-<meta property="og:updated_time" content="2018-04-19T06:44:33.500Z">
+<meta property="og:updated_time" content="2018-04-19T13:54:53.276Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="postgresql常见问题总结">
 <meta name="twitter:description" content="本来是不想写这篇文章的，因为感觉自己对于postgresql理解不够深入，但因为生活中对于postgresql有些问题总是遇到，所以记录下来，方便以后查找。">
@@ -407,15 +407,16 @@
 <p>32是子网掩码的网段；md5是密码验证方法，可以改为trust</p>
 </blockquote>
 <p>一个服务器，有内网ip（类似192.168这些，有外网ip 211.这种，有127.0.0.1 这种，如果要包括所有的，就得用0.0.0.0，感觉如果你访问一个服务器用的是内网ip，应该意思就是你们在同一个局域网中吧。很奇怪的一点是，之前说vagrant会把ssh的22端口映射到host的2222端口，导致了127.0.0.1:2222或者192.168.23.10:22都能访问，其实不太懂这个原理，但好像这是由两个不同的网卡决定的，我好像把itbasic那上面一个网卡禁止了，导致127那种ssh访问不了，感觉就是虽然内网ip和外网ip可以对应同一个端口，但也可以对应不同的端口）</p>
-<p>2.导出数据库</p>
-<p>/opt/pgsql/bin/pg_dump -U postgres itbasic &gt; /home/itbasic/itbasic.sql</p>
+<p>2.导入导出数据库</p>
+<p>导出：/opt/pgsql/bin/pg_dump -U postgres itbasic &gt; /home/itbasic/itbasic.sql</p>
 <p>pg_dump 是postgresql安装之后的一个命令，-U 指定用户 postgres, itbasic,是数据库名，postgresql好像只能用postgres这个用户执行操作，itbasic这个数据库名一定要指定，还有pg_dump 这个命令所在目录没有加入系统变量的话，一定要加上路径，后面 &gt;/home/itbasic/itbasic.sql,代表数据导出到具体的文件中。</p>
-<p>3.导入出数据库</p>
+<p>导出</p>
 <p>数据库的导入必须要先创建这个数据库</p>
 <p>postgresql安装之后的命令会有createdb，但用这个创建数据库感觉挺麻烦，直接</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">1. /opt/pgsql/bin/pgsql -U postgres itbasic  //进入pgsql 客户端</div><div class="line">2. create database project x   //创建数据库</div><div class="line">3. \q   //退出pgsql客户端</div><div class="line">4. /opt/pgsql/bin/pgsql -U postgres projectx -f /home/itbasic/projectx.sql   //导入数据库</div></pre></td></tr></table></figure>
-<p>4.导入出表</p>
+<p>3.导入导出表</p>
 <p>导入导出表和导入导出数据库的最大区别是导入导出数据库需要先建立一个数据库，而表则不用，最好还先把这张表删除了</p>
+<p>导出</p>
 <p>/opt/pgsql/bin/pg_dump -U postgres itbasic  -t dt_admin &gt; /home/itbasic/admin.sql</p>
 <p>导入</p>
 <p>/opt/pgsql/bin/psql -U postgres itbasic -f /home/itbasic/admin.sql</p>
