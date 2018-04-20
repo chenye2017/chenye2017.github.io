@@ -89,7 +89,7 @@
 <meta property="og:site_name" content="语法糖的博客">
 <meta property="og:description" content="异常处理其实是我一直很少接触的，之前是因为异常处理相比较于php的基础知识更高一层，大学时就有个习惯，越到后面的内容看的越少，比如c语言的指针，每学期的专业课，都是只能讲完前面的语法部分，运算符？if？else？for循环？后面就没了。 但当我学习tp5的时候，发现tp5的所有错误都会以异常的形式抛出，然后在7月老师的指导下，认识到了AOP思想，了解了统一异常处理类的时候，我才逐渐重视了这个东西。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-04-19T15:36:30.744Z">
+<meta property="og:updated_time" content="2018-04-20T10:44:32.810Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="异常处理">
 <meta name="twitter:description" content="异常处理其实是我一直很少接触的，之前是因为异常处理相比较于php的基础知识更高一层，大学时就有个习惯，越到后面的内容看的越少，比如c语言的指针，每学期的专业课，都是只能讲完前面的语法部分，运算符？if？else？for循环？后面就没了。 但当我学习tp5的时候，发现tp5的所有错误都会以异常的形式抛出，然后在7月老师的指导下，认识到了AOP思想，了解了统一异常处理类的时候，我才逐渐重视了这个东西。">
@@ -395,7 +395,12 @@
 <p>其实通过上面的例子我们还能了解到其实一个php项目说到底还是一个脚本，上面代码是我用swoole搭建的webserver时候的启动脚本，其实用swoole能更好的帮助phper理解web是怎么样运行的，当服务器监听到request过来的时候，我们通过这个</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Router::dispatch($uri, $request, $response);</div></pre></td></tr></table></figure>
 <p>去执行对应的项目里面的代码，这就是我们平时经常写的工程，大部分用的是面向对象的思想，定义一个类啊，方法啊，因为这里面就像一个仓库，是我们用来取东西的，所以没有那种流程的概念，唯一的流程概念应该在我们这个启动脚本里，这也是我们把try  catch 写在这里面的一个原因（这也是我找php统一异常处理的方法应该定义在哪的时候发现的），后来继续思考了下，感觉不管是我之前做的那个itbasic，还是现在这个bbs，其实都是脚本+类库合在一起的，因为很多时候我们往往都是在写类库，而忽略了脚本的存在（一般都是写好的，很少需要改），甚至把一个项目就当做一个面向对象，而忘记了面向过程的存在，之前群里面有个朋友不知道在哪定义通过哪个搜素引擎查找到自己网站的网上百度的方法，根源也是因为不理解一个项目的脚本到底存在于什么地方。</p>
-<p>其实类比自己接触的两个框架，tp和laravel,为嘛他的入口文件index.php和路由文件分开了呢，​:sweat:​ 其实本该分开，路由是个类库，入口文件是个脚本呢，之所以产生这种坑爹的想法是itbasic的route.php即是入口文件，也是路由类定义的地方。</p>
+<p>其实类比自己接触的两个框架，tp和laravel,为嘛他的入口文件index.php和路由文件分开了呢，:sweat: 其实本该分开，路由是个类库，入口文件是个脚本呢，之所以产生这种坑爹的想法是itbasic的route.php即是入口文件，也是路由类定义的地方。</p>
+<p>观察server.php, 观察config目录，发现set.php 是定义的常量，这样在使用的时候可以直接使用，但是config.php 是返回的数组，项目里面想用这里面的值是不可以直接使用的，那数据库是怎么连接的呢，发现</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ConnectionManager::db_config($config[&apos;db&apos;]);</div></pre></td></tr></table></figure>
+<p>这个类和普通的类不一样，这个直接在入口文件中就有加载，这个是把config里面的值保存到他的类变量中了，所以在项目里面可以直接使用。</p>
+<p>还有上次那个exception，其实子类继承了父类，父类中变量和子类中变量重名，但他们是各自的，子类继承了父类，用了父类获取自己errorcode的方法，那个其实是获取父类的，而并非是获取子类的，这点要注意。</p>
+<p>子类继承父类的初始化函数的时候不要忘记传参数了哦。</p>
 <p>wait:</p>
 <p>1.异常处理的细节</p>
 
@@ -717,7 +722,7 @@ var jiathis_config={
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count"> | 博客全站共44.6k字</span>
+  <span class="post-count"> | 博客全站共44.9k字</span>
 </div>
 
 
