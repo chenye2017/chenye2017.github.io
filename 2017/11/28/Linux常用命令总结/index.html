@@ -89,7 +89,7 @@
 <meta property="og:site_name" content="语法糖的博客">
 <meta property="og:description" content="netstat -an 展示所有的端口号，-a 表示包括tcp和utp，-n表示不用域名代替ip地址 ll -a ls-la  展示该目录下所有文件包括隐藏文件 cd  进入目录，~ 普通用户的家目录 /home/vagrant, root用户 /home pwd 展示路径 mkdir  创建目录 chmod -R (文件夹)  755 修改权限 chown root:root 文件名 修改文件">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-04-18T06:44:11.387Z">
+<meta property="og:updated_time" content="2018-04-23T13:08:36.308Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linux常用命令总结">
 <meta name="twitter:description" content="netstat -an 展示所有的端口号，-a 表示包括tcp和utp，-n表示不用域名代替ip地址 ll -a ls-la  展示该目录下所有文件包括隐藏文件 cd  进入目录，~ 普通用户的家目录 /home/vagrant, root用户 /home pwd 展示路径 mkdir  创建目录 chmod -R (文件夹)  755 修改权限 chown root:root 文件名 修改文件">
@@ -402,6 +402,8 @@
 <li>export 设置环境变量 export FOO = foo ,让当前环境变量立即生效，source ~/.bash_profile 执行这个脚本文件（source在当前进程中直接执行而不是复制子进程执行）感觉直接在命令行这样export FOO = foo 好像就直接生效了，但是如果修改bash_profile 文件的话，要执行source才能生效</li>
 <li>env 查看环境变量，比如查看刚刚的环境变量是否生效 env | grep FOO </li>
 <li>cp 复制文件  cp 源文件 目标文件 ，如果是文件夹 记得带上 -r 参数</li>
+<li>lsof -i|grep 3306 查看端口号</li>
+<li>​</li>
 </ol>
 <p>常用端口号 ：http 80 https 443</p>
 <p>mysql  3306</p>
@@ -592,7 +594,7 @@ var jiathis_config={
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">35</span>
+                  <span class="site-state-item-count">37</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -603,7 +605,7 @@ var jiathis_config={
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-count">13</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -614,7 +616,7 @@ var jiathis_config={
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">51</span>
+                  <span class="site-state-item-count">54</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -733,7 +735,7 @@ var jiathis_config={
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count"> | 博客全站共44.9k字</span>
+  <span class="post-count"> | 博客全站共63.1k字</span>
 </div>
 
 
