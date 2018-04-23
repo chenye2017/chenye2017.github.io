@@ -69,9 +69,9 @@
         <category>apache</category>
       </categories>
       <tags>
-        <tag>框架</tag>
         <tag>apache</tag>
         <tag>linux</tag>
+        <tag>框架</tag>
       </tags>
   </entry>
   <entry>
@@ -94,8 +94,8 @@
         <category>Laravel</category>
       </categories>
       <tags>
-        <tag>PHP</tag>
         <tag>Laravel</tag>
+        <tag>PHP</tag>
       </tags>
   </entry>
   <entry>
@@ -196,7 +196,7 @@
   <entry>
     <title><![CDATA[关于token]]></title>
     <url>%2F2018%2F02%2F07%2F%E5%85%B3%E4%BA%8Etoken%2F</url>
-    <content type="text"><![CDATA[关于token。故事背景：itbasic用vue做了个手机版，之前是用jquery识别是手机还是web实现页面上元素的尺寸变化，实现兼容，但是页面其实还是同一个。所以通过dom元素绑定的后台请求ajax，api接口可以通用。现在用了vue，这种mvvm模式的框架，需要后台返回纯json格式的数据，并不需要之前接口中可能返回的html，实现页面元素的变化，这样一来，很多接口得重写。之前的itbasic更像是远古时代的web，调用接口的基本权限控制用的是session里面存储的登录用户信息，而itbasic的web端更像是现代的web网站，调用接口不需要用户登录，而是通过令牌，也就是token进行身份认证。 token肯定要保存的啦,保存的内容有哪些？从上面可以看出token的作用就和之前的session作用是一样的，因为session中存储了用户的基本信息，我们可以通过解析session数组，从中获取自己有用的东西，但我们的token一般只是一串无意义不重复的数字，所以光靠token是实现不了用户的区分的，所以我们一般在缓存中保存（为什么是缓存呢，我觉得首先返回给客户端的token信息不重要，并不用都保留下来，还有就是频繁的调用api接口，如果我们每次都去数据库中取缓存，太多的与数据库的交流并不好）。那我们需要保存的内容有哪些呢？最基本的用户的uid，因为我们一个token需要区分一个用户，我们得通过token知道这个用户是谁，当然你可以保存的不单单是uid，你可以理解成token是session数组的session_id,session数组就是我们token可以对应的内容，你可以在里面存放用户权限，登录时间，等一些常用的信息，这样就不需要为了取一些常用的信息的时候，先通过token找到用户id，再通过数据库查找这个用户的相关信息，再返回。token对应的内容只要你乐意，随便存储什么，但最基本的应该有个uid哦。 ​总结：token保存在缓存中，并不用记录在数据库中，保存的内容是和uid 的对应关系。 token的产生其实之前我一直纠结怎么生成一个token，网上有很多算法，后来呢，感觉如果安全性不用太高的话。取一堆字符串，从中随机取个，通过mt_rand()，然后拼接下，你也可以再拼接个你自己的盐，再加上时间戳这种的东西，再md5（）加密下。(js,php这些都有md5加密的，同样的内容，不管通过什么语言md5加密应该是一样的）。总结：方法很多，自己想吧，别太纠结了 token有过期时间和session一样啦，不能请求一次就一直可以使用啦。 token一般放在cookie里面，这样请求接口的时候就不用一直带上这个参数了。 token的申请。token需要和用户相对应，这种对应关系怎么知道呢。在之前做的微信小程序登录接口中是这样做的。 首先用户通过登录小程序获得一个code码（还记得我们每次进入小程序的时候都有个允许授权吗），这个码可以换取对应这个用户在这个小程序里面的一个独一无二的openid，可以理解成类似uid的东西，我们一旦获取到这个openid，意味着就相当于我们多了个用户uid，我们在自己的用户表中存储这个openid。（为什么要用code换区openid呢，可以理解成openid比较重要，包含用户的重要信息，而且类似uid，永远不会变，一旦获取，就代表永远知道了，这个不能用来表示身份，或者说通过openid不能换取表示身份的token，所以还是放在服务器端吧。古代的用户密码登录因为有只有自己知道的密码，所以可以通过固定不变的大家可能都知道的用户名换区session_id,现在通过变化的code同样的道理，code理解成密码，服务器端给这个密码给微信，微信通过自身维护的code和openid的对应关系，把用户openid返回给你，注意这个code只能用一次哦） 服务器收到这个openid， 生成和这个用户相匹配的token，存储对应关系在缓存中，再返回给客户端token。客户端拿着这个token再来服务器端请求数据，服务器端看token是否存在和token是否失效，如果没有，可以访问。如果过期了，需要重新走上面的流程生成新的token。可这个时候就不用在用户表里面添加新的用户了，因为用户已经存在了，可以生成新的key=》value对应关系，key=》代表新生成的token。 大致就这些了吧···]]></content>
+    <content type="text"><![CDATA[关于token。故事背景：itbasic用vue做了个手机版，之前是用jquery识别是手机还是web实现页面上元素的尺寸变化，实现兼容，但是页面其实还是同一个。所以通过dom元素绑定的后台请求ajax，api接口可以通用。现在用了vue，这种mvvm模式的框架，需要后台返回纯json格式的数据，并不需要之前接口中可能返回的html，实现页面元素的变化，这样一来，很多接口得重写。之前的itbasic更像是远古时代的web，调用接口的基本权限控制用的是session里面存储的登录用户信息，而itbasic的web端更像是现代的web网站，调用接口不需要用户登录，而是通过令牌，也就是token进行身份认证。 token肯定要保存的啦,保存的内容有哪些？从上面可以看出token的作用就和之前的session作用是一样的，因为session中存储了用户的基本信息，我们可以通过解析session数组，从中获取自己有用的东西，但我们的token一般只是一串无意义不重复的数字，所以光靠token是实现不了用户的区分的，所以我们一般在缓存中保存（为什么是缓存呢，我觉得首先返回给客户端的token信息不重要，并不用都保留下来，还有就是频繁的调用api接口，如果我们每次都去数据库中取缓存，太多的与数据库的交流并不好）。那我们需要保存的内容有哪些呢？最基本的用户的uid，因为我们一个token需要区分一个用户，我们得通过token知道这个用户是谁，当然你可以保存的不单单是uid，你可以理解成token是session数组的session_id,session数组就是我们token可以对应的内容，你可以在里面存放用户权限，登录时间，等一些常用的信息，这样就不需要为了取一些常用的信息的时候，先通过token找到用户id，再通过数据库查找这个用户的相关信息，再返回。token对应的内容只要你乐意，随便存储什么，但最基本的应该有个uid哦。 ​总结：token保存在缓存中，并不用记录在数据库中，保存的内容是和uid 的对应关系。 token的产生其实之前我一直纠结怎么生成一个token，网上有很多算法，后来呢，感觉如果安全性不用太高的话。取一堆字符串，从中随机取个，通过mt_rand()，然后拼接下，你也可以再拼接个你自己的盐，再加上时间戳这种的东西，再md5（）加密下。(js,php这些都有md5加密的，同样的内容，不管通过什么语言md5加密应该是一样的）。总结：方法很多，自己想吧，别太纠结了 token有过期时间和session一样啦，不能请求一次就一直可以使用啦。 token一般放在cookie里面，这样请求接口的时候就不用一直带上这个参数了。 token的申请。token需要和用户相对应，这种对应关系怎么知道呢。在之前做的微信小程序登录接口中是这样做的。 首先用户通过登录小程序获得一个code码（还记得我们每次进入小程序的时候都有个允许授权吗），这个码可以换取对应这个用户在这个小程序里面的一个独一无二的openid，可以理解成类似uid的东西，我们一旦获取到这个openid，意味着就相当于我们多了个用户uid，我们在自己的用户表中存储这个openid。（为什么要用code换区openid呢，可以理解成openid比较重要，包含用户的重要信息，而且类似uid，永远不会变，一旦获取，就代表永远知道了，这个不能用来表示身份，或者说通过openid不能换取表示身份的token，所以还是放在服务器端吧。古代的用户密码登录因为有只有自己知道的密码，所以可以通过固定不变的大家可能都知道的用户名换区session_id,现在通过变化的code同样的道理，code理解成密码，服务器端给这个密码给微信，微信通过自身维护的code和openid的对应关系，把用户openid返回给你，注意这个code只能用一次哦） 服务器收到这个openid， 生成和这个用户相匹配的token，存储对应关系在缓存中，再返回给客户端token。客户端拿着这个token再来服务器端请求数据，服务器端看token是否存在和token是否失效，如果没有，可以访问。如果过期了，需要重新走上面的流程生成新的token。可这个时候就不用在用户表里面添加新的用户了，因为用户已经存在了，可以生成新的key=》value对应关系，key=》代表新生成的token。 大致就这些了吧··· 关于app接口设计的token，有signature签名的作用：主要是为了放置提交数据的安全性，token：1.第三方access_token,调用第三方接口的凭证。2.自己用的token，作用就相当于用户登录的密码，参见链接:https://blog.csdn.net/qq_26291823/article/details/53337518]]></content>
       <categories>
         <category>PHP</category>
       </categories>
@@ -239,8 +239,8 @@
       </categories>
       <tags>
         <tag>PHP</tag>
-        <tag>ThinkPHP5</tag>
         <tag>框架</tag>
+        <tag>ThinkPHP5</tag>
       </tags>
   </entry>
   <entry>
@@ -253,8 +253,8 @@
       <tags>
         <tag>PHP</tag>
         <tag>Linux</tag>
-        <tag>工具</tag>
         <tag>调试</tag>
+        <tag>工具</tag>
         <tag>Xdebug</tag>
       </tags>
   </entry>
@@ -379,8 +379,8 @@
       </categories>
       <tags>
         <tag>Linux</tag>
-        <tag>命令</tag>
         <tag>工具</tag>
+        <tag>命令</tag>
       </tags>
   </entry>
   <entry>
@@ -403,9 +403,9 @@
         <category>PHP</category>
       </categories>
       <tags>
-        <tag>框架</tag>
         <tag>apache</tag>
         <tag>linux</tag>
+        <tag>框架</tag>
         <tag>php</tag>
       </tags>
   </entry>
