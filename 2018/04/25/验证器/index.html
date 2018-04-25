@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="工具,PHP,Python,正则表达式," />
+  <meta name="keywords" content="PHP,框架,WEB," />
 
 
 
@@ -81,18 +81,18 @@
 
 
 
-<meta name="description" content="想用善良改变世界">
-<meta name="keywords" content="工具,PHP,Python,正则表达式">
+<meta name="description" content="验证器应该是我们在使用TP,Laravel这些框架的时候经常遇到的,英文名Validate,为什么要验证器呢？数据验证应该是所有web api的第一步，通过校验前端数据的是否合法，来进行数据的接下来的操作，如果数据不合法，直接退回给前端，而不用执行。">
+<meta name="keywords" content="PHP,框架,WEB">
 <meta property="og:type" content="article">
-<meta property="og:title" content="正则表达式">
-<meta property="og:url" content="http://yoursite.com/2018/02/27/正则表达式/index.html">
+<meta property="og:title" content="验证器">
+<meta property="og:url" content="http://yoursite.com/2018/04/25/验证器/index.html">
 <meta property="og:site_name" content="语法糖的博客">
-<meta property="og:description" content="想用善良改变世界">
+<meta property="og:description" content="验证器应该是我们在使用TP,Laravel这些框架的时候经常遇到的,英文名Validate,为什么要验证器呢？数据验证应该是所有web api的第一步，通过校验前端数据的是否合法，来进行数据的接下来的操作，如果数据不合法，直接退回给前端，而不用执行。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-02-27T10:20:54.004Z">
+<meta property="og:updated_time" content="2018-04-25T12:25:45.119Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="正则表达式">
-<meta name="twitter:description" content="想用善良改变世界">
+<meta name="twitter:title" content="验证器">
+<meta name="twitter:description" content="验证器应该是我们在使用TP,Laravel这些框架的时候经常遇到的,英文名Validate,为什么要验证器呢？数据验证应该是所有web api的第一步，通过校验前端数据的是否合法，来进行数据的接下来的操作，如果数据不合法，直接退回给前端，而不用执行。">
 
 
 
@@ -122,13 +122,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/02/27/正则表达式/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/04/25/验证器/"/>
 
 
 
 
 
-  <title>正则表达式 | 语法糖的博客</title>
+  <title>验证器 | 语法糖的博客</title>
   
 
 
@@ -293,7 +293,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/27/正则表达式/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/25/验证器/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="chenye2017">
@@ -310,7 +310,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">正则表达式</h1>
+          <h1 class="post-title" itemprop="name headline">验证器</h1>
         
 
         <div class="post-meta">
@@ -322,8 +322,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-27T11:55:54+08:00">
-                2018-02-27
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-25T20:01:08+08:00">
+                2018-04-25
               </time>
             
 
@@ -345,8 +345,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/工具/" itemprop="url" rel="index">
-                    <span itemprop="name">工具</span>
+                  <a href="/categories/PHP/" itemprop="url" rel="index">
+                    <span itemprop="name">PHP</span>
                   </a>
                 </span>
 
@@ -382,7 +382,25 @@
       
 
       
-        
+        <p>验证器应该是我们在使用TP,Laravel这些框架的时候经常遇到的,英文名Validate,为什么要验证器呢？数据验证应该是所有web api的第一步，通过校验前端数据的是否合法，来进行数据的接下来的操作，如果数据不合法，直接退回给前端，而不用执行。</p>
+<a id="more"></a>
+<p>Laravel</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">//验证数据的正确性</div><div class="line">        $this-&gt;validate($request, [</div><div class="line">           &apos;name&apos;=&gt;&apos;required|max:50&apos;,</div><div class="line">            &apos;email&apos;=&gt;&apos;required|email|unique:users|max:255&apos;,</div><div class="line">            &apos;password&apos;=&gt;&apos;required|confirmed|min:6&apos;</div><div class="line">        ]);</div></pre></td></tr></table></figure>
+<p>TP</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">protected $rule = [</div><div class="line">        &apos;name&apos; =&gt; &apos;require|isNotEmpty&apos;,</div><div class="line">        &apos;mobile&apos; =&gt; &apos;require|isMobile&apos;,</div><div class="line">        &apos;province&apos; =&gt; &apos;require|isNotEmpty&apos;,</div><div class="line">        &apos;city&apos; =&gt; &apos;require|isNotEmpty&apos;,</div><div class="line">        &apos;country&apos; =&gt; &apos;require|isNotEmpty&apos;,</div><div class="line">        &apos;detail&apos; =&gt; &apos;require|isNotEmpty&apos;</div><div class="line">    ];</div><div class="line"></div><div class="line">$result = $this-&gt;batch()-&gt;check($param);</div></pre></td></tr></table></figure>
+<p>其实两个很类似，就是通过传入验证条件和接受到的参数，来进行对应规则的验证.</p>
+<p>自己</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">namespace Libs;</div><div class="line"></div><div class="line">use Framework\Exception\ClientException;</div><div class="line">use Framework\Exception\ServerException;</div><div class="line"></div><div class="line">class Validate</div><div class="line">&#123;</div><div class="line">    static $res = true;</div><div class="line">    static $errMsg = &apos;&apos;;</div><div class="line"></div><div class="line">    /**</div><div class="line">     * @param $arr, 传入的验证规则</div><div class="line">     * @param $params, 请求的数据</div><div class="line">     * @throws ClientException</div><div class="line">     */</div><div class="line">    public static function validate($arr, $params)</div><div class="line">    &#123;</div><div class="line">        foreach ($arr as $a_key=&gt;$a_value) &#123;</div><div class="line">            $funcArr = explode(&apos;|&apos;, $a_value);</div><div class="line">            foreach ($funcArr as $f_key=&gt;$f_value) &#123;</div><div class="line">                if(is_callable([__CLASS__, $f_value])) &#123;</div><div class="line">                    call_user_func_array([__CLASS__, $f_value], [$a_key, $params]);</div><div class="line">                &#125; else &#123;</div><div class="line">                    throw new ServerException(&apos;&apos;, &apos;你的验证函数名不存在啦&apos;);</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        if(self::$res == false) &#123;</div><div class="line">            throw new ClientException(&apos;&apos;, self::$errMsg);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public static function required($key, $arr)</div><div class="line">    &#123;</div><div class="line">        if (!key_exists($key, $arr)) &#123;</div><div class="line">            self::$res = false;</div><div class="line">            self::$errMsg .= $key.&apos;不存在 | &apos;;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line"></div><div class="line">    public function __call($name, $arguments)</div><div class="line">    &#123;</div><div class="line">        throw new ServerException(&apos;&apos;, &apos;你的验证函数名不存在啦&apos;);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>controller调用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$validate = [&apos;comment_id&apos;=&gt;&apos;required|test&apos; ,&apos;sex&apos;=&gt;&apos;required&apos;];</div><div class="line">Validate::validate($validate, static::params());</div></pre></td></tr></table></figure>
+<p>需要注意的点是：</p>
+<ol>
+<li>上面验证器的使用过程中并不是检测到错误就立刻返回，而是检测出所有的错误再返回，所以我定义了两个static用来存储数据，当标志位是false的时候再把存储的错误信息一起返回。</li>
+<li>is_callable函数的使用，验证函数是否能执行，如果是类中，[‘类名’， ‘方法名’]， 都是字符串，注意这个类名用__CLASS__,之前我直接写的Validate，这样肯定是不行的，同理call_user_func_array这个也是，相比较于call_user_func,这个是后面传入函数中的参数要以array的形式，如果是非静态函数，就传入类名，静态的话要传入对象哦，$this,或者new一个对象吧。<a href="https://my.oschina.net/codespring/blog/535355" target="_blank" rel="external">call_user_func_array</a> <a href="http://www.111cn.net/phper/php-function/95406.htm" target="_blank" rel="external">is_callable</a></li>
+<li>需要注意static的使用，用的self哦，一般的使用用的this(都是在类中)，在类的外面的话，static 是 类名::,非static用的是 object-&gt;func.</li>
+<li>__call 是类中不存在这个方法的时候调用会自动执行，传入的两个参数第一个是调用的方法名，第二个参数是参数.</li>
+</ol>
+
       
     </div>
     
@@ -439,13 +457,11 @@
       
         <div class="post-tags">
           
-            <a href="/tags/工具/" rel="tag"><i class="fa fa-tag"></i> 工具</a>
-          
             <a href="/tags/PHP/" rel="tag"><i class="fa fa-tag"></i> PHP</a>
           
-            <a href="/tags/Python/" rel="tag"><i class="fa fa-tag"></i> Python</a>
+            <a href="/tags/框架/" rel="tag"><i class="fa fa-tag"></i> 框架</a>
           
-            <a href="/tags/正则表达式/" rel="tag"><i class="fa fa-tag"></i> 正则表达式</a>
+            <a href="/tags/WEB/" rel="tag"><i class="fa fa-tag"></i> WEB</a>
           
         </div>
       
@@ -458,8 +474,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/02/22/python学习笔记/" rel="next" title="python学习笔记">
-                <i class="fa fa-chevron-left"></i> python学习笔记
+              <a href="/2018/04/23/MIME-TYPE的作用/" rel="next" title="MIME TYPE的作用">
+                <i class="fa fa-chevron-left"></i> MIME TYPE的作用
               </a>
             
           </div>
@@ -467,10 +483,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/03/07/自己的http记录/" rel="prev" title="自己的http记录">
-                自己的http记录 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
