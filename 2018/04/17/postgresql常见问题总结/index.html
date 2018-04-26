@@ -90,7 +90,7 @@
 <meta property="og:description" content="本来是不想写这篇文章的，因为感觉自己对于postgresql理解不够深入，但因为生活中对于postgresql有些问题总是遇到，所以记录下来，方便以后查找。">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://ozys8fka7.bkt.clouddn.com/TIM%E6%88%AA%E5%9B%BE20180417155030.png">
-<meta property="og:updated_time" content="2018-04-19T13:54:53.276Z">
+<meta property="og:updated_time" content="2018-04-26T02:14:43.215Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="postgresql常见问题总结">
 <meta name="twitter:description" content="本来是不想写这篇文章的，因为感觉自己对于postgresql理解不够深入，但因为生活中对于postgresql有些问题总是遇到，所以记录下来，方便以后查找。">
@@ -420,6 +420,11 @@
 <p>/opt/pgsql/bin/pg_dump -U postgres itbasic  -t dt_admin &gt; /home/itbasic/admin.sql</p>
 <p>导入</p>
 <p>/opt/pgsql/bin/psql -U postgres itbasic -f /home/itbasic/admin.sql</p>
+<p>4.数组类型</p>
+<p>array_remove  会把出现的元素全都移除掉，而不是只移除一个   love=array_remove(love, chen.ye)</p>
+<p>array_append   love= array_append(love, chen.ye)</p>
+<p>如果元素不存在，也不会报错，只会接着往下执行</p>
+<p>any()  chenye = any(love)  love这个字段中是否有陈野</p>
 
       
     </div>
@@ -743,7 +748,7 @@ var jiathis_config={
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count"> | 博客全站共47.1k字</span>
+  <span class="post-count"> | 博客全站共47.2k字</span>
 </div>
 
 
