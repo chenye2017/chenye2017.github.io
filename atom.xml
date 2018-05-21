@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-05-21T10:30:31.308Z</updated>
+  <updated>2018-05-21T15:28:27.580Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,43 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>框架学习0</title>
+    <link href="http://yoursite.com/2018/05/21/%E6%A1%86%E6%9E%B6%E5%AD%A6%E4%B9%A00/"/>
+    <id>http://yoursite.com/2018/05/21/框架学习0/</id>
+    <published>2018-05-21T15:17:51.000Z</published>
+    <updated>2018-05-21T15:28:27.580Z</updated>
+    
+    <content type="html"><![CDATA[<p>想了下，还是把框架的基础知识也记录下来。</p><a id="more"></a><p>首先我们需要认识到框架也是一个脚本，不要因为现代的框架都是oop而忽略了面向过程。框架的入口文件其实可以看做框架的处理文件，就是一个php文件，只是因为框架把对于问题的处理发送到内部的面向对象库中去了，所以我们才会忽略框架本身的面向过程，这就经常会让小伙伴不知道比如记录用户的访问信息，如果不写在登录接口中应该写在哪呢。</p><p>框架中对于常量的定义，对于辅助函数的定义（没有用命名空间，类似原生php函数的使用）我们经常只是在框架定义好的文件中添加，但忽略了为什么在这个地方写就能这样使用，其实本质上都是因为在入口文件出有include 这个文件才会这样。</p><p>一般入口文件只写一些文件加载，像返回数据的处理之类的一般写在route之中，我们那个bbs写在了入口文件中，添加返回头信息啊之类的，感觉也还行。对于异常的捕获处理一般也写在最外层的入口文件处，这样很暴力，这样每当我们有错误的时候想立刻终止可以通过马上抛出异常，而不用执行到脚本的末尾。</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;想了下，还是把框架的基础知识也记录下来。&lt;/p&gt;
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>框架学习1</title>
+    <link href="http://yoursite.com/2018/05/21/%E6%A1%86%E6%9E%B6%E5%AD%A6%E4%B9%A01/"/>
+    <id>http://yoursite.com/2018/05/21/框架学习1/</id>
+    <published>2018-05-21T14:38:24.000Z</published>
+    <updated>2018-05-21T15:17:38.327Z</updated>
+    
+    <content type="html"><![CDATA[<p>对于框架源码的学习，可以帮助我们以后快速学习一个框架的使用，虽然同样的效果同样可以使用多学习几个框架，比如你把tp学完你学习laravel和yii发现很多时候都是一样的，但这仅限于你对框架的使用，增删改查的使用，当你想去修改一个框架的时候（不包括把框架中常量提取出来放在一个文件中，给框架增加一个validate等等这种情况）而是类似于把框架原来的隐式路由改成显式路由这种情况，如果你没有动手搭建过框架，你会不知所措。</p><p>我们这里对于框架的搭建还不是从头到尾写一个框架这种情况，composer（php的包管理工具，类似前端的npm），我们可以像拼接乐高积木那样搭建一个框架，那用什么来充当积木间的凹槽呢，我觉得命名空间可以充当凹槽之一。</p><a id="more"></a><p>命名空间在我的理解中就是把项目代码看做一个文件夹，然后名称是/,然后下面的各个文件夹名称就是命名空间，为了区分不同文件夹下的相同文件夹名称，我们需要把文件夹名称的路径记录下来。如果我的文件放在文件夹中的目录结构比较深，那么外层的文件夹名称是否可以不要呢，答案是肯定的，我觉得这也是文件夹相对于使用路径的好处之一。</p><p>上文说到了composer，我们要怎么使用这个工具呢。在项目的根目录下（注意不是网站的根目录下，网站的根目录往往是入口文件的根目录）执行composer install，linux下需要时php composer.phar install,他会找composer.json文件，第一次可能没有，我们可以通过composer require xxx/xxxx 来安装一个依赖，这时候会多出composer.json , composer.lock, vendor 目录，我们在入口文件出只需要include  vendor/autoload.php, 就能使用vendor中的依赖了。我们项目中自定义的文件夹也可以通过composer 的autoload来实现自动加载。php的psr-4和psr-0都有对命名空间的规定，但是0废弃了，现在大家都是用4，比较下0和4，比如 \controller\test.php,</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">namespace controller;</div></pre></td></tr></table></figure><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">//psr-0</div><div class="line">&#123;</div><div class="line">  &apos;autoload&apos; : &#123;</div><div class="line">  &apos;controller//&apos; : &apos;&apos;</div><div class="line">&#125;</div><div class="line">  </div><div class="line">&#125;</div><div class="line"></div><div class="line">//psr-4</div><div class="line">&#123;</div><div class="line">  &apos;autoload&apos; : &#123;</div><div class="line">  &apos;controller//&apos; : &apos;controller&apos;</div><div class="line">&#125;</div><div class="line">  </div><div class="line">&#125;</div></pre></td></tr></table></figure><p>psr-0会把规定的路径再拼上命名空间当做相对路径去文件夹下找，而psr-4会直接把规定的路径当做命名空间去寻找，上面的例子只是针对简单的一层命名空间，还是看不出什么效果，多层的更容易看出0是多么的脑残。</p><p>还有当注册了controller文件夹，controller的子文件夹的命名空间默认注册。</p><p>我们在修改命名空间的时候只需要修改composer.json文件就可以了，对于composer的具体怎么加载的其实不用管的，他应用这么广泛，一般不会出现什么问题。</p><p>todo:</p><p>use 的时候命名空间顶层不用加\,但是new的时候如果顶层写要加\，不是十分理解。</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;对于框架源码的学习，可以帮助我们以后快速学习一个框架的使用，虽然同样的效果同样可以使用多学习几个框架，比如你把tp学完你学习laravel和yii发现很多时候都是一样的，但这仅限于你对框架的使用，增删改查的使用，当你想去修改一个框架的时候（不包括把框架中常量提取出来放在一个文件中，给框架增加一个validate等等这种情况）而是类似于把框架原来的隐式路由改成显式路由这种情况，如果你没有动手搭建过框架，你会不知所措。&lt;/p&gt;
+&lt;p&gt;我们这里对于框架的搭建还不是从头到尾写一个框架这种情况，composer（php的包管理工具，类似前端的npm），我们可以像拼接乐高积木那样搭建一个框架，那用什么来充当积木间的凹槽呢，我觉得命名空间可以充当凹槽之一。&lt;/p&gt;
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>cookie和session的思考</title>
@@ -436,56 +473,6 @@
     
     
       <category term="Python" scheme="http://yoursite.com/tags/Python/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>关于token</title>
-    <link href="http://yoursite.com/2018/02/07/%E5%85%B3%E4%BA%8Etoken/"/>
-    <id>http://yoursite.com/2018/02/07/关于token/</id>
-    <published>2018-02-07T08:04:23.000Z</published>
-    <updated>2018-04-23T15:26:16.003Z</updated>
-    
-    <content type="html"><![CDATA[<p>关于token。<br>故事背景：itbasic用vue做了个手机版，之前是用jquery识别是手机还是web实现页面上元素的尺寸变化，实现兼容，但是页面其实还是同一个。所以通过dom元素绑定的后台请求ajax，api接口可以通用。现在用了vue，这种mvvm模式的框架，需要后台返回纯json格式的数据，并不需要之前接口中可能返回的html，实现页面元素的变化，这样一来，很多接口得重写。之前的itbasic更像是远古时代的web，调用接口的基本权限控制用的是session里面存储的登录用户信息，而itbasic的web端更像是现代的web网站，调用接口不需要用户登录，而是通过令牌，也就是token进行身份认证。</p><a id="more"></a><ol><li><p>token肯定要保存的啦,保存的内容有哪些？<br>从上面可以看出token的作用就和之前的session作用是一样的，因为session中存储了用户的基本信息，我们可以通过解析session数组，从中获取自己有用的东西，但我们的token一般只是一串无意义不重复的数字，所以光靠token是实现不了用户的区分的，所以我们一般在缓存中保存（为什么是缓存呢，我觉得首先返回给客户端的token信息不重要，并不用都保留下来，还有就是频繁的调用api接口，如果我们每次都去数据库中取缓存，太多的与数据库的交流并不好）。那我们需要保存的内容有哪些呢？最基本的用户的uid，因为我们一个token需要区分一个用户，我们得通过token知道这个用户是谁，当然你可以保存的不单单是uid，你可以理解成token是session数组的session_id,session数组就是我们token可以对应的内容，你可以在里面存放用户权限，登录时间，等一些常用的信息，这样就不需要为了取一些常用的信息的时候，先通过token找到用户id，再通过数据库查找这个用户的相关信息，再返回。token对应的内容只要你乐意，随便存储什么，但最基本的应该有个uid哦。</p><p>​总结：token保存在缓存中，并不用记录在数据库中，保存的内容是和uid                     的对应关系。</p></li><li><p>token的产生<br>其实之前我一直纠结怎么生成一个token，网上有很多算法，后来呢，感觉如果安全性不用太高的话。取一堆字符串，从中随机取个，通过mt_rand()，然后拼接下，你也可以再拼接个你自己的盐，再加上时间戳这种的东西，再md5（）加密下。(js,php这些都有md5加密的，同样的内容，不管通过什么语言md5加密应该是一样的）。<br>总结：方法很多，自己想吧，别太纠结了</p></li><li><p>token有过期时间<br>和session一样啦，不能请求一次就一直可以使用啦。</p></li><li><p>token一般放在cookie里面，这样请求接口的时候就不用一直带上这个参数了。</p></li><li><p>token的申请。<br>token需要和用户相对应，这种对应关系怎么知道呢。在之前做的微信小程序登录接口中是这样做的。</p><ol><li>首先用户通过登录小程序获得一个code码（还记得我们每次进入小程序的时候都有个允许授权吗），这个码可以换取对应这个用户在这个小程序里面的一个独一无二的openid，可以理解成类似uid的东西，我们一旦获取到这个openid，意味着就相当于我们多了个用户uid，我们在自己的用户表中存储这个openid。（为什么要用code换区openid呢，可以理解成openid比较重要，包含用户的重要信息，而且类似uid，永远不会变，一旦获取，就代表永远知道了，这个不能用来表示身份，或者说通过openid不能换取表示身份的token，所以还是放在服务器端吧。古代的用户密码登录因为有只有自己知道的密码，所以可以通过固定不变的大家可能都知道的用户名换区session_id,现在通过变化的code同样的道理，code理解成密码，服务器端给这个密码给微信，微信通过自身维护的code和openid的对应关系，把用户openid返回给你，注意这个code只能用一次哦）</li><li>服务器收到这个openid， 生成和这个用户相匹配的token，存储对应关系在缓存中，再返回给客户端token。客户端拿着这个token再来服务器端请求数据，服务器端看token是否存在和token是否失效，如果没有，可以访问。如果过期了，需要重新走上面的流程生成新的token。可这个时候就不用在用户表里面添加新的用户了，因为用户已经存在了，可以生成新的key=》value对应关系，key=》代表新生成的token。</li></ol></li></ol><p>大致就这些了吧···</p><p>关于app接口设计的token，有signature签名的作用：主要是为了放置提交数据的安全性，token：1.第三方access_token,调用第三方接口的凭证。2.自己用的token，作用就相当于用户登录的密码，参见链接:<a href="https://blog.csdn.net/qq_26291823/article/details/53337518" target="_blank" rel="external">https://blog.csdn.net/qq_26291823/article/details/53337518</a></p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;关于token。&lt;br&gt;故事背景：itbasic用vue做了个手机版，之前是用jquery识别是手机还是web实现页面上元素的尺寸变化，实现兼容，但是页面其实还是同一个。所以通过dom元素绑定的后台请求ajax，api接口可以通用。现在用了vue，这种mvvm模式的框架，需要后台返回纯json格式的数据，并不需要之前接口中可能返回的html，实现页面元素的变化，这样一来，很多接口得重写。之前的itbasic更像是远古时代的web，调用接口的基本权限控制用的是session里面存储的登录用户信息，而itbasic的web端更像是现代的web网站，调用接口不需要用户登录，而是通过令牌，也就是token进行身份认证。&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="PHP" scheme="http://yoursite.com/categories/PHP/"/>
-    
-    
-      <category term="PHP" scheme="http://yoursite.com/tags/PHP/"/>
-    
-      <category term="token" scheme="http://yoursite.com/tags/token/"/>
-    
-      <category term="API" scheme="http://yoursite.com/tags/API/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>PHP文件操作</title>
-    <link href="http://yoursite.com/2018/01/29/PHP%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C/"/>
-    <id>http://yoursite.com/2018/01/29/PHP文件操作/</id>
-    <published>2018-01-29T08:04:01.000Z</published>
-    <updated>2018-02-23T12:47:54.994Z</updated>
-    
-    <content type="html"><![CDATA[<p>上篇文章里面写了关于文件上传。其实在做文件上传的功能的时候遇到很多php关于文件的处理，记录下来。其实文件处理在我们刚开始学习php的时候肯定学习过，可后来因为项目当中，做网站的时候关于文件的操作很少，所以很容易忘记这部分的内容，毕竟其实也挺枯燥的。<br><a id="more"></a><br>1.遍历文件夹下的所有文件。<br>在做大文件切割的时候，本来想用php做，可是php的fopen好像最多只能接受8000多个字节，就是8000B，而我们上传文件大小一般能达到4m,如果按照8000B的切割也就太多小文件了，于是用linux新建个文件夹，在文件夹中split -b  4m 文件名 （还有个参数代表切割文件的名称，我没有仔细看，使用的默认的，就会产生xaa,xab···这种的文件），然后删除原始文件，遍历文件夹下的所有文件，每次上传一个，像服务器上刚开始创建好的文件持续写入，这样就能实现php的大文件上传<br>php:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">$dir = &apos;/root/test&apos;;</div><div class="line">$handle = opendir($dir);</div><div class="line">$fileArr = [];</div><div class="line">while($filename = readdir($handle)) &#123;</div><div class="line">     if ($filename != &apos;.&apos; &amp;&amp; $filename != &apos;..&apos; &amp;&amp; !is_dir($filename)) &#123;</div><div class="line">            array_push($fileArr, $filename);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line">//var_dump($fileArr);exit;</div></pre></td></tr></table></figure></p><p>2.遍历文件夹下所有文件<br>这个是面试题中经常考得一道题</p><p>php<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">function listDir($dir)</div><div class="line">&#123;</div><div class="line">if(is_dir($dir))</div><div class="line">   &#123;</div><div class="line">     if ($dh = opendir($dir)) </div><div class="line">&#123;</div><div class="line">        while (($file = readdir($dh)) !== false)</div><div class="line">&#123;</div><div class="line">     if((is_dir($dir.&quot;/&quot;.$file)) &amp;&amp; $file!=&quot;.&quot; &amp;&amp; $file!=&quot;..&quot;)</div><div class="line">&#123;</div><div class="line">     echo &quot;&lt;b&gt;&lt;font color=&apos;red&apos;&gt;文件名：&lt;/font&gt;&lt;/b&gt;&quot;,$file,&quot;&lt;br&gt;&lt;hr&gt;&quot;;</div><div class="line">     listDir($dir.&quot;/&quot;.$file.&quot;/&quot;);</div><div class="line">     &#125;</div><div class="line">else</div><div class="line">&#123;</div><div class="line">         if($file!=&quot;.&quot; &amp;&amp; $file!=&quot;..&quot;)</div><div class="line">&#123;</div><div class="line">         echo $file.&quot;&lt;br&gt;&quot;;</div><div class="line">      &#125;</div><div class="line">     &#125;</div><div class="line">        &#125;</div><div class="line">        closedir($dh);</div><div class="line">     &#125;</div><div class="line">   &#125;</div><div class="line">&#125;</div><div class="line">//开始运行</div><div class="line">listDir(&quot;./nowamagic&quot;);</div></pre></td></tr></table></figure></p><p>上面两个场景大致差不多，主要就是几个函数的使用。首先要明确读取文件夹的内容和读取文件的内容是不一样的。</p><ol><li>is_dir 判断该文件是否是文件夹，注意的一点事一定要跟上文件名的前缀··，否则不能找到指定文件，会有奇怪的错误发生。</li><li>is_file 判断是否是文件</li><li>读取文件夹的内容，首先要打开文件夹,opendir() ,会产生一个资源型的数据类型，句柄，readdir() 会循环遍历文件夹的内容。closedir()读完文件之后关闭。</li><li>注意每个文件夹下的两个特殊文件’.’ 和 ‘..’</li></ol><p>3.php合并文件<br>思路：其实就是打开一个文件，不断往里面写入。关于打开fopen() 参数很多，感觉很多都是遇到的时候再看吧，二进制文件记得加b。<br>php<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">$fb = fopen(&apos;/root/1.css&apos;, &apos;wb&apos;);</div><div class="line">foreach ($fileArr as $key=&gt;$value) &#123;</div><div class="line">    fwrite($fb, file_get_contents(&apos;/root/test/&apos;.$value));</div><div class="line">&#125;</div><div class="line">fclose($fopen);</div></pre></td></tr></table></figure></p><p>每次的写入都是从尾部开始写入的。（相比较打开文件夹，他少了个readdir这种循环遍历文件夹的函数，好像fgets也有这种功能，但是用的不多，就没细看了）。</p><p>4.还有一些关于文件的函数，比如获取文件内容file_get_contents,写入file_put_contents,获取fgets这种的好像是按照行获取的，一般读操作用file_get_contents,能读取全部的内容。</p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;上篇文章里面写了关于文件上传。其实在做文件上传的功能的时候遇到很多php关于文件的处理，记录下来。其实文件处理在我们刚开始学习php的时候肯定学习过，可后来因为项目当中，做网站的时候关于文件的操作很少，所以很容易忘记这部分的内容，毕竟其实也挺枯燥的。&lt;br&gt;
-    
-    </summary>
-    
-      <category term="PHP" scheme="http://yoursite.com/categories/PHP/"/>
-    
-    
-      <category term="PHP" scheme="http://yoursite.com/tags/PHP/"/>
-    
-      <category term="文件操作" scheme="http://yoursite.com/tags/%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C/"/>
     
   </entry>
   
