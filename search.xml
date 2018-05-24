@@ -8,7 +8,7 @@
   <entry>
     <title><![CDATA[框架学习1]]></title>
     <url>%2F2018%2F05%2F21%2F%E6%A1%86%E6%9E%B6%E5%AD%A6%E4%B9%A01%2F</url>
-    <content type="text"><![CDATA[对于框架源码的学习，可以帮助我们以后快速学习一个框架的使用，虽然同样的效果同样可以使用多学习几个框架，比如你把tp学完你学习laravel和yii发现很多时候都是一样的，但这仅限于你对框架的使用，增删改查的使用，当你想去修改一个框架的时候（不包括把框架中常量提取出来放在一个文件中，给框架增加一个validate等等这种情况）而是类似于把框架原来的隐式路由改成显式路由这种情况，如果你没有动手搭建过框架，你会不知所措。 我们这里对于框架的搭建还不是从头到尾写一个框架这种情况，composer（php的包管理工具，类似前端的npm），我们可以像拼接乐高积木那样搭建一个框架，那用什么来充当积木间的凹槽呢，我觉得命名空间可以充当凹槽之一。 命名空间在我的理解中就是把项目代码看做一个文件夹，然后名称是/,然后下面的各个文件夹名称就是命名空间，为了区分不同文件夹下的相同文件夹名称，我们需要把文件夹名称的路径记录下来。如果我的文件放在文件夹中的目录结构比较深，那么外层的文件夹名称是否可以不要呢，答案是肯定的，我觉得这也是文件夹相对于使用路径的好处之一。 上文说到了composer，我们要怎么使用这个工具呢。在项目的根目录下（注意不是网站的根目录下，网站的根目录往往是入口文件的根目录）执行composer install，linux下需要时php composer.phar install,他会找composer.json文件，第一次可能没有，我们可以通过composer require xxx/xxxx 来安装一个依赖，这时候会多出composer.json , composer.lock, vendor 目录，我们在入口文件出只需要include vendor/autoload.php, 就能使用vendor中的依赖了。我们项目中自定义的文件夹也可以通过composer 的autoload来实现自动加载。php的psr-4和psr-0都有对命名空间的规定，但是0废弃了，现在大家都是用4，比较下0和4，比如 \controller\test.php, 12&lt;?phpnamespace controller; 123456789101112131415//psr-0&#123; &apos;autoload&apos; : &#123; &apos;controller//&apos; : &apos;&apos; &#125; &#125;//psr-4&#123; &apos;autoload&apos; : &#123; &apos;controller//&apos; : &apos;controller&apos; &#125; &#125; psr-0会把规定的路径再拼上命名空间当做相对路径去文件夹下找，而psr-4会直接把规定的路径当做命名空间去寻找，上面的例子只是针对简单的一层命名空间，还是看不出什么效果，多层的更容易看出0是多么的脑残。 还有当注册了controller文件夹，controller的子文件夹的命名空间默认注册。 我们在修改命名空间的时候只需要修改composer.json文件就可以了，对于composer的具体怎么加载的其实不用管的，他应用这么广泛，一般不会出现什么问题。 todo: use 的时候命名空间顶层不用加\,但是new的时候如果顶层写要加\，不是十分理解。]]></content>
+    <content type="text"><![CDATA[对于框架源码的学习，可以帮助我们以后快速学习一个框架的使用，虽然同样的效果同样可以使用多学习几个框架，比如你把tp学完你学习laravel和yii发现很多时候都是一样的，但这仅限于你对框架的使用，增删改查的使用，当你想去修改一个框架的时候（不包括把框架中常量提取出来放在一个文件中，给框架增加一个validate等等这种情况）而是类似于把框架原来的隐式路由改成显式路由这种情况，如果你没有动手搭建过框架，你会不知所措。 我们这里对于框架的搭建还不是从头到尾写一个框架这种情况，composer（php的包管理工具，类似前端的npm），我们可以像拼接乐高积木那样搭建一个框架，那用什么来充当积木间的凹槽呢，我觉得命名空间可以充当凹槽之一。 命名空间在我的理解中就是把项目代码看做一个文件夹，然后名称是/,然后下面的各个文件夹名称就是命名空间，为了区分不同文件夹下的相同文件夹名称，我们需要把文件夹名称的路径记录下来。如果我的文件放在文件夹中的目录结构比较深，那么外层的文件夹名称是否可以不要呢，答案是肯定的，我觉得这也是文件夹相对于使用路径的好处之一。 上文说到了composer，我们要怎么使用这个工具呢。在项目的根目录下（注意不是网站的根目录下，网站的根目录往往是入口文件的根目录）执行composer install，linux下需要时php composer.phar install,他会找composer.json文件，第一次可能没有，我们可以通过composer require xxx/xxxx 来安装一个依赖，这时候会多出composer.json , composer.lock, vendor 目录，我们在入口文件出只需要include vendor/autoload.php, 就能使用vendor中的依赖了。我们项目中自定义的文件夹也可以通过composer 的autoload来实现自动加载。php的psr-4和psr-0都有对命名空间的规定，但是0废弃了，现在大家都是用4，比较下0和4，比如 \controller\test.php, 12&lt;?phpnamespace controller; 123456789101112131415//psr-0&#123; &apos;autoload&apos; : &#123; &apos;controller//&apos; : &apos;&apos; &#125; &#125;//psr-4&#123; &apos;autoload&apos; : &#123; &apos;controller//&apos; : &apos;controller&apos; &#125; &#125; psr-0会把规定的路径再拼上命名空间当做相对路径去文件夹下找，而psr-4会直接把规定的路径当做命名空间去寻找，上面的例子只是针对简单的一层命名空间，还是看不出什么效果，多层的更容易看出0是多么的脑残。 还有当注册了controller文件夹，controller的子文件夹的命名空间默认注册。 我们在修改命名空间的时候只需要修改composer.json文件就可以了，对于composer的具体怎么加载的其实不用管的，他应用这么广泛，一般不会出现什么问题。 todo: use 的时候命名空间顶层不用加\,但是new的时候如果顶层写要加\，不是十分理解。 来自modern php 首先use 的时候默认的是来自绝对，默认会在前面加上\ 同一个命名空间下的类相互引用，不用引入命名空间，比如我同一个controller下面代码的相互使用 xxx/xxxx,这种的一般第一个 xxx是厂商的命名空间，顶层命名空间，比较重要，第二个xxxx是子命名空间。 仅仅use 其实默认用了as取别名，只是类名和别名一样 Exception默认是php自带的，应该在顶层命名空间下，用\，如果使用的时候不加，他会默认在当前命名空间下寻找，会出现错误]]></content>
   </entry>
   <entry>
     <title><![CDATA[cookie和session的思考]]></title>
@@ -97,9 +97,9 @@
         <category>apache</category>
       </categories>
       <tags>
+        <tag>框架</tag>
         <tag>apache</tag>
         <tag>linux</tag>
-        <tag>框架</tag>
       </tags>
   </entry>
   <entry>
@@ -204,8 +204,8 @@
         <category>工具</category>
       </categories>
       <tags>
-        <tag>工具</tag>
         <tag>PHP</tag>
+        <tag>工具</tag>
         <tag>Python</tag>
         <tag>正则表达式</tag>
       </tags>
@@ -267,8 +267,8 @@
       </categories>
       <tags>
         <tag>PHP</tag>
-        <tag>框架</tag>
         <tag>ThinkPHP5</tag>
+        <tag>框架</tag>
       </tags>
   </entry>
   <entry>
@@ -279,9 +279,9 @@
         <category>PHP</category>
       </categories>
       <tags>
+        <tag>PHP</tag>
         <tag>Linux</tag>
         <tag>工具</tag>
-        <tag>PHP</tag>
         <tag>调试</tag>
         <tag>Xdebug</tag>
       </tags>
@@ -295,8 +295,8 @@
       </categories>
       <tags>
         <tag>Linux</tag>
-        <tag>环境</tag>
         <tag>lamp</tag>
+        <tag>环境</tag>
       </tags>
   </entry>
   <entry>
@@ -308,8 +308,8 @@
       </categories>
       <tags>
         <tag>Linux</tag>
-        <tag>lnmp</tag>
         <tag>环境</tag>
+        <tag>lnmp</tag>
       </tags>
   </entry>
   <entry>
@@ -320,8 +320,8 @@
         <category>PHP</category>
       </categories>
       <tags>
-        <tag>Linux</tag>
         <tag>PHP</tag>
+        <tag>Linux</tag>
         <tag>扩展</tag>
       </tags>
   </entry>
@@ -431,9 +431,9 @@
         <category>PHP</category>
       </categories>
       <tags>
+        <tag>框架</tag>
         <tag>apache</tag>
         <tag>linux</tag>
-        <tag>框架</tag>
         <tag>php</tag>
       </tags>
   </entry>

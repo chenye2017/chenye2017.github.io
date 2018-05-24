@@ -88,7 +88,7 @@
 <meta property="og:site_name" content="语法糖的博客">
 <meta property="og:description" content="对于框架源码的学习，可以帮助我们以后快速学习一个框架的使用，虽然同样的效果同样可以使用多学习几个框架，比如你把tp学完你学习laravel和yii发现很多时候都是一样的，但这仅限于你对框架的使用，增删改查的使用，当你想去修改一个框架的时候（不包括把框架中常量提取出来放在一个文件中，给框架增加一个validate等等这种情况）而是类似于把框架原来的隐式路由改成显式路由这种情况，如果你没有动手搭建过框">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-05-21T15:17:38.327Z">
+<meta property="og:updated_time" content="2018-05-24T04:02:43.426Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="框架学习1">
 <meta name="twitter:description" content="对于框架源码的学习，可以帮助我们以后快速学习一个框架的使用，虽然同样的效果同样可以使用多学习几个框架，比如你把tp学完你学习laravel和yii发现很多时候都是一样的，但这仅限于你对框架的使用，增删改查的使用，当你想去修改一个框架的时候（不包括把框架中常量提取出来放在一个文件中，给框架增加一个validate等等这种情况）而是类似于把框架原来的隐式路由改成显式路由这种情况，如果你没有动手搭建过框">
@@ -371,6 +371,14 @@
 <p>我们在修改命名空间的时候只需要修改composer.json文件就可以了，对于composer的具体怎么加载的其实不用管的，他应用这么广泛，一般不会出现什么问题。</p>
 <p>todo:</p>
 <p>use 的时候命名空间顶层不用加\,但是new的时候如果顶层写要加\，不是十分理解。</p>
+<p>来自modern php</p>
+<ol>
+<li>首先use 的时候默认的是来自绝对，默认会在前面加上\</li>
+<li>同一个命名空间下的类相互引用，不用引入命名空间，比如我同一个controller下面代码的相互使用</li>
+<li>xxx/xxxx,这种的一般第一个 xxx是厂商的命名空间，顶层命名空间，比较重要，第二个xxxx是子命名空间。</li>
+<li>仅仅use 其实默认用了as取别名，只是类名和别名一样</li>
+<li>Exception默认是php自带的，应该在顶层命名空间下，用\，如果使用的时候不加，他会默认在当前命名空间下寻找，会出现错误</li>
+</ol>
 
       
     </div>
@@ -686,7 +694,7 @@ var jiathis_config={
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count"> | 博客全站共49.9k字</span>
+  <span class="post-count"> | 博客全站共50.1k字</span>
 </div>
 
 
