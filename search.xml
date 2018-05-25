@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[PHP yield]]></title>
+    <url>%2F2018%2F05%2F25%2FPHP-yield%2F</url>
+    <content type="text"><![CDATA[yield，生成器，自己感觉还是挺重要的，因为php在读取大文件的时候经常会有内存溢出的错误，其实yield还会涉及spl，这部分内容自己目前了解的还不是十分清楚，所以，暂时就把yield的作用归类于放置变量过大在内存中占用本大空间，导致内存溢出吧。 关于yield这种数据类型，还有迭代器，还有collection，都是能用foreach进行循环遍历的。 1234567891011121314function productNum($length)&#123; $data = []; for ($i=0; $i&lt; $length; $i++)&#123; $data[] = $i; &#125; return $data; &#125;$data = productNum($100000000);foreach ($data as $key=&gt;$value) &#123; var_dump($value); &#125; 用php执行上端代码会报出超出分配给php的内存错误 123456789101112131415function productNum($length)&#123; //$data = []; for ($i=0; $i&lt; $length; $i++)&#123; //$data[] = $i; yield $i; &#125; //return $data; &#125;$data = productNum($100000000);foreach ($data as $key=&gt;$value) &#123; var_dump($value); &#125; 能执行成功，其实这个时候打印$data变量，可以看出来他是一个类。 每次foreach 去$data中取数据，上面的那个for循环就会执行一次，再次输出一个变量\$i。 so，如果使用yield的内容，每次也得循环使用吗？ yield定义的内容不能有返回。 下面写一个读取文件，再往另一个文件中写入内容的例子，其实这个例子不具有实际价值，其实就是一个copy文件，用shell_exec执行linux命令就可以，或者file_get_contents,file_put_contents这样就好了，使用yield分多次，唯一可以想到的好处就是控制对内存占用的大小。 1234567891011121314function getContent($file)&#123; $res = fopen($file); while (feof($resource) === false ) &#123; yield fgets($resource); &#125;&#125;$res = fopen(&apos;/home/itbasic/3.pdf&apos;, &apos;a&apos;);foreach ($content as $c_key=&gt;$c_value) &#123; fwrite($res, $c_value);&#125;fclose($res);echo &quot;使用: &quot;.memory_get_usage().&quot;B\n&quot;; //使用: 362640B 用传统方式 123$res = file_get_contents($file);file_put_contents(&apos;/home/itbasic/1.pdf&apos;, $res);echo &quot;使用: &quot;.memory_get_usage().&quot;B\n&quot;; //使用: 39875608B 显然超过一个数量级，yield就是把一个结果集分批的给你，你什么时候问他要下一个结果集，他什么时候给你。]]></content>
+  </entry>
+  <entry>
     <title><![CDATA[框架学习0]]></title>
     <url>%2F2018%2F05%2F21%2F%E6%A1%86%E6%9E%B6%E5%AD%A6%E4%B9%A00%2F</url>
     <content type="text"><![CDATA[想了下，还是把框架的基础知识也记录下来。 首先我们需要认识到框架也是一个脚本，不要因为现代的框架都是oop而忽略了面向过程。框架的入口文件其实可以看做框架的处理文件，就是一个php文件，只是因为框架把对于问题的处理发送到内部的面向对象库中去了，所以我们才会忽略框架本身的面向过程，这就经常会让小伙伴不知道比如记录用户的访问信息，如果不写在登录接口中应该写在哪呢。 框架中对于常量的定义，对于辅助函数的定义（没有用命名空间，类似原生php函数的使用）我们经常只是在框架定义好的文件中添加，但忽略了为什么在这个地方写就能这样使用，其实本质上都是因为在入口文件出有include 这个文件才会这样。 一般入口文件只写一些文件加载，像返回数据的处理之类的一般写在route之中，我们那个bbs写在了入口文件中，添加返回头信息啊之类的，感觉也还行。对于异常的捕获处理一般也写在最外层的入口文件处，这样很暴力，这样每当我们有错误的时候想立刻终止可以通过马上抛出异常，而不用执行到脚本的末尾。]]></content>
@@ -122,8 +127,8 @@
         <category>Laravel</category>
       </categories>
       <tags>
-        <tag>PHP</tag>
         <tag>Laravel</tag>
+        <tag>PHP</tag>
       </tags>
   </entry>
   <entry>
@@ -204,8 +209,8 @@
         <category>工具</category>
       </categories>
       <tags>
-        <tag>PHP</tag>
         <tag>工具</tag>
+        <tag>PHP</tag>
         <tag>Python</tag>
         <tag>正则表达式</tag>
       </tags>
@@ -237,7 +242,7 @@
   <entry>
     <title><![CDATA[PHP文件操作]]></title>
     <url>%2F2018%2F01%2F29%2FPHP%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C%2F</url>
-    <content type="text"><![CDATA[上篇文章里面写了关于文件上传。其实在做文件上传的功能的时候遇到很多php关于文件的处理，记录下来。其实文件处理在我们刚开始学习php的时候肯定学习过，可后来因为项目当中，做网站的时候关于文件的操作很少，所以很容易忘记这部分的内容，毕竟其实也挺枯燥的。1.遍历文件夹下的所有文件。在做大文件切割的时候，本来想用php做，可是php的fopen好像最多只能接受8000多个字节，就是8000B，而我们上传文件大小一般能达到4m,如果按照8000B的切割也就太多小文件了，于是用linux新建个文件夹，在文件夹中split -b 4m 文件名 （还有个参数代表切割文件的名称，我没有仔细看，使用的默认的，就会产生xaa,xab···这种的文件），然后删除原始文件，遍历文件夹下的所有文件，每次上传一个，像服务器上刚开始创建好的文件持续写入，这样就能实现php的大文件上传php:1234567891011&lt;?php$dir = &apos;/root/test&apos;;$handle = opendir($dir);$fileArr = [];while($filename = readdir($handle)) &#123; if ($filename != &apos;.&apos; &amp;&amp; $filename != &apos;..&apos; &amp;&amp; !is_dir($filename)) &#123; array_push($fileArr, $filename); &#125;&#125;//var_dump($fileArr);exit; 2.遍历文件夹下所有文件这个是面试题中经常考得一道题 php123456789101112131415161718192021222324252627function listDir($dir)&#123; if(is_dir($dir)) &#123; if ($dh = opendir($dir)) &#123; while (($file = readdir($dh)) !== false) &#123; if((is_dir($dir.&quot;/&quot;.$file)) &amp;&amp; $file!=&quot;.&quot; &amp;&amp; $file!=&quot;..&quot;) &#123; echo &quot;&lt;b&gt;&lt;font color=&apos;red&apos;&gt;文件名：&lt;/font&gt;&lt;/b&gt;&quot;,$file,&quot;&lt;br&gt;&lt;hr&gt;&quot;; listDir($dir.&quot;/&quot;.$file.&quot;/&quot;); &#125; else &#123; if($file!=&quot;.&quot; &amp;&amp; $file!=&quot;..&quot;) &#123; echo $file.&quot;&lt;br&gt;&quot;; &#125; &#125; &#125; closedir($dh); &#125; &#125;&#125;//开始运行listDir(&quot;./nowamagic&quot;); 上面两个场景大致差不多，主要就是几个函数的使用。首先要明确读取文件夹的内容和读取文件的内容是不一样的。 is_dir 判断该文件是否是文件夹，注意的一点事一定要跟上文件名的前缀··，否则不能找到指定文件，会有奇怪的错误发生。 is_file 判断是否是文件 读取文件夹的内容，首先要打开文件夹,opendir() ,会产生一个资源型的数据类型，句柄，readdir() 会循环遍历文件夹的内容。closedir()读完文件之后关闭。 注意每个文件夹下的两个特殊文件’.’ 和 ‘..’ 3.php合并文件思路：其实就是打开一个文件，不断往里面写入。关于打开fopen() 参数很多，感觉很多都是遇到的时候再看吧，二进制文件记得加b。php12345$fb = fopen(&apos;/root/1.css&apos;, &apos;wb&apos;);foreach ($fileArr as $key=&gt;$value) &#123; fwrite($fb, file_get_contents(&apos;/root/test/&apos;.$value));&#125;fclose($fopen); 每次的写入都是从尾部开始写入的。（相比较打开文件夹，他少了个readdir这种循环遍历文件夹的函数，好像fgets也有这种功能，但是用的不多，就没细看了）。 4.还有一些关于文件的函数，比如获取文件内容file_get_contents,写入file_put_contents,获取fgets这种的好像是按照行获取的，一般读操作用file_get_contents,能读取全部的内容。]]></content>
+    <content type="text"><![CDATA[上篇文章里面写了关于文件上传。其实在做文件上传的功能的时候遇到很多php关于文件的处理，记录下来。其实文件处理在我们刚开始学习php的时候肯定学习过，可后来因为项目当中，做网站的时候关于文件的操作很少，所以很容易忘记这部分的内容，毕竟其实也挺枯燥的。1.遍历文件夹下的所有文件。在做大文件切割的时候，本来想用php做，可是php的fopen好像最多只能接受8000多个字节，就是8000B，而我们上传文件大小一般能达到4m,如果按照8000B的切割也就太多小文件了，于是用linux新建个文件夹，在文件夹中split -b 4m 文件名 （还有个参数代表切割文件的名称，我没有仔细看，使用的默认的，就会产生xaa,xab···这种的文件），然后删除原始文件，遍历文件夹下的所有文件，每次上传一个，像服务器上刚开始创建好的文件持续写入，这样就能实现php的大文件上传php:1234567891011&lt;?php$dir = &apos;/root/test&apos;;$handle = opendir($dir);$fileArr = [];while($filename = readdir($handle)) &#123; if ($filename != &apos;.&apos; &amp;&amp; $filename != &apos;..&apos; &amp;&amp; !is_dir($filename)) &#123; array_push($fileArr, $filename); &#125;&#125;//var_dump($fileArr);exit; 2.遍历文件夹下所有文件这个是面试题中经常考得一道题 php123456789101112131415161718192021222324252627function listDir($dir)&#123; if(is_dir($dir)) &#123; if ($dh = opendir($dir)) &#123; while (($file = readdir($dh)) !== false) &#123; if((is_dir($dir.&quot;/&quot;.$file)) &amp;&amp; $file!=&quot;.&quot; &amp;&amp; $file!=&quot;..&quot;) &#123; echo &quot;&lt;b&gt;&lt;font color=&apos;red&apos;&gt;文件名：&lt;/font&gt;&lt;/b&gt;&quot;,$file,&quot;&lt;br&gt;&lt;hr&gt;&quot;; listDir($dir.&quot;/&quot;.$file.&quot;/&quot;); &#125; else &#123; if($file!=&quot;.&quot; &amp;&amp; $file!=&quot;..&quot;) &#123; echo $file.&quot;&lt;br&gt;&quot;; &#125; &#125; &#125; closedir($dh); &#125; &#125;&#125;//开始运行listDir(&quot;./nowamagic&quot;); 上面两个场景大致差不多，主要就是几个函数的使用。首先要明确读取文件夹的内容和读取文件的内容是不一样的。 is_dir 判断该文件是否是文件夹，注意的一点事一定要跟上文件名的前缀··，否则不能找到指定文件，会有奇怪的错误发生。 is_file 判断是否是文件 读取文件夹的内容，首先要打开文件夹,opendir() ,会产生一个资源型的数据类型，句柄，readdir() 会循环遍历文件夹的内容。closedir()读完文件之后关闭。 注意每个文件夹下的两个特殊文件’.’ 和 ‘..’ fopen打开一个文件，返回一个句柄，其实和上面打开一个文件夹是一样的，只是这里面多了几种模式。这个句柄可以理解成连接数据库时候的资源文件，每次关于数据库的操作都得用到这个文件 12345678&quot;r&quot; （只读方式打开，将文件指针指向文件头）&quot;r+&quot; （读写方式打开，将文件指针指向文件头）&quot;w&quot; （写入方式打开，清除文件内容，如果文件不存在则尝试创建之）&quot;w+&quot; （读写方式打开，清除文件内容，如果文件不存在则尝试创建之）&quot;a&quot; （写入方式打开，将文件指针指向文件末尾进行写入，如果文件不存在则尝试创建之）&quot;a+&quot; （读写方式打开，通过将文件指针指向文件末尾进行写入来保存文件内容）&quot;x&quot; （创建一个新的文件并以写入方式打开，如果文件已存在则返回 FALSE 和一个错误）&quot;x+&quot; （创建一个新的文件并以读写方式打开，如果文件已存在则返回 FALSE 和一个错误） 这个模式也可以分成指针指在文件头部还是尾部来记忆。 feof 判断指针是否到了文件尾部 fgets读取一行文件 fclose关闭文件 fgetcsv 与 fgets() 类似，不同的是 fgetcsv() 解析读入的行并找出 CSV 格式的字段，然后返回一个包含这些字段的数组。 fread(), 读取指定大小的文件，但有大小限制，然后还有二进制文件的限制（没有仔细了解过二进制文件和文本文件的区别） 3.php合并文件思路：其实就是打开一个文件，不断往里面写入。关于打开fopen() 参数很多，感觉很多都是遇到的时候再看吧，二进制文件记得加b。php12345$fb = fopen(&apos;/root/1.css&apos;, &apos;wb&apos;);foreach ($fileArr as $key=&gt;$value) &#123; fwrite($fb, file_get_contents(&apos;/root/test/&apos;.$value));&#125;fclose($fopen); 每次的写入都是从尾部开始写入的。（相比较打开文件夹，他少了个readdir这种循环遍历文件夹的函数，好像fgets也有这种功能，但是用的不多，就没细看了）。 4.还有一些关于文件的函数，比如获取文件内容file_get_contents,写入file_put_contents,获取fgets这种的好像是按照行获取的，一般读操作用file_get_contents,能读取全部的内容。 文件读写是经常进行的一个动作，读取文件的函数真是千千万万个，复杂的有，简单的也有。最常用方便的有file_get_contents(),file_put_conents()，不需要进行打开文件，关闭文件的操作。但是对超大文件进行读取时，file_get_contents()会把内容都读取进内存，造成内存溢出，最好是循环按行读取。fgetcsv()用来读取一行csv文件，fgets()用来读取一样普通文件。]]></content>
       <categories>
         <category>PHP</category>
       </categories>
@@ -279,9 +284,9 @@
         <category>PHP</category>
       </categories>
       <tags>
-        <tag>PHP</tag>
         <tag>Linux</tag>
         <tag>工具</tag>
+        <tag>PHP</tag>
         <tag>调试</tag>
         <tag>Xdebug</tag>
       </tags>
@@ -320,8 +325,8 @@
         <category>PHP</category>
       </categories>
       <tags>
-        <tag>PHP</tag>
         <tag>Linux</tag>
+        <tag>PHP</tag>
         <tag>扩展</tag>
       </tags>
   </entry>

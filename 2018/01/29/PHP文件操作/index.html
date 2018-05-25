@@ -89,7 +89,7 @@
 <meta property="og:site_name" content="语法糖的博客">
 <meta property="og:description" content="上篇文章里面写了关于文件上传。其实在做文件上传的功能的时候遇到很多php关于文件的处理，记录下来。其实文件处理在我们刚开始学习php的时候肯定学习过，可后来因为项目当中，做网站的时候关于文件的操作很少，所以很容易忘记这部分的内容，毕竟其实也挺枯燥的。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-02-23T12:47:54.994Z">
+<meta property="og:updated_time" content="2018-05-25T07:22:42.087Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="PHP文件操作">
 <meta name="twitter:description" content="上篇文章里面写了关于文件上传。其实在做文件上传的功能的时候遇到很多php关于文件的处理，记录下来。其实文件处理在我们刚开始学习php的时候肯定学习过，可后来因为项目当中，做网站的时候关于文件的操作很少，所以很容易忘记这部分的内容，毕竟其实也挺枯燥的。">
@@ -387,14 +387,35 @@
 <p>php<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">function listDir($dir)</div><div class="line">&#123;</div><div class="line">	if(is_dir($dir))</div><div class="line">   	&#123;</div><div class="line">     	if ($dh = opendir($dir)) </div><div class="line">		&#123;</div><div class="line">        	while (($file = readdir($dh)) !== false)</div><div class="line">			&#123;</div><div class="line">     			if((is_dir($dir.&quot;/&quot;.$file)) &amp;&amp; $file!=&quot;.&quot; &amp;&amp; $file!=&quot;..&quot;)</div><div class="line">				&#123;</div><div class="line">     				echo &quot;&lt;b&gt;&lt;font color=&apos;red&apos;&gt;文件名：&lt;/font&gt;&lt;/b&gt;&quot;,$file,&quot;&lt;br&gt;&lt;hr&gt;&quot;;</div><div class="line">     				listDir($dir.&quot;/&quot;.$file.&quot;/&quot;);</div><div class="line">     			&#125;</div><div class="line">				else</div><div class="line">				&#123;</div><div class="line">         			if($file!=&quot;.&quot; &amp;&amp; $file!=&quot;..&quot;)</div><div class="line">					&#123;</div><div class="line">         				echo $file.&quot;&lt;br&gt;&quot;;</div><div class="line">      				&#125;</div><div class="line">     			&#125;</div><div class="line">        	&#125;</div><div class="line">        	closedir($dh);</div><div class="line">     	&#125;</div><div class="line">   	&#125;</div><div class="line">&#125;</div><div class="line">//开始运行</div><div class="line">listDir(&quot;./nowamagic&quot;);</div></pre></td></tr></table></figure></p>
 <p>上面两个场景大致差不多，主要就是几个函数的使用。首先要明确读取文件夹的内容和读取文件的内容是不一样的。</p>
 <ol>
-<li>is_dir 判断该文件是否是文件夹，注意的一点事一定要跟上文件名的前缀··，否则不能找到指定文件，会有奇怪的错误发生。</li>
-<li>is_file 判断是否是文件</li>
-<li>读取文件夹的内容，首先要打开文件夹,opendir() ,会产生一个资源型的数据类型，句柄，readdir() 会循环遍历文件夹的内容。closedir()读完文件之后关闭。</li>
-<li>注意每个文件夹下的两个特殊文件’.’ 和 ‘..’</li>
+<li><p>is_dir 判断该文件是否是文件夹，注意的一点事一定要跟上文件名的前缀··，否则不能找到指定文件，会有奇怪的错误发生。</p>
+</li>
+<li><p>is_file 判断是否是文件</p>
+</li>
+<li><p>读取文件夹的内容，首先要打开文件夹,opendir() ,会产生一个资源型的数据类型，句柄，readdir() 会循环遍历文件夹的内容。closedir()读完文件之后关闭。</p>
+</li>
+<li><p>注意每个文件夹下的两个特殊文件’.’ 和 ‘..’</p>
+</li>
+<li><p>fopen打开一个文件，返回一个句柄，其实和上面打开一个文件夹是一样的，只是这里面多了几种模式。这个句柄可以理解成连接数据库时候的资源文件，每次关于数据库的操作都得用到这个文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">&quot;r&quot; （只读方式打开，将文件指针指向文件头）</div><div class="line">&quot;r+&quot; （读写方式打开，将文件指针指向文件头）</div><div class="line">&quot;w&quot; （写入方式打开，清除文件内容，如果文件不存在则尝试创建之）</div><div class="line">&quot;w+&quot; （读写方式打开，清除文件内容，如果文件不存在则尝试创建之）</div><div class="line">&quot;a&quot; （写入方式打开，将文件指针指向文件末尾进行写入，如果文件不存在则尝试创建之）</div><div class="line">&quot;a+&quot; （读写方式打开，通过将文件指针指向文件末尾进行写入来保存文件内容）</div><div class="line">&quot;x&quot; （创建一个新的文件并以写入方式打开，如果文件已存在则返回 FALSE 和一个错误）</div><div class="line">&quot;x+&quot; （创建一个新的文件并以读写方式打开，如果文件已存在则返回 FALSE 和一个错误）</div></pre></td></tr></table></figure>
+<p>这个模式也可以分成指针指在文件头部还是尾部来记忆。</p>
+</li>
+<li><p>feof 判断指针是否到了文件尾部</p>
+</li>
+<li><p>fgets读取一行文件</p>
+</li>
+<li><p>fclose关闭文件</p>
+</li>
+<li><p>fgetcsv 与 <a href="http://www.w3school.com.cn/php/func_filesystem_fgets.asp" target="_blank" rel="external">fgets()</a> 类似，不同的是 fgetcsv() 解析读入的行并找出 CSV 格式的字段，然后返回一个包含这些字段的数组。</p>
+</li>
+<li><p>fread(), 读取指定大小的文件，但有大小限制，然后还有二进制文件的限制（没有仔细了解过二进制文件和文本文件的区别）</p>
+</li>
 </ol>
 <p>3.php合并文件<br>思路：其实就是打开一个文件，不断往里面写入。关于打开fopen() 参数很多，感觉很多都是遇到的时候再看吧，二进制文件记得加b。<br>php<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">$fb = fopen(&apos;/root/1.css&apos;, &apos;wb&apos;);</div><div class="line">foreach ($fileArr as $key=&gt;$value) &#123;</div><div class="line">    fwrite($fb, file_get_contents(&apos;/root/test/&apos;.$value));</div><div class="line">&#125;</div><div class="line">fclose($fopen);</div></pre></td></tr></table></figure></p>
 <p>每次的写入都是从尾部开始写入的。（相比较打开文件夹，他少了个readdir这种循环遍历文件夹的函数，好像fgets也有这种功能，但是用的不多，就没细看了）。</p>
 <p>4.还有一些关于文件的函数，比如获取文件内容file_get_contents,写入file_put_contents,获取fgets这种的好像是按照行获取的，一般读操作用file_get_contents,能读取全部的内容。</p>
+<blockquote>
+<p>文件读写是经常进行的一个动作，读取文件的函数真是千千万万个，复杂的有，简单的也有。最常用方便的有file_get_contents(),file_put_conents()，不需要进行打开文件，关闭文件的操作。<br>但是对超大文件进行读取时，file_get_contents()会把内容都读取进内存，造成内存溢出，最好是循环按行读取。fgetcsv()用来读取一行csv文件，fgets()用来读取一样普通文件。</p>
+</blockquote>
 
       
     </div>
@@ -577,7 +598,7 @@ var jiathis_config={
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">41</span>
+                  <span class="site-state-item-count">42</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -718,7 +739,7 @@ var jiathis_config={
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count"> | 博客全站共50.1k字</span>
+  <span class="post-count"> | 博客全站共51.1k字</span>
 </div>
 
 
