@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[PHP opcache]]></title>
+    <url>%2F2018%2F05%2F25%2FPHP-opcache%2F</url>
+    <content type="text"><![CDATA[opcache是什么东西，我也不知道，我只知道开启他能加速我接口的返回速度。 原理：大概的意思就是把php的脚本一次性全存入内存中，然后每次读取脚本直接从这里面取，而不用每个连接都读取一份脚本。 但这样就存在修改数据后服务器识别不到，可以配置参数，多少秒服务器检查一次，但一般生产环境直接把配置成0，就是间隔时间是0，单位是s，然后停止检查，而开发环境参数配置成1，一直检查，这样就不会存在修改文件，没有效果了。 还可以手动清除，必须脚本中写入 1opcache_reset() 但需要注意的就是不同模式下储存脚本是在不同的内存空间中，比如cli下执行脚本文件，和通过浏览器这种mod_php清除是不一样的，所以浏览器访问的话就通过浏览器的方式去执行脚本吧。 当然，如果和我们swoole那样，每次修改代码后重启web服务器，那是根本不存在这种情况的。 话说偶然间发现代码的不同方式发布 121.类似前端代码那种，每次新代码的发布都会重新打个包，然后把站点目录通过软连接指向这个新包2.我们现在用的，通过在服务器上更新svn上的代码，来发布新的代码 首先运行环境是php7.014,线上环境是php5.6,效果不是十分明显，还有opcache_reset() byte-code不是十分好用。 首先得开启这个扩展，在phpinfo中查找opcache或者 php -m 中查找opcache，其实直接php -m就好了，会有个很显眼的ZendOpcache, 安装方法就是因为默认编译的时候大部分都有–enable-opcache,或者phpinfo页面上可以看见编译的参数，直接在php.ini 里面开启zend_extension=opcahce.so就好了，或者下载文件源码编译。 或者重新编译一下php（这个忘记了） 或者可以像pgsql那样去php源码包里面找源文件进行编译？这样可行吗，没有试过。 参数 12345opcache.validate_timestamps=1 //是否检测修改opcache.revalidate_freq=0//单位时间opcache.memory_consumption=64 //memory_consumption 这个参数很好理解，代表这块内存区开辟的大小，另外需要注意不同 PHP SAPI 内存区不是共享的，就是说同一个 PHP 文件，运行在命令行模式或者 PHP-FPM 模式下，对应的 byte-code 会存储在不同的内存区中。opcache.max_accelerated_files=4000 //如果命中率不搞，可以适当提升这个值，直到1。opcache.opcache.fast_shutdown=1 //modern php上面说这个写1就可以了 （opcache_get_configuration()和 and opcache_get_status()）获取配置信息和运行信息，比如了解那些文件被缓存了、使用了多少内存、内存命中率等等。 感觉就是基于这两个函数出了两个opcache的项目，一个是单页面，一个比较复杂 1.PeeHaa / OpCacheGUI 2.rlerdorf / opcache-status 单页面的部署直接放在网站根目录下就好了，就理解成phpadmin那种网点就好了，利用的就是php的函数获取php的运行环境，然后可视化展示出来 opcache_invalidate()，这个函数就是更新特定的文件缓存，没去试验过，因为项目小啦，直接重启web server。]]></content>
+  </entry>
+  <entry>
     <title><![CDATA[PHP yield]]></title>
     <url>%2F2018%2F05%2F25%2FPHP-yield%2F</url>
     <content type="text"><![CDATA[yield，生成器，自己感觉还是挺重要的，因为php在读取大文件的时候经常会有内存溢出的错误，其实yield还会涉及spl，这部分内容自己目前了解的还不是十分清楚，所以，暂时就把yield的作用归类于放置变量过大在内存中占用本大空间，导致内存溢出吧。 关于yield这种数据类型，还有迭代器，还有collection，都是能用foreach进行循环遍历的。 1234567891011121314function productNum($length)&#123; $data = []; for ($i=0; $i&lt; $length; $i++)&#123; $data[] = $i; &#125; return $data; &#125;$data = productNum($100000000);foreach ($data as $key=&gt;$value) &#123; var_dump($value); &#125; 用php执行上端代码会报出超出分配给php的内存错误 123456789101112131415function productNum($length)&#123; //$data = []; for ($i=0; $i&lt; $length; $i++)&#123; //$data[] = $i; yield $i; &#125; //return $data; &#125;$data = productNum($100000000);foreach ($data as $key=&gt;$value) &#123; var_dump($value); &#125; 能执行成功，其实这个时候打印$data变量，可以看出来他是一个类。 每次foreach 去$data中取数据，上面的那个for循环就会执行一次，再次输出一个变量\$i。 so，如果使用yield的内容，每次也得循环使用吗？ yield定义的内容不能有返回。 下面写一个读取文件，再往另一个文件中写入内容的例子，其实这个例子不具有实际价值，其实就是一个copy文件，用shell_exec执行linux命令就可以，或者file_get_contents,file_put_contents这样就好了，使用yield分多次，唯一可以想到的好处就是控制对内存占用的大小。 1234567891011121314function getContent($file)&#123; $res = fopen($file); while (feof($resource) === false ) &#123; yield fgets($resource); &#125;&#125;$res = fopen(&apos;/home/itbasic/3.pdf&apos;, &apos;a&apos;);foreach ($content as $c_key=&gt;$c_value) &#123; fwrite($res, $c_value);&#125;fclose($res);echo &quot;使用: &quot;.memory_get_usage().&quot;B\n&quot;; //使用: 362640B 用传统方式 123$res = file_get_contents($file);file_put_contents(&apos;/home/itbasic/1.pdf&apos;, $res);echo &quot;使用: &quot;.memory_get_usage().&quot;B\n&quot;; //使用: 39875608B 显然超过一个数量级，yield就是把一个结果集分批的给你，你什么时候问他要下一个结果集，他什么时候给你。]]></content>
@@ -102,9 +107,9 @@
         <category>apache</category>
       </categories>
       <tags>
-        <tag>框架</tag>
         <tag>apache</tag>
         <tag>linux</tag>
+        <tag>框架</tag>
       </tags>
   </entry>
   <entry>
@@ -272,8 +277,8 @@
       </categories>
       <tags>
         <tag>PHP</tag>
-        <tag>ThinkPHP5</tag>
         <tag>框架</tag>
+        <tag>ThinkPHP5</tag>
       </tags>
   </entry>
   <entry>
@@ -345,7 +350,7 @@
   <entry>
     <title><![CDATA[svn Git 思考]]></title>
     <url>%2F2017%2F12%2F20%2Fsvn-Git-%E6%80%9D%E8%80%83%2F</url>
-    <content type="text"><![CDATA[···今天碰到一个问题，其实这个问题好久之前就没碰到了，只是之前可以通过别的方式化解，然后今天没法通过别的方式解决了，只能通过正确的方式解决。 问题描述：在线上修改了代码，怎么更新到本地。 直接通过小乌龟update，肯定不行。因为小乌龟是直接从svn服务器上更新内容，然而我是线上的代码修改了，而不是svn服务器上的文件修改了。 之前我们这个小项目提交代码到线上是这样的，本地修改后，用小乌龟提交，然后连接到服务器上，切换到网站根目录下，svn up，这样线上就能正常访问了。正是这个过程导致了我一个误区，我以为svn的工作流程是这样。 但其实他应该是这样 其实线上网站根目录下文件夹也是svn客户端服务的内容，他只是svn服务器大脑下的一个分支 之前的错误概念还有就是把线上服务器的内容等同于svn大脑的内容。举个例子，在实际的大项目中，代码整理后，要经过测试环境等等多重步骤才能发布，放到正常的生产环境中，如果我们直接把大脑合并的内容放到生产环境中，这样是太不合理了，这样感觉会导致线上的代码太不稳定了。 所以，正如第二个图中看到的一样，网站根目录也是从线上代码往下拉的，所以我们对线上代码的提交，就应该和我们平时提交代码一样，只是我们平时用小乌龟习惯了，可能已经忘记命令了，还有svn up是svn update的缩写，这个up并不是提交的意思哦（···误导我一年了）。 所以，我们在线上svn commit（svn ci）缩写，必备参数 -m(我原先以为svn不需要，肯定是小乌龟做了处理)。这样就能把代码更新到svn服务器上，然后别的同事svn up就可以了]]></content>
+    <content type="text"><![CDATA[···今天碰到一个问题，其实这个问题好久之前就没碰到了，只是之前可以通过别的方式化解，然后今天没法通过别的方式解决了，只能通过正确的方式解决。 问题描述：在线上修改了代码，怎么更新到本地。 直接通过小乌龟update，肯定不行。因为小乌龟是直接从svn服务器上更新内容，然而我是线上的代码修改了，而不是svn服务器上的文件修改了。 之前我们这个小项目提交代码到线上是这样的，本地修改后，用小乌龟提交，然后连接到服务器上，切换到网站根目录下，svn up，这样线上就能正常访问了。正是这个过程导致了我一个误区，我以为svn的工作流程是这样。 但其实他应该是这样 其实线上网站根目录下文件夹也是svn客户端服务的内容，他只是svn服务器大脑下的一个分支 之前的错误概念还有就是把线上服务器的内容等同于svn大脑的内容。举个例子，在实际的大项目中，代码整理后，要经过测试环境等等多重步骤才能发布，放到正常的生产环境中，如果我们直接把大脑合并的内容放到生产环境中，这样是太不合理了，这样感觉会导致线上的代码太不稳定了。 所以，正如第二个图中看到的一样，网站根目录也是从线上代码往下拉的，所以我们对线上代码的提交，就应该和我们平时提交代码一样，只是我们平时用小乌龟习惯了，可能已经忘记命令了，还有svn up是svn update的缩写，这个up并不是提交的意思哦（···误导我一年了）。 所以，我们在线上svn commit（svn ci）缩写，必备参数 -m(我原先以为svn不需要，肯定是小乌龟做了处理)。这样就能把代码更新到svn服务器上，然后别的同事svn up就可以了。 svn提交失败，经常需要clean up，可是呢，点击clean up的时候又会显示clean up失败，请clean up，无限死循环。可以进入当前目录的.svn目录下，用Navicat 打开那个wc.db文件（用Navicat打开，如何打开请百度 ），然后清空 work_queue和wc_lock就好了]]></content>
       <categories>
         <category>工具</category>
       </categories>
@@ -436,9 +441,9 @@
         <category>PHP</category>
       </categories>
       <tags>
-        <tag>框架</tag>
         <tag>apache</tag>
         <tag>linux</tag>
+        <tag>框架</tag>
         <tag>php</tag>
       </tags>
   </entry>

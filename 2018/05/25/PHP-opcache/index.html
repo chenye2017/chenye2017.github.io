@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="PHP,HTTP," />
+  <meta name="keywords" content="Hexo, NexT" />
 
 
 
@@ -81,18 +81,17 @@
 
 
 
-<meta name="description" content="其实本来不用单独写这篇文章的，可以放在http协议中，因为他本来就是关联这个http请求和返回信息中的content type，但其实用的还挺多，主要就是上传文件这块和php不借助插件而是通过输出html表格元素让页面按照excel来解析的方式生成excel。">
-<meta name="keywords" content="PHP,HTTP">
+<meta name="description" content="opcache是什么东西，我也不知道，我只知道开启他能加速我接口的返回速度。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="MIME TYPE的作用">
-<meta property="og:url" content="http://yoursite.com/2018/04/23/MIME-TYPE的作用/index.html">
+<meta property="og:title" content="PHP opcache">
+<meta property="og:url" content="http://yoursite.com/2018/05/25/PHP-opcache/index.html">
 <meta property="og:site_name" content="语法糖的博客">
-<meta property="og:description" content="其实本来不用单独写这篇文章的，可以放在http协议中，因为他本来就是关联这个http请求和返回信息中的content type，但其实用的还挺多，主要就是上传文件这块和php不借助插件而是通过输出html表格元素让页面按照excel来解析的方式生成excel。">
+<meta property="og:description" content="opcache是什么东西，我也不知道，我只知道开启他能加速我接口的返回速度。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-04-23T15:12:46.144Z">
+<meta property="og:updated_time" content="2018-05-25T08:02:29.564Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="MIME TYPE的作用">
-<meta name="twitter:description" content="其实本来不用单独写这篇文章的，可以放在http协议中，因为他本来就是关联这个http请求和返回信息中的content type，但其实用的还挺多，主要就是上传文件这块和php不借助插件而是通过输出html表格元素让页面按照excel来解析的方式生成excel。">
+<meta name="twitter:title" content="PHP opcache">
+<meta name="twitter:description" content="opcache是什么东西，我也不知道，我只知道开启他能加速我接口的返回速度。">
 
 
 
@@ -122,13 +121,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/04/23/MIME-TYPE的作用/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/05/25/PHP-opcache/"/>
 
 
 
 
 
-  <title>MIME TYPE的作用 | 语法糖的博客</title>
+  <title>PHP opcache | 语法糖的博客</title>
   
 
 
@@ -293,7 +292,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/23/MIME-TYPE的作用/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/25/PHP-opcache/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="chenye2017">
@@ -310,7 +309,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">MIME TYPE的作用</h1>
+          <h1 class="post-title" itemprop="name headline">PHP opcache</h1>
         
 
         <div class="post-meta">
@@ -322,8 +321,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-23T21:44:00+08:00">
-                2018-04-23
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-25T15:38:57+08:00">
+                2018-05-25
               </time>
             
 
@@ -332,28 +331,6 @@
             
           </span>
 
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/HTTP/" itemprop="url" rel="index">
-                    <span itemprop="name">HTTP</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
           
 
           
@@ -382,31 +359,29 @@
       
 
       
-        <p>其实本来不用单独写这篇文章的，可以放在http协议中，因为他本来就是关联这个http请求和返回信息中的content type，但其实用的还挺多，主要就是上传文件这块和php不借助插件而是通过输出html表格元素让页面按照excel来解析的方式生成excel。</p>
+        <p>opcache是什么东西，我也不知道，我只知道开启他能加速我接口的返回速度。</p>
 <a id="more"></a>
-<blockquote>
-<p>一、</p>
-<p>首先，我们要了解浏览器是如何处理内容的。在浏览器中显示的内容有 HTML、有 XML、有 GIF、还有 Flash ……那么，浏览器是如何区分它们，决定什么内容用什么形式来显示呢？答案是 MIME Type，也就是该资源的媒体类型。<br>媒体类型通常是通过 HTTP 协议，由 Web 服务器告知浏览器的，更准确地说，是通过 Content-Type 来表示的，例如:<br>Content-Type: text/HTML<br>表示内容是 text/HTML 类型，也就是超文本文件。为什么是“text/HTML”而不是“HTML/text”或者别的什么？MIME Type 不是个人指定的，是经过 ietf 组织协商，以 RFC 的形式作为建议的标准发布在网上的，大多数的 Web 服务器和用户代理都会支持这个规范 (顺便说一句，Email 附件的类型也是通过 MIME Type 指定的)。<br>通常只有一些在互联网上获得广泛应用的格式才会获得一个 MIME Type，如果是某个客户端自己定义的格式，一般只能以 application/x- 开头。<br>XHTML 正是一个获得广泛应用的格式，因此，在 RFC 3236 中，说明了 XHTML 格式文件的 MIME Type 应该是 application/xHTML+XML。(现在不用xml，而是用json，一般在返回头中都有)</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">&gt;$response-&gt;header(&apos;Content-Type&apos;, &apos;application/json&apos;);</div><div class="line">&gt;</div></pre></td></tr></table></figure>
-</blockquote>
-<p>&gt;</p>
-<blockquote>
-<p>注意这个content type，不仅在response中有，在request中也有，</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&gt;application/x-www-form-urlencoded（使用HTTP的POST方法提交的表单）</div><div class="line">&gt;multipart/form-data（同上，但主要用于表单提交时伴随文件上传的场合）</div><div class="line">&gt;</div></pre></td></tr></table></figure>
-</blockquote>
-<p>&gt;</p>
-<blockquote>
-<p>上面的两种应该是我们平时最常见到的，一种是普通的表单提交，一种是当表单中有上传文件的时候进行的提交方式中content type的设置(好像默认的表单提交就是第一种，不用设置，只有上传的时候需要特殊设置，像我们itbasic上面，大部分时候用的是ajax进行提交，而不是表单，content type在ajax中应该封装成了text/json)</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&gt;&lt;form action=&quot;http://192.168.33.10:56732/bbs/login/test&quot; method=&quot;post&quot; enctype=&quot;multipart/form-data&quot;&gt;</div><div class="line">&gt;&lt;label for=&quot;file&quot;&gt;文件名：&lt;/label&gt;</div><div class="line">&gt;&lt;input type=&quot;file&quot; name=&quot;file&quot; id=&quot;file&quot;&gt;&lt;br&gt;</div><div class="line">&gt;&lt;input type=&quot;text&quot; name=&quot;name&quot; id=&quot;name&quot;&gt;&lt;br&gt;</div><div class="line">&gt;&lt;input type=&quot;submit&quot; name=&quot;submit&quot; value=&quot;提交&quot;&gt;</div><div class="line">&gt;&lt;/form&gt;</div><div class="line">&gt;</div></pre></td></tr></table></figure>
-</blockquote>
-<p>&gt;</p>
-<blockquote>
-<p>当然，处理本地的文件，在没有人告诉浏览器某个文件的 MIME Type 的情况下，浏览器也会做一些默认的处理，这可能和你在操作系统中给文件配置的 MIME Type 有关。比如在 Windows 下，打开注册表的“HKEY_LOCAL_MACHINESOFTWAREClassesMIMEDatabaseContent Type”主键，你可以看到所有 MIME Type 的配置信息。</p>
-</blockquote>
-<p>更详细的介绍<a href="https://www.cnblogs.com/jsean/articles/1610265.html" target="_blank" rel="external">https://www.cnblogs.com/jsean/articles/1610265.html</a></p>
-<p>因为这篇文章复制有很多重复的部分（▄█▀█●），复制下来改很麻烦。</p>
-<p>认识的几点就是：服务器端要存储文件后缀名和mime type的对应关系，我是这样理解的，虽然在linux下文件后缀名并没有什么卵用，感觉这都是content type的作用，但在windows下起了很大的作用啊，在服务器端保存文件的使用，需要通过content type对应的mime type 转换成文件后缀名，然后保存（虽然感觉直接读上传的文件名就可以了，感觉也许是兼容那些没有文件后缀名的情况吧，linux？）</p>
-<p>response 里面content type的作用很明显是通知客户端怎么解析这个文件。</p>
+<p>原理：大概的意思就是把php的脚本一次性全存入内存中，然后每次读取脚本直接从这里面取，而不用每个连接都读取一份脚本。</p>
+<p>但这样就存在修改数据后服务器识别不到，可以配置参数，多少秒服务器检查一次，但一般生产环境直接把配置成0，就是间隔时间是0，单位是s，然后停止检查，而开发环境参数配置成1，一直检查，这样就不会存在修改文件，没有效果了。</p>
+<p>还可以手动清除，必须脚本中写入</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">opcache_reset()</div></pre></td></tr></table></figure>
+<p>但需要注意的就是不同模式下储存脚本是在不同的内存空间中，比如cli下执行脚本文件，和通过浏览器这种mod_php清除是不一样的，所以浏览器访问的话就通过浏览器的方式去执行脚本吧。</p>
+<p>当然，如果和我们swoole那样，每次修改代码后重启web服务器，那是根本不存在这种情况的。</p>
+<p>话说偶然间发现代码的不同方式发布</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">1.类似前端代码那种，每次新代码的发布都会重新打个包，然后把站点目录通过软连接指向这个新包</div><div class="line">2.我们现在用的，通过在服务器上更新svn上的代码，来发布新的代码</div></pre></td></tr></table></figure>
+<p>首先运行环境是php7.014,线上环境是php5.6,效果不是十分明显，还有opcache_reset() byte-code不是十分好用。</p>
+<p>首先得开启这个扩展，在phpinfo中查找opcache或者 php -m 中查找opcache，其实直接php -m就好了，会有个很显眼的ZendOpcache,</p>
+<p>安装方法就是因为默认编译的时候大部分都有–enable-opcache,或者phpinfo页面上可以看见编译的参数，直接在php.ini 里面开启zend_extension=opcahce.so就好了，或者下载文件源码编译。</p>
+<p>或者重新编译一下php（这个忘记了）</p>
+<p>或者可以像pgsql那样去php源码包里面找源文件进行编译？这样可行吗，没有试过。</p>
+<p>参数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">opcache.validate_timestamps=1 //是否检测修改</div><div class="line">opcache.revalidate_freq=0//单位时间</div><div class="line">opcache.memory_consumption=64  //memory_consumption 这个参数很好理解，代表这块内存区开辟的大小，另外需要注意不同 PHP SAPI 内存区不是共享的，就是说同一个 PHP 文件，运行在命令行模式或者 PHP-FPM 模式下，对应的 byte-code 会存储在不同的内存区中。</div><div class="line">opcache.max_accelerated_files=4000 //如果命中率不搞，可以适当提升这个值，直到1。</div><div class="line">opcache.opcache.fast_shutdown=1  //modern php上面说这个写1就可以了</div></pre></td></tr></table></figure>
+<p>（opcache_get_configuration()和 and opcache_get_status()）获取配置信息和运行信息，比如了解那些文件被缓存了、使用了多少内存、内存命中率等等。</p>
+<p>感觉就是基于这两个函数出了两个opcache的项目，一个是单页面，一个比较复杂</p>
+<p>1.<a href="https://github.com/PeeHaa/OpCacheGUI" target="_blank" rel="external">PeeHaa / OpCacheGUI</a></p>
+<p>2.<a href="https://github.com/rlerdorf/opcache-status" target="_blank" rel="external">rlerdorf / opcache-status</a></p>
+<p>单页面的部署直接放在网站根目录下就好了，就理解成phpadmin那种网点就好了，利用的就是php的函数获取php的运行环境，然后可视化展示出来</p>
+<p>opcache_invalidate()，这个函数就是更新特定的文件缓存，没去试验过，因为项目小啦，直接重启web server。</p>
 
       
     </div>
@@ -462,14 +437,6 @@
 
     <footer class="post-footer">
       
-        <div class="post-tags">
-          
-            <a href="/tags/PHP/" rel="tag"><i class="fa fa-tag"></i> PHP</a>
-          
-            <a href="/tags/HTTP/" rel="tag"><i class="fa fa-tag"></i> HTTP</a>
-          
-        </div>
-      
 
       
       
@@ -479,8 +446,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/04/23/Redis/" rel="next" title="Redis">
-                <i class="fa fa-chevron-left"></i> Redis
+              <a href="/2018/05/25/PHP-yield/" rel="next" title="PHP yield">
+                <i class="fa fa-chevron-left"></i> PHP yield
               </a>
             
           </div>
@@ -488,10 +455,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/04/25/验证器/" rel="prev" title="验证器">
-                验证器 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
