@@ -88,7 +88,7 @@
 <meta property="og:site_name" content="语法糖的博客">
 <meta property="og:description" content="跨域这个问题其实前端很容易碰到，为什么呢?因为前端一直用浏览器啊，浏览器可以看做一个http客户端，前端和http打交道主要用的就是这个客户端，但如果后端和http打交道，一般只能使用curl这类工具，又因为浏览器的同源策略才产生了跨域，换句话说跨域的时候，后端对前端的数据进行了处理，并返回了对应的数据，但是浏览器检测到了跨域，所以把数据屏蔽了，这才产生了跨域，所以前端相比后端会更容易碰到跨域问题">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-06-06T10:29:30.641Z">
+<meta property="og:updated_time" content="2018-06-06T13:55:05.333Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="跨域">
 <meta name="twitter:description" content="跨域这个问题其实前端很容易碰到，为什么呢?因为前端一直用浏览器啊，浏览器可以看做一个http客户端，前端和http打交道主要用的就是这个客户端，但如果后端和http打交道，一般只能使用curl这类工具，又因为浏览器的同源策略才产生了跨域，换句话说跨域的时候，后端对前端的数据进行了处理，并返回了对应的数据，但是浏览器检测到了跨域，所以把数据屏蔽了，这才产生了跨域，所以前端相比后端会更容易碰到跨域问题">
@@ -370,7 +370,7 @@
 <p>通过script返回的内容因为在script标签内部，所以可以执行script代码，所以当我们传给后端我们定义好的方法名，然后让他们把我们需要的数据放进去，再返回来，类似 </p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">showData(&#123;&quot;1&quot;:&quot;boy&quot;&#125;);</div></pre></td></tr></table></figure>
 <p>上面的返回结果在script代码中自动执行，就能得到我们想要的结果（需要注意的是传入的数据必须是json类型哦，毕竟后端和js是不同的语言类型，然后我们只需要在showData里面对json数据进行转换成js能识别的数据即可）。</p>
-<p>对于jsonp，我用的比较少，因为很多时候不想特别写专门用来跨域的api接口，所以如果要用jsonp，后端逻辑代码需要更改。</p>
+<p>对于jsonp，我用的比较少，因为很多时候不想特别写专门用来跨域的api接口，所以如果要用jsonp，后端逻辑代码需要更改（百度php如何配合jsnop完成数据传输）。</p>
 <p>对于前端，像jquery有对jsonp的封装，可以自定义函数，然后传入，返回的数据会先走定义的函数，然后来到success函数里面，注意success传入的参数data是不包括后端返回的内容中的函数，而是函数的参数们。</p>
 <p>juqery默认传的自定义函数名称是jquery带一长串数字，具体的用法可以百度查看，我没咋用过。</p>
 <p>还有哦，jsonp只能支持get请求。</p>

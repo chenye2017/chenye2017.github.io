@@ -8,7 +8,7 @@
   <entry>
     <title><![CDATA[跨域]]></title>
     <url>%2F2018%2F06%2F06%2F%E8%B7%A8%E5%9F%9F%2F</url>
-    <content type="text"><![CDATA[跨域这个问题其实前端很容易碰到，为什么呢?因为前端一直用浏览器啊，浏览器可以看做一个http客户端，前端和http打交道主要用的就是这个客户端，但如果后端和http打交道，一般只能使用curl这类工具，又因为浏览器的同源策略才产生了跨域，换句话说跨域的时候，后端对前端的数据进行了处理，并返回了对应的数据，但是浏览器检测到了跨域，所以把数据屏蔽了，这才产生了跨域，所以前端相比后端会更容易碰到跨域问题。那前端就一定会碰到跨域问题吗，并不是这样。比如之前我在做itbasic的时候一直没有碰到这个问题，那是为什么呢？我的前端脚本和后端api服务都在80这个端口下，也就是说域是一直一样的，所以不会产生，但在当下，前后端分离，很多时候，前后端在不同的web服务下，比如我们那个bbs，前端静态页面由apache提供，端口8080，后端api是swoole提供，端口56735，这样前端肯定就遇到跨域问题啦。 关于浏览器同源策略的原因，可以网上查看各种资料，阮一峰的博客是个很好的选择。 什么时候会出现跨域 12345http://www.example.com/dir2/other.html：同源http://example.com/dir/other.html：不同源（域名不同）http://v2.www.example.com/dir/other.html：不同源（域名不同）http://www.example.com:81/dir/other.html：不同源（端口不同）组成一个域名（协议号：//ip地址：端口号）三者任意一个不同就会出现跨域 如果解决跨域呢，自己主要了解的有两种，分别是cors和jsonp,自己平时用的主要是cors。 cors可以让后端代码不用做过多的变动，只需要对返回的内容多添加些头部信息即可。 jsonp主要是通过script，img标签这类不存在跨域，回忆一下，是不是通过img加载过百度的图片，通过script的src加载过cdn上的jquery。 通过script返回的内容因为在script标签内部，所以可以执行script代码，所以当我们传给后端我们定义好的方法名，然后让他们把我们需要的数据放进去，再返回来，类似 1showData(&#123;&quot;1&quot;:&quot;boy&quot;&#125;); 上面的返回结果在script代码中自动执行，就能得到我们想要的结果（需要注意的是传入的数据必须是json类型哦，毕竟后端和js是不同的语言类型，然后我们只需要在showData里面对json数据进行转换成js能识别的数据即可）。 对于jsonp，我用的比较少，因为很多时候不想特别写专门用来跨域的api接口，所以如果要用jsonp，后端逻辑代码需要更改。 对于前端，像jquery有对jsonp的封装，可以自定义函数，然后传入，返回的数据会先走定义的函数，然后来到success函数里面，注意success传入的参数data是不包括后端返回的内容中的函数，而是函数的参数们。 juqery默认传的自定义函数名称是jquery带一长串数字，具体的用法可以百度查看，我没咋用过。 还有哦，jsonp只能支持get请求。 鉴于上面诸多的麻烦，我用的主要是cors。 首先我们需要知道浏览器将跨域请求分成了简单请求和非简单请求，什么是非简单请求，就是那些不是get post（请求方式）,返回头信息中加入token这类自定义的东西，就是非简单请求，一般情况下，我们的请求都是非简单请求，毕竟简单请求content-type 好像都不能是json类型。 对于非简单请求，会先在正式请求之前发送一个options请求，当有跨域请求的时候，我们可以看下Chrome的控制面板，很清楚的能看到。对于返回信息，我们需要加以下头信息 1234$response-&gt;header(&quot;Access-Control-Allow-Origin&quot;, &apos;*&apos;); //允许的ip$response-&gt;header(&apos;Access-Control-Allow-Methods&apos;, &apos;POST, GET&apos;); //允许的方法$response-&gt;header(&apos;Access-Control-Allow-Headers&apos;, &apos;Content-Type, token&apos;);//自定义的头部信息 大致只需要做这些处理，一般像php，只需要在router的 end（返回具体信息）之前加上上面的信息就可以了。 像node，或者swoole都在启动web服务的文件处加上即可。 ​]]></content>
+    <content type="text"><![CDATA[跨域这个问题其实前端很容易碰到，为什么呢?因为前端一直用浏览器啊，浏览器可以看做一个http客户端，前端和http打交道主要用的就是这个客户端，但如果后端和http打交道，一般只能使用curl这类工具，又因为浏览器的同源策略才产生了跨域，换句话说跨域的时候，后端对前端的数据进行了处理，并返回了对应的数据，但是浏览器检测到了跨域，所以把数据屏蔽了，这才产生了跨域，所以前端相比后端会更容易碰到跨域问题。那前端就一定会碰到跨域问题吗，并不是这样。比如之前我在做itbasic的时候一直没有碰到这个问题，那是为什么呢？我的前端脚本和后端api服务都在80这个端口下，也就是说域是一直一样的，所以不会产生，但在当下，前后端分离，很多时候，前后端在不同的web服务下，比如我们那个bbs，前端静态页面由apache提供，端口8080，后端api是swoole提供，端口56735，这样前端肯定就遇到跨域问题啦。 关于浏览器同源策略的原因，可以网上查看各种资料，阮一峰的博客是个很好的选择。 什么时候会出现跨域 12345http://www.example.com/dir2/other.html：同源http://example.com/dir/other.html：不同源（域名不同）http://v2.www.example.com/dir/other.html：不同源（域名不同）http://www.example.com:81/dir/other.html：不同源（端口不同）组成一个域名（协议号：//ip地址：端口号）三者任意一个不同就会出现跨域 如果解决跨域呢，自己主要了解的有两种，分别是cors和jsonp,自己平时用的主要是cors。 cors可以让后端代码不用做过多的变动，只需要对返回的内容多添加些头部信息即可。 jsonp主要是通过script，img标签这类不存在跨域，回忆一下，是不是通过img加载过百度的图片，通过script的src加载过cdn上的jquery。 通过script返回的内容因为在script标签内部，所以可以执行script代码，所以当我们传给后端我们定义好的方法名，然后让他们把我们需要的数据放进去，再返回来，类似 1showData(&#123;&quot;1&quot;:&quot;boy&quot;&#125;); 上面的返回结果在script代码中自动执行，就能得到我们想要的结果（需要注意的是传入的数据必须是json类型哦，毕竟后端和js是不同的语言类型，然后我们只需要在showData里面对json数据进行转换成js能识别的数据即可）。 对于jsonp，我用的比较少，因为很多时候不想特别写专门用来跨域的api接口，所以如果要用jsonp，后端逻辑代码需要更改（百度php如何配合jsnop完成数据传输）。 对于前端，像jquery有对jsonp的封装，可以自定义函数，然后传入，返回的数据会先走定义的函数，然后来到success函数里面，注意success传入的参数data是不包括后端返回的内容中的函数，而是函数的参数们。 juqery默认传的自定义函数名称是jquery带一长串数字，具体的用法可以百度查看，我没咋用过。 还有哦，jsonp只能支持get请求。 鉴于上面诸多的麻烦，我用的主要是cors。 首先我们需要知道浏览器将跨域请求分成了简单请求和非简单请求，什么是非简单请求，就是那些不是get post（请求方式）,返回头信息中加入token这类自定义的东西，就是非简单请求，一般情况下，我们的请求都是非简单请求，毕竟简单请求content-type 好像都不能是json类型。 对于非简单请求，会先在正式请求之前发送一个options请求，当有跨域请求的时候，我们可以看下Chrome的控制面板，很清楚的能看到。对于返回信息，我们需要加以下头信息 1234$response-&gt;header(&quot;Access-Control-Allow-Origin&quot;, &apos;*&apos;); //允许的ip$response-&gt;header(&apos;Access-Control-Allow-Methods&apos;, &apos;POST, GET&apos;); //允许的方法$response-&gt;header(&apos;Access-Control-Allow-Headers&apos;, &apos;Content-Type, token&apos;);//自定义的头部信息 大致只需要做这些处理，一般像php，只需要在router的 end（返回具体信息）之前加上上面的信息就可以了。 像node，或者swoole都在启动web服务的文件处加上即可。 ​]]></content>
   </entry>
   <entry>
     <title><![CDATA[PHP opcache]]></title>
@@ -142,8 +142,8 @@
         <category>Laravel</category>
       </categories>
       <tags>
-        <tag>Laravel</tag>
         <tag>PHP</tag>
+        <tag>Laravel</tag>
       </tags>
   </entry>
   <entry>
@@ -299,8 +299,8 @@
         <category>PHP</category>
       </categories>
       <tags>
-        <tag>Linux</tag>
         <tag>PHP</tag>
+        <tag>Linux</tag>
         <tag>工具</tag>
         <tag>调试</tag>
         <tag>Xdebug</tag>
@@ -340,8 +340,8 @@
         <category>PHP</category>
       </categories>
       <tags>
-        <tag>Linux</tag>
         <tag>PHP</tag>
+        <tag>Linux</tag>
         <tag>扩展</tag>
       </tags>
   </entry>
