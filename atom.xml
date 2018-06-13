@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-06-06T12:20:16.767Z</updated>
+  <updated>2018-06-13T09:15:47.145Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,24 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>无限递归</title>
+    <link href="http://yoursite.com/2018/06/13/%E6%97%A0%E9%99%90%E9%80%92%E5%BD%92/"/>
+    <id>http://yoursite.com/2018/06/13/无限递归/</id>
+    <published>2018-06-13T08:00:30.000Z</published>
+    <updated>2018-06-13T09:15:47.145Z</updated>
+    
+    <content type="html"><![CDATA[<p>无线递归用到的地方还是蛮多的，如果是我们itbasic上的话，那就是部门之间的关系，支撑体系下面有战略中心，战略中心下面有数据部，如果设计数据表维持这之间的关系，还有bbs，如何维护评论之间的关系（其实像laravel的论坛，他的评论关系都是从上往下一条线的，只是在评论的开头有@人的标志，我们的论坛是分为1级评论和多级，除了1级之外的评论都是在1级评论的后面按照1条线排列，没有显示主从关系），当我们需要获取这个评论的顶级的时候，我们就需要用到无线递归的知识。</p><a id="more"></a><p>以部门举例，我们在使用的过程中，需要找到这个部门的相关父级部门（子孙树），或者我们需要知道某个部门是否属于某个部门，我们既可以用家谱树去实现，也可以用子孙树去实现，用子孙树去实现的一个好处就是，当我们知道父级节点，一次性求出这个父级节点的所有子孙，通过判断子节点是否在这个父级节点的子孙中，就能知道是否满足条件。但如果我们通过家谱树，我们需要每次根据子节点，去求一次家谱，然后来判断家谱树中是否有这个父级节点存在，来判断是否符合条件。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line"></div><div class="line">$address = array(</div><div class="line">    array(&apos;id&apos;=&gt;1  , &apos;address&apos;=&gt;&apos;安徽&apos; , &apos;parent_id&apos; =&gt; 0),</div><div class="line">    array(&apos;id&apos;=&gt;2  , &apos;address&apos;=&gt;&apos;江苏&apos; , &apos;parent_id&apos; =&gt; 0),</div><div class="line">    array(&apos;id&apos;=&gt;3  , &apos;address&apos;=&gt;&apos;合肥&apos; , &apos;parent_id&apos; =&gt; 1),</div><div class="line">    array(&apos;id&apos;=&gt;4  , &apos;address&apos;=&gt;&apos;庐阳区&apos; , &apos;parent_id&apos; =&gt; 3),</div><div class="line">    array(&apos;id&apos;=&gt;5  , &apos;address&apos;=&gt;&apos;大杨镇&apos; , &apos;parent_id&apos; =&gt; 4),</div><div class="line">    array(&apos;id&apos;=&gt;6  , &apos;address&apos;=&gt;&apos;南京&apos; , &apos;parent_id&apos; =&gt; 2),</div><div class="line">    array(&apos;id&apos;=&gt;7  , &apos;address&apos;=&gt;&apos;玄武区&apos; , &apos;parent_id&apos; =&gt; 6),</div><div class="line">    array(&apos;id&apos;=&gt;8  , &apos;address&apos;=&gt;&apos;梅园新村街道&apos;, &apos;parent_id&apos; =&gt; 7),</div><div class="line">    array(&apos;id&apos;=&gt;9  , &apos;address&apos;=&gt;&apos;上海&apos; , &apos;parent_id&apos; =&gt; 0),</div><div class="line">    array(&apos;id&apos;=&gt;10 , &apos;address&apos;=&gt;&apos;黄浦区&apos; , &apos;parent_id&apos; =&gt; 9),</div><div class="line">    array(&apos;id&apos;=&gt;11 , &apos;address&apos;=&gt;&apos;外滩&apos; , &apos;parent_id&apos; =&gt; 10),</div><div class="line">    array(&apos;id&apos;=&gt;12 , &apos;address&apos;=&gt;&apos;安庆&apos; , &apos;parent_id&apos; =&gt; 1)</div><div class="line">    );</div><div class="line"></div><div class="line">function test($data, $pid)</div><div class="line">&#123;</div><div class="line">    static $arr = [];</div><div class="line">    foreach ($data as $key=&gt;$value) &#123;</div><div class="line">        if ($value[&apos;id&apos;] == $pid) &#123;</div><div class="line">            $arr[] = $value;</div><div class="line">            test($data, $value[&apos;parent_id&apos;]);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    return $arr;</div><div class="line">&#125;</div><div class="line"></div><div class="line">var_dump(test($address, 4));</div></pre></td></tr></table></figure><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">庐阳区，合肥，安徽</div></pre></td></tr></table></figure><p>子孙树的实现</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">function test1($data, $id, $level = 1)</div><div class="line">&#123;</div><div class="line">    static $arr = [];</div><div class="line">    foreach ($data as $key=&gt;$value) &#123;</div><div class="line">        if ($value[&apos;parent_id&apos;] == $id) &#123;</div><div class="line">            $value[&apos;level&apos;] = $level;</div><div class="line">            $arr[] = $value;</div><div class="line">            test1($data, $value[&apos;id&apos;], $level + 1);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    return $arr;</div><div class="line">&#125;</div><div class="line">//level主要用来显示是几级的儿子</div></pre></td></tr></table></figure><p>还记得我们在大学学习数据结构的时候，因为递归对于效率有影响，所以经常需要把递归改成迭代，上述家谱树容易修改，子孙树需要用到栈，自己不是很理解</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">function test2($data, $pid)</div><div class="line">&#123;</div><div class="line">    static $arr = [];</div><div class="line">    while ($pid != 0) &#123;</div><div class="line">        foreach($data as $key=&gt;$value) &#123;</div><div class="line">            if ($value[&apos;id&apos;] == $pid) &#123;</div><div class="line">                $arr[] = $value;</div><div class="line">                $pid = $value[&apos;parent_id&apos;];</div><div class="line">                break;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    return $arr;</div><div class="line">&#125;</div><div class="line">var_dump(test2($address, 4));</div><div class="line">//迭代和递归的转换主要就是靠迭代找到那个停止往上找的条件</div></pre></td></tr></table></figure><p>大致就是上面这些，像面包屑导航，不要看着从左到右，其实他也是一棵家谱树，因为他从始至终就只有一棵树。</p><p>还有就是移动各个部门位置问题：</p><p>想象一下，一棵树，我把某个分支截取下来放到另一个分支上是很正常的事情，但问题是有时候，我会出现把父亲节点的父亲设置成自己的子节点，这样树枝就断了，这样是不可取的，除此之外，任意移动都是可以的。</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;无线递归用到的地方还是蛮多的，如果是我们itbasic上的话，那就是部门之间的关系，支撑体系下面有战略中心，战略中心下面有数据部，如果设计数据表维持这之间的关系，还有bbs，如何维护评论之间的关系（其实像laravel的论坛，他的评论关系都是从上往下一条线的，只是在评论的开头有@人的标志，我们的论坛是分为1级评论和多级，除了1级之外的评论都是在1级评论的后面按照1条线排列，没有显示主从关系），当我们需要获取这个评论的顶级的时候，我们就需要用到无线递归的知识。&lt;/p&gt;
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>跨域 cookie</title>
@@ -306,11 +324,11 @@
       <category term="apache" scheme="http://yoursite.com/categories/apache/"/>
     
     
+      <category term="框架" scheme="http://yoursite.com/tags/%E6%A1%86%E6%9E%B6/"/>
+    
       <category term="apache" scheme="http://yoursite.com/tags/apache/"/>
     
       <category term="linux" scheme="http://yoursite.com/tags/linux/"/>
-    
-      <category term="框架" scheme="http://yoursite.com/tags/%E6%A1%86%E6%9E%B6/"/>
     
   </entry>
   
@@ -431,28 +449,6 @@
       <category term="PHP" scheme="http://yoursite.com/tags/PHP/"/>
     
       <category term="函数" scheme="http://yoursite.com/tags/%E5%87%BD%E6%95%B0/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>PHP知识点</title>
-    <link href="http://yoursite.com/2018/03/26/PHP%E7%9F%A5%E8%AF%86%E7%82%B9/"/>
-    <id>http://yoursite.com/2018/03/26/PHP知识点/</id>
-    <published>2018-03-26T06:08:38.000Z</published>
-    <updated>2018-03-26T14:22:12.108Z</updated>
-    
-    <content type="html"><![CDATA[<p>PHP中很多稍微高级的知识点自己都不是很熟悉，trait, 闭包，又或者composer等， 记录下来，成为现代phper。</p><a id="more"></a><ol><li><a href="https://chenye2017.github.io/2018/03/26/PHP%E9%97%AD%E5%8C%85/#more" target="_blank" rel="external">PHP中闭包</a></li></ol>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;PHP中很多稍微高级的知识点自己都不是很熟悉，trait, 闭包，又或者composer等， 记录下来，成为现代phper。&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="PHP" scheme="http://yoursite.com/categories/PHP/"/>
-    
-    
-      <category term="PHP" scheme="http://yoursite.com/tags/PHP/"/>
     
   </entry>
   
