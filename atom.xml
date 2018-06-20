@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-06-13T09:15:47.145Z</updated>
+  <updated>2018-06-20T14:48:01.622Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,24 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>网站部署随笔</title>
+    <link href="http://yoursite.com/2018/06/20/%E7%BD%91%E7%AB%99%E9%83%A8%E7%BD%B2%E9%9A%8F%E7%AC%94/"/>
+    <id>http://yoursite.com/2018/06/20/网站部署随笔/</id>
+    <published>2018-06-20T13:36:20.000Z</published>
+    <updated>2018-06-20T14:48:01.622Z</updated>
+    
+    <content type="html"><![CDATA[<p>618买了个网易云，2g内存1m带宽1核40g的存储，123一年，挺便宜的，相比较阿里云ecs和网易蜂巢还有腾讯云，之前同事有买过国外的vps搭建梯子，但在国内，vps这种的也就只能搭建梯子使用，如果想生活中用来玩玩，那是不利于个人的身心健康发展的，因为毕竟服务器架在国外，通过控制台或者xshell进行连接的时候真的有种想死的感觉，输入命令和幻灯片一样，但国外的vps好像是可以按照使用时间来计费的，国内的一般都是年。当初以为云服务器除了ecs就是vps，其实这两个只是云服务器中比较出名的，一个是国内一个是国外，像腾讯云叫什么cloud，这些名字只是厂商给她们产品取得，并不是专有名词。</p><a id="more"></a><p>好久之前在阿里云上买过一个域名，29一年，chenye2017.cn,主要这个名字和我的github账号也是一致的，比较好记。当我想绑定域名到服务器上的时候，其实有点担心，我在阿里云上买的域名能绑定到服务器上吗？</p><p>试试吧。首先需要对域名进行实名认证，域名的实名认证其实挺简单的，填下身份证号和联系电话就好了，后面需要备案，这点需要注意的是，我绑定的是京东云，所以需要在京东云上备案。之前对于域名的购买，我的理解是购买一款厂商的产品，但其实不是这样的，试想一下我们购买域名的时候是不是只要先构思一个自己想要的域名，然后查询域名是否在使用，如果没有使用就可以进行购买，这个凭空想象出来的域名厂商不可能提前为我们准备好，他能做的就是通过域名解析器dns把我们的域名注册进世界的万维网当中，当世界中的某个人通过浏览器进行访问的时候，dns能把域名解析成ip地址找到我们的服务器，既然这样，那我们是不是只需要在我们的服务器上搭建一个域名服务，就能不通过购买他的域名，直接使用自己注册的域名就可以了呢？理论上是可以的，但我没有去实践过。</p><p>备案未完成…</p><p>之前帮前端同事部署过一个vue项目，其实和部署一个php项目 极为相似，甚至更简单，都是通过找寻唯一入口文件，因为前端项目都是静态文件，而且apache默认找的文件夹下面的第一个文件就是index.html,所以都不需要进行特殊的设置（php的话因为要找index.php,所以要做更多的设置），唯一需要注意的就是前段项目的很多路径都是绝对路径，他本质上是相对网站的根目录来的，也就是默认项目部署在网站的根目录下，如果网站没有部署在根目录下，比如itbasic bbs，需要我对引入的静态资源路径进行适当的修改。比如给需要找的静态资源建立个软链接ln -s ,到新的静态资源目录下。</p><p>因为之前是根据网上教程搭建的hexo，其实不懂他的实现原理。</p><p>而且在教程的开始，就说了要使用node，对于我这种js都不好的人，看到node，首先就觉的完了。其实很多前端项目用到node，并不是用到nodejs的语法，而是用nodejs搭建了一个web服务，承载前端项目，然自己置身于一个联网的状态中，就能发出类似ajax这样的联网请求，因为当我们保存在本地的html在浏览器中打开的时候是file://开头的，这是默认禁止进行ajax请求的，但当我们使用node的时候，页面的路径就是<a href="http://开头了们可以进行ajax请求。因为当我们保存在本地的html在浏览器中打开的时候是file://开头的，这是默认禁止进行ajax请求的，但当我们使用node的时候，页面的路径就是http://开头了们可以进行ajax请求。" target="_blank" rel="external">http://开头了们可以进行ajax请求。因为当我们保存在本地的html在浏览器中打开的时候是file://开头的，这是默认禁止进行ajax请求的，但当我们使用node的时候，页面的路径就是http://开头了们可以进行ajax请求。</a></p><p>我看了下上传到github上的文件夹，和我本地的项目代码结构还是有挺大区别的，我的理解就是把本地代码进行了打包，打包好的文件上传到github上了（类似vue代码的发布），上传到github上的文件夹全是静态目录结构，我惊喜的发现了index.html,于是大胆的假设了下如果把那个目录放在我的站点根目录下，是否也能进行访问了呢，我就不用通过chenye2017.github.io去访问，而是通过我自己的站点去访问呢，毕竟服务器在国内，访问速度也比较快。</p><p>结果是成功的，印证了我的假设。</p><p>在网站部署的时候还遇到了几个问题，比如源码编译apache2.4,在之前还需要安装apr,apr-util,之类的文件，apache2.4的改文件访问权限和之前的apache还不一样，还有文件夹名字结尾不能有空格，否则识别不出来，加载vhost.conf,启动apache失败，修改server localhost之类的apache配置文件，还有apachectl restart开始不管用，需要自己手动配置脚本····</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;618买了个网易云，2g内存1m带宽1核40g的存储，123一年，挺便宜的，相比较阿里云ecs和网易蜂巢还有腾讯云，之前同事有买过国外的vps搭建梯子，但在国内，vps这种的也就只能搭建梯子使用，如果想生活中用来玩玩，那是不利于个人的身心健康发展的，因为毕竟服务器架在国外，通过控制台或者xshell进行连接的时候真的有种想死的感觉，输入命令和幻灯片一样，但国外的vps好像是可以按照使用时间来计费的，国内的一般都是年。当初以为云服务器除了ecs就是vps，其实这两个只是云服务器中比较出名的，一个是国内一个是国外，像腾讯云叫什么cloud，这些名字只是厂商给她们产品取得，并不是专有名词。&lt;/p&gt;
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>无限递归</title>
@@ -324,11 +342,11 @@
       <category term="apache" scheme="http://yoursite.com/categories/apache/"/>
     
     
-      <category term="框架" scheme="http://yoursite.com/tags/%E6%A1%86%E6%9E%B6/"/>
-    
       <category term="apache" scheme="http://yoursite.com/tags/apache/"/>
     
       <category term="linux" scheme="http://yoursite.com/tags/linux/"/>
+    
+      <category term="框架" scheme="http://yoursite.com/tags/%E6%A1%86%E6%9E%B6/"/>
     
   </entry>
   
@@ -425,30 +443,6 @@
       <category term="PHP" scheme="http://yoursite.com/tags/PHP/"/>
     
       <category term="面向对象" scheme="http://yoursite.com/tags/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>PHP函数</title>
-    <link href="http://yoursite.com/2018/03/26/PHP%E5%87%BD%E6%95%B0/"/>
-    <id>http://yoursite.com/2018/03/26/PHP函数/</id>
-    <published>2018-03-26T06:12:29.000Z</published>
-    <updated>2018-03-26T14:19:30.258Z</updated>
-    
-    <content type="html"><![CDATA[<p>工作的久了，反而基本功没有原先好了，也许要记得东西很多，内存中不够放置那些无规律的参数位置，但至少不要混淆哪些是框架自带的，哪些是PHP原生的。</p><a id="more"></a><p>一年多了，重复相同的工作可能让之前很多学会的但没用到的PHP函数忘记了，但这些在modern PHP 中，在新的环境中可能都是很重要的，记录下来。<br><!--more--></p><ol><li>string</li></ol><ul><li>str_repeat（’cy’, 10） //把cy这个字符串重复10次</li></ul><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">var_dump(str_repeat（&apos;cy&apos;, 10）)   //注意一定要打印，这个函数的作用只是构成一个字符串</div></pre></td></tr></table></figure><ul><li>var_dump 和 var_export<br>先来说下以后的使用都是使用var_dump,而不要使用var_export,因为第一个已经很强大了。<br>var_dump 可以输出数据类型，但是var_export不可以。<br>var_export 第二个参数给true, 他会把这个变量的值存储起来，可以用于赋值，但是当变量是resource的时候，返回的总是null,但是此时var_dump 虽然也不能打印出来，但是能<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">resource(2) of type (stream) </div><div class="line">NULL</div><div class="line">$a = var_export([2,3], true);</div></pre></td></tr></table></figure></li></ul><p>综上，用var_dump</p><ol><li>面向对象</li></ol><p>is_callable()与method_exists()     //method_exists 只能判断方法是否存在，但如果比如父类的方法是protected这种，没权利执行也会返回true，这种情况就得callable了，他会返回false<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">class Foo &#123;</div><div class="line">    public function PublicMethod()&#123;&#125;</div><div class="line">    private function PrivateMethod()&#123;&#125;</div><div class="line">    public static function PublicStaticMethod()&#123;&#125;</div><div class="line">    private static function PrivateStaticMethod()&#123;&#125;</div><div class="line">&#125;</div><div class="line">$foo = new Foo();</div><div class="line">$callbacks = array(</div><div class="line">    array($foo, &apos;PublicMethod&apos;),</div><div class="line">    array($foo, &apos;PrivateMethod&apos;),</div><div class="line">    array($foo, &apos;PublicStaticMethod&apos;),</div><div class="line">    array($foo, &apos;PrivateStaticMethod&apos;),</div><div class="line">    array(&apos;Foo&apos;, &apos;PublicMethod&apos;),</div><div class="line">    array(&apos;Foo&apos;, &apos;PrivateMethod&apos;),</div><div class="line">    array(&apos;Foo&apos;, &apos;PublicStaticMethod&apos;),</div><div class="line">    array(&apos;Foo&apos;, &apos;PrivateStaticMethod&apos;),</div><div class="line">   );</div><div class="line">foreach ($callbacks as $callback)&#123;</div><div class="line">    var_dump($callback);</div><div class="line">    var_dump(method_exists($callback[0], $callback[1]));</div><div class="line">    var_dump(is_callable($callback));</div><div class="line">    echo str_repeat(&apos;-&apos;, 10);</div><div class="line">    echo &apos;&lt;br /&gt;&apos;;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;工作的久了，反而基本功没有原先好了，也许要记得东西很多，内存中不够放置那些无规律的参数位置，但至少不要混淆哪些是框架自带的，哪些是PHP原生的。&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="PHP" scheme="http://yoursite.com/categories/PHP/"/>
-    
-    
-      <category term="PHP" scheme="http://yoursite.com/tags/PHP/"/>
-    
-      <category term="函数" scheme="http://yoursite.com/tags/%E5%87%BD%E6%95%B0/"/>
     
   </entry>
   

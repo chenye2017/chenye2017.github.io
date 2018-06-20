@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[网站部署随笔]]></title>
+    <url>%2F2018%2F06%2F20%2F%E7%BD%91%E7%AB%99%E9%83%A8%E7%BD%B2%E9%9A%8F%E7%AC%94%2F</url>
+    <content type="text"><![CDATA[618买了个网易云，2g内存1m带宽1核40g的存储，123一年，挺便宜的，相比较阿里云ecs和网易蜂巢还有腾讯云，之前同事有买过国外的vps搭建梯子，但在国内，vps这种的也就只能搭建梯子使用，如果想生活中用来玩玩，那是不利于个人的身心健康发展的，因为毕竟服务器架在国外，通过控制台或者xshell进行连接的时候真的有种想死的感觉，输入命令和幻灯片一样，但国外的vps好像是可以按照使用时间来计费的，国内的一般都是年。当初以为云服务器除了ecs就是vps，其实这两个只是云服务器中比较出名的，一个是国内一个是国外，像腾讯云叫什么cloud，这些名字只是厂商给她们产品取得，并不是专有名词。 好久之前在阿里云上买过一个域名，29一年，chenye2017.cn,主要这个名字和我的github账号也是一致的，比较好记。当我想绑定域名到服务器上的时候，其实有点担心，我在阿里云上买的域名能绑定到服务器上吗？ 试试吧。首先需要对域名进行实名认证，域名的实名认证其实挺简单的，填下身份证号和联系电话就好了，后面需要备案，这点需要注意的是，我绑定的是京东云，所以需要在京东云上备案。之前对于域名的购买，我的理解是购买一款厂商的产品，但其实不是这样的，试想一下我们购买域名的时候是不是只要先构思一个自己想要的域名，然后查询域名是否在使用，如果没有使用就可以进行购买，这个凭空想象出来的域名厂商不可能提前为我们准备好，他能做的就是通过域名解析器dns把我们的域名注册进世界的万维网当中，当世界中的某个人通过浏览器进行访问的时候，dns能把域名解析成ip地址找到我们的服务器，既然这样，那我们是不是只需要在我们的服务器上搭建一个域名服务，就能不通过购买他的域名，直接使用自己注册的域名就可以了呢？理论上是可以的，但我没有去实践过。 备案未完成… 之前帮前端同事部署过一个vue项目，其实和部署一个php项目 极为相似，甚至更简单，都是通过找寻唯一入口文件，因为前端项目都是静态文件，而且apache默认找的文件夹下面的第一个文件就是index.html,所以都不需要进行特殊的设置（php的话因为要找index.php,所以要做更多的设置），唯一需要注意的就是前段项目的很多路径都是绝对路径，他本质上是相对网站的根目录来的，也就是默认项目部署在网站的根目录下，如果网站没有部署在根目录下，比如itbasic bbs，需要我对引入的静态资源路径进行适当的修改。比如给需要找的静态资源建立个软链接ln -s ,到新的静态资源目录下。 因为之前是根据网上教程搭建的hexo，其实不懂他的实现原理。 而且在教程的开始，就说了要使用node，对于我这种js都不好的人，看到node，首先就觉的完了。其实很多前端项目用到node，并不是用到nodejs的语法，而是用nodejs搭建了一个web服务，承载前端项目，然自己置身于一个联网的状态中，就能发出类似ajax这样的联网请求，因为当我们保存在本地的html在浏览器中打开的时候是file://开头的，这是默认禁止进行ajax请求的，但当我们使用node的时候，页面的路径就是http://开头了们可以进行ajax请求。因为当我们保存在本地的html在浏览器中打开的时候是file://开头的，这是默认禁止进行ajax请求的，但当我们使用node的时候，页面的路径就是http://开头了们可以进行ajax请求。 我看了下上传到github上的文件夹，和我本地的项目代码结构还是有挺大区别的，我的理解就是把本地代码进行了打包，打包好的文件上传到github上了（类似vue代码的发布），上传到github上的文件夹全是静态目录结构，我惊喜的发现了index.html,于是大胆的假设了下如果把那个目录放在我的站点根目录下，是否也能进行访问了呢，我就不用通过chenye2017.github.io去访问，而是通过我自己的站点去访问呢，毕竟服务器在国内，访问速度也比较快。 结果是成功的，印证了我的假设。 在网站部署的时候还遇到了几个问题，比如源码编译apache2.4,在之前还需要安装apr,apr-util,之类的文件，apache2.4的改文件访问权限和之前的apache还不一样，还有文件夹名字结尾不能有空格，否则识别不出来，加载vhost.conf,启动apache失败，修改server localhost之类的apache配置文件，还有apachectl restart开始不管用，需要自己手动配置脚本····]]></content>
+  </entry>
+  <entry>
     <title><![CDATA[无限递归]]></title>
     <url>%2F2018%2F06%2F13%2F%E6%97%A0%E9%99%90%E9%80%92%E5%BD%92%2F</url>
     <content type="text"><![CDATA[无线递归用到的地方还是蛮多的，如果是我们itbasic上的话，那就是部门之间的关系，支撑体系下面有战略中心，战略中心下面有数据部，如果设计数据表维持这之间的关系，还有bbs，如何维护评论之间的关系（其实像laravel的论坛，他的评论关系都是从上往下一条线的，只是在评论的开头有@人的标志，我们的论坛是分为1级评论和多级，除了1级之外的评论都是在1级评论的后面按照1条线排列，没有显示主从关系），当我们需要获取这个评论的顶级的时候，我们就需要用到无线递归的知识。 以部门举例，我们在使用的过程中，需要找到这个部门的相关父级部门（子孙树），或者我们需要知道某个部门是否属于某个部门，我们既可以用家谱树去实现，也可以用子孙树去实现，用子孙树去实现的一个好处就是，当我们知道父级节点，一次性求出这个父级节点的所有子孙，通过判断子节点是否在这个父级节点的子孙中，就能知道是否满足条件。但如果我们通过家谱树，我们需要每次根据子节点，去求一次家谱，然后来判断家谱树中是否有这个父级节点存在，来判断是否符合条件。 123456789101112131415161718192021222324252627282930&lt;?php$address = array( array(&apos;id&apos;=&gt;1 , &apos;address&apos;=&gt;&apos;安徽&apos; , &apos;parent_id&apos; =&gt; 0), array(&apos;id&apos;=&gt;2 , &apos;address&apos;=&gt;&apos;江苏&apos; , &apos;parent_id&apos; =&gt; 0), array(&apos;id&apos;=&gt;3 , &apos;address&apos;=&gt;&apos;合肥&apos; , &apos;parent_id&apos; =&gt; 1), array(&apos;id&apos;=&gt;4 , &apos;address&apos;=&gt;&apos;庐阳区&apos; , &apos;parent_id&apos; =&gt; 3), array(&apos;id&apos;=&gt;5 , &apos;address&apos;=&gt;&apos;大杨镇&apos; , &apos;parent_id&apos; =&gt; 4), array(&apos;id&apos;=&gt;6 , &apos;address&apos;=&gt;&apos;南京&apos; , &apos;parent_id&apos; =&gt; 2), array(&apos;id&apos;=&gt;7 , &apos;address&apos;=&gt;&apos;玄武区&apos; , &apos;parent_id&apos; =&gt; 6), array(&apos;id&apos;=&gt;8 , &apos;address&apos;=&gt;&apos;梅园新村街道&apos;, &apos;parent_id&apos; =&gt; 7), array(&apos;id&apos;=&gt;9 , &apos;address&apos;=&gt;&apos;上海&apos; , &apos;parent_id&apos; =&gt; 0), array(&apos;id&apos;=&gt;10 , &apos;address&apos;=&gt;&apos;黄浦区&apos; , &apos;parent_id&apos; =&gt; 9), array(&apos;id&apos;=&gt;11 , &apos;address&apos;=&gt;&apos;外滩&apos; , &apos;parent_id&apos; =&gt; 10), array(&apos;id&apos;=&gt;12 , &apos;address&apos;=&gt;&apos;安庆&apos; , &apos;parent_id&apos; =&gt; 1) );function test($data, $pid)&#123; static $arr = []; foreach ($data as $key=&gt;$value) &#123; if ($value[&apos;id&apos;] == $pid) &#123; $arr[] = $value; test($data, $value[&apos;parent_id&apos;]); &#125; &#125; return $arr;&#125;var_dump(test($address, 4)); 1庐阳区，合肥，安徽 子孙树的实现 12345678910111213function test1($data, $id, $level = 1)&#123; static $arr = []; foreach ($data as $key=&gt;$value) &#123; if ($value[&apos;parent_id&apos;] == $id) &#123; $value[&apos;level&apos;] = $level; $arr[] = $value; test1($data, $value[&apos;id&apos;], $level + 1); &#125; &#125; return $arr;&#125;//level主要用来显示是几级的儿子 还记得我们在大学学习数据结构的时候，因为递归对于效率有影响，所以经常需要把递归改成迭代，上述家谱树容易修改，子孙树需要用到栈，自己不是很理解 12345678910111213141516function test2($data, $pid)&#123; static $arr = []; while ($pid != 0) &#123; foreach($data as $key=&gt;$value) &#123; if ($value[&apos;id&apos;] == $pid) &#123; $arr[] = $value; $pid = $value[&apos;parent_id&apos;]; break; &#125; &#125; &#125; return $arr;&#125;var_dump(test2($address, 4));//迭代和递归的转换主要就是靠迭代找到那个停止往上找的条件 大致就是上面这些，像面包屑导航，不要看着从左到右，其实他也是一棵家谱树，因为他从始至终就只有一棵树。 还有就是移动各个部门位置问题： 想象一下，一棵树，我把某个分支截取下来放到另一个分支上是很正常的事情，但问题是有时候，我会出现把父亲节点的父亲设置成自己的子节点，这样树枝就断了，这样是不可取的，除此之外，任意移动都是可以的。]]></content>
@@ -122,9 +127,9 @@
         <category>apache</category>
       </categories>
       <tags>
-        <tag>框架</tag>
         <tag>apache</tag>
         <tag>linux</tag>
+        <tag>框架</tag>
       </tags>
   </entry>
   <entry>
@@ -229,8 +234,8 @@
         <category>工具</category>
       </categories>
       <tags>
-        <tag>工具</tag>
         <tag>PHP</tag>
+        <tag>工具</tag>
         <tag>Python</tag>
         <tag>正则表达式</tag>
       </tags>
@@ -292,8 +297,8 @@
       </categories>
       <tags>
         <tag>PHP</tag>
-        <tag>ThinkPHP5</tag>
         <tag>框架</tag>
+        <tag>ThinkPHP5</tag>
       </tags>
   </entry>
   <entry>
@@ -304,9 +309,9 @@
         <category>PHP</category>
       </categories>
       <tags>
+        <tag>PHP</tag>
         <tag>Linux</tag>
         <tag>工具</tag>
-        <tag>PHP</tag>
         <tag>调试</tag>
         <tag>Xdebug</tag>
       </tags>
@@ -345,8 +350,8 @@
         <category>PHP</category>
       </categories>
       <tags>
-        <tag>Linux</tag>
         <tag>PHP</tag>
+        <tag>Linux</tag>
         <tag>扩展</tag>
       </tags>
   </entry>
@@ -456,9 +461,9 @@
         <category>PHP</category>
       </categories>
       <tags>
-        <tag>框架</tag>
         <tag>apache</tag>
         <tag>linux</tag>
+        <tag>框架</tag>
         <tag>php</tag>
       </tags>
   </entry>
