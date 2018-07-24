@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[Linux搭建git仓库]]></title>
+    <url>%2F2018%2F07%2F24%2FLinux%E6%90%AD%E5%BB%BAgit%E4%BB%93%E5%BA%93%2F</url>
+    <content type="text"><![CDATA[故事的发生背景：项目前端走了，前端界面没有人修改，只能先做后端，但是没有测试环境，而且这个bbs项目还被包含在itbasic里面，一旦代码提交到svn上，当我想更新服务器上的itbasic代码的时候，我一般直接在根目录下进行svn up来更新代码，这样会把bbs提交到svn上的代码也拉下来，所以本地的代码没法提交。以前我和前端镜像代码对接的时候，一般我都是先更新到svn上，然后前端进行下拉代码测试，当没问题的时候再去服务器上拉取svn的代码。但现在前端寻找不到，如若我更新bbs上代码，必然论坛会崩溃。后来老大希望测试下我写的代码，看看需要哪些参数，给了另一台服务器。刚开始想到直接把修改好的代码打个包放上去，后来想了下不是长久之计，因为我的水平肯定要经常修改代码，不能每次修改下就打包一下，太麻烦了。又想到可以通过配置itbasic服务器上的svn，当svn up 的时候忽略掉特定文件夹的更新，百度了下集中方法，大部分是一下集中情况：windows下忽略文件夹，提交代码的时候忽略掉文件夹，很少有更新代码的时候忽略掉文件夹的解决办法。（有，但自己试验失败）。后来想到不如利用git吧，首先大部分都是我一个人操作，我经常向github提交代码，操作已经很熟悉了，再者毕竟用git也能跟上时代的潮流嘛。 先来介绍一点基础知识：当我们想下载github上的代码（或者说远程仓库的代码），我们可以通过123456git clone git@ip地址：git远程仓库的地址//例如git clone git@github.com:chenye2017/zerg.git//当需要下载github上的仓库的时候，直接去这个项目首页，会有个clone or download的选项，注意不要选择use https，因为选了那个每次提交代码额时候都要输入密码//winodows用户可以直接下载zipgit clone git@192.168.56.10:/home/resposity/bbs.git 新建一个目录，自定义名称进入到这个目录内，执行上述操作，就能把项目目录中的代码下载下来。 但上面仅仅只是下载项目，我们为了和远程仓库进行联动，我们需要在本地的这个文件夹建造一个git仓库，然后和远程仓库的某个分支比如master进行绑定，当我们修改完成的时候进行代码推送到远程的时候，别人下次再次clone或者pull就能收到我们提交的修改。下面就是创建本地仓库的实例代码 1234567891011cd dir//进入上面执行git clone的文件夹git initgit add. //把修改的文件夹都添加进来git commit -m &apos;init&apos; //提交到本地代码库git remote -v //查看远端仓库//如果有远程仓库，可以进行删除git remote rm origingit remote add origin git@192.168.50.16:/home/resposity/bbs.git //添加远程仓库git push origin master //和远程仓库的master分支绑定，以后提交只需要git pushgit pull origin master //同上，以后使用也只要git push 就好了 当我们提交代码的时候肯定是不成功的，提示我们需要输入密码，···而且每次都会提示，怎么办呢，可以通过一个命令1ssh-keygen -t rsa -C &quot;your_email@example.com&quot; 在windows中，生成密钥位置会在C:\Users\admin 下面，这个下面有.ssh文件夹，进去复制末尾是.pua 也就是公钥的文件，粘贴到你的git仓库所在的服务器的git 主目录下，比如我的是 /home/git/.ssh/authorized_keys,粘贴到文件末尾即可，如果还不能提交代码，重启下sshd服务，netstat -antp|grep sshd, kill, /usr/bin/sshd 启动如果还不行，可以查看这篇文章修改下配置 https://blog.csdn.net/dreamstone_xiaoqw/article/details/78355873 一直提交需要填写密码其实是个很常见的问题，收集了几篇文章，因为之前一直不成功，但后来成功了，但其实不是下面这几个问题，是我对git远程仓库理解出现了问题，所以操作不对.https://www.jianshu.com/p/9dbb1dea5929， （文件夹权限），https://ruby-china.org/topics/14182 （ssh真的出问题了，需要查看日志） 最后也是最终的要一步，按理说这应该是第一步的，就是linux上远程创建git仓库。本身应该 1. 创建远程仓库 2 git clone 3. git push这也是我们平时使用github 的主要步骤，但因为这一步最重要所以我放在了最后。 git创建远程仓库 http://www.runoob.com/git/git-server.html 菜鸟教程上已经说得很清楚了，只是我们需要区别一下两行代码12git initgit init --bare 第一个我们经常用到是实例化本地仓库，第二个是创建一个裸库，什么意思呢，就是这个裸库就是我们平时那个 git clone ip地址后的路径，这个仓库装的都是我们的提交记录，本身是并没有代码的，但我们通过git clone能生成最新的代码，以我的服务器为例123/home/resposity //专门用来放远程仓库的文件夹/home/resposity/bbs.git //我的bbs远程代码库/home/code/bbs 这是我的服务器上实际项目代码，也是被人访问我的项目的路径 当我本地修改好了代码（windows下），提交到远程仓库中，然后在服务器的/home/code/bbs (线上项目文件夹)下进行更新git pull最新的代码,别人就能访问到我本机的最新代码了。]]></content>
+  </entry>
+  <entry>
     <title><![CDATA[网站部署随笔]]></title>
     <url>%2F2018%2F06%2F20%2F%E7%BD%91%E7%AB%99%E9%83%A8%E7%BD%B2%E9%9A%8F%E7%AC%94%2F</url>
     <content type="text"><![CDATA[618买了个网易云，2g内存1m带宽1核40g的存储，123一年，挺便宜的，相比较阿里云ecs和网易蜂巢还有腾讯云，之前同事有买过国外的vps搭建梯子，但在国内，vps这种的也就只能搭建梯子使用，如果想生活中用来玩玩，那是不利于个人的身心健康发展的，因为毕竟服务器架在国外，通过控制台或者xshell进行连接的时候真的有种想死的感觉，输入命令和幻灯片一样，但国外的vps好像是可以按照使用时间来计费的，国内的一般都是年。当初以为云服务器除了ecs就是vps，其实这两个只是云服务器中比较出名的，一个是国内一个是国外，像腾讯云叫什么cloud，这些名字只是厂商给她们产品取得，并不是专有名词。 好久之前在阿里云上买过一个域名，29一年，chenye2017.cn,主要这个名字和我的github账号也是一致的，比较好记。当我想绑定域名到服务器上的时候，其实有点担心，我在阿里云上买的域名能绑定到服务器上吗？ 试试吧。首先需要对域名进行实名认证，域名的实名认证其实挺简单的，填下身份证号和联系电话就好了，后面需要备案，这点需要注意的是，我绑定的是京东云，所以需要在京东云上备案。之前对于域名的购买，我的理解是购买一款厂商的产品，但其实不是这样的，试想一下我们购买域名的时候是不是只要先构思一个自己想要的域名，然后查询域名是否在使用，如果没有使用就可以进行购买，这个凭空想象出来的域名厂商不可能提前为我们准备好，他能做的就是通过域名解析器dns把我们的域名注册进世界的万维网当中，当世界中的某个人通过浏览器进行访问的时候，dns能把域名解析成ip地址找到我们的服务器，既然这样，那我们是不是只需要在我们的服务器上搭建一个域名服务，就能不通过购买他的域名，直接使用自己注册的域名就可以了呢？理论上是可以的，但我没有去实践过。 备案未完成… 之前帮前端同事部署过一个vue项目，其实和部署一个php项目 极为相似，甚至更简单，都是通过找寻唯一入口文件，因为前端项目都是静态文件，而且apache默认找的文件夹下面的第一个文件就是index.html,所以都不需要进行特殊的设置（php的话因为要找index.php,所以要做更多的设置），唯一需要注意的就是前段项目的很多路径都是绝对路径，他本质上是相对网站的根目录来的，也就是默认项目部署在网站的根目录下，如果网站没有部署在根目录下，比如itbasic bbs，需要我对引入的静态资源路径进行适当的修改。比如给需要找的静态资源建立个软链接ln -s ,到新的静态资源目录下。 因为之前是根据网上教程搭建的hexo，其实不懂他的实现原理。 而且在教程的开始，就说了要使用node，对于我这种js都不好的人，看到node，首先就觉的完了。其实很多前端项目用到node，并不是用到nodejs的语法，而是用nodejs搭建了一个web服务，承载前端项目，然自己置身于一个联网的状态中，就能发出类似ajax这样的联网请求，因为当我们保存在本地的html在浏览器中打开的时候是file://开头的，这是默认禁止进行ajax请求的，但当我们使用node的时候，页面的路径就是http://开头了们可以进行ajax请求。因为当我们保存在本地的html在浏览器中打开的时候是file://开头的，这是默认禁止进行ajax请求的，但当我们使用node的时候，页面的路径就是http://开头了们可以进行ajax请求。 我看了下上传到github上的文件夹，和我本地的项目代码结构还是有挺大区别的，我的理解就是把本地代码进行了打包，打包好的文件上传到github上了（类似vue代码的发布），上传到github上的文件夹全是静态目录结构，我惊喜的发现了index.html,于是大胆的假设了下如果把那个目录放在我的站点根目录下，是否也能进行访问了呢，我就不用通过chenye2017.github.io去访问，而是通过我自己的站点去访问呢，毕竟服务器在国内，访问速度也比较快。 结果是成功的，印证了我的假设。 在网站部署的时候还遇到了几个问题，比如源码编译apache2.4,在之前还需要安装apr,apr-util,之类的文件，apache2.4的改文件访问权限和之前的apache还不一样，还有文件夹名字结尾不能有空格，否则识别不出来，加载vhost.conf,启动apache失败，修改server localhost之类的apache配置文件，还有apachectl restart开始不管用，需要自己手动配置脚本····]]></content>
@@ -127,9 +132,9 @@
         <category>apache</category>
       </categories>
       <tags>
+        <tag>框架</tag>
         <tag>apache</tag>
         <tag>linux</tag>
-        <tag>框架</tag>
       </tags>
   </entry>
   <entry>
@@ -152,8 +157,8 @@
         <category>Laravel</category>
       </categories>
       <tags>
-        <tag>PHP</tag>
         <tag>Laravel</tag>
+        <tag>PHP</tag>
       </tags>
   </entry>
   <entry>
@@ -234,8 +239,8 @@
         <category>工具</category>
       </categories>
       <tags>
-        <tag>PHP</tag>
         <tag>工具</tag>
+        <tag>PHP</tag>
         <tag>Python</tag>
         <tag>正则表达式</tag>
       </tags>
@@ -297,8 +302,8 @@
       </categories>
       <tags>
         <tag>PHP</tag>
-        <tag>框架</tag>
         <tag>ThinkPHP5</tag>
+        <tag>框架</tag>
       </tags>
   </entry>
   <entry>
@@ -309,9 +314,9 @@
         <category>PHP</category>
       </categories>
       <tags>
-        <tag>PHP</tag>
         <tag>Linux</tag>
         <tag>工具</tag>
+        <tag>PHP</tag>
         <tag>调试</tag>
         <tag>Xdebug</tag>
       </tags>
@@ -350,8 +355,8 @@
         <category>PHP</category>
       </categories>
       <tags>
-        <tag>PHP</tag>
         <tag>Linux</tag>
+        <tag>PHP</tag>
         <tag>扩展</tag>
       </tags>
   </entry>
@@ -461,9 +466,9 @@
         <category>PHP</category>
       </categories>
       <tags>
+        <tag>框架</tag>
         <tag>apache</tag>
         <tag>linux</tag>
-        <tag>框架</tag>
         <tag>php</tag>
       </tags>
   </entry>
