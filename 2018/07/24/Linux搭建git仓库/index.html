@@ -88,7 +88,7 @@
 <meta property="og:site_name" content="语法糖的博客">
 <meta property="og:description" content="故事的发生背景：项目前端走了，前端界面没有人修改，只能先做后端，但是没有测试环境，而且这个bbs项目还被包含在itbasic里面，一旦代码提交到svn上，当我想更新服务器上的itbasic代码的时候，我一般直接在根目录下进行svn up来更新代码，这样会把bbs提交到svn上的代码也拉下来，所以本地的代码没法提交。以前我和前端镜像代码对接的时候，一般我都是先更新到svn上，然后前端进行下拉代码测试">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-07-25T12:13:37.093Z">
+<meta property="og:updated_time" content="2018-07-26T06:30:48.453Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linux搭建git仓库">
 <meta name="twitter:description" content="故事的发生背景：项目前端走了，前端界面没有人修改，只能先做后端，但是没有测试环境，而且这个bbs项目还被包含在itbasic里面，一旦代码提交到svn上，当我想更新服务器上的itbasic代码的时候，我一般直接在根目录下进行svn up来更新代码，这样会把bbs提交到svn上的代码也拉下来，所以本地的代码没法提交。以前我和前端镜像代码对接的时候，一般我都是先更新到svn上，然后前端进行下拉代码测试">
@@ -373,6 +373,9 @@
 <p>当我本地修改好了代码（windows下），提交到远程仓库中，然后在服务器的/home/code/bbs (线上项目文件夹)下进行更新git pull最新的代码,别人就能访问到我本机的最新代码了。</p>
 <p>对了，还记的我们当初svn代码更新提交失败，提示svn clean也不行的时候怎么处理的吗，就是清除.svn 下面两张表里面的数据 (通过Navicat建立连接).当时刚开始是不会这种方法的，同事告诉我直接删除.svn这个文件夹，说svn管理这个文件夹都是通过他，现在想起来挺有道理的，但没有试过（以前直接是删除了svn这个软件，然后肯定不成功啦，现在想想这和svn半毛钱的关系都没有撒，但感觉不能删除.svn,因为删除了，那些diff都找不到了）git应该也是通过.git这个文件管理的。</p>
 <p>对了，关于免密码登录，当我们通过命令生成的ssh密钥linux下，一般在这个用户目录下面，比如root用户，在/root/.ssh 下面，我们需要把这个公钥粘贴到需要进行提交的git远程仓库的服务器中git的安装目录下面的ssh的auth···——key，里面，追加在文件末尾，注意着这两个地方文件名虽然类似，但一定要分清把那个粘贴到哪个上面，分清主从关系。</p>
+<p>关于忽略文件夹，编辑.gitignore 文件，在项目根目录下面，因为windows下面不能这样命名文件，可以在linux下面编辑保存，编辑之后这个文件就是untracked形式,以后的提交就不会把这个文件保存在内，即使用了git add.</p>
+<p>但是之前把.idea这个文件夹包含进去了，怎么办呢，git remove -n -r –cached</p>
+<p>–cached  只是git仓库删除了，本地不会删除，-r 类似删除文件夹的时候递归删除， -n 先列出来要删除的文件，真正想删除的时候不要加这个参数。</p>
 
       
     </div>
@@ -684,7 +687,7 @@ var jiathis_config={
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count"> | 博客全站共59.3k字</span>
+  <span class="post-count"> | 博客全站共59.4k字</span>
 </div>
 
 
