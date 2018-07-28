@@ -81,16 +81,17 @@
 
 
 
-<meta name="description" content="想用善良改变世界">
-<meta property="og:type" content="website">
-<meta property="og:title" content="语法糖的博客">
-<meta property="og:url" content="http://yoursite.com/archives/page/4/index.html">
+<meta name="description" content="其实第一次有这方面的思考是来自七月老师的tp教程，他起了个头，他那个课程的核心就是为了提倡大家使用orm，后来在工作中开始留意这方面的知识.(如果没有那个引子，估计我会把builder query和orm弄混淆吧，因为真的挺相似，调用方法都是链式，orm对于bq方法的使用，又因为区别在于orm的面向对象这个特性上，而且现在基本都不用bq了，就算使用也是可以DB直接调用,而不用像orm那样需要定义一">
+<meta property="og:type" content="article">
+<meta property="og:title" content="关于框架操作数据库的几种方式">
+<meta property="og:url" content="http://yoursite.com/2018/07/28/关于框架操作数据库的几种方式/index.html">
 <meta property="og:site_name" content="语法糖的博客">
-<meta property="og:description" content="想用善良改变世界">
+<meta property="og:description" content="其实第一次有这方面的思考是来自七月老师的tp教程，他起了个头，他那个课程的核心就是为了提倡大家使用orm，后来在工作中开始留意这方面的知识.(如果没有那个引子，估计我会把builder query和orm弄混淆吧，因为真的挺相似，调用方法都是链式，orm对于bq方法的使用，又因为区别在于orm的面向对象这个特性上，而且现在基本都不用bq了，就算使用也是可以DB直接调用,而不用像orm那样需要定义一">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-07-28T15:12:14.011Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="语法糖的博客">
-<meta name="twitter:description" content="想用善良改变世界">
+<meta name="twitter:title" content="关于框架操作数据库的几种方式">
+<meta name="twitter:description" content="其实第一次有这方面的思考是来自七月老师的tp教程，他起了个头，他那个课程的核心就是为了提倡大家使用orm，后来在工作中开始留意这方面的知识.(如果没有那个引子，估计我会把builder query和orm弄混淆吧，因为真的挺相似，调用方法都是链式，orm对于bq方法的使用，又因为区别在于orm的面向对象这个特性上，而且现在基本都不用bq了，就算使用也是可以DB直接调用,而不用像orm那样需要定义一">
 
 
 
@@ -120,13 +121,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/archives/page/4/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/07/28/关于框架操作数据库的几种方式/"/>
 
 
 
 
 
-  <title>归档 | 语法糖的博客</title>
+  <title>关于框架操作数据库的几种方式 | 语法糖的博客</title>
   
 
 
@@ -160,7 +161,7 @@
     
   
 
-  <div class="container sidebar-position-left page-archive">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -274,415 +275,261 @@
           <div id="content" class="content">
             
 
+  <div id="posts" class="posts-expand">
+    
+
+
+
+
+  
+
   
   
   
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
 
-      <span class="archive-page-counter">
-        
-        
-         
-        
-        OK! 目前共计 49 篇日志。 继续努力。
-      </span>
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/28/关于框架操作数据库的几种方式/">
 
-      
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="chenye2017">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/my.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="语法糖的博客">
+    </span>
+
+    
+      <header class="post-header">
 
         
         
+          <h1 class="post-title" itemprop="name headline">关于框架操作数据库的几种方式</h1>
         
 
-        
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-28T23:11:56+08:00">
+                2018-07-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
           
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2018">2018</h1>
-          </div>
-        
-        
 
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/01/26/文件上传/" itemprop="url">
-              
-                <span itemprop="name">文件上传</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-01-26T18:26:03+08:00"
-              content="2018-01-26" >
-          01-26
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/01/24/ThinkPHP5-学习笔记/" itemprop="url">
-              
-                <span itemprop="name">ThinkPHP5 学习笔记</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-01-24T13:52:42+08:00"
-              content="2018-01-24" >
-          01-24
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/01/22/PHPStorm开启断点调试/" itemprop="url">
-              
-                <span itemprop="name">PHPStorm开启断点调试</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-01-22T13:05:02+08:00"
-              content="2018-01-22" >
-          01-22
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/01/19/lamp-源码编译/" itemprop="url">
-              
-                <span itemprop="name">lamp 源码编译</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-01-19T15:21:41+08:00"
-              content="2018-01-19" >
-          01-19
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/01/19/lnmp-yum安装/" itemprop="url">
-              
-                <span itemprop="name">lnmp yum安装</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-01-19T15:21:24+08:00"
-              content="2018-01-19" >
-          01-19
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/01/18/php安装扩展/" itemprop="url">
-              
-                <span itemprop="name">php安装扩展</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-01-18T18:35:02+08:00"
-              content="2018-01-18" >
-          01-18
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/01/09/Linux常见问题/" itemprop="url">
-              
-                <span itemprop="name">Linux常见问题</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-01-09T00:17:31+08:00"
-              content="2018-01-09" >
-          01-09
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
           
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2017">2017</h1>
-          </div>
-        
-        
+            
+          
 
-        
+          
+          
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+          
 
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/12/20/svn-Git-思考/" itemprop="url">
-              
-                <span itemprop="name">svn Git 思考</span>
-              
-            </a>
-        
-      </h2>
+          
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-12-20T21:41:18+08:00"
-              content="2017-12-20" >
-          12-20
-        </time>
-      </div>
+          
 
-    </header>
-  </article>
+        </div>
+      </header>
+    
 
-
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/12/15/Git使用教程/" itemprop="url">
-              
-                <span itemprop="name">git使用教程</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-12-15T00:14:16+08:00"
-              content="2017-12-15" >
-          12-15
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
       
 
-        
-        
-        
+      
+        <p>其实第一次有这方面的思考是来自七月老师的tp教程，他起了个头，他那个课程的核心就是为了提倡大家使用orm，后来在工作中开始留意这方面的知识.(如果没有那个引子，估计我会把builder query和orm弄混淆吧，因为真的挺相似，调用方法都是链式，orm对于bq方法的使用，又因为区别在于orm的面向对象这个特性上，而且现在基本都不用bq了，就算使用也是可以DB直接调用,而不用像orm那样需要定义一个model类，很难找出bq相对于orm的差别，换句话说因为本身orm就是基于bq的，所以我们需要发现的orm相对于bq的改变，但这个改变刚好是面向对象这种思想上，加上bq的少使用，这个改变很难发现)</p>
+<a id="more"></a>
+<p>看了下php关于linux方面的知识，pdo， builder query ，orm，我这种基础不好接触面不广的人经常混淆。在pdo之前应该是直接利用mysql 和 mysqli进行数据库连接操作，这种的只需要php开启对应的mysql或者mysqli扩展就好了（mysql已经废弃了），这还是我刚学习php的时候书上经常写的，后来在工作中这种的用的就比较少了，主要用的就是pdo了，个人感觉pdo和mysqli用起来查询那些操作还是差不多的，不管是函数还是查询到的结果集，感觉差别最大的还是 一个是new pdo一个是 mysqli_connect吧，:smile:。（pdo使用的时候除了安装pdo扩展，还要开启对应的驱动哦，比如 mysql_pdo）。</p>
+<p>还记的我在学习慕课那个高性能api接口时候接触到的dao层吗，其实dao后来理解起来感觉是不是只有在那种处理比较麻烦和严谨的时候使用</p>
+<pre><code>&lt;?php
+class DB_user extends DB_base {
+    public function find($username) {
+        $query = self::$db-&gt;prepare(&quot;select count(*) as c from yaf_user where username = ?&quot;);
+        $query-&gt;execute([$username]);
+        $count = $query-&gt;fetchAll();
+        if ($count[0][&apos;c&apos;] != 0) {
+            list(self::$errno, self::$errmsg) = Err_map::getCodeMessage(1004);
+            return false;
+        }
+        return true;
+    }
+</code></pre><p>看这种，查询一个结果要写这么多，肯定需要独立出来呢。</p>
+<p>后来是builder query，其实和orm是很像的，毕竟orm是基于builder query的，但二者不同之处在于orm把一张表看做一个模型model了，列看做模型对象的属性了，记录看做模型的实例(虽然我们在使用bq的时候可能也是这样想的，但orm不止是想这么简单，他是具体的实现了，比如下面同样调用all方法，虽然查出来的数据类型可能都是collection，但是展开看下，一个下面是关联数组，一个是对象，有具体的public 和private属性)。因为orm基于bq嘛，所以bq的那些方法orm都可以使用，所以我感觉方法的混用也是容易把orm和bq混淆的原因。但你是否还记得bq使用的时候调用的类是 DB,以laravel举例，DB是库facade下面的，但是orm使用的时候我们调用的类是继承model的那个类名字</p>
+<pre><code>DB::table(&apos;student&apos;)-&gt;all()
+Student::all()
+</code></pre><p>当我在学习yii的时候还接触到一个概念AR，其实AR只是实现orm的一种方式，比较常用的有AR和··mapper，laravel（Eloquent）和yii现在orm实现方式都是AR，所以不要把这个当做yii和laravel的区别啦。</p>
+<p>AR和mapper的区别在于，mapper把数据对象和数据持久化分开了（啥叫持久化，就是数据存储啊笨蛋···zz，心痛的感觉），mapper中对于数据的保存需要用类似bq中一个统一的类去实现，比如</p>
+<pre><code>//伪代码,方法名纯属虚构，因为懒得去查了
+$student = new Student();
+$student-&gt;name = &apos;cy&apos;;
+$student-&gt;age = 19;
+DBMAPPER-&gt;config($student);
+DBMAPPER-&gt;refresh($student);
+</code></pre><p>现在水平太低，也不知道这样的好处是啥：说是为了把数据对象独立出来，让他的作用就是在各个层中传递.</p>
+<p>大致就这些了吧，最后来一个laravel中最基础的model定义，让我们来更能理解orm的那几个定义</p>
+<pre><code>//orm把一张表看做一个模型model了，列看做模型对象的属性了，记录看做模型的实例
 
-        
-        
+&lt;?php
 
-        
+namespace App;
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+use Illuminate\Database\Eloquent\Model;
 
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/12/13/vagrant使用/" itemprop="url">
-              
-                <span itemprop="name">vagrant使用</span>
-              
-            </a>
-        
-      </h2>
+class Test extends Model
+{
+    //定义表名
+    protected $table = &apos;test&apos;;
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-12-13T21:55:52+08:00"
-              content="2017-12-13" >
-          12-13
-        </time>
-      </div>
+    //禁止更新时间戳，默认会更新created_at和updated_at
+    public $timestamps = false;
 
-    </header>
-  </article>
-
-
+    //可以批量赋值的属性，什么叫做批量赋值，就是我们可以通过create方法插入的，不是save那种，create是直接传入一个索引数组，
+    //save 是通过给实例的属性一个个赋值，就这点看来，确实有批量赋值的意思
+    protected $fillable = [&apos;name&apos;];
+}
+</code></pre><p>​    </p>
+<p>laravel 中orm的实现用了很多PHP的特性（魔术方法等），比如属性，写的挺好的，在laravel核心框架技术解析中有写到。</p>
 
       
-
     </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wp.png" alt="chenye2017 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/zp1.png" alt="chenye2017 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+  <div>
+  
+    <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+
+  
+  </div>
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/07/24/Linux搭建git仓库/" rel="next" title="Linux搭建git仓库">
+                <i class="fa fa-chevron-left"></i> Linux搭建git仓库
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
-
-  
-  <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/archives/page/3/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/archives/">1</a><span class="space">&hellip;</span><a class="page-number" href="/archives/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/archives/page/5/">5</a><a class="extend next" rel="next" href="/archives/page/5/"><i class="fa fa-angle-right"></i></a>
-  </nav>
+  </article>
 
 
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+<span class="jiathis_txt">分享到：</span>
+<a class="jiathis_button_fav">收藏夹</a>
+<a class="jiathis_button_copy">复制网址</a>
+<a class="jiathis_button_email">邮件</a>
+<a class="jiathis_button_weixin">微信</a>
+<a class="jiathis_button_qzone">QQ空间</a>
+<a class="jiathis_button_tqq">腾讯微博</a>
+<a class="jiathis_button_douban">豆瓣</a>
+<a class="jiathis_button_share">一键分享</a>
+
+<a href="http://www.jiathis.com/share?uid=2140465" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+var jiathis_config={
+  data_track_clickback:true,
+  summary:"",
+  shortUrl:false,
+  hideMore:false
+}
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+      
+    </div>
+  </div>
 
 
           </div>
@@ -690,6 +537,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -979,6 +830,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
 
   
 
