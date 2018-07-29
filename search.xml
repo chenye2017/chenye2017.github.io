@@ -1,6 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[Laravel 数据库相关操作]]></title>
+    <url>%2F2018%2F07%2F29%2FLaravel-%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9B%B8%E5%85%B3%E6%93%8D%E4%BD%9C%2F</url>
+    <content type="text"></content>
+  </entry>
+  <entry>
+    <title><![CDATA[Laravel seeder 数据填充]]></title>
+    <url>%2F2018%2F07%2F29%2FLaravel-seeder-%E6%95%B0%E6%8D%AE%E5%A1%AB%E5%85%85%2F</url>
+    <content type="text"></content>
+  </entry>
+  <entry>
+    <title><![CDATA[Laravel migrate 数据迁移]]></title>
+    <url>%2F2018%2F07%2F29%2FLaravel-migrate-%E6%95%B0%E6%8D%AE%E8%BF%81%E7%A7%BB%2F</url>
+    <content type="text"></content>
+  </entry>
+  <entry>
+    <title><![CDATA[Laravel router]]></title>
+    <url>%2F2018%2F07%2F29%2FLaravel-router%2F</url>
+    <content type="text"></content>
+  </entry>
+  <entry>
+    <title><![CDATA[关于composer]]></title>
+    <url>%2F2018%2F07%2F29%2F%E5%85%B3%E4%BA%8Ecomposer%2F</url>
+    <content type="text"></content>
+  </entry>
+  <entry>
     <title><![CDATA[关于框架操作数据库的几种方式]]></title>
     <url>%2F2018%2F07%2F28%2F%E5%85%B3%E4%BA%8E%E6%A1%86%E6%9E%B6%E6%93%8D%E4%BD%9C%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F%2F</url>
     <content type="text"><![CDATA[其实第一次有这方面的思考是来自七月老师的tp教程，他起了个头，他那个课程的核心就是为了提倡大家使用orm，后来在工作中开始留意这方面的知识.(如果没有那个引子，估计我会把builder query和orm弄混淆吧，因为真的挺相似，调用方法都是链式，orm对于bq方法的使用，又因为区别在于orm的面向对象这个特性上，而且现在基本都不用bq了，就算使用也是可以DB直接调用,而不用像orm那样需要定义一个model类，很难找出bq相对于orm的差别，换句话说因为本身orm就是基于bq的，所以我们需要发现的orm相对于bq的改变，但这个改变刚好是面向对象这种思想上，加上bq的少使用，这个改变很难发现) 看了下php关于linux方面的知识，pdo， builder query ，orm，我这种基础不好接触面不广的人经常混淆。在pdo之前应该是直接利用mysql 和 mysqli进行数据库连接操作，这种的只需要php开启对应的mysql或者mysqli扩展就好了（mysql已经废弃了），这还是我刚学习php的时候书上经常写的，后来在工作中这种的用的就比较少了，主要用的就是pdo了，个人感觉pdo和mysqli用起来查询那些操作还是差不多的，不管是函数还是查询到的结果集，感觉差别最大的还是 一个是new pdo一个是 mysqli_connect吧，:smile:。（pdo使用的时候除了安装pdo扩展，还要开启对应的驱动哦，比如 mysql_pdo）。 还记的我在学习慕课那个高性能api接口时候接触到的dao层吗，其实dao后来理解起来感觉是不是只有在那种处理比较麻烦和严谨的时候使用 &lt;?php class DB_user extends DB_base { public function find($username) { $query = self::$db-&gt;prepare(&quot;select count(*) as c from yaf_user where username = ?&quot;); $query-&gt;execute([$username]); $count = $query-&gt;fetchAll(); if ($count[0][&apos;c&apos;] != 0) { list(self::$errno, self::$errmsg) = Err_map::getCodeMessage(1004); return false; } return true; } 看这种，查询一个结果要写这么多，肯定需要独立出来呢。 后来是builder query，其实和orm是很像的，毕竟orm是基于builder query的，但二者不同之处在于orm把一张表看做一个模型model了，列看做模型对象的属性了，记录看做模型的实例(虽然我们在使用bq的时候可能也是这样想的，但orm不止是想这么简单，他是具体的实现了，比如下面同样调用all方法，虽然查出来的数据类型可能都是collection，但是展开看下，一个下面是关联数组，一个是对象，有具体的public 和private属性)。因为orm基于bq嘛，所以bq的那些方法orm都可以使用，所以我感觉方法的混用也是容易把orm和bq混淆的原因。但你是否还记得bq使用的时候调用的类是 DB,以laravel举例，DB是库facade下面的，但是orm使用的时候我们调用的类是继承model的那个类名字 DB::table(&apos;student&apos;)-&gt;all() Student::all() 当我在学习yii的时候还接触到一个概念AR，其实AR只是实现orm的一种方式，比较常用的有AR和··mapper，laravel（Eloquent）和yii现在orm实现方式都是AR，所以不要把这个当做yii和laravel的区别啦。 AR和mapper的区别在于，mapper把数据对象和数据持久化分开了（啥叫持久化，就是数据存储啊笨蛋···zz，心痛的感觉），mapper中对于数据的保存需要用类似bq中一个统一的类去实现，比如 //伪代码,方法名纯属虚构，因为懒得去查了 $student = new Student(); $student-&gt;name = &apos;cy&apos;; $student-&gt;age = 19; DBMAPPER-&gt;config($student); DBMAPPER-&gt;refresh($student); 现在水平太低，也不知道这样的好处是啥：说是为了把数据对象独立出来，让他的作用就是在各个层中传递. 大致就这些了吧，最后来一个laravel中最基础的model定义，让我们来更能理解orm的那几个定义 //orm把一张表看做一个模型model了，列看做模型对象的属性了，记录看做模型的实例 &lt;?php namespace App; use Illuminate\Database\Eloquent\Model; class Test extends Model { //定义表名 protected $table = &apos;test&apos;; //禁止更新时间戳，默认会更新created_at和updated_at public $timestamps = false; //可以批量赋值的属性，什么叫做批量赋值，就是我们可以通过create方法插入的，不是save那种，create是直接传入一个索引数组， //save 是通过给实例的属性一个个赋值，就这点看来，确实有批量赋值的意思 protected $fillable = [&apos;name&apos;]; } ​ laravel 中orm的实现用了很多PHP的特性（魔术方法等），比如属性，写的挺好的，在laravel核心框架技术解析中有写到。]]></content>
@@ -137,9 +162,9 @@
         <category>apache</category>
       </categories>
       <tags>
+        <tag>框架</tag>
         <tag>apache</tag>
         <tag>linux</tag>
-        <tag>框架</tag>
       </tags>
   </entry>
   <entry>
@@ -307,8 +332,8 @@
       </categories>
       <tags>
         <tag>PHP</tag>
-        <tag>框架</tag>
         <tag>ThinkPHP5</tag>
+        <tag>框架</tag>
       </tags>
   </entry>
   <entry>
@@ -471,9 +496,9 @@
         <category>PHP</category>
       </categories>
       <tags>
+        <tag>框架</tag>
         <tag>apache</tag>
         <tag>linux</tag>
-        <tag>框架</tag>
         <tag>php</tag>
       </tags>
   </entry>
