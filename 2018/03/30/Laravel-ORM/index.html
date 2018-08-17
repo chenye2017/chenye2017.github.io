@@ -385,31 +385,31 @@
         <p>orm并不是一个新兴的概念，他出现很久了，只是刚开始学习的自己并没有接触到，他能帮我们少写很多代码，让我们能以更面向对象的方式来处理关于数据库的操作。</p>
 <a id="more"></a>
 <p>Eloquent 是laravel的orm，我们通过</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">php artisan make:model User</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">php artisan make:model User</span><br></pre></td></tr></table></figure>
 <p>生成的类虽然是继承Model，但本质上都是继承这个Eloquent，他把我们每张表看做一个类，表里面的数据看做一个实例，我们对其进行操作的时候，更类似于面向对象的操作</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">$user = User::find(1);</div><div class="line">$user-&gt;name = &apos;cy&apos;;</div><div class="line">$user-&gt;city = &apos;shanghai&apos;;</div><div class="line">$user-&gt;save();</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$user = User::find(1);</span><br><span class="line">$user-&gt;name = &apos;cy&apos;;</span><br><span class="line">$user-&gt;city = &apos;shanghai&apos;;</span><br><span class="line">$user-&gt;save();</span><br></pre></td></tr></table></figure>
 <p>更便于理解。</p>
 <p>生成的model很简单，大致</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line"></div><div class="line">class Article extends \Eloquent &#123;</div><div class="line"></div><div class="line">protected $fillable = [];</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line"></span><br><span class="line">class Article extends \Eloquent &#123;</span><br><span class="line"></span><br><span class="line">protected $fillable = [];</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>这个fillable里面就是可以批量操作的字段，批量操作在我之前的文章里面有提到过，我觉得更通俗的理解是可更新的字段。只需要继承一下 Eloquent 类，就可以干 ‘first() find() where() orderBy()’ 等非常非常多的事情，这就是面向对象的强大威力。</p>
 <p>通过</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">php artisan tinker</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">php artisan tinker</span><br></pre></td></tr></table></figure>
 <p>可以开启一个交互环境进行orm的调试，其实我感觉不止是orm，别的代码也都是可以执行的，只是方便了orm的打印操作，能很方便的看到执行结果。有一点需要注意的就是tinker是基于当前代码的，如果代码重新修改来了，我们需要重启tinker来加载新的代码。</p>
 <p>还有我们会利用composer安装laravel-debugbar，来进行orm的调试，当我发现在别的项目中使用不了这个插件的时候，我改变了对composer的看法，他安装的东西更类似于代码，而不是软件，我们如果要在不同的项目中也使用这个插件，我们同样需要在另一个项目目录线面进行composer安装</p>
 <p>介绍几个常用的函数</p>
 <ul>
 <li><p>find()</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">User::find(1)</div><div class="line">App\User &#123;#764</div><div class="line">     id: 1,</div><div class="line">     name: &quot;cy&quot;,</div><div class="line">     email: &quot;1967196626@qq.com&quot;,</div><div class="line">     created_at: &quot;2018-03-30 01:42:40&quot;,</div><div class="line">     updated_at: &quot;2018-03-30 01:59:51&quot;,</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">User::find(1)</span><br><span class="line">App\User &#123;#764</span><br><span class="line">     id: 1,</span><br><span class="line">     name: &quot;cy&quot;,</span><br><span class="line">     email: &quot;1967196626@qq.com&quot;,</span><br><span class="line">     created_at: &quot;2018-03-30 01:42:40&quot;,</span><br><span class="line">     updated_at: &quot;2018-03-30 01:59:51&quot;,</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
 <p>这个1是主键</p>
 </li>
 </ul>
 <ul>
 <li><p>first()</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">User::where(&apos;id&apos;, &apos;&gt;&apos;, 1)-&gt;first()</div><div class="line">App\User &#123;#771</div><div class="line">     id: 2,</div><div class="line">     name: &quot;Bella Lebsack&quot;,</div><div class="line">     email: &quot;cristobal58@example.net&quot;,</div><div class="line">     created_at: &quot;2018-03-30 01:59:51&quot;,</div><div class="line">     updated_at: &quot;2018-03-30 01:59:51&quot;,</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">User::where(&apos;id&apos;, &apos;&gt;&apos;, 1)-&gt;first()</span><br><span class="line">App\User &#123;#771</span><br><span class="line">     id: 2,</span><br><span class="line">     name: &quot;Bella Lebsack&quot;,</span><br><span class="line">     email: &quot;cristobal58@example.net&quot;,</span><br><span class="line">     created_at: &quot;2018-03-30 01:59:51&quot;,</span><br><span class="line">     updated_at: &quot;2018-03-30 01:59:51&quot;,</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
 <p>上面两个获取的内容都是对象，可以直接使用</p>
 </li>
 <li><p>get()  获取的是一个collection</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"> User::where(&apos;id&apos;, &apos;&gt;&apos;, 1)-&gt;where(&apos;id&apos;, &apos;&lt;&apos;, 3)-&gt;get()</div><div class="line">=&gt; Illuminate\Database\Eloquent\Collection &#123;#773</div><div class="line">     all: [</div><div class="line">       App\User &#123;#778</div><div class="line">         id: 2,</div><div class="line">         name: &quot;Bella Lebsack&quot;,</div><div class="line">         email: &quot;cristobal58@example.net&quot;,</div><div class="line">         created_at: &quot;2018-03-30 01:59:51&quot;,</div><div class="line">         updated_at: &quot;2018-03-30 01:59:51&quot;,</div><div class="line">       &#125;,</div><div class="line">     ],</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"> User::where(&apos;id&apos;, &apos;&gt;&apos;, 1)-&gt;where(&apos;id&apos;, &apos;&lt;&apos;, 3)-&gt;get()</span><br><span class="line">=&gt; Illuminate\Database\Eloquent\Collection &#123;#773</span><br><span class="line">     all: [</span><br><span class="line">       App\User &#123;#778</span><br><span class="line">         id: 2,</span><br><span class="line">         name: &quot;Bella Lebsack&quot;,</span><br><span class="line">         email: &quot;cristobal58@example.net&quot;,</span><br><span class="line">         created_at: &quot;2018-03-30 01:59:51&quot;,</span><br><span class="line">         updated_at: &quot;2018-03-30 01:59:51&quot;,</span><br><span class="line">       &#125;,</span><br><span class="line">     ],</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>all() 获取的是一个collection</p>
 </li>
@@ -423,22 +423,22 @@
 <li>每一个继承了 Eloquent 的类都有两个 ‘固定用法’ ‘Article::find($number)’ ‘Article::all()’，前者会得到一个带有数据库中取出来值的对象，后者会得到一个包含整个数据库的对象合集。</li>
 </ol>
 <p>Builder</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Article::where(&apos;id&apos;, &apos;&gt;&apos;, 10)-&gt;where(&apos;id&apos;, &apos;&lt;&apos;, 20)-&gt;orderBy(&apos;updated_at&apos;, &apos;desc&apos;)-&gt;get();</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Article::where(&apos;id&apos;, &apos;&gt;&apos;, 10)-&gt;where(&apos;id&apos;, &apos;&lt;&apos;, 20)-&gt;orderBy(&apos;updated_at&apos;, &apos;desc&apos;)-&gt;get();</span><br></pre></td></tr></table></figure>
 <p>这段代码的 <code>::where()-&gt;where()-&gt;orderBy()</code> 就是Builder。用面向对象的方法来理解，可以总结成一句话：创建一个对象，并不断修改它的属性，最后用一个操作来触发数据库操作。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">User::orderBy(&apos;id&apos;, &apos;desc&apos;);</div><div class="line">=&gt; Illuminate\Database\Eloquent\Builder &#123;#817&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">User::orderBy(&apos;id&apos;, &apos;desc&apos;);</span><br><span class="line">=&gt; Illuminate\Database\Eloquent\Builder &#123;#817&#125;</span><br></pre></td></tr></table></figure>
 <p>这个get() 就是那个最后的方法。</p>
 <p>值的思考的一个问题</p>
 <blockquote>
-<p>如果直接用 :: 来访问某个 function，无论这个 function 是否为 static，构造函数 __construct() 都不会被调用，那么创建对象是如何实现的呢？请看：<a href="https://github.com/illuminate/database/blob/master/Eloquent/Model.php#L3354" target="_blank" rel="external">https://github.com/illuminate/database/blob/master/Eloquent/Model.php#L3354</a></p>
+<p>如果直接用 :: 来访问某个 function，无论这个 function 是否为 static，构造函数 __construct() 都不会被调用，那么创建对象是如何实现的呢？请看：<a href="https://github.com/illuminate/database/blob/master/Eloquent/Model.php#L3354" target="_blank" rel="noopener">https://github.com/illuminate/database/blob/master/Eloquent/Model.php#L3354</a></p>
 </blockquote>
 <p>所谓 “终结者” 方法，指的是在 N 个中间操作流方法对某个 Eloquent 对象进行加工以后，触发最终的数据库查询操作，得到返回值。</p>
 <p><code>first()</code> <code>get()</code> <code>paginate()</code> <code>count()</code> <code>delete()</code> 是用的比较多的一些 “终结者” 方法，他们会在中间操作流的最后出现，把 SQL 打给数据库，得到返回数据，经过加工返回一个 Article 对象或者一群 Article 对象的集合。</p>
 <p>all() 方法好像不是，因为all() 好像不能跟着条件</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"> User::orderBy(&apos;id&apos;, &apos;desc&apos;)-&gt;all();</div><div class="line">BadMethodCallException with message &apos;Call to undefined method Illuminate\Database\Query\Builder::all()</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"> User::orderBy(&apos;id&apos;, &apos;desc&apos;)-&gt;all();</span><br><span class="line">BadMethodCallException with message &apos;Call to undefined method Illuminate\Database\Query\Builder::all()</span><br></pre></td></tr></table></figure>
 <p>关系</p>
 <p>1 对 1 关系</p>
 <p>做了个试验，发现如果通过传统的生成迁移文件，生成model，进行数据填充真的挺麻烦的，不如在数据库中快速建表来的容易</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">public function hasOne1()</div><div class="line">    &#123;</div><div class="line">        return $this-&gt;hasOne(TestOneToOne::class, &apos;user_id&apos;, &apos;id&apos;);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public function belongsTo1()</div><div class="line">    &#123;</div><div class="line">        return $this-&gt;belongsTo(TestOneToOne::class, &apos;id&apos;, &apos;user_id&apos;);</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">public function hasOne1()</span><br><span class="line">    &#123;</span><br><span class="line">        return $this-&gt;hasOne(TestOneToOne::class, &apos;user_id&apos;, &apos;id&apos;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public function belongsTo1()</span><br><span class="line">    &#123;</span><br><span class="line">        return $this-&gt;belongsTo(TestOneToOne::class, &apos;id&apos;, &apos;user_id&apos;);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
 <p>这是User 中的两个方法</p>
 <p>User::with(‘hasOne1’)-&gt;find(1)</p>
 <p>User::with(‘belongsTo1’)-&gt;find(1)</p>
@@ -450,7 +450,7 @@
 <p>多对多</p>
 <p>这个时候经常需要第三张表来存储数据，值的注意的一点就是第三张表往往不需要生成model。</p>
 <p>第三张表值记录对应关系，感觉默认的就是主键id</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">public function belongsToMany1()</div><div class="line">    &#123;</div><div class="line">        return $this-&gt;belongsToMany(\App\User::class, &apos;test_many_to_many&apos;, &apos;user_id&apos;, &apos;test_id&apos;);</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">public function belongsToMany1()</span><br><span class="line">    &#123;</span><br><span class="line">        return $this-&gt;belongsToMany(\App\User::class, &apos;test_many_to_many&apos;, &apos;user_id&apos;, &apos;test_id&apos;);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
 <p>上面是一种我的粉丝，比如我是users 表中的一员，我的粉丝也是这张表中的数据，注意存储数据关系的表不要用::class，因为不存在这个class，还有如果要加where条件，里面的条件用调用主题的字段，比如users中的字段id。</p>
 
       
@@ -634,7 +634,7 @@ var jiathis_config={
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">54</span>
+                  <span class="site-state-item-count">55</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -775,7 +775,7 @@ var jiathis_config={
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count"> | 博客全站共60.7k字</span>
+  <span class="post-count"> | 博客全站共62.3k字</span>
 </div>
 
 

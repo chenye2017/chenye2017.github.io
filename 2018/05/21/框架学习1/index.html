@@ -88,7 +88,7 @@
 <meta property="og:site_name" content="语法糖的博客">
 <meta property="og:description" content="对于框架源码的学习，可以帮助我们以后快速学习一个框架的使用，虽然同样的效果同样可以使用多学习几个框架，比如你把tp学完你学习laravel和yii发现很多时候都是一样的，但这仅限于你对框架的使用，增删改查的使用，当你想去修改一个框架的时候（不包括把框架中常量提取出来放在一个文件中，给框架增加一个validate等等这种情况）而是类似于把框架原来的隐式路由改成显式路由这种情况，如果你没有动手搭建过框">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-05-24T04:02:43.426Z">
+<meta property="og:updated_time" content="2018-05-24T04:02:43.427Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="框架学习1">
 <meta name="twitter:description" content="对于框架源码的学习，可以帮助我们以后快速学习一个框架的使用，虽然同样的效果同样可以使用多学习几个框架，比如你把tp学完你学习laravel和yii发现很多时候都是一样的，但这仅限于你对框架的使用，增删改查的使用，当你想去修改一个框架的时候（不包括把框架中常量提取出来放在一个文件中，给框架增加一个validate等等这种情况）而是类似于把框架原来的隐式路由改成显式路由这种情况，如果你没有动手搭建过框">
@@ -364,8 +364,8 @@
 <a id="more"></a>
 <p>命名空间在我的理解中就是把项目代码看做一个文件夹，然后名称是/,然后下面的各个文件夹名称就是命名空间，为了区分不同文件夹下的相同文件夹名称，我们需要把文件夹名称的路径记录下来。如果我的文件放在文件夹中的目录结构比较深，那么外层的文件夹名称是否可以不要呢，答案是肯定的，我觉得这也是文件夹相对于使用路径的好处之一。</p>
 <p>上文说到了composer，我们要怎么使用这个工具呢。在项目的根目录下（注意不是网站的根目录下，网站的根目录往往是入口文件的根目录）执行composer install，linux下需要时php composer.phar install,他会找composer.json文件，第一次可能没有，我们可以通过composer require xxx/xxxx 来安装一个依赖，这时候会多出composer.json , composer.lock, vendor 目录，我们在入口文件出只需要include  vendor/autoload.php, 就能使用vendor中的依赖了。我们项目中自定义的文件夹也可以通过composer 的autoload来实现自动加载。php的psr-4和psr-0都有对命名空间的规定，但是0废弃了，现在大家都是用4，比较下0和4，比如 \controller\test.php,</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">namespace controller;</div></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">//psr-0</div><div class="line">&#123;</div><div class="line">  &apos;autoload&apos; : &#123;</div><div class="line">  		&apos;controller//&apos; : &apos;&apos;</div><div class="line">	&#125;</div><div class="line">  </div><div class="line">&#125;</div><div class="line"></div><div class="line">//psr-4</div><div class="line">&#123;</div><div class="line">  &apos;autoload&apos; : &#123;</div><div class="line">  		&apos;controller//&apos; : &apos;controller&apos;</div><div class="line">	&#125;</div><div class="line">  </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">namespace controller;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">//psr-0</span><br><span class="line">&#123;</span><br><span class="line">  &apos;autoload&apos; : &#123;</span><br><span class="line">  		&apos;controller//&apos; : &apos;&apos;</span><br><span class="line">	&#125;</span><br><span class="line">  </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//psr-4</span><br><span class="line">&#123;</span><br><span class="line">  &apos;autoload&apos; : &#123;</span><br><span class="line">  		&apos;controller//&apos; : &apos;controller&apos;</span><br><span class="line">	&#125;</span><br><span class="line">  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>psr-0会把规定的路径再拼上命名空间当做相对路径去文件夹下找，而psr-4会直接把规定的路径当做命名空间去寻找，上面的例子只是针对简单的一层命名空间，还是看不出什么效果，多层的更容易看出0是多么的脑残。</p>
 <p>还有当注册了controller文件夹，controller的子文件夹的命名空间默认注册。</p>
 <p>我们在修改命名空间的时候只需要修改composer.json文件就可以了，对于composer的具体怎么加载的其实不用管的，他应用这么广泛，一般不会出现什么问题。</p>
@@ -553,7 +553,7 @@ var jiathis_config={
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">54</span>
+                  <span class="site-state-item-count">55</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -694,7 +694,7 @@ var jiathis_config={
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count"> | 博客全站共60.7k字</span>
+  <span class="post-count"> | 博客全站共62.3k字</span>
 </div>
 
 

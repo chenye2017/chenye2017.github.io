@@ -88,7 +88,7 @@
 <meta property="og:site_name" content="语法糖的博客">
 <meta property="og:description" content="opcache是什么东西，我也不知道，我只知道开启他能加速我接口的返回速度。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-05-25T08:02:29.564Z">
+<meta property="og:updated_time" content="2018-05-25T08:02:29.565Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="PHP opcache">
 <meta name="twitter:description" content="opcache是什么东西，我也不知道，我只知道开启他能加速我接口的返回速度。">
@@ -364,22 +364,22 @@
 <p>原理：大概的意思就是把php的脚本一次性全存入内存中，然后每次读取脚本直接从这里面取，而不用每个连接都读取一份脚本。</p>
 <p>但这样就存在修改数据后服务器识别不到，可以配置参数，多少秒服务器检查一次，但一般生产环境直接把配置成0，就是间隔时间是0，单位是s，然后停止检查，而开发环境参数配置成1，一直检查，这样就不会存在修改文件，没有效果了。</p>
 <p>还可以手动清除，必须脚本中写入</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">opcache_reset()</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">opcache_reset()</span><br></pre></td></tr></table></figure>
 <p>但需要注意的就是不同模式下储存脚本是在不同的内存空间中，比如cli下执行脚本文件，和通过浏览器这种mod_php清除是不一样的，所以浏览器访问的话就通过浏览器的方式去执行脚本吧。</p>
 <p>当然，如果和我们swoole那样，每次修改代码后重启web服务器，那是根本不存在这种情况的。</p>
 <p>话说偶然间发现代码的不同方式发布</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">1.类似前端代码那种，每次新代码的发布都会重新打个包，然后把站点目录通过软连接指向这个新包</div><div class="line">2.我们现在用的，通过在服务器上更新svn上的代码，来发布新的代码</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">1.类似前端代码那种，每次新代码的发布都会重新打个包，然后把站点目录通过软连接指向这个新包</span><br><span class="line">2.我们现在用的，通过在服务器上更新svn上的代码，来发布新的代码</span><br></pre></td></tr></table></figure>
 <p>首先运行环境是php7.014,线上环境是php5.6,效果不是十分明显，还有opcache_reset() byte-code不是十分好用。</p>
 <p>首先得开启这个扩展，在phpinfo中查找opcache或者 php -m 中查找opcache，其实直接php -m就好了，会有个很显眼的ZendOpcache,</p>
 <p>安装方法就是因为默认编译的时候大部分都有–enable-opcache,或者phpinfo页面上可以看见编译的参数，直接在php.ini 里面开启zend_extension=opcahce.so就好了，或者下载文件源码编译。</p>
 <p>或者重新编译一下php（这个忘记了）</p>
 <p>或者可以像pgsql那样去php源码包里面找源文件进行编译？这样可行吗，没有试过。</p>
 <p>参数</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">opcache.validate_timestamps=1 //是否检测修改</div><div class="line">opcache.revalidate_freq=0//单位时间</div><div class="line">opcache.memory_consumption=64  //memory_consumption 这个参数很好理解，代表这块内存区开辟的大小，另外需要注意不同 PHP SAPI 内存区不是共享的，就是说同一个 PHP 文件，运行在命令行模式或者 PHP-FPM 模式下，对应的 byte-code 会存储在不同的内存区中。</div><div class="line">opcache.max_accelerated_files=4000 //如果命中率不搞，可以适当提升这个值，直到1。</div><div class="line">opcache.opcache.fast_shutdown=1  //modern php上面说这个写1就可以了</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">opcache.validate_timestamps=1 //是否检测修改</span><br><span class="line">opcache.revalidate_freq=0//单位时间</span><br><span class="line">opcache.memory_consumption=64  //memory_consumption 这个参数很好理解，代表这块内存区开辟的大小，另外需要注意不同 PHP SAPI 内存区不是共享的，就是说同一个 PHP 文件，运行在命令行模式或者 PHP-FPM 模式下，对应的 byte-code 会存储在不同的内存区中。</span><br><span class="line">opcache.max_accelerated_files=4000 //如果命中率不搞，可以适当提升这个值，直到1。</span><br><span class="line">opcache.opcache.fast_shutdown=1  //modern php上面说这个写1就可以了</span><br></pre></td></tr></table></figure>
 <p>（opcache_get_configuration()和 and opcache_get_status()）获取配置信息和运行信息，比如了解那些文件被缓存了、使用了多少内存、内存命中率等等。</p>
 <p>感觉就是基于这两个函数出了两个opcache的项目，一个是单页面，一个比较复杂</p>
-<p>1.<a href="https://github.com/PeeHaa/OpCacheGUI" target="_blank" rel="external">PeeHaa / OpCacheGUI</a></p>
-<p>2.<a href="https://github.com/rlerdorf/opcache-status" target="_blank" rel="external">rlerdorf / opcache-status</a></p>
+<p>1.<a href="https://github.com/PeeHaa/OpCacheGUI" target="_blank" rel="noopener">PeeHaa / OpCacheGUI</a></p>
+<p>2.<a href="https://github.com/rlerdorf/opcache-status" target="_blank" rel="noopener">rlerdorf / opcache-status</a></p>
 <p>单页面的部署直接放在网站根目录下就好了，就理解成phpadmin那种网点就好了，利用的就是php的函数获取php的运行环境，然后可视化展示出来</p>
 <p>opcache_invalidate()，这个函数就是更新特定的文件缓存，没去试验过，因为项目小啦，直接重启web server。</p>
 
@@ -556,7 +556,7 @@ var jiathis_config={
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">54</span>
+                  <span class="site-state-item-count">55</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -697,7 +697,7 @@ var jiathis_config={
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count"> | 博客全站共60.7k字</span>
+  <span class="post-count"> | 博客全站共62.3k字</span>
 </div>
 
 

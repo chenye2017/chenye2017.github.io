@@ -366,7 +366,7 @@
 <p>备案未完成…</p>
 <p>之前帮前端同事部署过一个vue项目，其实和部署一个php项目 极为相似，甚至更简单，都是通过找寻唯一入口文件，因为前端项目都是静态文件，而且apache默认找的文件夹下面的第一个文件就是index.html,所以都不需要进行特殊的设置（php的话因为要找index.php,所以要做更多的设置），唯一需要注意的就是前段项目的很多路径都是绝对路径，他本质上是相对网站的根目录来的，也就是默认项目部署在网站的根目录下，如果网站没有部署在根目录下，比如itbasic bbs，需要我对引入的静态资源路径进行适当的修改。比如给需要找的静态资源建立个软链接ln -s ,到新的静态资源目录下。</p>
 <p>因为之前是根据网上教程搭建的hexo，其实不懂他的实现原理。</p>
-<p>而且在教程的开始，就说了要使用node，对于我这种js都不好的人，看到node，首先就觉的完了。其实很多前端项目用到node，并不是用到nodejs的语法，而是用nodejs搭建了一个web服务，承载前端项目，然自己置身于一个联网的状态中，就能发出类似ajax这样的联网请求，因为当我们保存在本地的html在浏览器中打开的时候是file://开头的，这是默认禁止进行ajax请求的，但当我们使用node的时候，页面的路径就是<a href="http://开头了们可以进行ajax请求。因为当我们保存在本地的html在浏览器中打开的时候是file://开头的，这是默认禁止进行ajax请求的，但当我们使用node的时候，页面的路径就是http://开头了们可以进行ajax请求。" target="_blank" rel="external">http://开头了们可以进行ajax请求。因为当我们保存在本地的html在浏览器中打开的时候是file://开头的，这是默认禁止进行ajax请求的，但当我们使用node的时候，页面的路径就是http://开头了们可以进行ajax请求。</a></p>
+<p>而且在教程的开始，就说了要使用node，对于我这种js都不好的人，看到node，首先就觉的完了。其实很多前端项目用到node，并不是用到nodejs的语法，而是用nodejs搭建了一个web服务，承载前端项目，然自己置身于一个联网的状态中，就能发出类似ajax这样的联网请求，因为当我们保存在本地的html在浏览器中打开的时候是file://开头的，这是默认禁止进行ajax请求的，但当我们使用node的时候，页面的路径就是<a href="http://开头了们可以进行ajax请求。因为当我们保存在本地的html在浏览器中打开的时候是file://开头的，这是默认禁止进行ajax请求的，但当我们使用node的时候，页面的路径就是http://开头了们可以进行ajax请求。" target="_blank" rel="noopener">http://开头了们可以进行ajax请求。因为当我们保存在本地的html在浏览器中打开的时候是file://开头的，这是默认禁止进行ajax请求的，但当我们使用node的时候，页面的路径就是http://开头了们可以进行ajax请求。</a></p>
 <p>我看了下上传到github上的文件夹，和我本地的项目代码结构还是有挺大区别的，我的理解就是把本地代码进行了打包，打包好的文件上传到github上了（类似vue代码的发布），上传到github上的文件夹全是静态目录结构，我惊喜的发现了index.html,于是大胆的假设了下如果把那个目录放在我的站点根目录下，是否也能进行访问了呢，我就不用通过chenye2017.github.io去访问，而是通过我自己的站点去访问呢，毕竟服务器在国内，访问速度也比较快。</p>
 <p>结果是成功的，印证了我的假设。</p>
 <p>在网站部署的时候还遇到了几个问题，比如源码编译apache2.4,在之前还需要安装apr,apr-util,之类的文件，apache2.4的改文件访问权限和之前的apache还不一样，还有文件夹名字结尾不能有空格，否则识别不出来，加载vhost.conf,启动apache失败，修改server localhost之类的apache配置文件，还有apachectl restart开始不管用，需要自己手动配置脚本····</p>
@@ -544,7 +544,7 @@ var jiathis_config={
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">54</span>
+                  <span class="site-state-item-count">55</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -685,7 +685,7 @@ var jiathis_config={
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count"> | 博客全站共60.7k字</span>
+  <span class="post-count"> | 博客全站共62.3k字</span>
 </div>
 
 

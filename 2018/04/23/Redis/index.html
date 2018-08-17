@@ -394,17 +394,17 @@
 <p>通用命令：</p>
 <p>keys * : 获取所有的key</p>
 <p>string：get(),根据key值获取</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">class \Lib\Redis extends \Redis  //因为这个继承于php自带的扩展，所以命名空间在\下</div><div class="line">&#123;</div><div class="line">  public function __construct()</div><div class="line">  &#123;</div><div class="line">   建立连接</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">$redis = new \Lib\Redis();</div><div class="line">$redis-&gt;get($key);</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">class \Lib\Redis extends \Redis  //因为这个继承于php自带的扩展，所以命名空间在\下</span><br><span class="line">&#123;</span><br><span class="line">  public function __construct()</span><br><span class="line">  &#123;</span><br><span class="line">   建立连接</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$redis = new \Lib\Redis();</span><br><span class="line">$redis-&gt;get($key);</span><br></pre></td></tr></table></figure>
 <p>set,设置值</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$redis-&gt;set($key, $value,)</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$redis-&gt;set($key, $value,)</span><br></pre></td></tr></table></figure>
 <p>hash: hash类型不能像string的set方法中设置系统key的过期时间，可以通过调用expire来设置时间。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$redis-&gt;expire($key, 7*24*60*60);</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$redis-&gt;expire($key, 7*24*60*60);</span><br></pre></td></tr></table></figure>
 <p>hset: 设置hash的filed的值,这个key意思就是这个hash对象的唯一标识</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$redis-&gt;hset($key, $filed, $value)</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$redis-&gt;hset($key, $filed, $value)</span><br></pre></td></tr></table></figure>
 <p>hmset: 给这个对象进行赋值, $arr是关联数组</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$redis-&gt;hmset($key, $arr)</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$redis-&gt;hmset($key, $arr)</span><br></pre></td></tr></table></figure>
 <p>hgetall: 获取这个hash对象所有的内容</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$redis-&gt;hgetall($key)</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$redis-&gt;hgetall($key)</span><br></pre></td></tr></table></figure>
 <p>坑：</p>
 <p>之前很傻，因为接触到redis的时候，听到的好处就是相比较于mecache这种，多了很多的数据类型，memcache这种只有string，然后redis又在原先5中数据类型的基础上增加了表示地理坐标的新的数据类型。当时遇到一个问题就是想一个键值既能对应string，也能对应hash，想有没有这种数据类型。其实当时的思路是完全跑偏的，完全可以通过先构造一个比如token=&gt;string,string=&gt;hash两个类型，第一个是string，第二个是hash，通过token既能得到简单的string，也能得到hash。</p>
 
@@ -591,7 +591,7 @@ var jiathis_config={
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">54</span>
+                  <span class="site-state-item-count">55</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -732,7 +732,7 @@ var jiathis_config={
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count"> | 博客全站共60.7k字</span>
+  <span class="post-count"> | 博客全站共62.3k字</span>
 </div>
 
 

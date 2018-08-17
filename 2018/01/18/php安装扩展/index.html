@@ -395,7 +395,7 @@
 <li>./configure 生成配置文件，之前安装swoole的时候需要指定php-config,这可不是php的配置文件，也是一个命令，和上面的php，phpize在同一个bin目录下，如果想看更多参数可以 –help,</li>
 <li>make</li>
 <li>make install (安装失败make clean，重新再来呗)<br>8.生成的so文件自动放到了/usr/local/php/lib/php/extensions/no-debug-zts-20160303，然后在php.ini 文件里面加上一句extension = swoole.so就可以了</li>
-<li>可能需要ldconfig下，<a href="http://man.linuxde.net/ldconfig" target="_blank" rel="external">http://man.linuxde.net/ldconfig</a></li>
+<li>可能需要ldconfig下，<a href="http://man.linuxde.net/ldconfig" target="_blank" rel="noopener">http://man.linuxde.net/ldconfig</a></li>
 </ol>
 <p>windows下安装</p>
 <ol>
@@ -405,7 +405,7 @@
 <p>之前安装redis扩展的时候，···当时用的是xampp，··然后安装好了redis扩展，可是使用不了。坑爹啊，window下我都没安装redis，光安装redis扩展有什么用，····其实这个扩展知识为了让php能操作redis，像apache，在编译安装php7的时候，也要指定apache的apxs之类的位置。</p>
 <p>坑：</p>
 <ol>
-<li>机器上安装了挺多php的，有5.6，有7，因为7编译安装的时候没有填写配置文件的位置，默认应该是放在/usr/local/lib目录下（php -r “phpinfo();”|grep configure, 注意一定要在phpinfo();后面加引号，查看编译安装参数，像apache，直接去安装目录下的build文件夹里面，查看就可以了），而我的机器上一直还有/etc/php/php.ini 这个配置文件，因为php安装的时候是不存在配置文件，讲道理编译的时候没有写配置文件的位置，应该放在/usr/local/lib目录下，但他还是放在了/etc/php/php.ini,聪明的apache自动去找到了这个配置文件，但当我在默认/usr/local/lib目录下放置了php.ini的时候，他是去这下面寻找的，以前的那个就废弃了。apache可以指定php配置文件，只需要在apache的配置文件里面指定下，地址：[<a href="http://www.jb51.net/article/106111.htm" target="_blank" rel="external">http://www.jb51.net/article/106111.htm</a>]</li>
+<li>机器上安装了挺多php的，有5.6，有7，因为7编译安装的时候没有填写配置文件的位置，默认应该是放在/usr/local/lib目录下（php -r “phpinfo();”|grep configure, 注意一定要在phpinfo();后面加引号，查看编译安装参数，像apache，直接去安装目录下的build文件夹里面，查看就可以了），而我的机器上一直还有/etc/php/php.ini 这个配置文件，因为php安装的时候是不存在配置文件，讲道理编译的时候没有写配置文件的位置，应该放在/usr/local/lib目录下，但他还是放在了/etc/php/php.ini,聪明的apache自动去找到了这个配置文件，但当我在默认/usr/local/lib目录下放置了php.ini的时候，他是去这下面寻找的，以前的那个就废弃了。apache可以指定php配置文件，只需要在apache的配置文件里面指定下，地址：[<a href="http://www.jb51.net/article/106111.htm" target="_blank" rel="noopener">http://www.jb51.net/article/106111.htm</a>]</li>
 <li>php -m 的好处就在于不用重启服务器，就能看到已经加载的php模块，php -r “phpinfo();” 执行后面的函数返回结果。 php -c 指定配置文件的位置，注意 php -m -c  加载扩展的时候默认使用的是默认配置文件的位置，php -c 文件位置 -m 这里才是新的配置文件位置方式加载扩展。</li>
 </ol>
 <p>遗留的问题：</p>
@@ -596,7 +596,7 @@ var jiathis_config={
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">54</span>
+                  <span class="site-state-item-count">55</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -737,7 +737,7 @@ var jiathis_config={
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count"> | 博客全站共60.7k字</span>
+  <span class="post-count"> | 博客全站共62.3k字</span>
 </div>
 
 

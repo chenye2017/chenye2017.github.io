@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="PHP,Linux,工具,调试,Xdebug," />
+  <meta name="keywords" content="PHP,Linux,调试,工具,Xdebug," />
 
 
 
@@ -82,14 +82,14 @@
 
 
 <meta name="description" content="关于xdebug。作为一个phper，相信大家平时的调试用的都是var_dump,echo之类的，像我之前不知道var_dump可以打印出多个变量，在写代码的时候，经常为了打印多个变量，要写很多var_dump,后来无意间解除了xdebug，虽然现在还是经常用var_dump,但我感觉这类的辅助工具都是为了更好的，更高效率的完成工作，得变通，什么方便，什么自己用的舒服就用什么。平时的我感觉xdeb">
-<meta name="keywords" content="PHP,Linux,工具,调试,Xdebug">
+<meta name="keywords" content="PHP,Linux,调试,工具,Xdebug">
 <meta property="og:type" content="article">
 <meta property="og:title" content="PHPStorm开启断点调试">
 <meta property="og:url" content="http://yoursite.com/2018/01/22/PHPStorm开启断点调试/index.html">
 <meta property="og:site_name" content="语法糖的博客">
 <meta property="og:description" content="关于xdebug。作为一个phper，相信大家平时的调试用的都是var_dump,echo之类的，像我之前不知道var_dump可以打印出多个变量，在写代码的时候，经常为了打印多个变量，要写很多var_dump,后来无意间解除了xdebug，虽然现在还是经常用var_dump,但我感觉这类的辅助工具都是为了更好的，更高效率的完成工作，得变通，什么方便，什么自己用的舒服就用什么。平时的我感觉xdeb">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-03-30T03:10:14.706Z">
+<meta property="og:updated_time" content="2018-03-30T03:10:14.707Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="PHPStorm开启断点调试">
 <meta name="twitter:description" content="关于xdebug。作为一个phper，相信大家平时的调试用的都是var_dump,echo之类的，像我之前不知道var_dump可以打印出多个变量，在写代码的时候，经常为了打印多个变量，要写很多var_dump,后来无意间解除了xdebug，虽然现在还是经常用var_dump,但我感觉这类的辅助工具都是为了更好的，更高效率的完成工作，得变通，什么方便，什么自己用的舒服就用什么。平时的我感觉xdeb">
@@ -383,9 +383,9 @@
 
       
         <p>关于xdebug。作为一个phper，相信大家平时的调试用的都是var_dump,echo之类的，像我之前不知道var_dump可以打印出多个变量，在写代码的时候，经常为了打印多个变量，要写很多var_dump,后来无意间解除了xdebug，虽然现在还是经常用var_dump,但我感觉这类的辅助工具都是为了更好的，更高效率的完成工作，得变通，什么方便，什么自己用的舒服就用什么。平时的我感觉xdebug对于框架的学习，和自己平时不熟悉的代码的时候用的方便，var_dump,我一般用来进行简单的调试。<br><a id="more"></a><br>1.原理<br>没去看了</p>
-<p>2.安装<br>首先得安装xdebug的php扩展。这个xdebug的安装真的方便，他的网站上对xdbug的安装简直是傻瓜式，百度他的网站，<a href="http://xdebug.org/wizard.php" target="_blank" rel="external">http://xdebug.org/wizard.php</a>，把你的pathinfo() 的内容粘贴过去，她能自动帮你选择扩展版本，其实window下要的就是之前文章里面提的四个版本，以及php的扩展存放路径，已经php.ini, linux下好文件，同之前的文章一下。安装完成之后pathinfo，查找xdebug。<br>这里注意下我们通过xampp这类软件安装的lamp其实不是lamp，这个l linux根本不存在，我们用的是w，windows。</p>
-<p>具体的版本选择可以看这篇文章 帮<a href="http://blog.csdn.net/hel12he/article/details/44425781" target="_blank" rel="external">xdebug选择合适的安装版本</a></p>
-<p>3.phpstorm的配置<br>之前的配置在网上找吧，因为懒得截图了<br><a href="https://www.jianshu.com/p/74a1d60ab5ef" target="_blank" rel="external">简书上的这篇文章对安装方法写的很详细</a></p>
+<p>2.安装<br>首先得安装xdebug的php扩展。这个xdebug的安装真的方便，他的网站上对xdbug的安装简直是傻瓜式，百度他的网站，<a href="http://xdebug.org/wizard.php" target="_blank" rel="noopener">http://xdebug.org/wizard.php</a>，把你的pathinfo() 的内容粘贴过去，她能自动帮你选择扩展版本，其实window下要的就是之前文章里面提的四个版本，以及php的扩展存放路径，已经php.ini, linux下好文件，同之前的文章一下。安装完成之后pathinfo，查找xdebug。<br>这里注意下我们通过xampp这类软件安装的lamp其实不是lamp，这个l linux根本不存在，我们用的是w，windows。</p>
+<p>具体的版本选择可以看这篇文章 帮<a href="http://blog.csdn.net/hel12he/article/details/44425781" target="_blank" rel="noopener">xdebug选择合适的安装版本</a></p>
+<p>3.phpstorm的配置<br>之前的配置在网上找吧，因为懒得截图了<br><a href="https://www.jianshu.com/p/74a1d60ab5ef" target="_blank" rel="noopener">简书上的这篇文章对安装方法写的很详细</a></p>
 <p>4.注意事项</p>
 <ol>
 <li>首先是关于断点的位置。代码会在断点之前结束，所以如果想要获取断点处的内容，务必在该内容之后打上断点。记得老师在将课程的时候甚至在这个方法结束处的 } 打了断点。</li>
@@ -456,9 +456,9 @@
           
             <a href="/tags/Linux/" rel="tag"><i class="fa fa-tag"></i> Linux</a>
           
-            <a href="/tags/工具/" rel="tag"><i class="fa fa-tag"></i> 工具</a>
-          
             <a href="/tags/调试/" rel="tag"><i class="fa fa-tag"></i> 调试</a>
+          
+            <a href="/tags/工具/" rel="tag"><i class="fa fa-tag"></i> 工具</a>
           
             <a href="/tags/Xdebug/" rel="tag"><i class="fa fa-tag"></i> Xdebug</a>
           
@@ -583,7 +583,7 @@ var jiathis_config={
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">54</span>
+                  <span class="site-state-item-count">55</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -724,7 +724,7 @@ var jiathis_config={
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count"> | 博客全站共60.7k字</span>
+  <span class="post-count"> | 博客全站共62.3k字</span>
 </div>
 
 

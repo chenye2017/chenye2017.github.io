@@ -90,7 +90,7 @@
 <meta property="og:description" content="参考：https://segmentfault.com/a/1190000012196642作为一个web开发者，对于https和http肯定要有所了解，现在的我对于深层次的https通信看着还不是太懂，但是对于https和http的差别，记得有一次去中科招商的时候面试有问到过。写这篇文章的时候，主要是方便自己看的时候理解。">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://ozys8fka7.bkt.clouddn.com/1336318852-5a1d155b41475_articlex.png">
-<meta property="og:updated_time" content="2018-02-23T12:44:22.693Z">
+<meta property="og:updated_time" content="2018-02-23T12:44:22.694Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="https通信原理">
 <meta name="twitter:description" content="参考：https://segmentfault.com/a/1190000012196642作为一个web开发者，对于https和http肯定要有所了解，现在的我对于深层次的https通信看着还不是太懂，但是对于https和http的差别，记得有一次去中科招商的时候面试有问到过。写这篇文章的时候，主要是方便自己看的时候理解。">
@@ -384,7 +384,7 @@
       
 
       
-        <p>参考：<a href="https://segmentfault.com/a/1190000012196642" target="_blank" rel="external">https://segmentfault.com/a/1190000012196642</a><br>作为一个web开发者，对于https和http肯定要有所了解，现在的我对于深层次的https通信看着还不是太懂，但是对于https和http的差别，记得有一次去中科招商的时候面试有问到过。写这篇文章的时候，主要是方便自己看的时候理解。</p>
+        <p>参考：<a href="https://segmentfault.com/a/1190000012196642" target="_blank" rel="noopener">https://segmentfault.com/a/1190000012196642</a><br>作为一个web开发者，对于https和http肯定要有所了解，现在的我对于深层次的https通信看着还不是太懂，但是对于https和http的差别，记得有一次去中科招商的时候面试有问到过。写这篇文章的时候，主要是方便自己看的时候理解。</p>
 <a id="more"></a>
 <p>首先呢 https默认端口号是443，http是80，都知道http相比于http更加安全。但是安全主要在什么方面呢，http通过明文传输，post方式好像看不见，但是get方式可以通过在服务器上监听这个端口，就能看见甚至都不要解密传进来的数据。像之前的talent，远程连接（默认端口23），因为传输过程明文，而且远程连接主要就是用来远程登录，肯定要输入用户名和密码，so，通过对这个端口的监听，就能知道用户通过talent服务的这个端口传进来的用户名和密码，这个安全性的要求不言而喻，所以现在都不用了，现在用ssh。还记得每次连接服务器的时候，让你接受公钥的弹窗嘛，这是为了在传输过程中用服务器的公钥进行加密，然后数据到达服务器端，服务器可以通过私钥进行解密。之前看过一个很形象的比喻。公钥就相当于锁，私钥就相当于钥匙，我这个东西用锁锁起来了，当然就可以用钥匙打开了（这是公钥加密，私钥解密的比喻）</p>
 <p>https和http都是基于tcp/ip 协议，属于应用层，他们其实是一样的，只是https外层有个ssl包裹起来<img src="http://ozys8fka7.bkt.clouddn.com/1336318852-5a1d155b41475_articlex.png" alt=""></p>
@@ -597,7 +597,7 @@ var jiathis_config={
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">54</span>
+                  <span class="site-state-item-count">55</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -738,7 +738,7 @@ var jiathis_config={
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count"> | 博客全站共60.7k字</span>
+  <span class="post-count"> | 博客全站共62.3k字</span>
 </div>
 
 

@@ -91,7 +91,7 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://ozys8fka7.bkt.clouddn.com/svn%E6%B5%81%E7%A8%8B%EF%BC%88%E9%94%99%E8%AF%AF%EF%BC%89.png">
 <meta property="og:image" content="http://ozys8fka7.bkt.clouddn.com/svnl%E6%B5%81%E7%A8%8B%EF%BC%88%E6%96%B0%EF%BC%89.png">
-<meta property="og:updated_time" content="2018-05-25T07:36:42.305Z">
+<meta property="og:updated_time" content="2018-05-25T07:36:42.306Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="svn Git 思考">
 <meta name="twitter:description" content="···今天碰到一个问题，其实这个问题好久之前就没碰到了，只是之前可以通过别的方式化解，然后今天没法通过别的方式解决了，只能通过正确的方式解决。 问题描述：在线上修改了代码，怎么更新到本地。">
@@ -397,7 +397,7 @@
 <p>之前的错误概念还有就是把线上服务器的内容等同于svn大脑的内容。举个例子，在实际的大项目中，代码整理后，要经过测试环境等等多重步骤才能发布，放到正常的生产环境中，如果我们直接把大脑合并的内容放到生产环境中，这样是太不合理了，这样感觉会导致线上的代码太不稳定了。</p>
 <p>所以，正如第二个图中看到的一样，网站根目录也是从线上代码往下拉的，所以我们对线上代码的提交，就应该和我们平时提交代码一样，只是我们平时用小乌龟习惯了，可能已经忘记命令了，还有svn up是svn update的缩写，这个up并不是提交的意思哦（···误导我一年了）。</p>
 <p>所以，我们在线上svn commit（svn ci）缩写，必备参数 -m(我原先以为svn不需要，肯定是小乌龟做了处理)。这样就能把代码更新到svn服务器上，然后别的同事svn up就可以了。</p>
-<p>svn提交失败，经常需要clean up，可是呢，点击clean up的时候又会显示clean up失败，请clean up，无限死循环。可以进入当前目录的.svn目录下，用Navicat 打开那个wc.db文件（用Navicat打开，如何<a href="https://jingyan.baidu.com/article/3d69c551626297f0cf02d78b.html" target="_blank" rel="external">打开请百度</a> ），然后清空</p>
+<p>svn提交失败，经常需要clean up，可是呢，点击clean up的时候又会显示clean up失败，请clean up，无限死循环。可以进入当前目录的.svn目录下，用Navicat 打开那个wc.db文件（用Navicat打开，如何<a href="https://jingyan.baidu.com/article/3d69c551626297f0cf02d78b.html" target="_blank" rel="noopener">打开请百度</a> ），然后清空</p>
 <p>work_queue和wc_lock就好了</p>
 
       
@@ -583,7 +583,7 @@ var jiathis_config={
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">54</span>
+                  <span class="site-state-item-count">55</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -724,7 +724,7 @@ var jiathis_config={
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count"> | 博客全站共60.7k字</span>
+  <span class="post-count"> | 博客全站共62.3k字</span>
 </div>
 
 
