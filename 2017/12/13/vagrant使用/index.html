@@ -89,7 +89,7 @@
 <meta property="og:site_name" content="语法糖的博客">
 <meta property="og:description" content="使用vagrant的原因？ 其实主要是因为来公司的时候用的这个东西，相比于传统的xampp这种window下的一体化工具，vagrant其实是在vitrual box 之上的一种管理工具，他是基于虚拟机的，所以你可以在虚拟机上干的事他都能干。 首先xampp是window平台下的，他的lamp这个l不具备，所以，你xampp永远都接触不到linux，但是vagrant不同，他是基于虚拟机的，虚拟机">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-04-17T07:36:16.419Z">
+<meta property="og:updated_time" content="2018-08-20T09:37:21.841Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="vagrant使用">
 <meta name="twitter:description" content="使用vagrant的原因？ 其实主要是因为来公司的时候用的这个东西，相比于传统的xampp这种window下的一体化工具，vagrant其实是在vitrual box 之上的一种管理工具，他是基于虚拟机的，所以你可以在虚拟机上干的事他都能干。 首先xampp是window平台下的，他的lamp这个l不具备，所以，你xampp永远都接触不到linux，但是vagrant不同，他是基于虚拟机的，虚拟机">
@@ -428,6 +428,11 @@
 <li>共享文件夹目录（用于写代码的目录）</li>
 </ol>
 <p>上面的1，3两个大文件默认都是在c盘，坑爹啊，结果我的c盘越来越小</p>
+<p>最近遇到的问题：</p>
+<p>1.Homestead 需要的vagrant是2.1版本，我那个是1.9，为了升级，我直接卸载了vagrant，然后装了新的vagrant，奇迹就是 vagrant box list 的时候之前的数据还在，zz，看了下文档，vagrant分为程序部分卸载和数据部分卸载，我们单单通过windows卸载的是程序部分， 如果我们删除了用户下.vagrant，那之前的数据才会丢失</p>
+<p>2.关于vagrant init 只是通过一个镜像文件生成一个vagrant file 文件，我们在使用homestead的时候，没有使用vagrant init ,直接是vagrant up，这样也是可以的，因为针对这个box的配置文件之前就已经存在了，homestead 中配置文件的名称是homestead.yaml</p>
+<p>3.vagrant的那些镜像应该都有个默认用户 vagrant vagrant，虽然这个用户的权利也不是很大，但是我们能通过sudo 完成我们的绝大多数操作</p>
+<p>4.之前那些suspend 的项目需要halt，然后up，如果直接resume 会有奇怪的问题</p>
 
       
     </div>
@@ -612,7 +617,7 @@ var jiathis_config={
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">55</span>
+                  <span class="site-state-item-count">56</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -753,7 +758,7 @@ var jiathis_config={
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count"> | 博客全站共62.3k字</span>
+  <span class="post-count"> | 博客全站共62.8k字</span>
 </div>
 
 

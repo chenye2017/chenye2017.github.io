@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[关于nginx的那些事]]></title>
+    <url>%2F2018%2F08%2F20%2F%E5%85%B3%E4%BA%8Enginx%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B%2F</url>
+    <content type="text"></content>
+  </entry>
+  <entry>
     <title><![CDATA[test]]></title>
     <url>%2F2018%2F08%2F17%2Ftest%2F</url>
     <content type="text"></content>
@@ -155,7 +160,7 @@
   <entry>
     <title><![CDATA[postgresql常见问题总结]]></title>
     <url>%2F2018%2F04%2F17%2Fpostgresql%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93%2F</url>
-    <content type="text"><![CDATA[本来是不想写这篇文章的，因为感觉自己对于postgresql理解不够深入，但因为生活中对于postgresql有些问题总是遇到，所以记录下来，方便以后查找。 1.navicate连接postgresql 第一次建立连接肯定会报错啦 上面初始数据库的意思并不是数据库的名称。毕竟这次连接成功后，里面有一堆的数据库 The server doesn’t grant access to the database: the server reportsFATAL: no pg_hba.conf entry for host “192.168.0.123”, user “postgres”, database “postgres” FATAL: no pg_hba.conf entry for host “192.168.0.123”, user “postgres”, database “postgres” 谷歌翻译 服务器不授予对数据库的访问权限：服务器报告FATAL：主机“192.168.0.123”，用户“postgres”，数据库“postgres”没有pg_hba.conf条目FATAL：主机“192.168.0.123”没有pg_hba.conf条目，用户“postgres”，数据库“postgres” 其实字面意思就很容易理解，虽然我还是百度的错误答案。我自己理解就是入口不被允许,就觉办法如下 PostgreSQL数据库为了安全，它不会监听除本地以外的所有连接请求，当用户通过JDBC访问是，会报一些如下的异常： org.postgresql.util.PSQLException: FATAL: no pg_hba.conf entry for host 要解决这个问题，只需要在PostgreSQL数据库的安装目录下找到/data/pg_hba.conf,找到“# IPv4 local connections:” 在其下加上请求连接的机器IP host all all 127.0.0.1/32 md5 //坑爹，那里面对于192.168.23.10当做192.168.23.1 32是子网掩码的网段；md5是密码验证方法，可以改为trust 一个服务器，有内网ip（类似192.168这些，有外网ip 211.这种，有127.0.0.1 这种，如果要包括所有的，就得用0.0.0.0，感觉如果你访问一个服务器用的是内网ip，应该意思就是你们在同一个局域网中吧。很奇怪的一点是，之前说vagrant会把ssh的22端口映射到host的2222端口，导致了127.0.0.1:2222或者192.168.23.10:22都能访问，其实不太懂这个原理，但好像这是由两个不同的网卡决定的，我好像把itbasic那上面一个网卡禁止了，导致127那种ssh访问不了，感觉就是虽然内网ip和外网ip可以对应同一个端口，但也可以对应不同的端口） 2.导入导出数据库 导出：/opt/pgsql/bin/pg_dump -U postgres itbasic &gt; /home/itbasic/itbasic.sql pg_dump 是postgresql安装之后的一个命令，-U 指定用户 postgres, itbasic,是数据库名，postgresql好像只能用postgres这个用户执行操作，itbasic这个数据库名一定要指定，还有pg_dump 这个命令所在目录没有加入系统变量的话，一定要加上路径，后面 &gt;/home/itbasic/itbasic.sql,代表数据导出到具体的文件中。 导出 数据库的导入必须要先创建这个数据库 postgresql安装之后的命令会有createdb，但用这个创建数据库感觉挺麻烦，直接 12341. /opt/pgsql/bin/pgsql -U postgres itbasic //进入pgsql 客户端2. create database project x //创建数据库3. \q //退出pgsql客户端4. /opt/pgsql/bin/pgsql -U postgres projectx -f /home/itbasic/projectx.sql //导入数据库 3.导入导出表 导入导出表和导入导出数据库的最大区别是导入导出数据库需要先建立一个数据库，而表则不用，最好还先把这张表删除了 导出 /opt/pgsql/bin/pg_dump -U postgres itbasic -t dt_admin &gt; /home/itbasic/admin.sql 导入 /opt/pgsql/bin/psql -U postgres itbasic -f /home/itbasic/admin.sql 4.数组类型 array_remove 会把出现的元素全都移除掉，而不是只移除一个 love=array_remove(love, chen.ye) array_append love= array_append(love, chen.ye) 如果元素不存在，也不会报错，只会接着往下执行 any() chenye = any(love) love这个字段中是否有陈野]]></content>
+    <content type="text"><![CDATA[本来是不想写这篇文章的，因为感觉自己对于postgresql理解不够深入，但因为生活中对于postgresql有些问题总是遇到，所以记录下来，方便以后查找。 1.navicate连接postgresql 第一次建立连接肯定会报错啦 上面初始数据库的意思并不是数据库的名称。毕竟这次连接成功后，里面有一堆的数据库 The server doesn’t grant access to the database: the server reportsFATAL: no pg_hba.conf entry for host “192.168.0.123”, user “postgres”, database “postgres” FATAL: no pg_hba.conf entry for host “192.168.0.123”, user “postgres”, database “postgres” 谷歌翻译 服务器不授予对数据库的访问权限：服务器报告FATAL：主机“192.168.0.123”，用户“postgres”，数据库“postgres”没有pg_hba.conf条目FATAL：主机“192.168.0.123”没有pg_hba.conf条目，用户“postgres”，数据库“postgres” 其实字面意思就很容易理解，虽然我还是百度的错误答案。我自己理解就是入口不被允许,就觉办法如下 PostgreSQL数据库为了安全，它不会监听除本地以外的所有连接请求，当用户通过JDBC访问是，会报一些如下的异常： org.postgresql.util.PSQLException: FATAL: no pg_hba.conf entry for host 要解决这个问题，只需要在PostgreSQL数据库的安装目录下找到/data/pg_hba.conf,找到“# IPv4 local connections:” 在其下加上请求连接的机器IP host all all 127.0.0.1/32 md5 //坑爹，那里面对于192.168.23.10当做192.168.23.1 32是子网掩码的网段；md5是密码验证方法，可以改为trust 一个服务器，有内网ip（类似192.168这些，有外网ip 211.这种，有127.0.0.1 这种，如果要包括所有的，就得用0.0.0.0，感觉如果你访问一个服务器用的是内网ip，应该意思就是你们在同一个局域网中吧。很奇怪的一点是，之前说vagrant会把ssh的22端口映射到host的2222端口，导致了127.0.0.1:2222或者192.168.23.10:22都能访问，其实不太懂这个原理，但好像这是由两个不同的网卡决定的，我好像把itbasic那上面一个网卡禁止了，导致127那种ssh访问不了，感觉就是虽然内网ip和外网ip可以对应同一个端口，但也可以对应不同的端口） 2.导入导出数据库 导出：/opt/pgsql/bin/pg_dump -U postgres itbasic &gt; /home/itbasic/itbasic.sql pg_dump 是postgresql安装之后的一个命令，-U 指定用户 postgres, itbasic,是数据库名，postgresql好像只能用postgres这个用户执行操作，itbasic这个数据库名一定要指定，还有pg_dump 这个命令所在目录没有加入系统变量的话，一定要加上路径，后面 &gt;/home/itbasic/itbasic.sql,代表数据导出到具体的文件中。 导出 数据库的导入必须要先创建这个数据库 postgresql安装之后的命令会有createdb，但用这个创建数据库感觉挺麻烦，直接 12341. /opt/pgsql/bin/pgsql -U postgres itbasic //进入pgsql 客户端2. create database project x //创建数据库3. \q //退出pgsql客户端4. /opt/pgsql/bin/pgsql -U postgres projectx -f /home/itbasic/projectx.sql //导入数据库 3.导入导出表 导入导出表和导入导出数据库的最大区别是导入导出数据库需要先建立一个数据库，而表则不用，最好还先把这张表删除了 导出 /opt/pgsql/bin/pg_dump -U postgres itbasic -t dt_admin &gt; /home/itbasic/admin.sql 导入 /opt/pgsql/bin/psql -U postgres itbasic -f /home/itbasic/admin.sql 4.数组类型 array_remove 会把出现的元素全都移除掉，而不是只移除一个 love=array_remove(love, chen.ye) array_append love= array_append(love, chen.ye) 如果元素不存在，也不会报错，只会接着往下执行 any() chenye = any(love) love这个字段中是否有陈野 5.今天在到处数据的时候发现了一个不得了的问题，就是通过命令导出的数据的时候当文件一定大的时候，会自动停止，但是导出语句不会报错，这就坑爹了，也就是说我每天备份的那些文件都没有任何的意义 可以通过 1/opt/pgsql/bin/pg_dump -U postgres itbasic -t &apos;(dt_user|dt_user_login|dt_userinfo)&apos; &gt; /home/itbasic/t4.sql 分表导出 表名的话可以通过 1select tablename from pg_tables where tablename like &apos;dt_%&apos; 筛选出来再连接，果然定义成有前缀好处颇多，要不然筛选出好多自带的无用的表 6.感觉要多看看别的项目是怎么进行数据备份的，之前的那种一次性导出的方式不行，当数据量大的时候，单表备份可能都不行。]]></content>
       <categories>
         <category>postgresql</category>
       </categories>
@@ -356,8 +361,8 @@
       <tags>
         <tag>PHP</tag>
         <tag>Linux</tag>
-        <tag>调试</tag>
         <tag>工具</tag>
+        <tag>调试</tag>
         <tag>Xdebug</tag>
       </tags>
   </entry>
@@ -370,8 +375,8 @@
       </categories>
       <tags>
         <tag>Linux</tag>
-        <tag>lamp</tag>
         <tag>环境</tag>
+        <tag>lamp</tag>
       </tags>
   </entry>
   <entry>
@@ -383,8 +388,8 @@
       </categories>
       <tags>
         <tag>Linux</tag>
-        <tag>环境</tag>
         <tag>lnmp</tag>
+        <tag>环境</tag>
       </tags>
   </entry>
   <entry>
@@ -440,7 +445,7 @@
   <entry>
     <title><![CDATA[vagrant使用]]></title>
     <url>%2F2017%2F12%2F13%2Fvagrant%E4%BD%BF%E7%94%A8%2F</url>
-    <content type="text"><![CDATA[使用vagrant的原因？ 其实主要是因为来公司的时候用的这个东西，相比于传统的xampp这种window下的一体化工具，vagrant其实是在vitrual box 之上的一种管理工具，他是基于虚拟机的，所以你可以在虚拟机上干的事他都能干。 首先xampp是window平台下的，他的lamp这个l不具备，所以，你xampp永远都接触不到linux，但是vagrant不同，他是基于虚拟机的，虚拟机可以装linux，所以使用vagrant，你可以使用linux。 使用vagrant首先得加载镜像，这个镜像就相当于最原始的环境，他是个box文件，想象一下，如果这个镜像是你们生产环境的打包，那你是不是就不用做别的处理就可以直接使用了，节省了新人安装环境的成本。 其实vagrant 构建开发环境分为两大部分，第一部分是加载镜像，这主要和box有关， so,先来介绍几个关于vagrant box 的相关命令 vagrant box add (镜像名自定义) 文件路径 （建议下载到本地，vagrant cloud 上面的文件下载很慢） vagrant box add（命名空间/文件名） 其实这样也是可以的，只是很慢 这样下载的文件放在了windows 用户 目录下面的 .vagrant 下面的box文件里面 这个可以修改的 setx VAGRANT_HOME = “” 路径名 /M 就可以了,/M代表整个系统都修改了 set 环境变量名 这样得到环境变量的值 set 环境变量= 这样是删除环境变量 vagrant box remove （box名称） 这样是删除box文件 vagrant box list 展示有哪些box文件 这样把远端或者是本地的box文件加载到系统中，如果是下载的.box文件就可以删除啦 镜像加载完成啦，接下来干嘛呢，就是在这个镜像的基础上构建虚拟环境，我们得用到vagrant的相关命令。 然后呢，新建个文件夹，建议vitrual，代表虚拟环境，再在下面新建单个项目的文件夹，这样的好处是vagrant虚拟环境不容易到处都有 进入对应文件夹（后面的这些vagrant操作命令都是在这个文件夹中进行的） vagrant init （add的box文件名） 初始化，会生成vagrant file 文件，修改其中的 config.vm.box = “new_itbasic” 这个代表box的名称 config.vm.network “private_network”, ip: “192.168.33.10” 私有网络只能自己通讯，相当于虚拟机里面的桥接，不能和局域网中的别的电脑通信（这个ip地址有要求吗） public 相当于net，可以和局域网中其他通信，记得得是局域网中同一个网段哦 config.vm.synced_folder “D:\code\yaf_api”, “/home/itbasic” 设置共享文件夹，配置文件中这上面是两个\\应该是为了转义 config.vm.boot_timeout = 100 config.ssh.username = “root” config.ssh.password = “root” 这个是为了直接可以远程连接虚拟机 配置好后，vagrant up 第一次好像都是用这个，重新加载配置文件了，其实点开vitrual box，会发现自动创建个虚拟机，然后 不用的时候挂起 vagrant suspend，再启动 vagrant resume vagrant halt 是关闭，vagrant reload 重新加载配置文件 vagrant status 查看虚拟机状态 vagrant package - -output itbasic.box 去自己的vitrual环境下，打包自己的环境成box文件，方便以后使用（好像vagrant 打包环境最好把虚拟机关掉，省略后面 - - output itbasic.box 默认生成package.box） vagrant destroy 摧毁虚拟机镜像，这个是保存位置是第三个位置了，这个是由vitrual box决定的，在vitrual box的全局设定里面。 几个坑 vagrant box 可能就2.5g，可是新建的虚拟机可能要10g，这就是我之前环境一直错误，以为是虚拟机的错误之类的，其实报错信息很明显，是我的磁盘空间不足，这里不是指虚拟环境vagrant up的那个文件夹，而是c盘装的virtual box 装的虚拟环境的文件夹。 新导入的虚拟机，可能没有mac地址，需要在网卡配置里面加入对应的mac地址，通过tail -f /var/logs/message 查看启动错误日志，看启动了哪些网卡，把不用的网卡onboot = no就好了，然后再systemctl start network,还可以systemctl stop networkmanger, systemctl disabled networkmanger, 这些不用的东西。 关掉网卡之后可能ssh有问题。config.ssh.host=”192.168.33.10” config.ssh.port=”22” config.ssh.username=”root” config.ssh.password=”root” 把ssh先配置好，要不然改了网卡之后可能连接不上。config.vm.boot_timeout=100 配置好超时时间，这样就不用一直等了。 总结一下：vagrant构建环境其实一共有4个文件夹的位置 vagrant box的文件位置，box add镜像之后，.box文件就可以不要了（如果以后要用，可以直接打包生成） vagrant 的虚拟环境，生成vagrant file 配置文件的目录 基于box生成的供vitrual box 使用的镜像存储目录 共享文件夹目录（用于写代码的目录） 上面的1，3两个大文件默认都是在c盘，坑爹啊，结果我的c盘越来越小]]></content>
+    <content type="text"><![CDATA[使用vagrant的原因？ 其实主要是因为来公司的时候用的这个东西，相比于传统的xampp这种window下的一体化工具，vagrant其实是在vitrual box 之上的一种管理工具，他是基于虚拟机的，所以你可以在虚拟机上干的事他都能干。 首先xampp是window平台下的，他的lamp这个l不具备，所以，你xampp永远都接触不到linux，但是vagrant不同，他是基于虚拟机的，虚拟机可以装linux，所以使用vagrant，你可以使用linux。 使用vagrant首先得加载镜像，这个镜像就相当于最原始的环境，他是个box文件，想象一下，如果这个镜像是你们生产环境的打包，那你是不是就不用做别的处理就可以直接使用了，节省了新人安装环境的成本。 其实vagrant 构建开发环境分为两大部分，第一部分是加载镜像，这主要和box有关， so,先来介绍几个关于vagrant box 的相关命令 vagrant box add (镜像名自定义) 文件路径 （建议下载到本地，vagrant cloud 上面的文件下载很慢） vagrant box add（命名空间/文件名） 其实这样也是可以的，只是很慢 这样下载的文件放在了windows 用户 目录下面的 .vagrant 下面的box文件里面 这个可以修改的 setx VAGRANT_HOME = “” 路径名 /M 就可以了,/M代表整个系统都修改了 set 环境变量名 这样得到环境变量的值 set 环境变量= 这样是删除环境变量 vagrant box remove （box名称） 这样是删除box文件 vagrant box list 展示有哪些box文件 这样把远端或者是本地的box文件加载到系统中，如果是下载的.box文件就可以删除啦 镜像加载完成啦，接下来干嘛呢，就是在这个镜像的基础上构建虚拟环境，我们得用到vagrant的相关命令。 然后呢，新建个文件夹，建议vitrual，代表虚拟环境，再在下面新建单个项目的文件夹，这样的好处是vagrant虚拟环境不容易到处都有 进入对应文件夹（后面的这些vagrant操作命令都是在这个文件夹中进行的） vagrant init （add的box文件名） 初始化，会生成vagrant file 文件，修改其中的 config.vm.box = “new_itbasic” 这个代表box的名称 config.vm.network “private_network”, ip: “192.168.33.10” 私有网络只能自己通讯，相当于虚拟机里面的桥接，不能和局域网中的别的电脑通信（这个ip地址有要求吗） public 相当于net，可以和局域网中其他通信，记得得是局域网中同一个网段哦 config.vm.synced_folder “D:\code\yaf_api”, “/home/itbasic” 设置共享文件夹，配置文件中这上面是两个\\应该是为了转义 config.vm.boot_timeout = 100 config.ssh.username = “root” config.ssh.password = “root” 这个是为了直接可以远程连接虚拟机 配置好后，vagrant up 第一次好像都是用这个，重新加载配置文件了，其实点开vitrual box，会发现自动创建个虚拟机，然后 不用的时候挂起 vagrant suspend，再启动 vagrant resume vagrant halt 是关闭，vagrant reload 重新加载配置文件 vagrant status 查看虚拟机状态 vagrant package - -output itbasic.box 去自己的vitrual环境下，打包自己的环境成box文件，方便以后使用（好像vagrant 打包环境最好把虚拟机关掉，省略后面 - - output itbasic.box 默认生成package.box） vagrant destroy 摧毁虚拟机镜像，这个是保存位置是第三个位置了，这个是由vitrual box决定的，在vitrual box的全局设定里面。 几个坑 vagrant box 可能就2.5g，可是新建的虚拟机可能要10g，这就是我之前环境一直错误，以为是虚拟机的错误之类的，其实报错信息很明显，是我的磁盘空间不足，这里不是指虚拟环境vagrant up的那个文件夹，而是c盘装的virtual box 装的虚拟环境的文件夹。 新导入的虚拟机，可能没有mac地址，需要在网卡配置里面加入对应的mac地址，通过tail -f /var/logs/message 查看启动错误日志，看启动了哪些网卡，把不用的网卡onboot = no就好了，然后再systemctl start network,还可以systemctl stop networkmanger, systemctl disabled networkmanger, 这些不用的东西。 关掉网卡之后可能ssh有问题。config.ssh.host=”192.168.33.10” config.ssh.port=”22” config.ssh.username=”root” config.ssh.password=”root” 把ssh先配置好，要不然改了网卡之后可能连接不上。config.vm.boot_timeout=100 配置好超时时间，这样就不用一直等了。 总结一下：vagrant构建环境其实一共有4个文件夹的位置 vagrant box的文件位置，box add镜像之后，.box文件就可以不要了（如果以后要用，可以直接打包生成） vagrant 的虚拟环境，生成vagrant file 配置文件的目录 基于box生成的供vitrual box 使用的镜像存储目录 共享文件夹目录（用于写代码的目录） 上面的1，3两个大文件默认都是在c盘，坑爹啊，结果我的c盘越来越小 最近遇到的问题： 1.Homestead 需要的vagrant是2.1版本，我那个是1.9，为了升级，我直接卸载了vagrant，然后装了新的vagrant，奇迹就是 vagrant box list 的时候之前的数据还在，zz，看了下文档，vagrant分为程序部分卸载和数据部分卸载，我们单单通过windows卸载的是程序部分， 如果我们删除了用户下.vagrant，那之前的数据才会丢失 2.关于vagrant init 只是通过一个镜像文件生成一个vagrant file 文件，我们在使用homestead的时候，没有使用vagrant init ,直接是vagrant up，这样也是可以的，因为针对这个box的配置文件之前就已经存在了，homestead 中配置文件的名称是homestead.yaml 3.vagrant的那些镜像应该都有个默认用户 vagrant vagrant，虽然这个用户的权利也不是很大，但是我们能通过sudo 完成我们的绝大多数操作 4.之前那些suspend 的项目需要halt，然后up，如果直接resume 会有奇怪的问题]]></content>
       <categories>
         <category>工具</category>
       </categories>
@@ -482,8 +487,8 @@
       </categories>
       <tags>
         <tag>Linux</tag>
-        <tag>工具</tag>
         <tag>命令</tag>
+        <tag>工具</tag>
       </tags>
   </entry>
   <entry>
@@ -494,8 +499,8 @@
         <category>Linux</category>
       </categories>
       <tags>
-        <tag>Linux</tag>
         <tag>网络</tag>
+        <tag>Linux</tag>
       </tags>
   </entry>
   <entry>

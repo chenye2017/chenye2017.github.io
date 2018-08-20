@@ -90,7 +90,7 @@
 <meta property="og:description" content="本来是不想写这篇文章的，因为感觉自己对于postgresql理解不够深入，但因为生活中对于postgresql有些问题总是遇到，所以记录下来，方便以后查找。">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://ozys8fka7.bkt.clouddn.com/TIM%E6%88%AA%E5%9B%BE20180417155030.png">
-<meta property="og:updated_time" content="2018-04-26T02:14:43.215Z">
+<meta property="og:updated_time" content="2018-08-20T11:53:04.460Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="postgresql常见问题总结">
 <meta name="twitter:description" content="本来是不想写这篇文章的，因为感觉自己对于postgresql理解不够深入，但因为生活中对于postgresql有些问题总是遇到，所以记录下来，方便以后查找。">
@@ -425,6 +425,14 @@
 <p>array_append   love= array_append(love, chen.ye)</p>
 <p>如果元素不存在，也不会报错，只会接着往下执行</p>
 <p>any()  chenye = any(love)  love这个字段中是否有陈野</p>
+<p>5.今天在到处数据的时候发现了一个不得了的问题，就是通过命令导出的数据的时候当文件一定大的时候，会自动停止，但是导出语句不会报错，这就坑爹了，也就是说我每天备份的那些文件都没有任何的意义</p>
+<p>可以通过</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/opt/pgsql/bin/pg_dump -U postgres itbasic -t &apos;(dt_user|dt_user_login|dt_userinfo)&apos; &gt; /home/itbasic/t4.sql</span><br></pre></td></tr></table></figure>
+<p>分表导出</p>
+<p>表名的话可以通过</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select tablename from pg_tables where tablename like &apos;dt_%&apos;</span><br></pre></td></tr></table></figure>
+<p>筛选出来再连接，果然定义成有前缀好处颇多，要不然筛选出好多自带的无用的表</p>
+<p>6.感觉要多看看别的项目是怎么进行数据备份的，之前的那种一次性导出的方式不行，当数据量大的时候，单表备份可能都不行。</p>
 
       
     </div>
@@ -607,7 +615,7 @@ var jiathis_config={
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">55</span>
+                  <span class="site-state-item-count">56</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -748,7 +756,7 @@ var jiathis_config={
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count"> | 博客全站共62.3k字</span>
+  <span class="post-count"> | 博客全站共62.8k字</span>
 </div>
 
 
