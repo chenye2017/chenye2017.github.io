@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[关于单点登陆的那些事]]></title>
+    <url>%2F2018%2F09%2F04%2F%E5%85%B3%E4%BA%8E%E5%8D%95%E7%82%B9%E7%99%BB%E9%99%86%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B%2F</url>
+    <content type="text"><![CDATA[最近老大希望把项目中的用户登陆模块独立出来，起初是公司的各个部门都有一些自己的小项目，但因为是公司内部的项目，所以肯定就不能走一半网站的那种注册流程，一般情况下需要个审批人，注册的时候只有公司内部员工可以通过。可能通过接口ip的限制，比如智能内网访问注册接口可以起到同样的作用，但他们一致决定后这个东西还是独立出来，然后老大就交给了我，于是乎开始了解了下单点登录.单点登录：简单理解成一处登陆，到处登陆，一处登出，各处登出。其实在生活中的应用还是满广泛的。比如你登录淘宝的网站，可能当你跳转到天猫上，也不需要登陆，光从界面上看，也能分辨这是两个网站，这两个网站肯定有各自的登陆机制，其实内部就是用了单点登录的原理，让用户无感知的情况下实现一个账户在各个网站下的登陆登出。后来在写的过程中，发现这个单点登录也有点第三方登陆的意思，这个第三方就是sso登陆中心。很多人广从字面意义上看，可能会觉的单点登录应该是这样：一个用户在这个地方登陆了，比如手机上或者上海登陆了，当在电脑上登陆或者安徽登陆了，之前登陆过的账号会下线，但这并不是单点登录哦，想了下，上述功能实现起来也挺简单，比如我们经常存取 token =》 用户信息这样的登陆凭证，又或者是session_id =&gt; session 信息（用户信息）这样的登陆凭证，不妨我们在用户登陆的时候，再存储一封 用户id =&gt; 用户信息，这样我们可以很方便的统计有哪些在线用户，哪个用户是否在线（前面第一种的话需要遍历所有的session文件取出用户id）。当我们登陆接口产生了一个新的token =》 用户信息的时候，我们检测下这个用户是否在已登录列表，如果有，我们服务端直接让之前的token失效就可以了，就能实现前面账号的下线。回归正题，关于单点登录单点登录的原理大致就是上面了：1.先登录普通web1，web1后台检测是否登陆了，如果登陆过，直接跳转到web1,如果没有登陆，跳转到sso登陆中心。sso中心检测这个用户是否登陆过，如果没有登陆，跳转到sso登陆界面，输入用户名和密码（之前为什么说单点登录很像第三方登陆呢，因为接入单点登录的web1也不知道即使能登陆到他这个平台上的用户的用户名和密码，用户登陆的操作逻辑都是sso 这个第三方维护的，web1只是在登陆sso成功之后维护一个用户和web1的登陆态，比如web1派发给用户一把钥匙，以后拿着这把钥匙就代表你是web用户了），用户成功登陆sso这个中央站点后（用户和sso之间的登陆成功搭建成，之前我是通过jwt的方式维护用户和sso之间的，jwt相比较传统的cookie和session就是通过签名的方式能防止用户篡改已登录人的信息），sso会回调web1站点上提前设置好的接口（这个我当时是在跳转到登陆中心的时候附带在url后面参数，其实这个可以提前设定好，然后通过传入一个参数web1，sso去后台查找需要的会掉地址），传给他一个参数，可以理解成一个ticket，web1拿着这个ticket可以换取正在登陆的用户的用户信息，拿到之后web1就能实现自己的业务逻辑了，比如检测这个用户是不是第一次登陆，如果是第一次登陆的话需要绑定用户信息之类的，然后维护用户和web1之间的登陆状态建成。上面需要注意的点就是客户端如何接受服务端生成的登陆凭证.首先是用户和sso中心，这个好解决，因为我们的登陆页面可以可以当做一个静态页面，我们可以在上面写js，这就方便了，我们发送一个ajax请求给sso，成功后把返回的登陆凭证放在cookie中，每次调用sso接口比如验证用户是否登陆的时候都会携带着这个cookie，！！！千万要注意，携带这个中在客户端浏览器的cookie的前提是通过ajax之类的访问，你别通过curl之类的访问，curl需要自己手动设置cookie，并不会像浏览器一样自动添加上，所以我们在后台一般要用header location之类的跳转，而不是curl.web1和用户之间登陆态的维护：这块我没有使用header location跳转，用的是ajax返回给前端页面，前端页面去跳转，之所以这么做，好像是用第一种好像有点问题，没有去研究了，因为时间赶啊！！！前端拿着这个ticket，哈哈哈，你是不是担心不安全，我也担心呢！！而且我这块直接用的url跳转，为什么呢，因为我的后台是获取用户信息之后直接跳转，并不需要ajax那种返回了，如果这里用返回，首先是前台页面并不知道维护好登陆信息之后需要挑战的地址（这个静态页面是sso的），然后呢，如果通过ajax，后台跳转可能有些错误，之前那个sso登陆成功后台跳转不到web1，可能就是这个问题。web1的回调地址里面通过ticket拿到用户信息之后可以做很多自己事情了，比如绑定用户，比如验证用户是否合法等等 2.单点退出一处退出，处处退出。我是这样做的，当登陆成功后，会在数据库中写入，这个用户的登出地址，当我们登出的时候，查询数据库，所有用户的登出地址，循环调用，需要注意的是我们传给用户的是只能是user_id之类的公有信息，各个子网站接收到之后，需要拿这个信息获取用户的登陆凭证，然后让其失效。我是这样做的：redis中存储着phpsessid（我们用的传统的cookie session）,然后curl 模拟请求的时候cookie带上这个，··然后就实现啦 思考：如果我们模拟请求的时候带上完全一样的头信息，是不是就能达到和浏览器一样的效果了，··有些能，比如上面的登出，但是设置cookie不可以，明明就是header加上点信息嘛，为什么不可以呢，因为cookie只能在浏览器上使用？还有很多优化的空间，比如回调多个登出接口，用的消息队列，如果一个出错，是记日志吗，还是什么zzz每个网站需要自己的登陆界面嘛，这样每次未登录定位到登陆界面之后就只有个登陆按钮，点击之后才能进入sso输入用户名和密码，相比较之前略麻烦，但是如果sso登陆之后，我们点击就能直接跳转到我们的网站，感觉这样更符合单点登录。而且住校之后我们可以定位到普通网站的登陆界面，而且点击因为可以加回调地址，我觉得还是不能省略的。代码就不放了，放些接口的函数吧sso :login :检测是直接跳转到登陆页面还是检测cookie是否有效，有效回调web1站点地址，无效跳转到登陆界面（看了下仿佛ajax中header location 就是有点问题）logout web1:login: 判断是去sso还是直接登陆logout:退出，需要回调 sso 的logout, 注销sso还有各个子网站ssologin:回调登陆地址ssologout：回调登出地址]]></content>
+  </entry>
+  <entry>
     <title><![CDATA[关于nginx的那些事]]></title>
     <url>%2F2018%2F08%2F20%2F%E5%85%B3%E4%BA%8Enginx%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B%2F</url>
     <content type="text"></content>
@@ -9,11 +14,6 @@
     <title><![CDATA[test]]></title>
     <url>%2F2018%2F08%2F17%2Ftest%2F</url>
     <content type="text"></content>
-  </entry>
-  <entry>
-    <title><![CDATA[Hello World]]></title>
-    <url>%2F2018%2F08%2F17%2Fhello-world%2F</url>
-    <content type="text"><![CDATA[Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick StartCreate a new post1$ hexo new "My New Post" More info: Writing Run server1$ hexo server More info: Server Generate static files1$ hexo generate More info: Generating Deploy to remote sites1$ hexo deploy More info: Deployment]]></content>
   </entry>
   <entry>
     <title><![CDATA[Laravel 数据库相关操作]]></title>
@@ -375,8 +375,8 @@
       </categories>
       <tags>
         <tag>Linux</tag>
-        <tag>环境</tag>
         <tag>lamp</tag>
+        <tag>环境</tag>
       </tags>
   </entry>
   <entry>
@@ -388,8 +388,8 @@
       </categories>
       <tags>
         <tag>Linux</tag>
-        <tag>lnmp</tag>
         <tag>环境</tag>
+        <tag>lnmp</tag>
       </tags>
   </entry>
   <entry>
@@ -499,8 +499,8 @@
         <category>Linux</category>
       </categories>
       <tags>
-        <tag>网络</tag>
         <tag>Linux</tag>
+        <tag>网络</tag>
       </tags>
   </entry>
   <entry>
