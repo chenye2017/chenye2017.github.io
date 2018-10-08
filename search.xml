@@ -187,9 +187,9 @@
         <category>apache</category>
       </categories>
       <tags>
+        <tag>框架</tag>
         <tag>apache</tag>
         <tag>linux</tag>
-        <tag>框架</tag>
       </tags>
   </entry>
   <entry>
@@ -357,8 +357,8 @@
       </categories>
       <tags>
         <tag>PHP</tag>
-        <tag>框架</tag>
         <tag>ThinkPHP5</tag>
+        <tag>框架</tag>
       </tags>
   </entry>
   <entry>
@@ -385,8 +385,8 @@
       </categories>
       <tags>
         <tag>Linux</tag>
-        <tag>环境</tag>
         <tag>lamp</tag>
+        <tag>环境</tag>
       </tags>
   </entry>
   <entry>
@@ -398,8 +398,8 @@
       </categories>
       <tags>
         <tag>Linux</tag>
-        <tag>lnmp</tag>
         <tag>环境</tag>
+        <tag>lnmp</tag>
       </tags>
   </entry>
   <entry>
@@ -521,9 +521,9 @@
         <category>PHP</category>
       </categories>
       <tags>
+        <tag>框架</tag>
         <tag>apache</tag>
         <tag>linux</tag>
-        <tag>框架</tag>
         <tag>php</tag>
       </tags>
   </entry>
