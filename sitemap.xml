@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yoursite.com/2018/07/29/%E5%85%B3%E4%BA%8Ecomposer/</loc>
+    
+    <lastmod>2018-10-10T03:42:40.020Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/2018/09/11/%E7%BD%91%E7%AB%99%E5%8D%87%E7%BA%A7https/</loc>
     
     <lastmod>2018-09-11T06:57:58.961Z</lastmod>
@@ -75,13 +82,6 @@
     <loc>http://yoursite.com/2018/07/29/Laravel-migrate-%E6%95%B0%E6%8D%AE%E8%BF%81%E7%A7%BB/</loc>
     
     <lastmod>2018-07-29T15:42:19.410Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2018/07/29/%E5%85%B3%E4%BA%8Ecomposer/</loc>
-    
-    <lastmod>2018-07-29T15:41:17.557Z</lastmod>
     
   </url>
   
