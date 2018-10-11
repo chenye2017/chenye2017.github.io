@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="PHP,Laravel," />
 
 
 
@@ -81,17 +81,18 @@
 
 
 
-<meta name="description" content="想用善良改变世界">
+<meta name="description" content="关于路由的一些总结">
+<meta name="keywords" content="PHP,Laravel">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Laravel router">
 <meta property="og:url" content="http://yoursite.com/2018/07/29/Laravel-router/index.html">
 <meta property="og:site_name" content="语法糖的博客">
-<meta property="og:description" content="想用善良改变世界">
+<meta property="og:description" content="关于路由的一些总结">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-08-15T03:08:32.452Z">
+<meta property="og:updated_time" content="2018-10-11T03:53:04.177Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Laravel router">
-<meta name="twitter:description" content="想用善良改变世界">
+<meta name="twitter:description" content="关于路由的一些总结">
 
 
 
@@ -332,6 +333,28 @@
           </span>
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/PHP/" itemprop="url" rel="index">
+                    <span itemprop="name">PHP</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -359,7 +382,14 @@
       
 
       
-        
+        <p>关于路由的一些总结</p>
+<a id="more"></a>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">Route::get(&apos;/&apos;, &apos;StaticPagesController@home&apos;)-&gt;name(&apos;home&apos;);</span><br><span class="line">Route::get(&apos;/help&apos;, &apos;StaticPagesController@help&apos;)-&gt;name(&apos;help&apos;);</span><br><span class="line">Route::get(&apos;/about&apos;, &apos;StaticPagesController@about&apos;)-&gt;name(&apos;about&apos;);</span><br></pre></td></tr></table></figure>
+<p>这个name是用来命名的，命名有什么用，看下面</p>
+<p>route(‘help’)  =&gt; 这个help 是路由命名，user.help 更为准确</p>
+<p>route(‘help’,[1,2])  =&gt; 多个参数传递数组</p>
+<p>这个函数的参数，通过下面这个函数，配合配置得环境变量，可以生成前端可以访问路径的，如果很直白的写url，以后url改动的时候但凡用到的地方，都需要改动</p>
+
       
     </div>
     
@@ -413,6 +443,14 @@
     
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/PHP/" rel="tag"><i class="fa fa-tag"></i> PHP</a>
+          
+            <a href="/tags/Laravel/" rel="tag"><i class="fa fa-tag"></i> Laravel</a>
+          
+        </div>
       
 
       
@@ -533,7 +571,7 @@ var jiathis_config={
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">58</span>
+                  <span class="site-state-item-count">59</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -674,7 +712,7 @@ var jiathis_config={
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count"> | 博客全站共68.7k字</span>
+  <span class="post-count"> | 博客全站共70.0k字</span>
 </div>
 
 

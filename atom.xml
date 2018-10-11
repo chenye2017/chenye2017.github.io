@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-09-11T06:57:58.961Z</updated>
+  <updated>2018-10-11T06:24:36.163Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,30 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Laravel 关于blade</title>
+    <link href="http://yoursite.com/2018/10/10/Laravel-%E5%85%B3%E4%BA%8Eblade(%E6%A8%A1%E6%9D%BF%E5%BC%95%E6%93%8E)/"/>
+    <id>http://yoursite.com/2018/10/10/Laravel-关于blade(模板引擎)/</id>
+    <published>2018-10-10T08:45:23.000Z</published>
+    <updated>2018-10-11T06:24:36.163Z</updated>
+    
+    <content type="html"><![CDATA[<p>其实现在都是前后端分离的，应该蛮少用到模板引擎这种东西，作为上一个web时代的产物，其实模板引擎开发起来还是蛮快的，而且挺简单的。</p><a id="more"></a><p>itbasic 用的也是模板引擎，名twig，其实和blade没有多少不同的地方，只是自己发现的twig新功能还比较少，只是一直在原先的基础上堆代码，感觉上在模板引擎里面还是不要做过多的逻辑判断，否则后面会越写越复杂，而且难于维护。</p><p>对于web网站，我们有很多页面，但这些页面大部分都是相同的？因为我们的布局需要相同，这个其实在写itbasic的时候应该能感觉到，我们似乎只需要填充中间的content部分就好了</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;html&gt;</span><br><span class="line">    &lt;head&gt;</span><br><span class="line">        &lt;title&gt;@yield(&apos;title&apos;,&apos;测试&apos;)&lt;/title&gt;</span><br><span class="line">    &lt;/head&gt;</span><br><span class="line">    &lt;body&gt;</span><br><span class="line">        @yield(&apos;content&apos;)</span><br><span class="line">    &lt;/body&gt;</span><br><span class="line"></span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure><p>什么是yield ,就是让继承者可以填充的东西，继承者通过</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">@extends(&apos;layout.blade&apos;) //继承上一个模板</span><br><span class="line">@section(&apos;title&apos;, &apos;cy&apos;)  //填充数据</span><br><span class="line"></span><br><span class="line">@section(&apos;content&apos;)   //这种方式填充数据要有结束符号</span><br><span class="line">&lt;h1&gt;222&lt;/h1&gt;</span><br><span class="line">@stop</span><br></pre></td></tr></table></figure><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">@include(&apos;default.ce&apos;)  // 包含额外的页面</span><br><span class="line">//传递变量，include(&apos;default.ce&apos;, [&apos;user&apos;=&gt;$user])</span><br></pre></td></tr></table></figure><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">//判断</span><br><span class="line">@if ($a &gt; 0)</span><br><span class="line">&lt;h1&gt;cc&lt;/h1&gt;</span><br><span class="line">@endif</span><br><span class="line"></span><br><span class="line">//循环</span><br><span class="line">@foreach($counts as $count)</span><br><span class="line">&lt;li&gt;&lt;/li&gt;</span><br><span class="line">@endforeach</span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;其实现在都是前后端分离的，应该蛮少用到模板引擎这种东西，作为上一个web时代的产物，其实模板引擎开发起来还是蛮快的，而且挺简单的。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="PHP" scheme="http://yoursite.com/categories/PHP/"/>
+    
+    
+      <category term="PHP" scheme="http://yoursite.com/tags/PHP/"/>
+    
+      <category term="Laravel" scheme="http://yoursite.com/tags/Laravel/"/>
+    
+  </entry>
   
   <entry>
     <title>网站升级https</title>
@@ -39,9 +63,9 @@
     <link href="http://yoursite.com/2018/09/07/%E8%BF%99%E5%8F%AF%E8%83%BD%E6%98%AF%E4%B8%9C%E5%8D%8A%E7%90%83%E6%9C%80%E5%A5%BD%E7%9A%84git%E5%85%A5%E9%97%A8%E4%BA%86/"/>
     <id>http://yoursite.com/2018/09/07/这可能是东半球最好的git入门了/</id>
     <published>2018-09-07T07:51:06.000Z</published>
-    <updated>2018-10-10T05:16:35.439Z</updated>
+    <updated>2018-10-10T13:45:15.259Z</updated>
     
-    <content type="html"><![CDATA[<p>写后感：以后自己再也不去写关于教程方面的文章了，因为内容实在是太多了，而且很多细小的知识点，其实之前也写过关于python的一个教程，初衷只是担心自己忘记的太快，方便以后的学习，其实就是笔记的整理，反正这两篇写的都很烂，希望自己记住这方面的教训，以后这类文章就是对于自己碰到问题的解决方案吧，实在有些基础内容不记得，就直接看笔记吧</p><p>为什么要取这个名字呢，其实就是我最近看到好多这种名字，然后呢自己很喜欢，就也用了这个名字，但这肯定不是东半球最好的git文章啦，倒数最好的还有可能哦，推荐几篇我比较喜欢的git文章，廖雪峰的git入门教程，掘金小册git教程，其实还有个图解git也挺好的，但我比较笨呢，然后觉得git看了几个就差不多了，图解git可能更适合那些已经用过并了解过git的人，还有就是毕竟不同的人对于git的解读还是不一样的，不同的文章混合在一起看会很难受，最后想说的就是编程要来自实践，工作中不同的困难能加深你对git的认知，因为我们平时用的svn，所以我把git的基本操作记录下来，方便以后的学习。<br><a id="more"></a></p><p>git 和 svn 的区别 ：<br>应该是面试中经常问到的，svn是集中式版本控制系统，git是分布式。<br>1.我们代码的svn提交流程<br>本地修改=》svn服务器=》线上环境，拉取svn服务器最新代码<br>2.我平时用的git提交流程<br>本地修改=》github (远程仓库) =》线上环境<br>哈哈哈，是不是感觉一样，这样使用起来确实是一样的。</p><p>git中每个成员的电脑都相当于一个代码仓库，所以是分布式，svn 只有一个中央服务器，理解成集中式。svn必须联网才能使用，因为我们需要把本地代码提交到中央服务器上，但是git就不需要，因为git可以先把代码提交到本地代码仓库，以后等有网络了再推送到远程仓库，所以是不是可以理解成svn只有在网络许可的情况下，我们才能用他上面的一些功能，但是git不一样，git在本地操作就能完成提交，代码对比的相关功能。</p><p>git 全局配置</p><p>git config –global user.name “Your Name”    //其实这就是给提交日志上面看的</p><p>git config –global user.email your@example.com</p><p>详细的说下git 推送流程：</p><ol><li>github<br>在github 上新建远程仓库<br>git clone 远程仓库地址<br>git init  (把整个文件夹添托管给git)<br>git add  .  (以后有文件修改的话)<br>git commit -m  “message”  （推送到本地仓库）<br>git push （推送到远程仓库）</li></ol><p>git add .   其实是把文件修改内容添加到暂存区，暂存区是什么，暂存区就是 .git 这个隐藏文件夹下面的index （还记得同事之前说过的让我解决代码冲突时候的一种办法，删除掉.git 或者.svn 文件夹，因为这个文件夹里面保存了我们所有的提交信息，然后我们再设置当前文件夹的远程提交仓库就好了），！！！注意添加到暂存区的是文件修改内容，想象一下，我们每次修改文件后都需要git add 一次就是这个原因，但文件第一次添加后以后没有git add  就是 unstaged, 如果一次都没添加那是 untracked 未追踪的状态，两个还是不一样的。</p><p>撤销git add . (或者文件名)， 通过 git reset head ，可以删除暂存区的内容，这个可以通过git status ，上面会有提示。<br>git commit -m ‘message’ 提交到本地仓库，之后就能看到git log, 其实这也能看做和svn的区别之一？这是掘金小册的作者说的，svn 代码提交就直接在线上环境了，git还只是本地仓库，也可以这么理解吧。<br>git push 远程推送 ，其实是 git push origin master:master ,有时候我们想推送别的分支，可以通过git push origin test:test, origin 是 远程仓库的默认名称。</p><ol><li>一般书上写的团队合作推送流程<br>git checkout dev<br>git checkout -b book<br>git add .<br>git commit<br>git checkout dev<br>git merge<br>git push origin dev:dev</li></ol><p>老大们 ：在master分支上合并dev<br>我们一般在dev分支上开发，我们本地新建一个小的分支，然后进行开发，开发完了合并到dev分支上，然后提交dev分支。<br>以后远程仓库的dev分支合并到master分支上就是老大的事情了</p><p>3.表哥他们的流程<br>每次新建一个本地分支，然后推送到远程，在自己弄得这个分支上开发，然后合并主分支到自己的分支上，开发完了推送到远程分支，因为远程分支是空的，永远不会冲突，但每次自己合并master分支的时候肯定有冲突。</p><p>自己git的日常：</p><ol><li>提交的时候经常看到 up-to-date, 这是最新的意思 （话说简书的md编辑器真的挺好用，复制的图片就直接上传到他们服务器上了，还能转换成md的标签）</li></ol><p><img src="https://upload-images.jianshu.io/upload_images/5525740-246f7dc2d79ad61a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p><p> 这个是我们经常git commit 之后看到的，代表你要提交啦，你本地仓库代表的commit记录已经在远程仓库之前了。</p><p>如果别人也有提交，脑补一下小册上的gif图片，提交肯定有冲突，需要git pull, 下拉代码进行合并。</p><ol><li><p>你需要手动处理冲突，然后git add ., git commit ,然后再git push .<br>注意git push的时候肯定不会冲突，因为git push 就相当于用本地代码覆盖线上代码。</p></li><li><p>head ，master ，branch 都代表一个commit<br><img src="https://upload-images.jianshu.io/upload_images/5525740-19cb5fcfb13f2e0b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p></li></ol><p>有时候我们理解branch ，树枝代表一个很长的提交，其实也还好，但其实不用关心那么长的提交记录啦，知道代表一个commit 就好了，或者是掘金小册中的一个小圆点。</p><ol><li>git log  查看提交记录<br>git log –path   查看详细的修改，其实感觉这种通过ui看就行了，比较方便嘛<br>git log –stat   简单的查看哪些文件修改了</li></ol><p>5 <img src="https://upload-images.jianshu.io/upload_images/5525740-fb95afa267114b40.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p><p>head 按理说肯定跟着最新的提交跑，但远程仓库默认就是在master分支上，改不了，所以一直指向的就是master分支上的最新提交</p><ol><li>git branch -a ,可以查看本地分支和远程分支，并不是本地建了分支，远程就要有，需要推送的，然</li></ol>]]></content>
+    <content type="html"><![CDATA[<p>写后感：以后自己再也不去写关于教程方面的文章了，因为内容实在是太多了，而且很多细小的知识点，其实之前也写过关于python的一个教程，初衷只是担心自己忘记的太快，方便以后的学习，其实就是笔记的整理，反正这两篇写的都很烂，希望自己记住这方面的教训，以后这类文章就是对于自己碰到问题的解决方案吧，实在有些基础内容不记得，就直接看笔记吧</p><p>为什么要取这个名字呢，其实就是我最近看到好多这种名字，然后呢自己很喜欢，就也用了这个名字，但这肯定不是东半球最好的git文章啦，倒数最好的还有可能哦，推荐几篇我比较喜欢的git文章，廖雪峰的git入门教程，掘金小册git教程，其实还有个图解git也挺好的，但我比较笨呢，然后觉得git看了几个就差不多了，图解git可能更适合那些已经用过并了解过git的人，还有就是毕竟不同的人对于git的解读还是不一样的，不同的文章混合在一起看会很难受，最后想说的就是编程要来自实践，工作中不同的困难能加深你对git的认知，因为我们平时用的svn，所以我把git的基本操作记录下来，方便以后的学习。<br><a id="more"></a></p><p>git 和 svn 的区别 ：<br>应该是面试中经常问到的，svn是集中式版本控制系统，git是分布式。<br>1.我们代码的svn提交流程<br>本地修改=》svn服务器=》线上环境，拉取svn服务器最新代码<br>2.我平时用的git提交流程<br>本地修改=》github (远程仓库) =》线上环境<br>哈哈哈，是不是感觉一样，这样使用起来确实是一样的。</p><p>git中每个成员的电脑都相当于一个代码仓库，所以是分布式，svn 只有一个中央服务器，理解成集中式。svn必须联网才能使用，因为我们需要把本地代码提交到中央服务器上，但是git就不需要，因为git可以先把代码提交到本地代码仓库，以后等有网络了再推送到远程仓库，所以是不是可以理解成svn只有在网络许可的情况下，我们才能用他上面的一些功能，但是git不一样，git在本地操作就能完成提交，代码对比的相关功能。</p><p>git 全局配置</p><p>git config –global user.name “Your Name”    //其实这就是给提交日志上面看的</p><p>git config –global user.email your@example.com</p><p>详细的说下git 推送流程：</p><ol><li><p>github<br>在github 上新建远程仓库<br>git clone 远程仓库地址<br>git init  (把整个文件夹添托管给git)<br>git add  .  (以后有文件修改的话，并不是第一次文件修改了之后以后的文件修改就不用add了，add 只是把修改的内容添加到缓冲区，以后修改的时候还是要田间的)</p><p>撤销缓冲区的修改 （应该可以针对某文件）<br>git commit -m  “message”  （推送到本地仓库）</p><p>撤销本地仓库的修改（应该可以针对某文件）<br>git push （推送到远程仓库）</p><p>git status 看查暂存区状态</p><p>查看当前文件夹关联的远程仓库</p><p>给当前文件夹添加远程仓库</p></li></ol><p>git add .   其实是把文件修改内容添加到暂存区，暂存区是什么，暂存区就是 .git 这个隐藏文件夹下面的index （还记得同事之前说过的让我解决代码冲突时候的一种办法，删除掉.git 或者.svn 文件夹，因为这个文件夹里面保存了我们所有的提交信息，然后我们再设置当前文件夹的远程提交仓库就好了），！！！注意添加到暂存区的是文件修改内容，想象一下，我们每次修改文件后都需要git add 一次就是这个原因，但文件第一次添加后以后没有git add  就是 unstaged, 如果一次都没添加那是 untracked 未追踪的状态，两个还是不一样的。</p><p>撤销git add . (或者文件名)， 通过 git reset head ，可以删除暂存区的内容，这个可以通过git status ，上面会有提示。<br>git commit -m ‘message’ 提交到本地仓库，之后就能看到git log, 其实这也能看做和svn的区别之一？这是掘金小册的作者说的，svn 代码提交就直接在线上环境了，git还只是本地仓库，也可以这么理解吧，git commit之后如果没有冲突就可以理解成一次版本更替了，但我们需要把他替换到线上，所以我们需要push(注意push的时候并不会产生冲突，冲突发生在push之前的更新本地代码)<br>git push 远程推送 ，其实是 git push origin master:master ,有时候我们想推送别的分支，可以通过git push origin test:test, origin 是 远程仓库的默认名称。</p><ol><li>一般书上写的团队合作推送流程<br>git checkout dev<br>git checkout -b book<br>git add .<br>git commit<br>git checkout dev<br>git merge<br>git push origin dev:dev</li></ol><p>老大们 ：在master分支上合并dev<br>我们一般在dev分支上开发，我们本地新建一个小的分支，然后进行开发，开发完了合并到dev分支上，然后提交dev分支。<br>以后远程仓库的dev分支合并到master分支上就是老大的事情了</p><p>3.表哥他们的流程<br>每次新建一个本地分支，然后推送到远程，在自己弄得这个分支上开发，然后合并主分支到自己的分支上，开发完了推送到远程分支，因为远程分支是空的，永远不会冲突，但每次自己合并master分支的时候肯定有冲突。</p><p>自己git的日常：</p><ol><li>提交的时候经常看到 up-to-date, 这是最新的意思 （话说简书的md编辑器真的挺好用，复制的图片就直接上传到他们服务器上了，还能转换成md的标签）</li></ol><p><img src="https://upload-images.jianshu.io/upload_images/5525740-246f7dc2d79ad61a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p><p> 这个是我们经常git commit 之后看到的，代表你要提交啦，你本地仓库代表的commit记录已经在远程仓库之前了。</p><p>如果别人也有提交，脑补一下小册上的gif图片，提交肯定有冲突，需要git pull, 下拉代码进行合并。</p><ol><li><p>你需要手动处理冲突，然后git add ., git commit ,然后再git push .<br>注意git push的时候肯定不会冲突，因为git push 就相当于用本地代码覆盖线上代码。</p></li><li><p>head ，master ，branch 都代表一个commit<br><img src="https://upload-images.jianshu.io/upload_images/5525740-19cb5fcfb13f2e0b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p></li></ol><p>有时候我们理解branch ，树枝代表一个很长的提交，其实也还好，但其实不用关心那么长的提交记录啦，知道代表一个commit 就好了，或者是掘金小册中的一个小圆点。</p><ol><li>git log  查看提交记录<br>git log –path   查看详细的修改，其实感觉这种通过ui看就行了，比较方便嘛<br>git log –stat   简单的查看哪些文件修改了</li></ol><p>5 <img src="https://upload-images.jianshu.io/upload_images/5525740-fb95afa267114b40.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p><p>head 按理说肯定跟着最新的提交跑，但远程仓库默认就是在master分支上，改不了，所以一直指向的就是master分支上的最新提交</p><ol><li>git branch -a ,可以查看本地分支和远程分支，并不是本地建了分支，远程就要有，需要推送的，然</li></ol><p>git 的分支操作应该还是蛮常见的，但其实因为我自己开发直接就是主分支，所以感觉不到</p><p><img src="https://upload-images.jianshu.io/upload_images/5525740-b735ea60e2199e18.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p><p>编辑器这种线面都能自带切换分支</p><p>切换分支之前一定要commit ,否则我之前好像容易丢失那些没有提交的内容</p>]]></content>
     
     <summary type="html">
     
@@ -132,9 +156,13 @@
     <link href="http://yoursite.com/2018/07/29/Laravel-migrate-%E6%95%B0%E6%8D%AE%E8%BF%81%E7%A7%BB/"/>
     <id>http://yoursite.com/2018/07/29/Laravel-migrate-数据迁移/</id>
     <published>2018-07-29T15:42:19.000Z</published>
-    <updated>2018-07-29T15:42:19.410Z</updated>
+    <updated>2018-10-11T02:32:25.730Z</updated>
+    
+    <content type="html"><![CDATA[<p>虽然表哥说他们都不用这种方式，但这种方式确实很方便的解决了团队合作的时候数据库表的同步问题，像我们itbasic 就每次上线或者给队友同步数据库的时候都得自己手动去处理，而且这种方式更多的把sql语句转换成php语言处理，不知道建索引那些会不会很方便.</p><a id="more"></a><p>文件位置和命名：</p><ul><li>database/migrations/2014_10_12_000000_create_users_table.php</li></ul><p>通过artisan 命令能直接生成对应目录下的文件</p><p>注意up 和 down 方法，分别是的执行的时候，还有回滚的时候的执行</p><p>注意create 和 update 表结构的时候的区别</p><p>自增：increment </p><p>字符串： string  ， 方法的第二个参数限制最大长度</p><p>唯一： unique，感觉就像数据库的唯一索引</p><p>创建时间和修改时间，通过 timestamps 就能生成</p><p>记住我： rememberToken, 虽然一直不太清楚这个干啥的</p><p>create =&gt;  dropIfExists() , 创建 回滚的时候对应 删除</p>]]></content>
     
     <summary type="html">
+    
+      &lt;p&gt;虽然表哥说他们都不用这种方式，但这种方式确实很方便的解决了团队合作的时候数据库表的同步问题，像我们itbasic 就每次上线或者给队友同步数据库的时候都得自己手动去处理，而且这种方式更多的把sql语句转换成php语言处理，不知道建索引那些会不会很方便.&lt;/p&gt;
     
     </summary>
     
@@ -146,12 +174,22 @@
     <link href="http://yoursite.com/2018/07/29/Laravel-router/"/>
     <id>http://yoursite.com/2018/07/29/Laravel-router/</id>
     <published>2018-07-29T15:41:50.000Z</published>
-    <updated>2018-08-15T03:08:32.452Z</updated>
+    <updated>2018-10-11T03:53:04.177Z</updated>
+    
+    <content type="html"><![CDATA[<p>关于路由的一些总结</p><a id="more"></a><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">Route::get(&apos;/&apos;, &apos;StaticPagesController@home&apos;)-&gt;name(&apos;home&apos;);</span><br><span class="line">Route::get(&apos;/help&apos;, &apos;StaticPagesController@help&apos;)-&gt;name(&apos;help&apos;);</span><br><span class="line">Route::get(&apos;/about&apos;, &apos;StaticPagesController@about&apos;)-&gt;name(&apos;about&apos;);</span><br></pre></td></tr></table></figure><p>这个name是用来命名的，命名有什么用，看下面</p><p>route(‘help’)  =&gt; 这个help 是路由命名，user.help 更为准确</p><p>route(‘help’,[1,2])  =&gt; 多个参数传递数组</p><p>这个函数的参数，通过下面这个函数，配合配置得环境变量，可以生成前端可以访问路径的，如果很直白的写url，以后url改动的时候但凡用到的地方，都需要改动</p>]]></content>
     
     <summary type="html">
     
+      &lt;p&gt;关于路由的一些总结&lt;/p&gt;
+    
     </summary>
     
+      <category term="PHP" scheme="http://yoursite.com/categories/PHP/"/>
+    
+    
+      <category term="PHP" scheme="http://yoursite.com/tags/PHP/"/>
+    
+      <category term="Laravel" scheme="http://yoursite.com/tags/Laravel/"/>
     
   </entry>
   
@@ -335,25 +373,6 @@
     <summary type="html">
     
       &lt;p&gt;想了下，还是把框架的基础知识也记录下来。&lt;/p&gt;
-    
-    </summary>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>框架学习1</title>
-    <link href="http://yoursite.com/2018/05/21/%E6%A1%86%E6%9E%B6%E5%AD%A6%E4%B9%A01/"/>
-    <id>http://yoursite.com/2018/05/21/框架学习1/</id>
-    <published>2018-05-21T14:38:24.000Z</published>
-    <updated>2018-05-24T04:02:43.427Z</updated>
-    
-    <content type="html"><![CDATA[<p>对于框架源码的学习，可以帮助我们以后快速学习一个框架的使用，虽然同样的效果同样可以使用多学习几个框架，比如你把tp学完你学习laravel和yii发现很多时候都是一样的，但这仅限于你对框架的使用，增删改查的使用，当你想去修改一个框架的时候（不包括把框架中常量提取出来放在一个文件中，给框架增加一个validate等等这种情况）而是类似于把框架原来的隐式路由改成显式路由这种情况，如果你没有动手搭建过框架，你会不知所措。</p><p>我们这里对于框架的搭建还不是从头到尾写一个框架这种情况，composer（php的包管理工具，类似前端的npm），我们可以像拼接乐高积木那样搭建一个框架，那用什么来充当积木间的凹槽呢，我觉得命名空间可以充当凹槽之一。</p><a id="more"></a><p>命名空间在我的理解中就是把项目代码看做一个文件夹，然后名称是/,然后下面的各个文件夹名称就是命名空间，为了区分不同文件夹下的相同文件夹名称，我们需要把文件夹名称的路径记录下来。如果我的文件放在文件夹中的目录结构比较深，那么外层的文件夹名称是否可以不要呢，答案是肯定的，我觉得这也是文件夹相对于使用路径的好处之一。</p><p>上文说到了composer，我们要怎么使用这个工具呢。在项目的根目录下（注意不是网站的根目录下，网站的根目录往往是入口文件的根目录）执行composer install，linux下需要时php composer.phar install,他会找composer.json文件，第一次可能没有，我们可以通过composer require xxx/xxxx 来安装一个依赖，这时候会多出composer.json , composer.lock, vendor 目录，我们在入口文件出只需要include  vendor/autoload.php, 就能使用vendor中的依赖了。我们项目中自定义的文件夹也可以通过composer 的autoload来实现自动加载。php的psr-4和psr-0都有对命名空间的规定，但是0废弃了，现在大家都是用4，比较下0和4，比如 \controller\test.php,</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">namespace controller;</span><br></pre></td></tr></table></figure><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">//psr-0</span><br><span class="line">&#123;</span><br><span class="line">  &apos;autoload&apos; : &#123;</span><br><span class="line">  &apos;controller//&apos; : &apos;&apos;</span><br><span class="line">&#125;</span><br><span class="line">  </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//psr-4</span><br><span class="line">&#123;</span><br><span class="line">  &apos;autoload&apos; : &#123;</span><br><span class="line">  &apos;controller//&apos; : &apos;controller&apos;</span><br><span class="line">&#125;</span><br><span class="line">  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>psr-0会把规定的路径再拼上命名空间当做相对路径去文件夹下找，而psr-4会直接把规定的路径当做命名空间去寻找，上面的例子只是针对简单的一层命名空间，还是看不出什么效果，多层的更容易看出0是多么的脑残。</p><p>还有当注册了controller文件夹，controller的子文件夹的命名空间默认注册。</p><p>我们在修改命名空间的时候只需要修改composer.json文件就可以了，对于composer的具体怎么加载的其实不用管的，他应用这么广泛，一般不会出现什么问题。</p><p>todo:</p><p>use 的时候命名空间顶层不用加\,但是new的时候如果顶层写要加\，不是十分理解。</p><p>来自modern php</p><ol><li>首先use 的时候默认的是来自绝对，默认会在前面加上\</li><li>同一个命名空间下的类相互引用，不用引入命名空间，比如我同一个controller下面代码的相互使用</li><li>xxx/xxxx,这种的一般第一个 xxx是厂商的命名空间，顶层命名空间，比较重要，第二个xxxx是子命名空间。</li><li>仅仅use 其实默认用了as取别名，只是类名和别名一样</li><li>Exception默认是php自带的，应该在顶层命名空间下，用\，如果使用的时候不加，他会默认在当前命名空间下寻找，会出现错误</li></ol>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;对于框架源码的学习，可以帮助我们以后快速学习一个框架的使用，虽然同样的效果同样可以使用多学习几个框架，比如你把tp学完你学习laravel和yii发现很多时候都是一样的，但这仅限于你对框架的使用，增删改查的使用，当你想去修改一个框架的时候（不包括把框架中常量提取出来放在一个文件中，给框架增加一个validate等等这种情况）而是类似于把框架原来的隐式路由改成显式路由这种情况，如果你没有动手搭建过框架，你会不知所措。&lt;/p&gt;
-&lt;p&gt;我们这里对于框架的搭建还不是从头到尾写一个框架这种情况，composer（php的包管理工具，类似前端的npm），我们可以像拼接乐高积木那样搭建一个框架，那用什么来充当积木间的凹槽呢，我觉得命名空间可以充当凹槽之一。&lt;/p&gt;
     
     </summary>
     

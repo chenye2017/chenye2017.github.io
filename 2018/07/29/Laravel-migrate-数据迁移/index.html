@@ -81,17 +81,17 @@
 
 
 
-<meta name="description" content="想用善良改变世界">
+<meta name="description" content="虽然表哥说他们都不用这种方式，但这种方式确实很方便的解决了团队合作的时候数据库表的同步问题，像我们itbasic 就每次上线或者给队友同步数据库的时候都得自己手动去处理，而且这种方式更多的把sql语句转换成php语言处理，不知道建索引那些会不会很方便.">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Laravel migrate 数据迁移">
 <meta property="og:url" content="http://yoursite.com/2018/07/29/Laravel-migrate-数据迁移/index.html">
 <meta property="og:site_name" content="语法糖的博客">
-<meta property="og:description" content="想用善良改变世界">
+<meta property="og:description" content="虽然表哥说他们都不用这种方式，但这种方式确实很方便的解决了团队合作的时候数据库表的同步问题，像我们itbasic 就每次上线或者给队友同步数据库的时候都得自己手动去处理，而且这种方式更多的把sql语句转换成php语言处理，不知道建索引那些会不会很方便.">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-07-29T15:42:19.410Z">
+<meta property="og:updated_time" content="2018-10-11T02:32:25.730Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Laravel migrate 数据迁移">
-<meta name="twitter:description" content="想用善良改变世界">
+<meta name="twitter:description" content="虽然表哥说他们都不用这种方式，但这种方式确实很方便的解决了团队合作的时候数据库表的同步问题，像我们itbasic 就每次上线或者给队友同步数据库的时候都得自己手动去处理，而且这种方式更多的把sql语句转换成php语言处理，不知道建索引那些会不会很方便.">
 
 
 
@@ -359,7 +359,22 @@
       
 
       
-        
+        <p>虽然表哥说他们都不用这种方式，但这种方式确实很方便的解决了团队合作的时候数据库表的同步问题，像我们itbasic 就每次上线或者给队友同步数据库的时候都得自己手动去处理，而且这种方式更多的把sql语句转换成php语言处理，不知道建索引那些会不会很方便.</p>
+<a id="more"></a>
+<p>文件位置和命名：</p>
+<ul>
+<li>database/migrations/2014_10_12_000000_create_users_table.php</li>
+</ul>
+<p>通过artisan 命令能直接生成对应目录下的文件</p>
+<p>注意up 和 down 方法，分别是的执行的时候，还有回滚的时候的执行</p>
+<p>注意create 和 update 表结构的时候的区别</p>
+<p>自增：increment </p>
+<p>字符串： string  ， 方法的第二个参数限制最大长度</p>
+<p>唯一： unique，感觉就像数据库的唯一索引</p>
+<p>创建时间和修改时间，通过 timestamps 就能生成</p>
+<p>记住我： rememberToken, 虽然一直不太清楚这个干啥的</p>
+<p>create =&gt;  dropIfExists() , 创建 回滚的时候对应 删除</p>
+
       
     </div>
     
@@ -533,7 +548,7 @@ var jiathis_config={
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">58</span>
+                  <span class="site-state-item-count">59</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -674,7 +689,7 @@ var jiathis_config={
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count"> | 博客全站共68.7k字</span>
+  <span class="post-count"> | 博客全站共70.0k字</span>
 </div>
 
 

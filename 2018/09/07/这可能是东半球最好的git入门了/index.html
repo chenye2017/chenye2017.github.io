@@ -91,7 +91,8 @@
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5525740-246f7dc2d79ad61a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5525740-19cb5fcfb13f2e0b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5525740-fb95afa267114b40.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2018-10-10T05:16:35.439Z">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5525740-b735ea60e2199e18.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-10-10T13:45:15.259Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="这可能是东半球最好的git入门了">
 <meta name="twitter:description" content="写后感：以后自己再也不去写关于教程方面的文章了，因为内容实在是太多了，而且很多细小的知识点，其实之前也写过关于python的一个教程，初衷只是担心自己忘记的太快，方便以后的学习，其实就是笔记的整理，反正这两篇写的都很烂，希望自己记住这方面的教训，以后这类文章就是对于自己碰到问题的解决方案吧，实在有些基础内容不记得，就直接看笔记吧 为什么要取这个名字呢，其实就是我最近看到好多这种名字，然后呢自己很喜">
@@ -372,10 +373,16 @@
 <p>git config –global user.email your@example.com</p>
 <p>详细的说下git 推送流程：</p>
 <ol>
-<li>github<br>在github 上新建远程仓库<br>git clone 远程仓库地址<br>git init  (把整个文件夹添托管给git)<br>git add  .  (以后有文件修改的话)<br>git commit -m  “message”  （推送到本地仓库）<br>git push （推送到远程仓库）</li>
+<li><p>github<br>在github 上新建远程仓库<br>git clone 远程仓库地址<br>git init  (把整个文件夹添托管给git)<br>git add  .  (以后有文件修改的话，并不是第一次文件修改了之后以后的文件修改就不用add了，add 只是把修改的内容添加到缓冲区，以后修改的时候还是要田间的)</p>
+<p>撤销缓冲区的修改 （应该可以针对某文件）<br>git commit -m  “message”  （推送到本地仓库）</p>
+<p>撤销本地仓库的修改（应该可以针对某文件）<br>git push （推送到远程仓库）</p>
+<p>git status 看查暂存区状态</p>
+<p>查看当前文件夹关联的远程仓库</p>
+<p>给当前文件夹添加远程仓库</p>
+</li>
 </ol>
 <p>git add .   其实是把文件修改内容添加到暂存区，暂存区是什么，暂存区就是 .git 这个隐藏文件夹下面的index （还记得同事之前说过的让我解决代码冲突时候的一种办法，删除掉.git 或者.svn 文件夹，因为这个文件夹里面保存了我们所有的提交信息，然后我们再设置当前文件夹的远程提交仓库就好了），！！！注意添加到暂存区的是文件修改内容，想象一下，我们每次修改文件后都需要git add 一次就是这个原因，但文件第一次添加后以后没有git add  就是 unstaged, 如果一次都没添加那是 untracked 未追踪的状态，两个还是不一样的。</p>
-<p>撤销git add . (或者文件名)， 通过 git reset head ，可以删除暂存区的内容，这个可以通过git status ，上面会有提示。<br>git commit -m ‘message’ 提交到本地仓库，之后就能看到git log, 其实这也能看做和svn的区别之一？这是掘金小册的作者说的，svn 代码提交就直接在线上环境了，git还只是本地仓库，也可以这么理解吧。<br>git push 远程推送 ，其实是 git push origin master:master ,有时候我们想推送别的分支，可以通过git push origin test:test, origin 是 远程仓库的默认名称。</p>
+<p>撤销git add . (或者文件名)， 通过 git reset head ，可以删除暂存区的内容，这个可以通过git status ，上面会有提示。<br>git commit -m ‘message’ 提交到本地仓库，之后就能看到git log, 其实这也能看做和svn的区别之一？这是掘金小册的作者说的，svn 代码提交就直接在线上环境了，git还只是本地仓库，也可以这么理解吧，git commit之后如果没有冲突就可以理解成一次版本更替了，但我们需要把他替换到线上，所以我们需要push(注意push的时候并不会产生冲突，冲突发生在push之前的更新本地代码)<br>git push 远程推送 ，其实是 git push origin master:master ,有时候我们想推送别的分支，可以通过git push origin test:test, origin 是 远程仓库的默认名称。</p>
 <ol>
 <li>一般书上写的团队合作推送流程<br>git checkout dev<br>git checkout -b book<br>git add .<br>git commit<br>git checkout dev<br>git merge<br>git push origin dev:dev</li>
 </ol>
@@ -403,6 +410,10 @@
 <ol>
 <li>git branch -a ,可以查看本地分支和远程分支，并不是本地建了分支，远程就要有，需要推送的，然</li>
 </ol>
+<p>git 的分支操作应该还是蛮常见的，但其实因为我自己开发直接就是主分支，所以感觉不到</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/5525740-b735ea60e2199e18.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>编辑器这种线面都能自带切换分支</p>
+<p>切换分支之前一定要commit ,否则我之前好像容易丢失那些没有提交的内容</p>
 
       
     </div>
@@ -577,7 +588,7 @@ var jiathis_config={
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">58</span>
+                  <span class="site-state-item-count">59</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -718,7 +729,7 @@ var jiathis_config={
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count"> | 博客全站共68.7k字</span>
+  <span class="post-count"> | 博客全站共70.0k字</span>
 </div>
 
 
