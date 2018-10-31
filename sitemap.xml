@@ -2,9 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yoursite.com/2018/09/07/%E8%BF%99%E5%8F%AF%E8%83%BD%E6%98%AF%E4%B8%9C%E5%8D%8A%E7%90%83%E6%9C%80%E5%A5%BD%E7%9A%84git%E5%85%A5%E9%97%A8%E4%BA%86/</loc>
+    
+    <lastmod>2018-10-31T12:44:03.955Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/2018/01/19/lamp-%E6%BA%90%E7%A0%81%E7%BC%96%E8%AF%91/</loc>
     
-    <lastmod>2018-10-31T09:34:29.534Z</lastmod>
+    <lastmod>2018-10-31T11:51:27.150Z</lastmod>
     
   </url>
   
@@ -33,13 +40,6 @@
     <loc>http://yoursite.com/2018/07/29/Laravel-migrate-%E6%95%B0%E6%8D%AE%E8%BF%81%E7%A7%BB/</loc>
     
     <lastmod>2018-10-11T02:32:25.730Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2018/09/07/%E8%BF%99%E5%8F%AF%E8%83%BD%E6%98%AF%E4%B8%9C%E5%8D%8A%E7%90%83%E6%9C%80%E5%A5%BD%E7%9A%84git%E5%85%A5%E9%97%A8%E4%BA%86/</loc>
-    
-    <lastmod>2018-10-10T13:45:15.259Z</lastmod>
     
   </url>
   
