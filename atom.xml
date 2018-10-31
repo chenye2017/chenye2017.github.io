@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-10-11T06:24:36.163Z</updated>
+  <updated>2018-10-11T11:48:42.158Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="http://yoursite.com/2018/10/10/Laravel-%E5%85%B3%E4%BA%8Eblade(%E6%A8%A1%E6%9D%BF%E5%BC%95%E6%93%8E)/"/>
     <id>http://yoursite.com/2018/10/10/Laravel-关于blade(模板引擎)/</id>
     <published>2018-10-10T08:45:23.000Z</published>
-    <updated>2018-10-11T06:24:36.163Z</updated>
+    <updated>2018-10-11T11:48:42.158Z</updated>
     
     <content type="html"><![CDATA[<p>其实现在都是前后端分离的，应该蛮少用到模板引擎这种东西，作为上一个web时代的产物，其实模板引擎开发起来还是蛮快的，而且挺简单的。</p><a id="more"></a><p>itbasic 用的也是模板引擎，名twig，其实和blade没有多少不同的地方，只是自己发现的twig新功能还比较少，只是一直在原先的基础上堆代码，感觉上在模板引擎里面还是不要做过多的逻辑判断，否则后面会越写越复杂，而且难于维护。</p><p>对于web网站，我们有很多页面，但这些页面大部分都是相同的？因为我们的布局需要相同，这个其实在写itbasic的时候应该能感觉到，我们似乎只需要填充中间的content部分就好了</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;html&gt;</span><br><span class="line">    &lt;head&gt;</span><br><span class="line">        &lt;title&gt;@yield(&apos;title&apos;,&apos;测试&apos;)&lt;/title&gt;</span><br><span class="line">    &lt;/head&gt;</span><br><span class="line">    &lt;body&gt;</span><br><span class="line">        @yield(&apos;content&apos;)</span><br><span class="line">    &lt;/body&gt;</span><br><span class="line"></span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure><p>什么是yield ,就是让继承者可以填充的东西，继承者通过</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">@extends(&apos;layout.blade&apos;) //继承上一个模板</span><br><span class="line">@section(&apos;title&apos;, &apos;cy&apos;)  //填充数据</span><br><span class="line"></span><br><span class="line">@section(&apos;content&apos;)   //这种方式填充数据要有结束符号</span><br><span class="line">&lt;h1&gt;222&lt;/h1&gt;</span><br><span class="line">@stop</span><br></pre></td></tr></table></figure><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">@include(&apos;default.ce&apos;)  // 包含额外的页面</span><br><span class="line">//传递变量，include(&apos;default.ce&apos;, [&apos;user&apos;=&gt;$user])</span><br></pre></td></tr></table></figure><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">//判断</span><br><span class="line">@if ($a &gt; 0)</span><br><span class="line">&lt;h1&gt;cc&lt;/h1&gt;</span><br><span class="line">@endif</span><br><span class="line"></span><br><span class="line">//循环</span><br><span class="line">@foreach($counts as $count)</span><br><span class="line">&lt;li&gt;&lt;/li&gt;</span><br><span class="line">@endforeach</span><br></pre></td></tr></table></figure>]]></content>
     
@@ -34,9 +34,9 @@
       <category term="PHP" scheme="http://yoursite.com/categories/PHP/"/>
     
     
-      <category term="PHP" scheme="http://yoursite.com/tags/PHP/"/>
-    
       <category term="Laravel" scheme="http://yoursite.com/tags/Laravel/"/>
+    
+      <category term="PHP" scheme="http://yoursite.com/tags/PHP/"/>
     
   </entry>
   
@@ -187,9 +187,9 @@
       <category term="PHP" scheme="http://yoursite.com/categories/PHP/"/>
     
     
-      <category term="PHP" scheme="http://yoursite.com/tags/PHP/"/>
-    
       <category term="Laravel" scheme="http://yoursite.com/tags/Laravel/"/>
+    
+      <category term="PHP" scheme="http://yoursite.com/tags/PHP/"/>
     
   </entry>
   

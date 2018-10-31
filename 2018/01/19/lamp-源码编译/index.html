@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Linux,环境,lamp," />
+  <meta name="keywords" content="Linux,lamp,环境," />
 
 
 
@@ -81,19 +81,19 @@
 
 
 
-<meta name="description" content="lamp的源码编译安装。！！！注意哦，这里面是lamp，不是lnmp。之前的lamp中，apache和php的交流主要是apache把php作为自身的一个模块，而ngixn是通过cgi，php-fpm进行管理进程。所以lamp的编译安装是有顺序的，因为php在编译的过程中需要指定apache的apxs模块位置。">
-<meta name="keywords" content="Linux,环境,lamp">
+<meta name="description" content="lamp的源码编译安装。！！！注意哦，这里面是lamp，不是lnmp。之前的lamp中，apache和php的交流主要是apache把php作为自身的一个模块，而ngixn是通过cgi，php-fpm进行管理进程（这段话有待考证，因为apache也能使用php-fpm进行管理，并不是php-fpm和apache绑定的。我们那个lamp环境搭建的时候安装好apache,编译php 的时候要指定apx">
+<meta name="keywords" content="Linux,lamp,环境">
 <meta property="og:type" content="article">
 <meta property="og:title" content="lamp 源码编译">
 <meta property="og:url" content="http://yoursite.com/2018/01/19/lamp-源码编译/index.html">
 <meta property="og:site_name" content="语法糖的博客">
-<meta property="og:description" content="lamp的源码编译安装。！！！注意哦，这里面是lamp，不是lnmp。之前的lamp中，apache和php的交流主要是apache把php作为自身的一个模块，而ngixn是通过cgi，php-fpm进行管理进程。所以lamp的编译安装是有顺序的，因为php在编译的过程中需要指定apache的apxs模块位置。">
+<meta property="og:description" content="lamp的源码编译安装。！！！注意哦，这里面是lamp，不是lnmp。之前的lamp中，apache和php的交流主要是apache把php作为自身的一个模块，而ngixn是通过cgi，php-fpm进行管理进程（这段话有待考证，因为apache也能使用php-fpm进行管理，并不是php-fpm和apache绑定的。我们那个lamp环境搭建的时候安装好apache,编译php 的时候要指定apx">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://ozys8fka7.bkt.clouddn.com/mysql-status.jpg">
-<meta property="og:updated_time" content="2018-02-23T12:44:47.922Z">
+<meta property="og:updated_time" content="2018-10-31T09:34:29.534Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="lamp 源码编译">
-<meta name="twitter:description" content="lamp的源码编译安装。！！！注意哦，这里面是lamp，不是lnmp。之前的lamp中，apache和php的交流主要是apache把php作为自身的一个模块，而ngixn是通过cgi，php-fpm进行管理进程。所以lamp的编译安装是有顺序的，因为php在编译的过程中需要指定apache的apxs模块位置。">
+<meta name="twitter:description" content="lamp的源码编译安装。！！！注意哦，这里面是lamp，不是lnmp。之前的lamp中，apache和php的交流主要是apache把php作为自身的一个模块，而ngixn是通过cgi，php-fpm进行管理进程（这段话有待考证，因为apache也能使用php-fpm进行管理，并不是php-fpm和apache绑定的。我们那个lamp环境搭建的时候安装好apache,编译php 的时候要指定apx">
 <meta name="twitter:image" content="http://ozys8fka7.bkt.clouddn.com/mysql-status.jpg">
 
 
@@ -384,26 +384,51 @@
       
 
       
-        <p>lamp的源码编译安装。！！！注意哦，这里面是lamp，不是lnmp。之前的lamp中，apache和php的交流主要是apache把php作为自身的一个模块，而ngixn是通过cgi，php-fpm进行管理进程。所以lamp的编译安装是有顺序的，因为php在编译的过程中需要指定apache的apxs模块位置。<br><a id="more"></a></p>
-<ol>
-<li>apahce 的编译安装<br>apache2.4之后编译安装之前需要apr和apr-util的支持（这两个文件下载位置，百度，好像在apr.apache.org下面）apache在httpd.apache.org下面下载。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost src]#pwd</span><br><span class="line">/usr/local/src</span><br><span class="line">[root@localhost src]#tar xvf apr-1.6.2.tar.gz </span><br><span class="line">[root@localhost src]#tar xvf apr-util-1.6.0.tar.gz </span><br><span class="line">[root@localhost src]#tar xvf httpd-2.4.27.tar.bz2</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>编译安装 :<br>   1.进入解压目录，./configure 配置路径，百度吧 （–prefix==/usr/local/apr）<br>   2.make<br>   3.make install<br>   4.查看<br>安装apr-util之前得先安装apr</p>
-<ol>
-<li><p>安装额外的包</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost src]#yum install openssl-devel expat-devel pcre-devel</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>编译httpd</p>
-</li>
-</ol>
+        <p>lamp的源码编译安装。！！！注意哦，这里面是lamp，不是lnmp。之前的lamp中，apache和php的交流主要是apache把php作为自身的一个模块，而ngixn是通过cgi，php-fpm进行管理进程（这段话有待考证，因为apache也能使用php-fpm进行管理，并不是php-fpm和apache绑定的。我们那个lamp环境搭建的时候安装好apache,编译php 的时候要指定apxs的位置，–with-apxs2=/app/httpd24/bin/apxs ,这之间的交互过程还不是特别清楚）。</p>
+<p>所以lamp的编译安装是有顺序的，因为php在编译的过程中需要指定apache的apxs模块位置。<br><a id="more"></a></p>
+<h3 id="apahce-的编译安装"><a href="#apahce-的编译安装" class="headerlink" title="apahce 的编译安装"></a>apahce 的编译安装</h3><p>apache2.4之后编译安装之前需要apr和apr-util的支持（这两个文件下载位置，百度，好像在apr.apache.org下面，首页上面只是展示最新的，注意有个archive.download.sit,点击他，你会发现新世界的大门）apache在httpd.apache.org下面下载（讲道理我不知道他们之间的搭配有没有版本限制，so 下载的时候都下载最新的？比较靠谱的办法就是网上再找一份教程上面有apr apr-util apache的版本，对照着做就好啦··我的文章只是自己的思路呢）。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost src]#pwd</span><br><span class="line">/usr/local/src</span><br><span class="line">[root@localhost src]#tar zxvf apr-1.6.2.tar.gz </span><br><span class="line">[root@localhost src]#tar zxvf apr-util-1.6.0.tar.gz </span><br><span class="line">[root@localhost src]#tar zxvf httpd-2.4.27.tar.bz2</span><br></pre></td></tr></table></figure>
+<p> 安装apr-util之前得先安装apr，因为需要配置 （–prefix==/usr/local/apr），上面的三个编译安装或者    说所有linux的软件编译安装都是一个套路 :<br>   1.进入解压目录，./configure 配置参数，百度吧<br>   2.make<br>   3.make install<br>   4.查看</p>
+<p>需要注意的就是可能安装的时候要安装额外的包，其实刚开始没安装也没什么大事情，后面编译肯定通过不了，所以就百度，一下子就能出来答案。</p>
+<p>还有就是 configure 文件不存在，怎么办？一般目前我遇到这种情况主要是在编译安装php扩展的时候，可以通过 phpize(这个命令在php安装生成的bin目录下的一个指令),运行后会生成configure脚本，然后再像上面一样执行</p>
 <p>参考文章：<a href="http://blog.csdn.net/leshami/article/details/50144179" target="_blank" rel="noopener">centos7 源码编译httpd7</a><br>其实这一块都不用lamp中安装apache和单独安转apache没啥区别。</p>
-<p>而且后来发现一个问题 apachectl start 这些用不了</p>
-<p>httpd -k start 这戏好用</p>
-<p>其实ps -efl|grep httpd ,也能看到这个httpd 的命令</p>
-<p>mysql 编译安装<br>失败，用的yum安装（直接下载编译好的二进制码比较好，比如subline下载之后直接就能使用，不用安装，这些java写的东西啊，好用，但是mysql不行，即使是编译过的二进制码，还要执行一些脚本）</p>
-<p>php编译安装</p>
+<p>notice :</p>
+<ul>
+<li><p>（而且后来发现一个问题 apachectl start 这些用不了，应该是按照上篇博客中安装出现的问题，其实还是要解决下，因为在lamp中，刚开始修改php.ini 是很常见的，每次修改都需要apachectl restart 一下还是很方便的)</p>
+<p>​httpd -k start 这戏好用</p>
+<p>​其实ps -ef|grep httpd ,也能看到这个httpd 的命令</p>
+</li>
+</ul>
+<ul>
+<li>把apachectl 添加到环境变量中，我一般通过的方法是</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/profile </span><br><span class="line">HTTP=/usr/local/apache/bin</span><br><span class="line">$PATH=$HTTP:$PATH</span><br><span class="line">export $PATH</span><br><span class="line">需要注意的是我们在使用变量的时候会从前往后找的，比如http 和 path 中都有 apachectl,但是http 在最前面，会使用前面的http中的apachectl, 通过 which apachectl可以查看这条命令来自哪里（yum安装的软件可能把命令自动加到/usr/bin 里面去，卸载的时候也删除不掉，这个很坑爹，需要注意下，经常用的时候不是你想用那条命令，所以一直加在前面可能会避免一些这样的事情发生）</span><br><span class="line">source /etc/profile 让他生效</span><br><span class="line">echo $PATH 看是否包含了你需要的路径</span><br></pre></td></tr></table></figure>
+<ul>
+<li>我在正常启动apache 之后，外网总是访问不了，通过查看配置文件的日志 access_log 是空的，error_log中有内容，但其实是notice 级别的错误，一直以为是这个原因导致外网不能访问，百度了好久这个错误信息，都没有找到解决办法，问同事，演变成apache正常启动，外网访问不了的问题，先通过curl 127.0.0.1:80 来尝试访问，得到内容， it works 说明服务器没有问题，想到防火墙，看了下服务没有开启，想了下selinux 也没有开启，最后是阿里云的锅，zzz,其实问题很简单，解决过程也很简单，只是自己很笨，不知道怎么去排查问题</li>
+</ul>
+<ul>
+<li><p>虚拟主机的配置，测试外网是否能访问，需要修改配置文件，需要注意的点</p>
 <ol>
+<li>开启httpd-vhost,需要包含，然后再那个配置文件中写入</li>
+<li>开启apache rewrite模块</li>
+<li>开启端口监听，Listen 0.0.0.0:8080，注意0.0.0.0</li>
+<li>默认查找Index.php，除了在虚拟主机的virtual host 中配置，在外层的配置文件中也要配置</li>
+<li>开启php文件处理，主配置文件中修改， 这时候在apache的根目录下访问phpinfo这种文件还是不幸的，需要支持对php的mime类型解析，（想了下框架不能处理json输入是因为框架原因，还是web server原因）<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">AddType application/x-httpd-php .php</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>​</p>
+</li>
+</ul>
+<h3 id="mysql-编译安装"><a href="#mysql-编译安装" class="headerlink" title="mysql 编译安装"></a>mysql 编译安装</h3><p>失败，用的yum安装（直接下载编译好的二进制码比较好，比如subline下载之后直接就能使用，不用安装，这些java写的东西啊，好用，但是mysql不行，即使是编译过的二进制码，还要执行一些脚本）</p>
+<h3 id="postgresql-的编译安装（网上的教程很详细）"><a href="#postgresql-的编译安装（网上的教程很详细）" class="headerlink" title="postgresql 的编译安装（网上的教程很详细）"></a>postgresql 的编译安装（网上的教程很详细）</h3><p>这个下载速度很快，可以考虑源码安装</p>
+<ol>
+<li>有两个配置文件，一个用来进行用户权限的限制，一个好像是具体的配置</li>
+<li>有两个目录，一个专门装数据，一个装软件，比如命令这些</li>
+<li>默认root 访问不了，创建postgres用户和组（源码编译，yum的话自动创建），修改配置文件trust</li>
+<li>pg_config 这个命令很重要，安装中文搜索引擎，先安装scw库文件，再去安装zhaper这个分词，多个pgsql 一定要指定pg_config（好像指定不起作用,一定要把pg_config 直接运行的这个命令对应的pgsql 对上你想要装扩展的pgsql,要不然在数据库里面创建扩展会不成功 create extension ）</li>
+<li>可以通过sql语句查询配置文件的位置（locate 不知道为啥找不到/mnt 下的文件，坑死我了）</li>
+</ol>
+<h3 id="php编译安装"><a href="#php编译安装" class="headerlink" title="php编译安装"></a>php编译安装</h3><ol>
 <li>php.net 上下载源文件</li>
 <li>安装额外的包<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install libxml2-devel bzip2-devel libmcrypt-devel</span><br></pre></td></tr></table></figure>
 </li>
@@ -411,13 +436,19 @@
 <p>3.编译安装php7<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost php-7.1.10]#./configure \</span><br><span class="line">&gt; --prefix=/app/php \</span><br><span class="line">&gt; --enable-mysqlnd \</span><br><span class="line">&gt; --with-mysqli=mysqlnd \</span><br><span class="line">&gt; --with-openssl \</span><br><span class="line">&gt; --with-pdo-mysql=mysqlnd \</span><br><span class="line">&gt; --enable-mbstring \</span><br><span class="line">&gt; --with-freetype-dir \</span><br><span class="line">&gt; --with-jpeg-dir \</span><br><span class="line">&gt; --with-png-dir \</span><br><span class="line">&gt; --with-zlib \</span><br><span class="line">&gt; --with-libxml-dir=/usr \</span><br><span class="line">&gt; --enable-xml \</span><br><span class="line">&gt; --enable-sockets \</span><br><span class="line">&gt; --with-apxs2=/app/httpd24/bin/apxs \</span><br><span class="line">&gt; --with-mcrypt \</span><br><span class="line">&gt; --with-config-file-path=/etc \</span><br><span class="line">&gt; --with-config-file-scan-dir=/etc/php.d \</span><br><span class="line">&gt; --enable-maintainer-zts \</span><br><span class="line">&gt; --disable-fileinfo</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 进行编译安装</span><br><span class="line">[root@localhost php-7.1.10]#make -j 2 &amp;&amp; make install</span><br></pre></td></tr></table></figure></p>
 <p>注意那个with-apxs2 的选项<br>下面那个 make -j 2 指的是用两个cpu进行编译</p>
 <p>注意这时候时没有配置文件的，到解压的php文件夹下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost php-7.1.10]#cp php.ini-production /etc/php.ini</span><br></pre></td></tr></table></figure></p>
-<p>编译php7的时候with-config-file-path 指定了配置文件的位置</p>
+<p>notice</p>
 <ol>
-<li>这时候在apache的根目录下访问phpinfo这种文件还是不幸的，需要支持对php的mime类型解析，修改httpd的配置文件<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">AddType application/x-httpd-php .php</span><br></pre></td></tr></table></figure>
-</li>
+<li>编译php7的时候with-config-file-path 指定了配置文件的位置,这个是很重要的，因为要不然我们没有指定也没有放在默认的php文件存放位置，以后每次运行php 的时候都要指定 配置配置文件的位置很麻烦</li>
+<li>测试phpinfo， 看到了local value 还有另一行没，之前看过好像一个是apache 中指定的位置，但是本地可以通过脚本修改，所以local value 是实际的位置</li>
+<li>讲道理，上面的编译参数运行不了， –with-config-file-scan-dir=/etc/php.d \，感觉是这个参数在作怪，不太明白这个文件夹中装的啥，反正是开启了一些curl 等的扩展，但实际上好像没有开启，所以需要把屏蔽掉（上面的php 编译参数不太好用，像curl 都没有开启，在项目中用会出错）</li>
+<li>php 源码包的作用。像pgsql 这些扩展，源码包中都是有的，如果想开启，不用再网上下载，直接去源码包的ext 下面找就好了，然后phpize ```编译，修改php.ini, php -m 查看是否成功。需要注意的是，一个包编译失败之后，再次编译，最好make clean一下。（pgsql 和 pdo_pgsql 是两个扩展···）</li>
 </ol>
-<p>5.测试phpinfo</p>
-<p>6.测试数据库连接</p>
+<h3 id="redis-的安装"><a href="#redis-的安装" class="headerlink" title="redis 的安装"></a>redis 的安装</h3><p>需要注意的就是 redis 启动服务要手动指定配置文件，</p>
+<ol>
+<li>遇到的问题就是估计之前别人在路径中加入过redis-server 这个命令，导致我用 redis-server /opt/redis/conf/redis.conf 不匹配，出错，</li>
+<li>还有有个配置选项是是否展示cli 下 那个命令行redis图像，果断关闭，虽然不知道他为啥报错</li>
+<li>改成守护进程模式</li>
+</ol>
 <p>之前测试测试数据库总的出错···总结了下原因</p>
 <ol>
 <li>不能清楚的认识到mysql怎么连接数据库的。其实换一种思路，php是怎么连接redis的，我们安装好redis服务，然后安装php的redis扩展，就可以了。什么连接函数啊和连接mysql是一样的。关于php连接mysql，现在主推两种方式，mysqli和pdo，分别对应两种扩展，具体的可以参考<a href="http://www.runoob.com/php/php-mysql-connect.html" target="_blank" rel="noopener">菜鸟教程里面的这个php连接mysql</a>。</li>
@@ -482,9 +513,9 @@
           
             <a href="/tags/Linux/" rel="tag"><i class="fa fa-tag"></i> Linux</a>
           
-            <a href="/tags/环境/" rel="tag"><i class="fa fa-tag"></i> 环境</a>
-          
             <a href="/tags/lamp/" rel="tag"><i class="fa fa-tag"></i> lamp</a>
+          
+            <a href="/tags/环境/" rel="tag"><i class="fa fa-tag"></i> 环境</a>
           
         </div>
       
@@ -587,8 +618,17 @@ var jiathis_config={
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -700,6 +740,22 @@ var jiathis_config={
       </section>
 
       
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#apahce-的编译安装"><span class="nav-number">1.</span> <span class="nav-text">apahce 的编译安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mysql-编译安装"><span class="nav-number">2.</span> <span class="nav-text">mysql 编译安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#postgresql-的编译安装（网上的教程很详细）"><span class="nav-number">3.</span> <span class="nav-text">postgresql 的编译安装（网上的教程很详细）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#php编译安装"><span class="nav-number">4.</span> <span class="nav-text">php编译安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#redis-的安装"><span class="nav-number">5.</span> <span class="nav-text">redis 的安装</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
 
       
 
@@ -748,7 +804,7 @@ var jiathis_config={
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count"> | 博客全站共70.0k字</span>
+  <span class="post-count"> | 博客全站共71.6k字</span>
 </div>
 
 

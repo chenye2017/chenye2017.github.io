@@ -2,9 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yoursite.com/2018/01/19/lamp-%E6%BA%90%E7%A0%81%E7%BC%96%E8%AF%91/</loc>
+    
+    <lastmod>2018-10-31T09:34:29.534Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/2018/10/10/Laravel-%E5%85%B3%E4%BA%8Eblade(%E6%A8%A1%E6%9D%BF%E5%BC%95%E6%93%8E)/</loc>
     
-    <lastmod>2018-10-11T06:24:36.163Z</lastmod>
+    <lastmod>2018-10-11T11:48:42.158Z</lastmod>
     
   </url>
   
@@ -383,13 +390,6 @@
     <loc>http://yoursite.com/2017/11/28/Linux%E7%BD%91%E7%BB%9C%E7%AE%A1%E7%90%86/</loc>
     
     <lastmod>2018-02-23T12:46:15.239Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2018/01/19/lamp-%E6%BA%90%E7%A0%81%E7%BC%96%E8%AF%91/</loc>
-    
-    <lastmod>2018-02-23T12:44:47.922Z</lastmod>
     
   </url>
   

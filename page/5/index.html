@@ -996,7 +996,8 @@
 
       
         
-          <p>lamp的源码编译安装。！！！注意哦，这里面是lamp，不是lnmp。之前的lamp中，apache和php的交流主要是apache把php作为自身的一个模块，而ngixn是通过cgi，php-fpm进行管理进程。所以lamp的编译安装是有顺序的，因为php在编译的过程中需要指定apache的apxs模块位置。<br>
+          <p>lamp的源码编译安装。！！！注意哦，这里面是lamp，不是lnmp。之前的lamp中，apache和php的交流主要是apache把php作为自身的一个模块，而ngixn是通过cgi，php-fpm进行管理进程（这段话有待考证，因为apache也能使用php-fpm进行管理，并不是php-fpm和apache绑定的。我们那个lamp环境搭建的时候安装好apache,编译php 的时候要指定apxs的位置，–with-apxs2=/app/httpd24/bin/apxs ,这之间的交互过程还不是特别清楚）。</p>
+<p>所以lamp的编译安装是有顺序的，因为php在编译的过程中需要指定apache的apxs模块位置。<br>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2018/01/19/lamp-源码编译/#more" rel="contents">
@@ -2013,7 +2014,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count"> | 博客全站共70.0k字</span>
+  <span class="post-count"> | 博客全站共71.6k字</span>
 </div>
 
 
