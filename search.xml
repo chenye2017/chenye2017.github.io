@@ -8,8 +8,8 @@
         <category>PHP</category>
       </categories>
       <tags>
-        <tag>PHP</tag>
         <tag>Laravel</tag>
+        <tag>PHP</tag>
       </tags>
   </entry>
   <entry>
@@ -60,8 +60,8 @@
         <category>PHP</category>
       </categories>
       <tags>
-        <tag>PHP</tag>
         <tag>Laravel</tag>
+        <tag>PHP</tag>
       </tags>
   </entry>
   <entry>
@@ -213,9 +213,9 @@
         <category>apache</category>
       </categories>
       <tags>
+        <tag>框架</tag>
         <tag>apache</tag>
         <tag>linux</tag>
-        <tag>框架</tag>
       </tags>
   </entry>
   <entry>
@@ -238,8 +238,8 @@
         <category>Laravel</category>
       </categories>
       <tags>
-        <tag>PHP</tag>
         <tag>Laravel</tag>
+        <tag>PHP</tag>
       </tags>
   </entry>
   <entry>
@@ -383,8 +383,8 @@
       </categories>
       <tags>
         <tag>PHP</tag>
-        <tag>框架</tag>
         <tag>ThinkPHP5</tag>
+        <tag>框架</tag>
       </tags>
   </entry>
   <entry>
@@ -405,7 +405,7 @@
   <entry>
     <title><![CDATA[lamp 源码编译]]></title>
     <url>%2F2018%2F01%2F19%2Flamp-%E6%BA%90%E7%A0%81%E7%BC%96%E8%AF%91%2F</url>
-    <content type="text"><![CDATA[lamp的源码编译安装。！！！注意哦，这里面是lamp，不是lnmp。之前的lamp中，apache和php的交流主要是apache把php作为自身的一个模块，而ngixn是通过cgi，php-fpm进行管理进程（这段话有待考证，因为apache也能使用php-fpm进行管理，并不是php-fpm和apache绑定的。我们那个lamp环境搭建的时候安装好apache,编译php 的时候要指定apxs的位置，–with-apxs2=/app/httpd24/bin/apxs ,这之间的交互过程还不是特别清楚）。 所以lamp的编译安装是有顺序的，因为php在编译的过程中需要指定apache的apxs模块位置。 apahce 的编译安装apache2.4之后编译安装之前需要apr和apr-util的支持（这两个文件下载位置，百度，好像在apr.apache.org下面，首页上面只是展示最新的，注意有个archive.download.sit,点击他，你会发现新世界的大门）apache在httpd.apache.org下面下载（讲道理我不知道他们之间的搭配有没有版本限制，so 下载的时候都下载最新的？比较靠谱的办法就是网上再找一份教程上面有apr apr-util apache的版本，对照着做就好啦··我的文章只是自己的思路呢）。 12345[root@localhost src]#pwd/usr/local/src[root@localhost src]#tar zxvf apr-1.6.2.tar.gz [root@localhost src]#tar zxvf apr-util-1.6.0.tar.gz [root@localhost src]#tar zxvf httpd-2.4.27.tar.bz2 安装apr-util之前得先安装apr，因为需要配置 （–prefix==/usr/local/apr），上面的三个编译安装或者 说所有linux的软件编译安装都是一个套路 : 1.进入解压目录，./configure 配置参数，百度吧 2.make 3.make install 4.查看 需要注意的就是可能安装的时候要安装额外的包，其实刚开始没安装也没什么大事情，后面编译肯定通过不了，所以就百度，一下子就能出来答案。 还有就是 configure 文件不存在，怎么办？一般目前我遇到这种情况主要是在编译安装php扩展的时候，可以通过 phpize(这个命令在php安装生成的bin目录下的一个指令),运行后会生成configure脚本，然后再像上面一样执行 参考文章：centos7 源码编译httpd7其实这一块都不用lamp中安装apache和单独安转apache没啥区别。 notice : （而且后来发现一个问题 apachectl start 这些用不了，应该是按照上篇博客中安装出现的问题，其实还是要解决下，因为在lamp中，刚开始修改php.ini 是很常见的，每次修改都需要apachectl restart 一下还是很方便的) ​httpd -k start 这戏好用 ​其实ps -ef|grep httpd ,也能看到这个httpd 的命令 把apachectl 添加到环境变量中，我一般通过的方法是 1234567vim /etc/profile HTTP=/usr/local/apache/bin$PATH=$HTTP:$PATHexport $PATH需要注意的是我们在使用变量的时候会从前往后找的，比如http 和 path 中都有 apachectl,但是http 在最前面，会使用前面的http中的apachectl, 通过 which apachectl可以查看这条命令来自哪里（yum安装的软件可能把命令自动加到/usr/bin 里面去，卸载的时候也删除不掉，这个很坑爹，需要注意下，经常用的时候不是你想用那条命令，所以一直加在前面可能会避免一些这样的事情发生）source /etc/profile 让他生效echo $PATH 看是否包含了你需要的路径 我在正常启动apache 之后，外网总是访问不了，通过查看配置文件的日志 access_log 是空的，error_log中有内容，但其实是notice 级别的错误，一直以为是这个原因导致外网不能访问，百度了好久这个错误信息，都没有找到解决办法，问同事，演变成apache正常启动，外网访问不了的问题，先通过curl 127.0.0.1:80 来尝试访问，得到内容， it works 说明服务器没有问题，想到防火墙，看了下服务没有开启，想了下selinux 也没有开启，最后是阿里云的锅，zzz,其实问题很简单，解决过程也很简单，只是自己很笨，不知道怎么去排查问题 虚拟主机的配置，测试外网是否能访问，需要修改配置文件，需要注意的点 开启httpd-vhost,需要包含，然后再那个配置文件中写入 开启apache rewrite模块 开启端口监听，Listen 0.0.0.0:8080，注意0.0.0.0 默认查找Index.php，除了在虚拟主机的virtual host 中配置，在外层的配置文件中也要配置 开启php文件处理，主配置文件中修改， 这时候在apache的根目录下访问phpinfo这种文件还是不幸的，需要支持对php的mime类型解析，（想了下框架不能处理json输入是因为框架原因，还是web server原因）1AddType application/x-httpd-php .php ​ mysql 编译安装失败，用的yum安装（直接下载编译好的二进制码比较好，比如subline下载之后直接就能使用，不用安装，这些java写的东西啊，好用，但是mysql不行，即使是编译过的二进制码，还要执行一些脚本） postgresql 的编译安装（网上的教程很详细）这个下载速度很快，可以考虑源码安装 有两个配置文件，一个用来进行用户权限的限制，一个好像是具体的配置 有两个目录，一个专门装数据，一个装软件，比如命令这些 默认root 访问不了，创建postgres用户和组（源码编译，yum的话自动创建），修改配置文件trust pg_config 这个命令很重要，安装中文搜索引擎，先安装scw库文件，再去安装zhaper这个分词，多个pgsql 一定要指定pg_config（好像指定不起作用,一定要把pg_config 直接运行的这个命令对应的pgsql 对上你想要装扩展的pgsql,要不然在数据库里面创建扩展会不成功 create extension ） 可以通过sql语句查询配置文件的位置（locate 不知道为啥找不到/mnt 下的文件，坑死我了） php编译安装 php.net 上下载源文件 安装额外的包1yum install libxml2-devel bzip2-devel libmcrypt-devel 3.编译安装php7123456789101112131415161718192021222324[root@localhost php-7.1.10]#./configure \&gt; --prefix=/app/php \&gt; --enable-mysqlnd \&gt; --with-mysqli=mysqlnd \&gt; --with-openssl \&gt; --with-pdo-mysql=mysqlnd \&gt; --enable-mbstring \&gt; --with-freetype-dir \&gt; --with-jpeg-dir \&gt; --with-png-dir \&gt; --with-zlib \&gt; --with-libxml-dir=/usr \&gt; --enable-xml \&gt; --enable-sockets \&gt; --with-apxs2=/app/httpd24/bin/apxs \&gt; --with-mcrypt \&gt; --with-config-file-path=/etc \&gt; --with-config-file-scan-dir=/etc/php.d \&gt; --enable-maintainer-zts \&gt; --disable-fileinfo# 进行编译安装[root@localhost php-7.1.10]#make -j 2 &amp;&amp; make install 注意那个with-apxs2 的选项下面那个 make -j 2 指的是用两个cpu进行编译 注意这时候时没有配置文件的，到解压的php文件夹下1[root@localhost php-7.1.10]#cp php.ini-production /etc/php.ini notice 编译php7的时候with-config-file-path 指定了配置文件的位置,这个是很重要的，因为要不然我们没有指定也没有放在默认的php文件存放位置，以后每次运行php 的时候都要指定 配置配置文件的位置很麻烦 测试phpinfo， 看到了local value 还有另一行没，之前看过好像一个是apache 中指定的位置，但是本地可以通过脚本修改，所以local value 是实际的位置 讲道理，上面的编译参数运行不了， –with-config-file-scan-dir=/etc/php.d \，感觉是这个参数在作怪，不太明白这个文件夹中装的啥，反正是开启了一些curl 等的扩展，但实际上好像没有开启，所以需要把屏蔽掉（上面的php 编译参数不太好用，像curl 都没有开启，在项目中用会出错） php 源码包的作用。像pgsql 这些扩展，源码包中都是有的，如果想开启，不用再网上下载，直接去源码包的ext 下面找就好了，然后phpize ```编译，修改php.ini, php -m 查看是否成功。需要注意的是，一个包编译失败之后，再次编译，最好make clean一下。（pgsql 和 pdo_pgsql 是两个扩展···） 关于错误信息的输出。php.ini 有不同的两个版本，development, product， 虽然我没有研究过他们的不同，但目前发现最基本的就是，开发版本会把错误信息输出在页面上，但是生产版本不会，是php.ini 中一个选项的原因，生产版本可以把错误信息输出到日志中保存，好像nginx fpm 那种比较复杂，lamp这种直接在apache 的错误日志中就可以找到。（多熟悉lnmp,最好完全切过来，熟悉swoole） redis 的安装需要注意的就是 redis 启动服务要手动指定配置文件， 遇到的问题就是估计之前别人在路径中加入过redis-server 这个命令，导致我用 redis-server /opt/redis/conf/redis.conf 不匹配，出错， 还有有个配置选项是是否展示cli 下 那个命令行redis图像，果断关闭，虽然不知道他为啥报错 改成守护进程模式 之前测试测试数据库总的出错···总结了下原因 不能清楚的认识到mysql怎么连接数据库的。其实换一种思路，php是怎么连接redis的，我们安装好redis服务，然后安装php的redis扩展，就可以了。什么连接函数啊和连接mysql是一样的。关于php连接mysql，现在主推两种方式，mysqli和pdo，分别对应两种扩展，具体的可以参考菜鸟教程里面的这个php连接mysql。 mysqli() 第一个参数’localhost’ 和’127.0.0.1’ 的区别，localhost 连接基于socket，这个文件的位置在php.ini有指定，如果换了位置，则找不到。127.0.0.1基于tcp，就可以啦，不用那个文件，参考链接segmentfaultmysql 这个status挺好用的哈哈]]></content>
+    <content type="text"><![CDATA[lamp的源码编译安装。！！！注意哦，这里面是lamp，不是lnmp。之前的lamp中，apache和php的交流主要是apache把php作为自身的一个模块，而ngixn是通过cgi，php-fpm进行管理进程（这段话有待考证，因为apache也能使用php-fpm进行管理，并不是php-fpm和apache绑定的。我们那个lamp环境搭建的时候安装好apache,编译php 的时候要指定apxs的位置，–with-apxs2=/app/httpd24/bin/apxs ,这之间的交互过程还不是特别清楚）。 所以lamp的编译安装是有顺序的，因为php在编译的过程中需要指定apache的apxs模块位置。 apahce 的编译安装apache2.4之后编译安装之前需要apr和apr-util的支持（这两个文件下载位置，百度，好像在apr.apache.org下面，首页上面只是展示最新的，注意有个archive.download.sit,点击他，你会发现新世界的大门）apache在httpd.apache.org下面下载（讲道理我不知道他们之间的搭配有没有版本限制，so 下载的时候都下载最新的？比较靠谱的办法就是网上再找一份教程上面有apr apr-util apache的版本，对照着做就好啦··我的文章只是自己的思路呢）。 12345[root@localhost src]#pwd/usr/local/src[root@localhost src]#tar zxvf apr-1.6.2.tar.gz [root@localhost src]#tar zxvf apr-util-1.6.0.tar.gz [root@localhost src]#tar zxvf httpd-2.4.27.tar.bz2 安装apr-util之前得先安装apr，因为需要配置 （–prefix==/usr/local/apr），上面的三个编译安装或者 说所有linux的软件编译安装都是一个套路 : 1.进入解压目录，./configure 配置参数，百度吧 2.make 3.make install 4.查看 需要注意的就是可能安装的时候要安装额外的包，其实刚开始没安装也没什么大事情，后面编译肯定通过不了，所以就百度，一下子就能出来答案。 还有就是 configure 文件不存在，怎么办？一般目前我遇到这种情况主要是在编译安装php扩展的时候，可以通过 phpize(这个命令在php安装生成的bin目录下的一个指令),运行后会生成configure脚本，然后再像上面一样执行 参考文章：centos7 源码编译httpd7其实这一块都不用lamp中安装apache和单独安转apache没啥区别。 notice : （而且后来发现一个问题 apachectl start 这些用不了，应该是按照上篇博客中安装出现的问题，其实还是要解决下，因为在lamp中，刚开始修改php.ini 是很常见的，每次修改都需要apachectl restart 一下还是很方便的) ​httpd -k start 这戏好用 ​其实ps -ef|grep httpd ,也能看到这个httpd 的命令 把apachectl 添加到环境变量中，我一般通过的方法是 1234567vim /etc/profile HTTP=/usr/local/apache/bin$PATH=$HTTP:$PATHexport $PATH需要注意的是我们在使用变量的时候会从前往后找的，比如http 和 path 中都有 apachectl,但是http 在最前面，会使用前面的http中的apachectl, 通过 which apachectl可以查看这条命令来自哪里（yum安装的软件可能把命令自动加到/usr/bin 里面去，卸载的时候也删除不掉，这个很坑爹，需要注意下，经常用的时候不是你想用那条命令，所以一直加在前面可能会避免一些这样的事情发生）source /etc/profile 让他生效echo $PATH 看是否包含了你需要的路径 我在正常启动apache 之后，外网总是访问不了，通过查看配置文件的日志 access_log 是空的，error_log中有内容，但其实是notice 级别的错误，一直以为是这个原因导致外网不能访问，百度了好久这个错误信息，都没有找到解决办法，问同事，演变成apache正常启动，外网访问不了的问题，先通过curl 127.0.0.1:80 来尝试访问，得到内容， it works 说明服务器没有问题，想到防火墙，看了下服务没有开启，想了下selinux 也没有开启，最后是阿里云的锅，zzz,其实问题很简单，解决过程也很简单，只是自己很笨，不知道怎么去排查问题 虚拟主机的配置，测试外网是否能访问，需要修改配置文件，需要注意的点 开启httpd-vhost,需要包含，然后再那个配置文件中写入 开启apache rewrite模块 开启端口监听，Listen 0.0.0.0:8080，注意0.0.0.0 默认查找Index.php，除了在虚拟主机的virtual host 中配置，在外层的配置文件中也要配置 开启php文件处理，主配置文件中修改， 这时候在apache的根目录下访问phpinfo这种文件还是不幸的，需要支持对php的mime类型解析，（想了下框架不能处理json输入是因为框架原因，还是web server原因）1AddType application/x-httpd-php .php 默认apache 运行用户是daemon,当我们在php 中运行写日志的比如seaslog,默认写入是/var/log,daemon用户没有写入这个文件夹的权限，我们需要修改文件夹权限或者新建新的文件夹或者修改运行用户等 mysql 编译安装失败，用的yum安装（直接下载编译好的二进制码比较好，比如subline下载之后直接就能使用，不用安装，这些java写的东西啊，好用，但是mysql不行，即使是编译过的二进制码，还要执行一些脚本） postgresql 的编译安装（网上的教程很详细）这个下载速度很快，可以考虑源码安装 有两个配置文件，一个用来进行用户权限的限制，一个好像是具体的配置 有两个目录，一个专门装数据，一个装软件，比如命令这些 默认root 访问不了，创建postgres用户和组（源码编译，yum的话自动创建），修改配置文件trust pg_config 这个命令很重要，安装中文搜索引擎，先安装scw库文件，再去安装zhaper这个分词，多个pgsql 一定要指定pg_config（好像指定不起作用,一定要把pg_config 直接运行的这个命令对应的pgsql 对上你想要装扩展的pgsql,要不然在数据库里面创建扩展会不成功 create extension ） 可以通过sql语句查询配置文件的位置（locate 不知道为啥找不到/mnt 下的文件，坑死我了） php编译安装 php.net 上下载源文件 安装额外的包1yum install libxml2-devel bzip2-devel libmcrypt-devel 3.编译安装php7123456789101112131415161718192021222324[root@localhost php-7.1.10]#./configure \&gt; --prefix=/app/php \&gt; --enable-mysqlnd \&gt; --with-mysqli=mysqlnd \&gt; --with-openssl \&gt; --with-pdo-mysql=mysqlnd \&gt; --enable-mbstring \&gt; --with-freetype-dir \&gt; --with-jpeg-dir \&gt; --with-png-dir \&gt; --with-zlib \&gt; --with-libxml-dir=/usr \&gt; --enable-xml \&gt; --enable-sockets \&gt; --with-apxs2=/app/httpd24/bin/apxs \&gt; --with-mcrypt \&gt; --with-config-file-path=/etc \&gt; --with-config-file-scan-dir=/etc/php.d \&gt; --enable-maintainer-zts \&gt; --disable-fileinfo# 进行编译安装[root@localhost php-7.1.10]#make -j 2 &amp;&amp; make install 注意那个with-apxs2 的选项下面那个 make -j 2 指的是用两个cpu进行编译 注意这时候时没有配置文件的，到解压的php文件夹下1[root@localhost php-7.1.10]#cp php.ini-production /etc/php.ini notice 编译php7的时候with-config-file-path 指定了配置文件的位置,这个是很重要的，因为要不然我们没有指定也没有放在默认的php文件存放位置，以后每次运行php 的时候都要指定 配置配置文件的位置很麻烦 测试phpinfo， 看到了local value 还有另一行没，之前看过好像一个是apache 中指定的位置，但是本地可以通过脚本修改，所以local value 是实际的位置 讲道理，上面的编译参数运行不了， –with-config-file-scan-dir=/etc/php.d \，感觉是这个参数在作怪，不太明白这个文件夹中装的啥，反正是开启了一些curl 等的扩展，但实际上好像没有开启，所以需要把屏蔽掉（上面的php 编译参数不太好用，像curl 都没有开启，在项目中用会出错） php 源码包的作用。像pgsql 这些扩展，源码包中都是有的，如果想开启，不用再网上下载，直接去源码包的ext 下面找就好了，然后phpize ```编译，修改php.ini, php -m 查看是否成功。需要注意的是，一个包编译失败之后，再次编译，最好make clean一下。（pgsql 和 pdo_pgsql 是两个扩展···） 关于错误信息的输出。php.ini 有不同的两个版本，development, product， 虽然我没有研究过他们的不同，但目前发现最基本的就是，开发版本会把错误信息输出在页面上，但是生产版本不会，是php.ini 中一个选项的原因，生产版本可以把错误信息输出到日志中保存，好像nginx fpm 那种比较复杂，lamp这种直接在apache 的错误日志中就可以找到。（多熟悉lnmp,最好完全切过来，熟悉swoole） redis 的安装需要注意的就是 redis 启动服务要手动指定配置文件， 遇到的问题就是估计之前别人在路径中加入过redis-server 这个命令，导致我用 redis-server /opt/redis/conf/redis.conf 不匹配，出错， 还有有个配置选项是是否展示cli 下 那个命令行redis图像，果断关闭，虽然不知道他为啥报错 改成守护进程模式 之前测试测试数据库总的出错···总结了下原因 不能清楚的认识到mysql怎么连接数据库的。其实换一种思路，php是怎么连接redis的，我们安装好redis服务，然后安装php的redis扩展，就可以了。什么连接函数啊和连接mysql是一样的。关于php连接mysql，现在主推两种方式，mysqli和pdo，分别对应两种扩展，具体的可以参考菜鸟教程里面的这个php连接mysql。 mysqli() 第一个参数’localhost’ 和’127.0.0.1’ 的区别，localhost 连接基于socket，这个文件的位置在php.ini有指定，如果换了位置，则找不到。127.0.0.1基于tcp，就可以啦，不用那个文件，参考链接segmentfaultmysql 这个status挺好用的哈哈]]></content>
       <categories>
         <category>Linux</category>
       </categories>
@@ -547,9 +547,9 @@
         <category>PHP</category>
       </categories>
       <tags>
+        <tag>框架</tag>
         <tag>apache</tag>
         <tag>linux</tag>
-        <tag>框架</tag>
         <tag>php</tag>
       </tags>
   </entry>

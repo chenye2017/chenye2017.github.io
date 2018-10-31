@@ -90,7 +90,7 @@
 <meta property="og:description" content="lamp的源码编译安装。！！！注意哦，这里面是lamp，不是lnmp。之前的lamp中，apache和php的交流主要是apache把php作为自身的一个模块，而ngixn是通过cgi，php-fpm进行管理进程（这段话有待考证，因为apache也能使用php-fpm进行管理，并不是php-fpm和apache绑定的。我们那个lamp环境搭建的时候安装好apache,编译php 的时候要指定apx">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://ozys8fka7.bkt.clouddn.com/mysql-status.jpg">
-<meta property="og:updated_time" content="2018-10-31T11:51:27.150Z">
+<meta property="og:updated_time" content="2018-10-31T14:44:12.111Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="lamp 源码编译">
 <meta name="twitter:description" content="lamp的源码编译安装。！！！注意哦，这里面是lamp，不是lnmp。之前的lamp中，apache和php的交流主要是apache把php作为自身的一个模块，而ngixn是通过cgi，php-fpm进行管理进程（这段话有待考证，因为apache也能使用php-fpm进行管理，并不是php-fpm和apache绑定的。我们那个lamp环境搭建的时候安装好apache,编译php 的时候要指定apx">
@@ -416,7 +416,8 @@
 <li>开启php文件处理，主配置文件中修改， 这时候在apache的根目录下访问phpinfo这种文件还是不幸的，需要支持对php的mime类型解析，（想了下框架不能处理json输入是因为框架原因，还是web server原因）<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">AddType application/x-httpd-php .php</span><br></pre></td></tr></table></figure>
 </li>
 </ol>
-<p>​</p>
+</li>
+<li><p>默认apache 运行用户是daemon,当我们在php 中运行写日志的比如seaslog,默认写入是/var/log,daemon用户没有写入这个文件夹的权限，我们需要修改文件夹权限或者新建新的文件夹或者修改运行用户等</p>
 </li>
 </ul>
 <h3 id="mysql-编译安装"><a href="#mysql-编译安装" class="headerlink" title="mysql 编译安装"></a>mysql 编译安装</h3><p>失败，用的yum安装（直接下载编译好的二进制码比较好，比如subline下载之后直接就能使用，不用安装，这些java写的东西啊，好用，但是mysql不行，即使是编译过的二进制码，还要执行一些脚本）</p>
@@ -805,7 +806,7 @@ var jiathis_config={
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count"> | 博客全站共70.0k字</span>
+  <span class="post-count"> | 博客全站共70.1k字</span>
 </div>
 
 

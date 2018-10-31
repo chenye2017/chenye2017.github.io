@@ -34,9 +34,9 @@
       <category term="PHP" scheme="http://yoursite.com/categories/PHP/"/>
     
     
-      <category term="PHP" scheme="http://yoursite.com/tags/PHP/"/>
-    
       <category term="Laravel" scheme="http://yoursite.com/tags/Laravel/"/>
+    
+      <category term="PHP" scheme="http://yoursite.com/tags/PHP/"/>
     
   </entry>
   
@@ -186,9 +186,9 @@
       <category term="PHP" scheme="http://yoursite.com/categories/PHP/"/>
     
     
-      <category term="PHP" scheme="http://yoursite.com/tags/PHP/"/>
-    
       <category term="Laravel" scheme="http://yoursite.com/tags/Laravel/"/>
+    
+      <category term="PHP" scheme="http://yoursite.com/tags/PHP/"/>
     
   </entry>
   
