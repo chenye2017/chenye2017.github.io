@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[ThinkPHP的感觉]]></title>
+    <url>%2F2018%2F11%2F12%2FThinkPHP%E7%9A%84%E6%84%9F%E8%A7%89%2F</url>
+    <content type="text"><![CDATA[学习，为了更好地适应未来的工作。简单的解除了下tp和laravel，总体来说tp比laravel简单多了，封装的也没有那么深，所以用起来还是很方便的，用的是5.0，5.1和5.0区别就挺大了，不如有了门脸，又是一个使用类不知道到底用哪个命名空间下类比较好的时候了，还有获取参数的方式，5.1已经没有getInstance()这种东西了，记录一下这几天的感觉,方便交流 目录结构 首先是模块的创建，主要是为了方便后台模块和 api 模块的分开 后台模块， 这个项目中主要是通过接口能返回html 模板 但是 api 模块，单单只用返回json 数据 Controller关于api 模块的json 返回，我们只要调用json() 方法就可以了，不需要做进一步的配置， 我们还可以通过json 方法的进一步封装，让调用起来更加方便 [图片上传失败…(image-14c2c0-1542018168779)] 这种方法其实就是在返回头上加上个别的信息 这种公共的方法我们可以写在 common.php 文件中 控制器中获取传过来的参数 有个坑就是5.0 和 5.1 通过request 获取参数的方式竟然就不一样了， 5.0 中 其中一种 Request::instance()-&gt;get() 5.1 Request::get() (5.1中已经开始出现faceade这种看不懂的东西了) 其实用助手函数就没有上述问题了，···但无奈我不喜欢用，但感觉助手函数的话对不同版本的tp代码都是通用的 对于put 参数，我们在用postman 提交代码的时候需要通过第二种方式提交，第一种方式是获取不到的，可能是因为表单默认屏蔽了put delete 提交方式 这个header 头信息是真的坑，解决这个办法就是先把$header 信息保留成数组，然后再通过数组去寻找这个变量 讲道理，还是有点不明白_initialize 和 __construct(） 的区别 关于文件的定义，基本上除了配置文件，剩下的都是class 文件，按照psr4 ,类名要和文件名一样，我之前有过类名和文件名不一样，导致文件加载失败 异常处理那块，当调用父的 异常处理函数，需要return ,否则会报错，感觉和调用模板也需要return 是一个道理 Router关于 tp 的路由，好久之前就知道被吐槽pathinfo 模式，虽然我不知道是因为什么被吐槽，除了pathinfo 还有别的模式吗？ 除了默认的pathinfo, 我们对于api 接口（admin 那种返回html 的可以不用管），可以使用路由注册的形式，就是在route.php 中进行路由注册，他会首先匹配,没找到的会使用pathinfo 模式，这块需要我们在配置文件中进行配置 （可以完全关闭pathinfo 或者 路由注册的形式） （关于路由注册这块，tp 的路由注册和laravel 的还不一样，他不是使用命名空间的形式，用的是感觉自己定义的形式， 但感觉因为这个方面，路tp的路由方面应该不能单独拆出来给别的项目使用），但其实也挺好理解， 注意 完全路由匹配，还有路由参数的限制 参照： https://www.jianshu.com/p/73ed6e42d389 Config今天因为不太知道config() 助手函数都是从哪里获取的数据，查了一下，这篇文章写得还是蛮好的 https://www.jianshu.com/p/cd8b68143fde 比如我们那个api模块的接口需要很多额外的参数，我们只需要在application 最外层定义一个extra 的目录，然后会自动引入里面的文件 我们配置文件的数据返回大致如下 通过 config() 可以看到全局的配置参数 Modelmodel 最近用的都是orm,不管是后台admin 还是api接口，都可以公用，所以新建了一个common模块，在里面写入了model,通过model() 或者命名空间的方式都能使用（我比较喜欢用命名空间的方式去使用，tp的orm可以分离出来去别的项目中使用，当然model()方法引入model类就不可以了，只能通过命名空间的方式） 题外话 ：关于为什么用model() 就能引入common 模块下的model，我们可以理解成约定俗成，甚至可以理解成1 + 1 = 2， 之前我纠结这些问题很久，但其实他就像我们使用别的约定俗成的概念是一样的，只是这个可能是由于框架的封装，在我们的印象中很难站住脚 ，或者没有看到官方给的白纸黑字的文档，能做的就是看源码，model 是怎么执行加载的，表哥说过，你可以画上 1年半载去弄懂框架的源码，但如果你弄不懂的话，你也可以通过专注业务区提升自己的能力，有些东西能用就好了。 基本的方法: 通过在数据库配置文件中设置表前缀，默认类名称是 ‘表前缀_类名’ ， laravel 是表名单数 where =&gt; [‘id’=&gt; 1, ‘status’=&gt; 1], 多条件等于情况， [‘id’, ‘status’] 代表两个column order 同上 limit 5 size page 1 页码 select 获取集合 ，这个直接json 返回外面就是array ,在项目里面打印是 是object ,这个项目里面转换成 array 需要 collection($arr)-&gt;toArray() find 只能获取一条 ,这个直接 $arr-&gt;toArray() 就能转换成数组 field 获取哪些对应字段 count 这个好像需要放在 where 条件后面，要不然也会报错 setInc 增加某字段的数量 orm 之所以能调用这些db的方法是因为orm 的基础是db insert 插入 自动写入时间戳都是针对orm 这种操作可以的，db 操作是不可以的， 上面的操作都是db 的操作 注意用Db 进行操作的时候，命名前缀已经失效了，记住要用表的全名 关于join 表，老师和表哥说都不要join ,因为数据多的时候join会出问题，对于用户和用户名的对应的时候，利用先找出所有数据，再把userid 取出来进行in 的查询，再通过遍历之前需要处理的数据，把username 链接进去，这样是可以的，但是对于zan这种，可能不存在这条数据 ORMso , 下面的 才可以 save 插入 这个不能用静态方法，只能实例化调用 create 静态调用 update 静态调用 get （条件） all (条件) 只有orm 取出来的数据可以直接用 [‘属性’] 方式取值， 上面的sql 方式取出来的数据不能这样直接使用 关于orm 的执行日志，或者是说sql日志，统一的开启数据库调试模式，然后直接在log中查看就好了 Cache自己新建的缓存文件不要和 thinkphp里面的字段名称一样，否则回报错误]]></content>
+      <categories>
+        <category>PHP</category>
+      </categories>
+      <tags>
+        <tag>PHP</tag>
+        <tag>框架</tag>
+        <tag>ThinkPHP</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Laravel 关于blade]]></title>
     <url>%2F2018%2F10%2F10%2FLaravel-%E5%85%B3%E4%BA%8Eblade(%E6%A8%A1%E6%9D%BF%E5%BC%95%E6%93%8E)%2F</url>
     <content type="text"><![CDATA[其实现在都是前后端分离的，应该蛮少用到模板引擎这种东西，作为上一个web时代的产物，其实模板引擎开发起来还是蛮快的，而且挺简单的。 itbasic 用的也是模板引擎，名twig，其实和blade没有多少不同的地方，只是自己发现的twig新功能还比较少，只是一直在原先的基础上堆代码，感觉上在模板引擎里面还是不要做过多的逻辑判断，否则后面会越写越复杂，而且难于维护。 对于web网站，我们有很多页面，但这些页面大部分都是相同的？因为我们的布局需要相同，这个其实在写itbasic的时候应该能感觉到，我们似乎只需要填充中间的content部分就好了 123456789&lt;html&gt; &lt;head&gt; &lt;title&gt;@yield(&apos;title&apos;,&apos;测试&apos;)&lt;/title&gt; &lt;/head&gt; &lt;body&gt; @yield(&apos;content&apos;) &lt;/body&gt;&lt;/html&gt; 什么是yield ,就是让继承者可以填充的东西，继承者通过 123456@extends(&apos;layout.blade&apos;) //继承上一个模板@section(&apos;title&apos;, &apos;cy&apos;) //填充数据@section(&apos;content&apos;) //这种方式填充数据要有结束符号 &lt;h1&gt;222&lt;/h1&gt;@stop 12@include(&apos;default.ce&apos;) // 包含额外的页面//传递变量，include(&apos;default.ce&apos;, [&apos;user&apos;=&gt;$user]) 123456789//判断@if ($a &gt; 0) &lt;h1&gt;cc&lt;/h1&gt;@endif//循环@foreach($counts as $count) &lt;li&gt;&lt;/li&gt;@endforeach]]></content>
@@ -8,8 +21,8 @@
         <category>PHP</category>
       </categories>
       <tags>
-        <tag>PHP</tag>
         <tag>Laravel</tag>
+        <tag>PHP</tag>
       </tags>
   </entry>
   <entry>
@@ -60,8 +73,8 @@
         <category>PHP</category>
       </categories>
       <tags>
-        <tag>PHP</tag>
         <tag>Laravel</tag>
+        <tag>PHP</tag>
       </tags>
   </entry>
   <entry>
@@ -213,9 +226,9 @@
         <category>apache</category>
       </categories>
       <tags>
+        <tag>框架</tag>
         <tag>apache</tag>
         <tag>linux</tag>
-        <tag>框架</tag>
       </tags>
   </entry>
   <entry>
@@ -238,8 +251,8 @@
         <category>Laravel</category>
       </categories>
       <tags>
-        <tag>PHP</tag>
         <tag>Laravel</tag>
+        <tag>PHP</tag>
       </tags>
   </entry>
   <entry>
@@ -372,8 +385,8 @@
       </categories>
       <tags>
         <tag>PHP</tag>
-        <tag>框架</tag>
         <tag>ThinkPHP5</tag>
+        <tag>框架</tag>
       </tags>
   </entry>
   <entry>
@@ -400,8 +413,8 @@
       </categories>
       <tags>
         <tag>Linux</tag>
-        <tag>环境</tag>
         <tag>lamp</tag>
+        <tag>环境</tag>
       </tags>
   </entry>
   <entry>
@@ -413,8 +426,8 @@
       </categories>
       <tags>
         <tag>Linux</tag>
-        <tag>lnmp</tag>
         <tag>环境</tag>
+        <tag>lnmp</tag>
       </tags>
   </entry>
   <entry>
@@ -536,9 +549,9 @@
         <category>PHP</category>
       </categories>
       <tags>
+        <tag>框架</tag>
         <tag>apache</tag>
         <tag>linux</tag>
-        <tag>框架</tag>
         <tag>php</tag>
       </tags>
   </entry>
