@@ -2,6 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yoursite.com/2018/06/13/%E6%97%A0%E9%99%90%E9%80%92%E5%BD%92/</loc>
+    
+    <lastmod>2018-11-15T07:21:59.684Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2018/01/29/PHP%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C/</loc>
+    
+    <lastmod>2018-11-15T07:04:18.352Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/2018/11/12/ThinkPHP%E7%9A%84%E6%84%9F%E8%A7%89/</loc>
     
     <lastmod>2018-11-12T10:26:00.669Z</lastmod>
@@ -135,13 +149,6 @@
   </url>
   
   <url>
-    <loc>http://yoursite.com/2018/06/13/%E6%97%A0%E9%99%90%E9%80%92%E5%BD%92/</loc>
-    
-    <lastmod>2018-06-13T09:15:47.146Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://yoursite.com/2018/06/06/%E8%B7%A8%E5%9F%9F/</loc>
     
     <lastmod>2018-06-06T13:55:05.334Z</lastmod>
@@ -173,13 +180,6 @@
     <loc>http://yoursite.com/2017/12/20/svn-Git-%E6%80%9D%E8%80%83/</loc>
     
     <lastmod>2018-05-25T07:36:42.306Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2018/01/29/PHP%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C/</loc>
-    
-    <lastmod>2018-05-25T07:22:42.087Z</lastmod>
     
   </url>
   
