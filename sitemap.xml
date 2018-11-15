@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yoursite.com/2018/11/12/ThinkPHP%E7%9A%84%E6%84%9F%E8%A7%89/</loc>
+    
+    <lastmod>2018-11-15T13:15:13.051Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/2018/06/13/%E6%97%A0%E9%99%90%E9%80%92%E5%BD%92/</loc>
     
     <lastmod>2018-11-15T07:21:59.684Z</lastmod>
@@ -12,13 +19,6 @@
     <loc>http://yoursite.com/2018/01/29/PHP%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C/</loc>
     
     <lastmod>2018-11-15T07:04:18.352Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2018/11/12/ThinkPHP%E7%9A%84%E6%84%9F%E8%A7%89/</loc>
-    
-    <lastmod>2018-11-12T10:26:00.669Z</lastmod>
     
   </url>
   
@@ -362,13 +362,6 @@
     <loc>http://yoursite.com/2017/11/25/window%E4%B8%8B%E8%BF%90%E8%A1%8C%E5%90%84%E7%A7%8D%E6%A1%86%E6%9E%B6%E6%80%BB%E7%BB%93/</loc>
     
     <lastmod>2018-02-23T12:49:25.069Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2018/01/24/ThinkPHP5-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</loc>
-    
-    <lastmod>2018-02-23T12:48:41.567Z</lastmod>
     
   </url>
   
