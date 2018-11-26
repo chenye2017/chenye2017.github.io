@@ -106,7 +106,7 @@
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5525740-5fc354627abfef17.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5525740-993df227105522ea.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5525740-e8860b37d1293f63.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2018-11-16T10:05:09.005Z">
+<meta property="og:updated_time" content="2018-11-23T14:49:20.988Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ThinkPHP的感觉">
 <meta name="twitter:description" content="学习，为了更好地适应未来的工作。简单的解除了下tp和laravel，总体来说tp比laravel简单多了，封装的也没有那么深，所以用起来还是很方便的，用的是5.0，5.1和5.0区别就挺大了，不如有了门脸，又是一个使用类不知道到底用哪个命名空间下类比较好的时候了，还有获取参数的方式，5.1已经没有getInstance()这种东西了，记录一下这几天的感觉,方便交流">
@@ -548,6 +548,7 @@
 <p>接下来， Basci Exception 是自己默认定义的exception， 既然是自己定义的错误，自然不用tp的异常处理，直接返回前台json 数据就好了，因为自己定义的错误，一般是手动抛出，自己了解错误的原因</p>
 <p>然后是非自己定义，首先要是判断是否开启了debug 模式，如果开启了，说明在调试，直接使用tp自带的就好了，千万注意要加上return ,要不然会报错，毕竟是html 页面的返回（类似可以想象一下tp中模板的返回）</p>
 <p>再者是如果是上线环境，只需要告知前台服务器错误就好了，定义个固定的数组，返回给前端，然后记日志</p>
+<p>（记录日志也是很简单的，log::error(), 写在runtime的log下面）</p>
 <p>异常处理定义完毕，就要开始定义异常类了。使用异常类的原因就是告别传统的遇到错误的返回方式，还记得之前我们在嵌套函数中执行错误后怎么返回的吗，只能层层往上抛出，到了最外层的controller 返回，可是异常就不一样了，当异常处理检测到这个地方抛出的异常，就能直接进入异常处理函数中，多方便。</p>
 <p>（还有一点我觉得定义异常的好处，就是之前我们对错误信息的输出总是 code =&gt; message =&gt; ,有时候为了规范我们通过写一个方法，通过code 去获取message ，但你想象一下，当你写完接口之后，满屏的 code ，你也不知道这个code 代表的啥意思，当然我们可以约定code的规范，如果我们通过throw new ParamErrorException([code=&gt; , message=&gt;]), 我们就会知道这个错误大致属于前端参数的错误）</p>
 <p>notice :<br>1.不管是什么框架，我们定义的异常都一定继承于最原始的php \Exception</p>
@@ -651,6 +652,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/11/23/PHP常用工具/" rel="prev" title="PHP常用工具">
+                PHP常用工具 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -757,7 +762,7 @@ var jiathis_config={
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">58</span>
+                  <span class="site-state-item-count">59</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -914,7 +919,7 @@ var jiathis_config={
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count"> | 博客全站共70.0k字</span>
+  <span class="post-count"> | 博客全站共71.0k字</span>
 </div>
 
 
