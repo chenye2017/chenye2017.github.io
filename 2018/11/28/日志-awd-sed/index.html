@@ -81,17 +81,19 @@
 
 
 
-<meta name="description" content="yield，生成器，自己感觉还是挺重要的，因为php在读取大文件的时候经常会有内存溢出的错误，其实yield还会涉及spl，这部分内容自己目前了解的还不是十分清楚，所以，暂时就把yield的作用归类于放置变量过大在内存中占用本大空间，导致内存溢出吧。">
+<meta name="description" content="日志很重要  日志可以进行数据挖掘，分析用户的喜好，比如什么资源被用户频繁访问（对应面试题：取出访问量前20的网址）  –来自百度某朋友 你线上要是有错误怎么办，你们平时是不是都不看日志，只有错误了才解决，··balabal （一顿嘲讽）  –来自平安好房某专家表哥 为啥本地开发的时候，错误信息能输出在页面，线上环境直接就是个500页面，好奇怪，好奇怪     –来自17年的me">
 <meta property="og:type" content="article">
-<meta property="og:title" content="PHP yield">
-<meta property="og:url" content="http://yoursite.com/2018/05/25/PHP-yield/index.html">
+<meta property="og:title" content="日志 awd sed">
+<meta property="og:url" content="http://yoursite.com/2018/11/28/日志-awd-sed/index.html">
 <meta property="og:site_name" content="语法糖的博客">
-<meta property="og:description" content="yield，生成器，自己感觉还是挺重要的，因为php在读取大文件的时候经常会有内存溢出的错误，其实yield还会涉及spl，这部分内容自己目前了解的还不是十分清楚，所以，暂时就把yield的作用归类于放置变量过大在内存中占用本大空间，导致内存溢出吧。">
+<meta property="og:description" content="日志很重要  日志可以进行数据挖掘，分析用户的喜好，比如什么资源被用户频繁访问（对应面试题：取出访问量前20的网址）  –来自百度某朋友 你线上要是有错误怎么办，你们平时是不是都不看日志，只有错误了才解决，··balabal （一顿嘲讽）  –来自平安好房某专家表哥 为啥本地开发的时候，错误信息能输出在页面，线上环境直接就是个500页面，好奇怪，好奇怪     –来自17年的me">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-05-25T06:51:23.789Z">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5525740-689499213d1911e2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-11-28T10:33:56.171Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="PHP yield">
-<meta name="twitter:description" content="yield，生成器，自己感觉还是挺重要的，因为php在读取大文件的时候经常会有内存溢出的错误，其实yield还会涉及spl，这部分内容自己目前了解的还不是十分清楚，所以，暂时就把yield的作用归类于放置变量过大在内存中占用本大空间，导致内存溢出吧。">
+<meta name="twitter:title" content="日志 awd sed">
+<meta name="twitter:description" content="日志很重要  日志可以进行数据挖掘，分析用户的喜好，比如什么资源被用户频繁访问（对应面试题：取出访问量前20的网址）  –来自百度某朋友 你线上要是有错误怎么办，你们平时是不是都不看日志，只有错误了才解决，··balabal （一顿嘲讽）  –来自平安好房某专家表哥 为啥本地开发的时候，错误信息能输出在页面，线上环境直接就是个500页面，好奇怪，好奇怪     –来自17年的me">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/5525740-689499213d1911e2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
 
 
@@ -121,13 +123,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/05/25/PHP-yield/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/11/28/日志-awd-sed/"/>
 
 
 
 
 
-  <title>PHP yield | 语法糖的博客</title>
+  <title>日志 awd sed | 语法糖的博客</title>
   
 
 
@@ -292,7 +294,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/25/PHP-yield/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/28/日志-awd-sed/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="chenye2017">
@@ -309,7 +311,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">PHP yield</h1>
+          <h1 class="post-title" itemprop="name headline">日志 awd sed</h1>
         
 
         <div class="post-meta">
@@ -321,8 +323,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-25T13:55:52+08:00">
-                2018-05-25
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-28T18:32:20+08:00">
+                2018-11-28
               </time>
             
 
@@ -359,21 +361,35 @@
       
 
       
-        <p>yield，生成器，自己感觉还是挺重要的，因为php在读取大文件的时候经常会有内存溢出的错误，其实yield还会涉及spl，这部分内容自己目前了解的还不是十分清楚，所以，暂时就把yield的作用归类于放置变量过大在内存中占用本大空间，导致内存溢出吧。</p>
+        <p>日志很重要</p>
+<blockquote>
+<p>日志可以进行数据挖掘，分析用户的喜好，比如什么资源被用户频繁访问（对应面试题：取出访问量前20的网址）  –来自百度某朋友</p>
+<p>你线上要是有错误怎么办，你们平时是不是都不看日志，只有错误了才解决，··balabal （一顿嘲讽）  –来自平安好房某专家表哥</p>
+<p>为啥本地开发的时候，错误信息能输出在页面，线上环境直接就是个500页面，好奇怪，好奇怪     –来自17年的me</p>
+</blockquote>
 <a id="more"></a>
-<p>关于yield这种数据类型，还有迭代器，还有collection，都是能用foreach进行循环遍历的。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">function productNum($length)</span><br><span class="line">&#123;</span><br><span class="line"> $data = [];</span><br><span class="line">  for ($i=0; $i&lt; $length; $i++)&#123;</span><br><span class="line">     $data[] = $i;</span><br><span class="line">	&#125;</span><br><span class="line"> return $data;	</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$data = productNum($100000000);</span><br><span class="line">foreach ($data as $key=&gt;$value) &#123;</span><br><span class="line">  var_dump($value);</span><br><span class="line">  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>用php执行上端代码会报出超出分配给php的内存错误</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">function productNum($length)</span><br><span class="line">&#123;</span><br><span class="line"> //$data = [];</span><br><span class="line">  for ($i=0; $i&lt; $length; $i++)&#123;</span><br><span class="line">     //$data[] = $i;</span><br><span class="line">     yield $i;</span><br><span class="line">	&#125;</span><br><span class="line"> //return $data;	</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$data = productNum($100000000);</span><br><span class="line">foreach ($data as $key=&gt;$value) &#123;</span><br><span class="line">  var_dump($value);</span><br><span class="line">  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>能执行成功，其实这个时候打印$data变量，可以看出来他是一个类。</p>
-<p>每次foreach 去$data中取数据，上面的那个for循环就会执行一次，再次输出一个变量\$i。</p>
-<p>so，如果使用yield的内容，每次也得循环使用吗？</p>
-<p>yield定义的内容不能有返回。</p>
-<p>下面写一个读取文件，再往另一个文件中写入内容的例子，其实这个例子不具有实际价值，其实就是一个copy文件，用shell_exec执行linux命令就可以，或者file_get_contents,file_put_contents这样就好了，使用yield分多次，唯一可以想到的好处就是控制对内存占用的大小。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">function getContent($file)</span><br><span class="line">&#123;</span><br><span class="line">  $res = fopen($file);</span><br><span class="line">  while (feof($resource) === false ) &#123;</span><br><span class="line">         yield fgets($resource);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$res = fopen(&apos;/home/itbasic/3.pdf&apos;, &apos;a&apos;);</span><br><span class="line">foreach ($content as $c_key=&gt;$c_value) &#123;</span><br><span class="line">    fwrite($res, $c_value);</span><br><span class="line">&#125;</span><br><span class="line">fclose($res);</span><br><span class="line">echo &quot;使用: &quot;.memory_get_usage().&quot;B\n&quot;;  //使用: 362640B</span><br></pre></td></tr></table></figure>
-<p>用传统方式</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$res = file_get_contents($file);</span><br><span class="line">file_put_contents(&apos;/home/itbasic/1.pdf&apos;, $res);</span><br><span class="line">echo &quot;使用: &quot;.memory_get_usage().&quot;B\n&quot;; //使用: 39875608B</span><br></pre></td></tr></table></figure>
-<p>显然超过一个数量级，yield就是把一个结果集分批的给你，你什么时候问他要下一个结果集，他什么时候给你。</p>
+<p>###了解日志<br>我们itbasic用的其实是lamp, 通过apache的模块处理php, php的错误日志可以在虚拟域名里面进行配置<br>lnmp,nginx 起到静态文件处理的作用，php 转给php-fpm 进行处理，虽然网上说nginx 记录不了错误日志，但其实当我在虚拟站点里面配置error-log的时候，也是有记录的，和php-fpm中是一样的。<br>php-fpm 中开启日志需要修改php.fpm 的配置文件（还可以添加慢查询日志，<a href="https://juejin.im/post/5b9394a0e51d450e686747e3" target="_blank" rel="noopener">据说很重要</a>，有空的话可以把itbasic改成lnmp,有空的话看看php-fpm 中各个参数的作用，）</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/5525740-689499213d1911e2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"><br>特别是这块，php_flag和php_value 的作用是一致的，不知道为什么要搞两个一样的，还有就是他们的使用是这样<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">php_flag[error_reporting] = 0</span><br></pre></td></tr></table></figure></p>
+<p>来覆盖代码中的error_reporting ,····原先以为还有什么作用呢</p>
+<p>###分析日志</p>
+<p>我不会告诉你最开始接触sed和awk 是因为面试题，很多时候，当我们分析一个大日志文件的时候，我们甚至都打不开这个文件，因为太大了， 但是我们可以通过这些文本处理工具对数据加以筛选。</p>
+<p>awk（参照<a href="http://www.ruanyifeng.com/blog/2018/11/awk.html" target="_blank" rel="noopener">阮一峰</a>老师，很可惜，没有出sed 入门）</p>
+<p><strong>基本用法</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># 格式</span><br><span class="line">$ awk 动作 文件名</span><br><span class="line"></span><br><span class="line"># 示例</span><br><span class="line">$ awk &apos;&#123;print $0&#125;&apos; demo.txt</span><br><span class="line"></span><br><span class="line">$ echo &apos;this is a test&apos; | awk &apos;&#123;print $0&#125;&apos;</span><br><span class="line">this is a test</span><br></pre></td></tr></table></figure></p>
+<p>print 和 echo 都是标准输出，stdin ,这个东西最近经常看到，感觉就是输出在控制台上，比如php cli 模式下，普通php 脚本中 echo,  print,  var_dump都可以打印在控制台上（但好像记得之前子进程中输出好像只有父进程中才能看到，不记得是return 还是 输出了），这种标准输出好像都可以通过管道进行连接然后进行处理<br>上面的分割， \$1 代表第一个元素，$0 代表整体元素<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"># 练习（test.log）：</span><br><span class="line">root:x:0:0:root:/root:/usr/bin/zsh</span><br><span class="line">daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin</span><br><span class="line">bin:x:2:2:bin:/bin:/usr/sbin/nologin</span><br><span class="line">sys:x:3:3:sys:/dev:/usr/sbin/nologin</span><br><span class="line">sync:x:4:65534:sync:/bin:/bin/sync</span><br><span class="line"></span><br><span class="line"># 想输出第一个字符的话</span><br><span class="line">cat test.log|awk -F &apos;:&apos; &apos;&#123;print $1&#125;&apos;</span><br></pre></td></tr></table></figure></p>
+<p> 想一下，我们通过cat ,是不是能把文件默认输出在页面上，然后我们通过awk去处理，设置分隔符号 ‘:’,默认的分隔符符号是 ‘ ‘.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># 练习：提取nginx 500 日志，并统计总数</span><br><span class="line"># 78.181.37.209 - - [28/Nov/2018:15:01:56 +0800] &quot;GET / HTTP/1.1&quot; 200 612 &quot;-&quot; &quot;Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36&quot;</span><br><span class="line">cat access.log|awk -F &apos; &apos; &apos;if ($9 == 500) print $0&apos; | wc -l</span><br></pre></td></tr></table></figure>
+<p>注意这个分隔符号是空格，即使双引号里面有空格，也会把切割开， wc -l 可以统计行数</p>
+<p><strong>变量</strong><br>内置一些变量，比如行数NR，这一行有多少个字段NF(这两个应该是最常用)，<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">FILENAME：当前文件名</span><br><span class="line">FS：字段分隔符，默认是空格和制表符。</span><br><span class="line">RS：行分隔符，用于分割每一行，默认是换行符。</span><br><span class="line">OFS：输出字段的分隔符，用于打印时分隔字段，默认为空格。</span><br><span class="line">ORS：输出记录的分隔符，用于打印时分隔记录，默认为换行符。</span><br><span class="line">OFMT：数字输出的格式，默认为％.6g。</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">练习：</span><br><span class="line">      2 345</span><br><span class="line">      2 123</span><br><span class="line">      1 789</span><br><span class="line">      1 1234</span><br><span class="line"></span><br><span class="line">awk &apos;&#123;print NR&quot; &quot; $2&#125;&apos; log  # 行数  第二个字段中间用空格连接</span><br><span class="line">awk &apos;&#123;print NR&quot; &quot; $(NF)&#125;&apos; # 行数 最后一个字段中间用空格连接，运行的时候中间的值会被替换</span><br></pre></td></tr></table></figure>
+<p><strong>函数</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">tolower()：字符转为小写。</span><br><span class="line">length()：返回字符串长度。</span><br><span class="line">substr()：返回子字符串。</span><br><span class="line">sin()：正弦。</span><br><span class="line">cos()：余弦。</span><br><span class="line">sqrt()：平方根。</span><br><span class="line">rand()：随机数。</span><br></pre></td></tr></table></figure></p>
+<p><strong>条件</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">awk &apos;条件 动作&apos; 文件名</span><br><span class="line">awk &apos;条件 动作&apos; 文件名awk -F &apos;:&apos; &apos;/usr/ &#123;print $1&#125;&apos; demo.txt</span><br><span class="line">awk -F &apos;:&apos; &apos;NR % 2 == 0 &#123;print $0&#125;&apos; demo.text #输出偶数行</span><br><span class="line">awk -F &apos;:&apos; &apos;&#123;if (NR % 2 == 0) print $0; else print &quot;error&quot; &apos;&#125;&apos; demo.text</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">练习</span><br><span class="line">[例]：有如下文件test,请统计每个网址出现次数，用一句shell实现。</span><br><span class="line">a [www.baidu.com]  20:00</span><br><span class="line">b [www.qq.com]  14:00</span><br><span class="line">d [www.baidu.com] 23:00</span><br><span class="line">e [www.qq.com]  20:30</span><br><span class="line">f [www.360.com] 20:30</span><br><span class="line"></span><br><span class="line"> cat url.txt|awk &apos;&#123;print $2&#125;&apos;|sort|uniq -c|sort -rn</span><br><span class="line"># cat 查看文件内容， 输出第二行的内容，排序，因为 uniq 只能把连接在一起的文件重复文件合并，然后再倒序</span><br></pre></td></tr></table></figure>
+<p>uniq -c  把重复的行数显示在前，但是只能合并连续的<br>sort 排序， -rn   r是倒序，n是按照数字处理<br>head -n 5  取出前五行，这也是查询的时候经常要用到的</p>
+<p>补充一下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># 取出cpu 或者内存占用前五，top 查看占用</span><br><span class="line">ps -aux|sort -k3rn|head -n 5</span><br><span class="line"># sort 自带切割，</span><br><span class="line"># ps -aux 可以查看所有进程， 比如之前我想查看我的一个脚本 server.php,可以通过 ps -aux|grep server.php, 相比较netstat -antp|grep 9000,查看端口占用情况， ps -aux 查看更加清楚，比如swoole 的进程，1个 master ,1个manage,剩下的work ，所有的进程都能查看到，但是netstat 只能查看到一个</span><br></pre></td></tr></table></figure></p>
+<p>统计某接口的调用次数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat access.log| grep &apos;GET /app/kevinContent&apos; | wc -l</span><br></pre></td></tr></table></figure>
+<p>统计报错接口</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat access.log| awk &apos;&#123;if ($9 == 500) print $0&#125;&apos;</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -438,8 +454,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/05/21/框架学习0/" rel="next" title="框架学习0">
-                <i class="fa fa-chevron-left"></i> 框架学习0
+              <a href="/2018/11/23/PHP常用工具/" rel="next" title="PHP常用工具">
+                <i class="fa fa-chevron-left"></i> PHP常用工具
               </a>
             
           </div>
@@ -447,10 +463,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/05/25/PHP-opcache/" rel="prev" title="PHP opcache">
-                PHP opcache <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
