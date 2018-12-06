@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-11-28T10:33:56.171Z</updated>
+  <updated>2018-12-06T16:36:15.100Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,30 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>常用的接口(-)</title>
+    <link href="http://yoursite.com/2018/12/07/%E5%B8%B8%E7%94%A8%E7%9A%84%E6%8E%A5%E5%8F%A3/"/>
+    <id>http://yoursite.com/2018/12/07/常用的接口/</id>
+    <published>2018-12-06T16:34:57.000Z</published>
+    <updated>2018-12-06T16:36:15.100Z</updated>
+    
+    <content type="html"><![CDATA[<p>关于登陆，现在的网站有第三方登陆（qq,微信，微博）， 手机号登陆，用户名密码登陆，sso登陆，找回密码，注销 感觉其实都差不多<br><a id="more"></a></p><p><strong>第三方登陆</strong><br>其实国内的大多数第三方登陆都是基于oauth 2.0的变种，同理还有微信上消息more按钮点击能跳转到公司网站同样实现登陆都是基于这个，那什么是oauth2.0呢，阮老师这篇文章讲解的很清楚<a href="http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html" target="_blank" rel="noopener">oauth2.0</a>，而我们用的更多的又是其中的授权码模式，大致逻辑如下</p><p><img src="https://upload-images.jianshu.io/upload_images/5525740-517ca8a069faf690.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p><p>其中比较重要的两点就是用户授权code和access_token, code作用代表用户同意登陆了，access_token 代表这个用户资源（有时候像之前的小程序，是拿着用户同意之后返回的code 去换回openid, 这个openid 类似这个access_token, 他在每个应用中是唯一的，代表了一个用户，如果我们想把不同app上同一个微信用户绑在一起，需要我们去微信联合平台绑定需要处理的app，然后下次请求的时候会返回一个unit id ，这个对于同一个微信用户在不同的app内部是唯一的）</p><p>for example 微信消息跳转itbasic网站<br>1.引导用户点击授权链接，微信给的授权链接上会有参数绑定回调地址和state参数，当用户点击的时候，微信会重定向（注意不是回调）填写的会掉地址，并携带参数state,还有code ,也就是用户授权码，下面是我们的重定向地址代码<br>2.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">public function dologin($req)</span><br><span class="line">    &#123;</span><br><span class="line">        $code = $req-&gt;param(&apos;code&apos;);  # 用户授权码</span><br><span class="line">        $state = $req-&gt;param(&apos;state&apos;);  # 自己定义的参数，比如这次登陆来自微信，或者登陆之后需要跳转的地址</span><br><span class="line">        $accesstoken = $this-&gt;getAccessToken(); # 微信这块的access_token不需要用户的授权即可获取，但后面获取用户信息还是需要授权码，所以原理和上面是一样的</span><br><span class="line">         </span><br><span class="line">        $url = &apos;https://qyapi.weixin.qq.com/cgi-bin/user/getuserinfo?access_token=&apos;.$accesstoken.&apos;&amp;code=&apos;.$code;  </span><br><span class="line"></span><br><span class="line">        $res =$this-&gt;http($url); #获取用户信息</span><br><span class="line"></span><br><span class="line">        if (!array_key_exists(&apos;UserId&apos;, $res[&apos;result&apos;])) &#123;</span><br><span class="line">             // 记录错误信息（微信）到日志,获取用户信息出错</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        </span><br><span class="line">           // 根据实际业务处理，我这块是登陆</span><br><span class="line">          // 你可以根据返回的用户名称，判断是新用户，还是老用户，新用户的话会往数据库插入数据</span><br><span class="line">            $user_model = Box::getObject(&apos;user&apos;, model);</span><br><span class="line">            $res = $user_model-&gt;search($res[&apos;name&apos;]);</span><br><span class="line"></span><br><span class="line">            if (!$res) &#123;</span><br><span class="line">                // 记录错误信息（itbaisc） 到日志，查找用户失败</span><br><span class="line">            &#125;</span><br><span class="line">        </span><br><span class="line">            $userinfo = $res;</span><br><span class="line">            $userinfo = [&apos;userid&apos; =&gt; $userinfo[&apos;id&apos;], &apos;username&apos; =&gt; $userinfo[&apos;username&apos;], &apos;status&apos; =&gt; $userinfo[&apos;status&apos;], &apos;deptsid&apos; =&gt; $userinfo[&apos;deptsid&apos;], &apos;postsid&apos; =&gt; $userinfo[&apos;postsid&apos;], &apos;role&apos; =&gt; $userinfo[&apos;role&apos;], &apos;long&apos; =&gt; true];</span><br><span class="line">            Session::set(&apos;userinfo&apos;, $userinfo);  //实现登陆</span><br><span class="line">        </span><br><span class="line">        $state = urldecode($state);  // 之前我们自己绑定的参数，因为url在http参数中需要加密，防止多余的http这些参数</span><br><span class="line">        header( &quot;Location: $state&quot; );exit;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p><p><strong>手机号登陆</strong><br>首先生成验证码,存入缓存中，手机号=》验证码（过期时间，离开当前页面让其失效，只能使用一次），然后调用第三方接口发送给手机上这个验证码，用户收到验证码之后调用新的接口进行验证，我们在缓存中寻找手机号验证码是否匹配，如果匹配代表成功，后面是登陆啊，还是绑定啊看自己的业务需求</p><p><strong>sso登陆</strong><br>一处登陆处处登陆，一处注销，处处注销<br>(itbasic的原理类似oauth2。首先用户验证是否在的登陆中心登陆，如果没有，先登录，登陆中心成功后返回一个access_token,重定向到你来时候那个地址，相当于帮你发出请求，你拿着这个access_token获取用户信息，干啥都是你自己的事情。下次用户再来的时候，验证中心已经登陆上了，直接返回access_token然后重定向)<br>（注销，我们在每次去验证中心验证的时候，都记住有哪些来的网站，注销的时候都请求他们注销的地址就好了，这个时候可以直接请求，不用重定向，因为不用种cookie,直接销毁服务端数据就好了）</p><p><strong>找回密码</strong><br>通过邮箱。首先填写用户名和邮箱（为了防止别人恶意找回用户），确保用户名和邮箱和登陆的时候绑定一致，才发送修改密码的邮件，邮件内容是</p><p><img src="https://upload-images.jianshu.io/upload_images/5525740-804e1f534d3a4917.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p><p>这样其实就足够了，这个token 是我们之前发送邮件时候生成的，我们只需要保证 用户名 =&gt;token,当用户请求这个接口的时候（注意一定是get请求，因为是点击），我们通过这个token,知道是哪个用户就好了，然后返回一个界面让用户修改密码就可以了.</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;关于登陆，现在的网站有第三方登陆（qq,微信，微博）， 手机号登陆，用户名密码登陆，sso登陆，找回密码，注销 感觉其实都差不多&lt;br&gt;
+    
+    </summary>
+    
+      <category term="PHP" scheme="http://yoursite.com/categories/PHP/"/>
+    
+    
+      <category term="PHP" scheme="http://yoursite.com/tags/PHP/"/>
+    
+      <category term="API" scheme="http://yoursite.com/tags/API/"/>
+    
+  </entry>
   
   <entry>
     <title>日志 awd sed</title>
@@ -73,9 +97,9 @@
     
       <category term="PHP" scheme="http://yoursite.com/tags/PHP/"/>
     
-      <category term="ThinkPHP" scheme="http://yoursite.com/tags/ThinkPHP/"/>
-    
       <category term="框架" scheme="http://yoursite.com/tags/%E6%A1%86%E6%9E%B6/"/>
+    
+      <category term="ThinkPHP" scheme="http://yoursite.com/tags/ThinkPHP/"/>
     
   </entry>
   
@@ -97,9 +121,9 @@
       <category term="PHP" scheme="http://yoursite.com/categories/PHP/"/>
     
     
-      <category term="Laravel" scheme="http://yoursite.com/tags/Laravel/"/>
-    
       <category term="PHP" scheme="http://yoursite.com/tags/PHP/"/>
+    
+      <category term="Laravel" scheme="http://yoursite.com/tags/Laravel/"/>
     
   </entry>
   
@@ -249,9 +273,9 @@
       <category term="PHP" scheme="http://yoursite.com/categories/PHP/"/>
     
     
-      <category term="Laravel" scheme="http://yoursite.com/tags/Laravel/"/>
-    
       <category term="PHP" scheme="http://yoursite.com/tags/PHP/"/>
+    
+      <category term="Laravel" scheme="http://yoursite.com/tags/Laravel/"/>
     
   </entry>
   
@@ -363,24 +387,6 @@
     <summary type="html">
     
       &lt;p&gt;cookie，对于传统的php开发web必不可少，为什么呢，因为http是无状态协议，为了让浏览器在不同的tab页面记住我这个人，我们通过让同一个浏览器在访问同一个网址的时候都使用同一个钥匙，这个钥匙就是cookie，这个钥匙能打开服务器端特定的箱子，就是session，这个session里面保存了完整的用户信息，这样就能让浏览器记住我的不同tab页对应的是哪一个人了。&lt;/p&gt;
-    
-    </summary>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>跨域</title>
-    <link href="http://yoursite.com/2018/06/06/%E8%B7%A8%E5%9F%9F/"/>
-    <id>http://yoursite.com/2018/06/06/跨域/</id>
-    <published>2018-06-06T09:34:20.000Z</published>
-    <updated>2018-06-06T13:55:05.334Z</updated>
-    
-    <content type="html"><![CDATA[<p>跨域这个问题其实前端很容易碰到，为什么呢?因为前端一直用浏览器啊，浏览器可以看做一个http客户端，前端和http打交道主要用的就是这个客户端，但如果后端和http打交道，一般只能使用curl这类工具，又因为浏览器的同源策略才产生了跨域，换句话说跨域的时候，后端对前端的数据进行了处理，并返回了对应的数据，但是浏览器检测到了跨域，所以把数据屏蔽了，这才产生了跨域，所以前端相比后端会更容易碰到跨域问题。那前端就一定会碰到跨域问题吗，并不是这样。比如之前我在做itbasic的时候一直没有碰到这个问题，那是为什么呢？我的前端脚本和后端api服务都在80这个端口下，也就是说域是一直一样的，所以不会产生，但在当下，前后端分离，很多时候，前后端在不同的web服务下，比如我们那个bbs，前端静态页面由apache提供，端口8080，后端api是swoole提供，端口56735，这样前端肯定就遇到跨域问题啦。</p><a id="more"></a><p>关于浏览器同源策略的原因，可以网上查看各种资料，阮一峰的博客是个很好的选择。</p><p>什么时候会出现跨域</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">http://www.example.com/dir2/other.html：同源</span><br><span class="line">http://example.com/dir/other.html：不同源（域名不同）</span><br><span class="line">http://v2.www.example.com/dir/other.html：不同源（域名不同）</span><br><span class="line">http://www.example.com:81/dir/other.html：不同源（端口不同）</span><br><span class="line">组成一个域名（协议号：//ip地址：端口号）三者任意一个不同就会出现跨域</span><br></pre></td></tr></table></figure><p>如果解决跨域呢，自己主要了解的有两种，分别是cors和jsonp,自己平时用的主要是cors。</p><p>cors可以让后端代码不用做过多的变动，只需要对返回的内容多添加些头部信息即可。</p><p>jsonp主要是通过script，img标签这类不存在跨域，回忆一下，是不是通过img加载过百度的图片，通过script的src加载过cdn上的jquery。</p><p>通过script返回的内容因为在script标签内部，所以可以执行script代码，所以当我们传给后端我们定义好的方法名，然后让他们把我们需要的数据放进去，再返回来，类似 </p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">showData(&#123;&quot;1&quot;:&quot;boy&quot;&#125;);</span><br></pre></td></tr></table></figure><p>上面的返回结果在script代码中自动执行，就能得到我们想要的结果（需要注意的是传入的数据必须是json类型哦，毕竟后端和js是不同的语言类型，然后我们只需要在showData里面对json数据进行转换成js能识别的数据即可）。</p><p>对于jsonp，我用的比较少，因为很多时候不想特别写专门用来跨域的api接口，所以如果要用jsonp，后端逻辑代码需要更改（百度php如何配合jsnop完成数据传输）。</p><p>对于前端，像jquery有对jsonp的封装，可以自定义函数，然后传入，返回的数据会先走定义的函数，然后来到success函数里面，注意success传入的参数data是不包括后端返回的内容中的函数，而是函数的参数们。</p><p>juqery默认传的自定义函数名称是jquery带一长串数字，具体的用法可以百度查看，我没咋用过。</p><p>还有哦，jsonp只能支持get请求。</p><p>鉴于上面诸多的麻烦，我用的主要是cors。</p><p>首先我们需要知道浏览器将跨域请求分成了简单请求和非简单请求，什么是非简单请求，就是那些不是get post（请求方式）,返回头信息中加入token这类自定义的东西，就是非简单请求，一般情况下，我们的请求都是非简单请求，毕竟简单请求content-type 好像都不能是json类型。</p><p>对于非简单请求，会先在正式请求之前发送一个options请求，当有跨域请求的时候，我们可以看下Chrome的控制面板，很清楚的能看到。对于返回信息，我们需要加以下头信息</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$response-&gt;header(&quot;Access-Control-Allow-Origin&quot;, &apos;*&apos;); //允许的ip</span><br><span class="line">$response-&gt;header(&apos;Access-Control-Allow-Methods&apos;, &apos;POST, GET&apos;); //允许的方法</span><br><span class="line">$response-&gt;header(&apos;Access-Control-Allow-Headers&apos;, &apos;Content-Type, token&apos;);</span><br><span class="line">//自定义的头部信息</span><br></pre></td></tr></table></figure><p>大致只需要做这些处理，一般像php，只需要在router的 end（返回具体信息）之前加上上面的信息就可以了。</p><p>像node，或者swoole都在启动web服务的文件处加上即可。</p><p>​    </p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;跨域这个问题其实前端很容易碰到，为什么呢?因为前端一直用浏览器啊，浏览器可以看做一个http客户端，前端和http打交道主要用的就是这个客户端，但如果后端和http打交道，一般只能使用curl这类工具，又因为浏览器的同源策略才产生了跨域，换句话说跨域的时候，后端对前端的数据进行了处理，并返回了对应的数据，但是浏览器检测到了跨域，所以把数据屏蔽了，这才产生了跨域，所以前端相比后端会更容易碰到跨域问题。那前端就一定会碰到跨域问题吗，并不是这样。比如之前我在做itbasic的时候一直没有碰到这个问题，那是为什么呢？我的前端脚本和后端api服务都在80这个端口下，也就是说域是一直一样的，所以不会产生，但在当下，前后端分离，很多时候，前后端在不同的web服务下，比如我们那个bbs，前端静态页面由apache提供，端口8080，后端api是swoole提供，端口56735，这样前端肯定就遇到跨域问题啦。&lt;/p&gt;
     
     </summary>
     

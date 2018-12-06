@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="框架,apache,linux," />
+  <meta name="keywords" content="apache,linux,框架," />
 
 
 
@@ -82,14 +82,14 @@
 
 
 <meta name="description" content="关于apache的配置文件。不管是xampp安装的lamp环境，还是自己在linux下面搭建的lamp环境，之前关于apache的配置都是直接copy网上的，用的虚拟域名，本质是还是不够理解的，关于.htaccess 也只是刚开始学习tp的时候看到过，后来因为配置虚拟域名能解决问题，就没有过多的了解这个.htaccess了。">
-<meta name="keywords" content="框架,apache,linux">
+<meta name="keywords" content="apache,linux,框架">
 <meta property="og:type" content="article">
 <meta property="og:title" content="apache简单配置">
 <meta property="og:url" content="http://yoursite.com/2018/04/16/apache简单配置/index.html">
 <meta property="og:site_name" content="语法糖的博客">
 <meta property="og:description" content="关于apache的配置文件。不管是xampp安装的lamp环境，还是自己在linux下面搭建的lamp环境，之前关于apache的配置都是直接copy网上的，用的虚拟域名，本质是还是不够理解的，关于.htaccess 也只是刚开始学习tp的时候看到过，后来因为配置虚拟域名能解决问题，就没有过多的了解这个.htaccess了。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-04-17T01:22:55.118Z">
+<meta property="og:updated_time" content="2018-11-30T03:14:04.903Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="apache简单配置">
 <meta name="twitter:description" content="关于apache的配置文件。不管是xampp安装的lamp环境，还是自己在linux下面搭建的lamp环境，之前关于apache的配置都是直接copy网上的，用的虚拟域名，本质是还是不够理解的，关于.htaccess 也只是刚开始学习tp的时候看到过，后来因为配置虚拟域名能解决问题，就没有过多的了解这个.htaccess了。">
@@ -450,7 +450,7 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">RewriteCond %&#123;HTTP_REFERER&#125; (www.test.cn)</span><br><span class="line">RewriteRule (.*)$ test.php</span><br></pre></td></tr></table></figure>
 <p>上面语句的作用是如果你访问的上一个页面的主机地址是www.test.cn，则无论你当前访问的是哪个页面，都会跳转到对test.php的访问。</p>
 <p>再比如，也可以利用 HTTP_REFERER <code>防倒链</code>，就是限制别人网站使用我网站的图片。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">RewriteCond %&#123;HTTP_REFERER&#125; !^$ [NC]</span><br><span class="line">RewriteCond %&#123;HTTP_REFERER&#125; !ww.iyangyi.com [NC]</span><br><span class="line">RewriteRule \.(jpg|gif) http://image.baidu.com/ [R,NC,L]</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">RewriteCond %&#123;HTTP_REFERER&#125; !^$ [NC]</span><br><span class="line">RewriteCond %&#123;HTTP_REFERER&#125; !www.iyangyi.com [NC]</span><br><span class="line">RewriteRule \.(jpg|gif) http://image.baidu.com/ [R,NC,L]</span><br></pre></td></tr></table></figure>
 <p>NC nocase的意思，忽略大小写。第一句呢，是必须要有域名，第一句就是看域名如果不是 www.iyangyi.com 的，当访问.jpg或者.gif文件时候，就都会自动跳转到 <a href="http://image.baidu.com/" target="_blank" rel="noopener">http://image.baidu.com/</a> 上，很好的达到了防盗链的要求。</p>
 <p><strong>REQUEST_FILENAME</strong> </p>
 <p><strong>REQUEST_FILENAME</strong><br>这个基本是用的最多的，以为url重写是用的最多的，它是匹配当前访问的域名文件，那哪一块属于REQUEST_FILENAME 呢？是url 除了host域名外的。</p>
@@ -551,11 +551,11 @@
       
         <div class="post-tags">
           
-            <a href="/tags/框架/" rel="tag"><i class="fa fa-tag"></i> 框架</a>
-          
             <a href="/tags/apache/" rel="tag"><i class="fa fa-tag"></i> apache</a>
           
             <a href="/tags/linux/" rel="tag"><i class="fa fa-tag"></i> linux</a>
+          
+            <a href="/tags/框架/" rel="tag"><i class="fa fa-tag"></i> 框架</a>
           
         </div>
       
@@ -687,7 +687,7 @@ var jiathis_config={
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">60</span>
+                  <span class="site-state-item-count">61</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -844,7 +844,7 @@ var jiathis_config={
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count"> | 博客全站共72.6k字</span>
+  <span class="post-count"> | 博客全站共73.9k字</span>
 </div>
 
 
