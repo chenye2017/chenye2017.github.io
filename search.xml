@@ -3,7 +3,7 @@
   <entry>
     <title><![CDATA[常用的接口(-)]]></title>
     <url>%2F2018%2F12%2F07%2F%E5%B8%B8%E7%94%A8%E7%9A%84%E6%8E%A5%E5%8F%A3%2F</url>
-    <content type="text"><![CDATA[关于登陆，现在的网站有第三方登陆（qq,微信，微博）， 手机号登陆，用户名密码登陆，sso登陆，找回密码，注销 感觉其实都差不多 第三方登陆其实国内的大多数第三方登陆都是基于oauth 2.0的变种，同理还有微信上消息more按钮点击能跳转到公司网站同样实现登陆都是基于这个，那什么是oauth2.0呢，阮老师这篇文章讲解的很清楚oauth2.0，而我们用的更多的又是其中的授权码模式，大致逻辑如下 其中比较重要的两点就是用户授权code和access_token, code作用代表用户同意登陆了，access_token 代表这个用户资源（有时候像之前的小程序，是拿着用户同意之后返回的code 去换回openid, 这个openid 类似这个access_token, 他在每个应用中是唯一的，代表了一个用户，如果我们想把不同app上同一个微信用户绑在一起，需要我们去微信联合平台绑定需要处理的app，然后下次请求的时候会返回一个unit id ，这个对于同一个微信用户在不同的app内部是唯一的） for example 微信消息跳转itbasic网站1.引导用户点击授权链接，微信给的授权链接上会有参数绑定回调地址和state参数，当用户点击的时候，微信会重定向（注意不是回调）填写的会掉地址，并携带参数state,还有code ,也就是用户授权码，下面是我们的重定向地址代码2.1234567891011121314151617181920212223242526272829303132public function dologin($req) &#123; $code = $req-&gt;param(&apos;code&apos;); # 用户授权码 $state = $req-&gt;param(&apos;state&apos;); # 自己定义的参数，比如这次登陆来自微信，或者登陆之后需要跳转的地址 $accesstoken = $this-&gt;getAccessToken(); # 微信这块的access_token不需要用户的授权即可获取，但后面获取用户信息还是需要授权码，所以原理和上面是一样的 $url = &apos;https://qyapi.weixin.qq.com/cgi-bin/user/getuserinfo?access_token=&apos;.$accesstoken.&apos;&amp;code=&apos;.$code; $res =$this-&gt;http($url); #获取用户信息 if (!array_key_exists(&apos;UserId&apos;, $res[&apos;result&apos;])) &#123; // 记录错误信息（微信）到日志,获取用户信息出错 &#125; // 根据实际业务处理，我这块是登陆 // 你可以根据返回的用户名称，判断是新用户，还是老用户，新用户的话会往数据库插入数据 $user_model = Box::getObject(&apos;user&apos;, model); $res = $user_model-&gt;search($res[&apos;name&apos;]); if (!$res) &#123; // 记录错误信息（itbaisc） 到日志，查找用户失败 &#125; $userinfo = $res; $userinfo = [&apos;userid&apos; =&gt; $userinfo[&apos;id&apos;], &apos;username&apos; =&gt; $userinfo[&apos;username&apos;], &apos;status&apos; =&gt; $userinfo[&apos;status&apos;], &apos;deptsid&apos; =&gt; $userinfo[&apos;deptsid&apos;], &apos;postsid&apos; =&gt; $userinfo[&apos;postsid&apos;], &apos;role&apos; =&gt; $userinfo[&apos;role&apos;], &apos;long&apos; =&gt; true]; Session::set(&apos;userinfo&apos;, $userinfo); //实现登陆 $state = urldecode($state); // 之前我们自己绑定的参数，因为url在http参数中需要加密，防止多余的http这些参数 header( &quot;Location: $state&quot; );exit; &#125; 手机号登陆首先生成验证码,存入缓存中，手机号=》验证码（过期时间，离开当前页面让其失效，只能使用一次），然后调用第三方接口发送给手机上这个验证码，用户收到验证码之后调用新的接口进行验证，我们在缓存中寻找手机号验证码是否匹配，如果匹配代表成功，后面是登陆啊，还是绑定啊看自己的业务需求 sso登陆一处登陆处处登陆，一处注销，处处注销(itbasic的原理类似oauth2。首先用户验证是否在的登陆中心登陆，如果没有，先登录，登陆中心成功后返回一个access_token,重定向到你来时候那个地址，相当于帮你发出请求，你拿着这个access_token获取用户信息，干啥都是你自己的事情。下次用户再来的时候，验证中心已经登陆上了，直接返回access_token然后重定向)（注销，我们在每次去验证中心验证的时候，都记住有哪些来的网站，注销的时候都请求他们注销的地址就好了，这个时候可以直接请求，不用重定向，因为不用种cookie,直接销毁服务端数据就好了） 找回密码通过邮箱。首先填写用户名和邮箱（为了防止别人恶意找回用户），确保用户名和邮箱和登陆的时候绑定一致，才发送修改密码的邮件，邮件内容是 这样其实就足够了，这个token 是我们之前发送邮件时候生成的，我们只需要保证 用户名 =&gt;token,当用户请求这个接口的时候（注意一定是get请求，因为是点击），我们通过这个token,知道是哪个用户就好了，然后返回一个界面让用户修改密码就可以了.]]></content>
+    <content type="text"><![CDATA[关于登陆，现在的网站有第三方登陆（qq,微信，微博）， 手机号登陆，用户名密码登陆，sso登陆，找回密码，注销 感觉其实都差不多 第三方登陆其实国内的大多数第三方登陆都是基于oauth 2.0的变种，同理还有微信上消息more按钮点击能跳转到公司网站同样实现登陆都是基于这个，那什么是oauth2.0呢，阮老师这篇文章讲解的很清楚oauth2.0，而我们用的更多的又是其中的授权码模式，大致逻辑如下 其中比较重要的两点就是用户授权code和access_token, code作用代表用户同意登陆了，access_token 代表这个用户资源（有时候像之前的小程序，是拿着用户同意之后返回的code 去换回openid, 这个openid 类似这个access_token, 他在每个应用中是唯一的，代表了一个用户，如果我们想把不同app上同一个微信用户绑在一起，需要我们去微信联合平台绑定需要处理的app，然后下次请求的时候会返回一个unit id ，这个对于同一个微信用户在不同的app内部是唯一的） for example 微信消息跳转itbasic网站1.引导用户点击授权链接，微信给的授权链接上会有参数绑定回调地址和state参数，当用户点击的时候，微信会重定向（注意不是回调）填写的会掉地址，并携带参数state,还有code ,也就是用户授权码，下面是我们的重定向地址代码2.1234567891011121314151617181920212223242526272829303132public function dologin($req) &#123; $code = $req-&gt;param(&apos;code&apos;); # 用户授权码 $state = $req-&gt;param(&apos;state&apos;); # 自己定义的参数，比如这次登陆来自微信，或者登陆之后需要跳转的地址 $accesstoken = $this-&gt;getAccessToken(); # 微信这块的access_token不需要用户的授权即可获取，但后面获取用户信息还是需要授权码，所以原理和上面是一样的 $url = &apos;https://qyapi.weixin.qq.com/cgi-bin/user/getuserinfo?access_token=&apos;.$accesstoken.&apos;&amp;code=&apos;.$code; $res =$this-&gt;http($url); #获取用户信息 if (!array_key_exists(&apos;UserId&apos;, $res[&apos;result&apos;])) &#123; // 记录错误信息（微信）到日志,获取用户信息出错 &#125; // 根据实际业务处理，我这块是登陆 // 你可以根据返回的用户名称，判断是新用户，还是老用户，新用户的话会往数据库插入数据 $user_model = Box::getObject(&apos;user&apos;, model); $res = $user_model-&gt;search($res[&apos;name&apos;]); if (!$res) &#123; // 记录错误信息（itbaisc） 到日志，查找用户失败 &#125; $userinfo = $res; $userinfo = [&apos;userid&apos; =&gt; $userinfo[&apos;id&apos;], &apos;username&apos; =&gt; $userinfo[&apos;username&apos;], &apos;status&apos; =&gt; $userinfo[&apos;status&apos;], &apos;deptsid&apos; =&gt; $userinfo[&apos;deptsid&apos;], &apos;postsid&apos; =&gt; $userinfo[&apos;postsid&apos;], &apos;role&apos; =&gt; $userinfo[&apos;role&apos;], &apos;long&apos; =&gt; true]; Session::set(&apos;userinfo&apos;, $userinfo); //实现登陆 $state = urldecode($state); // 之前我们自己绑定的参数，因为url在http参数中需要加密，防止多余的http这些参数 header( &quot;Location: $state&quot; );exit; &#125; 手机号登陆首先生成验证码,存入缓存中，手机号=》验证码（过期时间，离开当前页面让其失效，只能使用一次），然后调用第三方接口发送给手机上这个验证码，用户收到验证码之后调用新的接口进行验证，我们在缓存中寻找手机号验证码是否匹配，如果匹配代表成功，后面是登陆啊，还是绑定啊看自己的业务需求 sso登陆一处登陆处处登陆，一处注销，处处注销(itbasic的原理类似oauth2。首先用户验证是否在的登陆中心登陆，如果没有，先登录，登陆中心成功后返回一个access_token,重定向到你来时候那个地址，相当于帮你发出请求，你拿着这个access_token获取用户信息，干啥都是你自己的事情。下次用户再来的时候，验证中心已经登陆上了，直接返回access_token然后重定向)（注销，我们在每次去验证中心验证的时候，都记住有哪些来的网站，注销的时候都请求他们注销的地址就好了，这个时候可以直接请求，不用重定向，因为不用种cookie,直接销毁服务端数据就好了） 找回密码通过邮箱。首先填写用户名和邮箱（为了防止别人恶意找回用户），确保用户名和邮箱和登陆的时候绑定一致，才发送修改密码的邮件，邮件内容是 这样其实就足够了，这个token 是我们之前发送邮件时候生成的，我们只需要保证 用户名 =&gt;token,当用户请求这个接口的时候（注意一定是get请求，因为是点击），我们通过这个token,知道是哪个用户就好了，然后返回一个界面让用户修改密码就可以了. 熟悉了几个函数的使用 http_query_build ,拼接http请求参数（这个对url 好像还会进行urlencode加密） parse_str, 把上面的拼接内容分开 当然上面各个案例的解决方案很多，比如找回密码用手机而不是用邮箱，只是简单记录下常用的方式]]></content>
       <categories>
         <category>PHP</category>
       </categories>
@@ -31,8 +31,8 @@
       </categories>
       <tags>
         <tag>PHP</tag>
-        <tag>框架</tag>
         <tag>ThinkPHP</tag>
+        <tag>框架</tag>
       </tags>
   </entry>
   <entry>
@@ -43,8 +43,8 @@
         <category>PHP</category>
       </categories>
       <tags>
-        <tag>PHP</tag>
         <tag>Laravel</tag>
+        <tag>PHP</tag>
       </tags>
   </entry>
   <entry>
@@ -65,11 +65,6 @@
   <entry>
     <title><![CDATA[关于nginx的那些事]]></title>
     <url>%2F2018%2F08%2F20%2F%E5%85%B3%E4%BA%8Enginx%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B%2F</url>
-    <content type="text"></content>
-  </entry>
-  <entry>
-    <title><![CDATA[test]]></title>
-    <url>%2F2018%2F08%2F17%2Ftest%2F</url>
     <content type="text"></content>
   </entry>
   <entry>
@@ -95,14 +90,14 @@
         <category>PHP</category>
       </categories>
       <tags>
-        <tag>PHP</tag>
         <tag>Laravel</tag>
+        <tag>PHP</tag>
       </tags>
   </entry>
   <entry>
     <title><![CDATA[关于composer]]></title>
     <url>%2F2018%2F07%2F29%2F%E5%85%B3%E4%BA%8Ecomposer%2F</url>
-    <content type="text"><![CDATA[composer,php的包管理工具，类似nodejs的npm，类似python的pip，因为很多时候我们需要接入外来的服务，可能自己的能力不足，又或者是别人有更好的解决办法，不是有说过站在巨人的肩膀上能看的更远么。 composer require ```当我们需要安装一个外来服务的时候，注意这个不是安装php的扩展模块，两者有本质上的区别，php的扩展模块是c写的，需要我们源码编译到php中, 而通过composer接入的是php封装的内容。 之前我经常把需要的模块通过手动写入composer.json文件中，然后通过composer install 或者 composer update 这种方式更新，这都是不对的 composer install 会依据composer.lock 文件进行安装，如果没有这个lock文件按照composer.json进行安装 composer update 会依据composer.json 进行安装（composer.lock 和 composer.json 的区别lock文件中会严格规定版本号） composer init 初始化一个项目被composer 管理（很少用, 一般是手动编写一个composer.json文件，然后install） composer 还有文件夹管理的功能，现在一般用的是psr-4,原先项目组织有psr-0,现在废弃了，二者区别就是psr-4通过命名空间更能代表文件位置composer的自动加载有psr-4,我们那个api服务中有使用，注意定义了一个顶级之后，下面的子命名空间可以自动寻找，而不需要你的人为干预files 可以加载配置文件之类的，不用一直includeclassmap可以不遵循psr-4规范，会扫描指定文件夹，加载里面的类（一般的类名首字母大写，然后类名和文件名一样）当我们修改了composer的自动加载，通过composer dump-autoload来更新 我们php的框架和python 这种框架有挺大的区别，写了点python，还有问了写python的同事，得到的就是他们写python的时候还用的是面向过程的方式，他们的框架flask感觉更像是php中的包的概念，通过import方式导入，没有各个文件夹的内容规定，给了很大的自由给用户，我们通过composer 安装的文件一般在这个项目文件的vendor目录下，但是我们python 通过pip安装的一般是全局安装，就算是用了pipenv 或者vrtualenv 也是在全局下面然后分成各个子文件夹（仿佛是虚拟站点让php变得这么方便？） composer需要注意的东西： 修改源，下载东西更快 linux 下安装（composer.phar 就是 php composer, 只是单独使用的话需要composer.phar 需要执行权限 chmod a+x composer.phar）]]></content>
+    <content type="text"><![CDATA[composer,php的包管理工具，类似nodejs的npm，类似python的pip，因为很多时候我们需要接入外来的服务，可能自己的能力不足，又或者是别人有更好的解决办法，不是有说过站在巨人的肩膀上能看的更远么。 composer require 而通过composer接入的是php封装的内容。 之前我经常把需要的模块通过手动写入composer.json文件中，然后通过composer install 或者 composer update 这种方式更新，这都是不对的1234567891011121314151617181920212223242526272829composer install 会依据composer.lock 文件进行安装，如果没有这个lock文件按照composer.json进行安装composer update 会依据composer.json 进行安装（composer.lock 和 composer.json 的区别lock文件中会严格规定版本号）composer init 初始化一个项目被composer 管理（很少用, 一般是手动编写一个composer.json文件，然后install）composer 还有文件夹管理的功能，现在一般用的是psr-4,原先项目组织有psr-0,现在废弃了，二者区别就是psr-4通过命名空间更能代表文件位置composer的自动加载有psr-4,我们那个api服务中有使用，注意定义了一个顶级之后，下面的子命名空间可以自动寻找，而不需要你的人为干预files 可以加载配置文件之类的，不用一直includeclassmap可以不遵循psr-4规范，会扫描指定文件夹，加载里面的类（一般的类名首字母大写，然后类名和文件名一样）当我们修改了composer的自动加载，通过composer dump-autoload来更新我们php的框架和python 这种框架有挺大的区别，写了点python，还有问了写python的同事，得到的就是他们写python的时候还用的是面向过程的方式，他们的框架flask感觉更像是php中的包的概念，通过import方式导入，没有各个文件夹的内容规定，给了很大的自由给用户，我们通过composer 安装的文件一般在这个项目文件的vendor目录下，但是我们python 通过pip安装的一般是全局安装，就算是用了pipenv 或者vrtualenv 也是在全局下面然后分成各个子文件夹（仿佛是虚拟站点让php变得这么方便？）composer需要注意的东西：1. 修改源，下载东西更快2. linux 下安装（composer.phar 就是 php composer, 只是单独使用的话需要composer.phar 需要执行权限 chmod a+x composer.phar）使用composer 发布一个自己的扩展包编写项目用的是超哥的脚手架工具 composer global require ‘overtrue/package-builder’ –prefer-sourcepackage-builder build ./login ##后续查看是否要修改一些composer.json 文件``` 可能也许是因为我在packages 上的登陆用的是github的，所以自动配置了扩展包的自动更新(可以自行测试，修改readme 文件，github上的，看packages 上是否自动修改，如果没有自动修改，谷歌自动更新的方法 同步方法 完整的发布流程 总结 ：其实就是去package 上面注册一下，然后把自己的项目地址(git 仓库地址)粘贴上去就好了，能自动识别，(而且感觉还会自动配置自动更新，否则去项目的setting 下面自己设置) 遇到的问题： package上面有，composer require 不到 脚手架自动生成的read me 上的composer require 有问题，别用那个自动生成的，（之前怀疑是源的问题， 虽然用的是中国源，但是更新的也是很快，接近实时，所以package上面有，composer require 不到，是自己的问题， 版本号写错了） （超哥那个自动生成的md文件会被package 上面 直接显示（嵌入的毫无痕迹，我还以为是package 网站生成的，于是我就直接使用read me 上的composer require 语句 ，报错） 我们的composer require 语句应该和composer.json 相匹配]]></content>
       <categories>
         <category>PHP</category>
       </categories>
@@ -248,9 +243,9 @@
         <category>apache</category>
       </categories>
       <tags>
+        <tag>框架</tag>
         <tag>apache</tag>
         <tag>linux</tag>
-        <tag>框架</tag>
       </tags>
   </entry>
   <entry>
@@ -273,8 +268,8 @@
         <category>Laravel</category>
       </categories>
       <tags>
-        <tag>PHP</tag>
         <tag>Laravel</tag>
+        <tag>PHP</tag>
       </tags>
   </entry>
   <entry>
@@ -558,9 +553,9 @@
         <category>PHP</category>
       </categories>
       <tags>
+        <tag>框架</tag>
         <tag>apache</tag>
         <tag>linux</tag>
-        <tag>框架</tag>
         <tag>php</tag>
       </tags>
   </entry>

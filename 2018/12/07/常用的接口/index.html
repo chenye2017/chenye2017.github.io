@@ -91,7 +91,7 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5525740-517ca8a069faf690.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5525740-804e1f534d3a4917.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2018-12-06T16:36:15.100Z">
+<meta property="og:updated_time" content="2018-12-07T16:32:34.037Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="常用的接口(-)">
 <meta name="twitter:description" content="关于登陆，现在的网站有第三方登陆（qq,微信，微博）， 手机号登陆，用户名密码登陆，sso登陆，找回密码，注销 感觉其实都差不多">
@@ -395,6 +395,10 @@
 <p><strong>找回密码</strong><br>通过邮箱。首先填写用户名和邮箱（为了防止别人恶意找回用户），确保用户名和邮箱和登陆的时候绑定一致，才发送修改密码的邮件，邮件内容是</p>
 <p><img src="https://upload-images.jianshu.io/upload_images/5525740-804e1f534d3a4917.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
 <p>这样其实就足够了，这个token 是我们之前发送邮件时候生成的，我们只需要保证 用户名 =&gt;token,当用户请求这个接口的时候（注意一定是get请求，因为是点击），我们通过这个token,知道是哪个用户就好了，然后返回一个界面让用户修改密码就可以了.</p>
+<p>熟悉了几个函数的使用</p>
+<p>http_query_build ,拼接http请求参数（这个对url 好像还会进行urlencode加密）</p>
+<p>parse_str, 把上面的拼接内容分开</p>
+<p>当然上面各个案例的解决方案很多，比如找回密码用手机而不是用邮箱，只是简单记录下常用的方式</p>
 
       
     </div>
@@ -573,7 +577,7 @@ var jiathis_config={
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">61</span>
+                  <span class="site-state-item-count">60</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -714,7 +718,7 @@ var jiathis_config={
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count"> | 博客全站共73.9k字</span>
+  <span class="post-count"> | 博客全站共74.3k字</span>
 </div>
 
 
