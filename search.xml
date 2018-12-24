@@ -31,8 +31,8 @@
       </categories>
       <tags>
         <tag>PHP</tag>
-        <tag>ThinkPHP</tag>
         <tag>框架</tag>
+        <tag>ThinkPHP</tag>
       </tags>
   </entry>
   <entry>
@@ -243,9 +243,9 @@
         <category>apache</category>
       </categories>
       <tags>
-        <tag>框架</tag>
         <tag>apache</tag>
         <tag>linux</tag>
+        <tag>框架</tag>
       </tags>
   </entry>
   <entry>
@@ -417,8 +417,8 @@
       </categories>
       <tags>
         <tag>Linux</tag>
-        <tag>环境</tag>
         <tag>lamp</tag>
+        <tag>环境</tag>
       </tags>
   </entry>
   <entry>
@@ -430,8 +430,8 @@
       </categories>
       <tags>
         <tag>Linux</tag>
-        <tag>lnmp</tag>
         <tag>环境</tag>
+        <tag>lnmp</tag>
       </tags>
   </entry>
   <entry>
@@ -523,7 +523,7 @@
   <entry>
     <title><![CDATA[Linux常用命令总结]]></title>
     <url>%2F2017%2F11%2F28%2FLinux%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E6%80%BB%E7%BB%93%2F</url>
-    <content type="text"><![CDATA[netstat -an 展示所有的端口号，-a 表示包括tcp和utp，-n表示不用域名代替ip地址 ll -a ls-la 展示该目录下所有文件包括隐藏文件 cd 进入目录，~ 普通用户的家目录 /home/vagrant, root用户 /home pwd 展示路径 mkdir 创建目录 chmod -R (文件夹) 755 修改权限 chown root:root 文件名 修改文件所有者和组 chgrp 修改组 useradd 添加用户 passwd 修改密码 （切换到当前用户下就可以修改了哦，不知道怎么修改别的用户的） groupadd 添加组 touch 新建文件 echo 11 &gt;&gt; 文件名 把这个内容输出到文件中 vim i 修改模式 ：wq 保存 ：q 退出不保存 ：q！强制退出 / 查找 ：num 多少行 ：$末尾 cat 查看 echo 输出，比如输出当前进程号 echo $$ (PID的值代表的就是进程号) export 设置环境变量 export FOO = foo ,让当前环境变量立即生效，source ~/.bash_profile 执行这个脚本文件（source在当前进程中直接执行而不是复制子进程执行）感觉直接在命令行这样export FOO = foo 好像就直接生效了，但是如果修改bash_profile 文件的话，要执行source才能生效 env 查看环境变量，比如查看刚刚的环境变量是否生效 env | grep FOO cp 复制文件 cp 源文件 目标文件 ，如果是文件夹 记得带上 -r 参数 lsof -i|grep 3306 查看端口号 ps -ef | grep httpd 查看httpd进程是否在 tar -xjvf 解压 常用端口号 ： http 80 https 443 mysql 3306 redis 6379 ssh 22 ~代表家目录，root用户 /root,普通用户/home/用户名]]></content>
+    <content type="text"><![CDATA[netstat -an 查看网络连接，-a 表示包括tcp和utp，-n表示不用域名代替ip地址 ll -a ls-la 展示该目录下所有文件包括隐藏文件 cd 进入目录，~ 普通用户的家目录 /home/vagrant, root用户 /home pwd 展示路径 mkdir 创建目录 chmod -R (文件夹) 755 修改权限 chown root:root 文件名 修改文件所有者和组 chgrp 修改组 useradd 添加用户 passwd 修改密码 （切换到当前用户下就可以修改了哦，不知道怎么修改别的用户的） groupadd 添加组 touch 新建文件 echo 11 &gt;&gt; 文件名 把这个内容输出到文件中 vim i 修改模式 ：wq 保存 ：q 退出不保存 ：q！强制退出 / 查找 ：num 多少行 ：$末尾 cat 查看 echo 输出，比如输出当前进程号 echo $$ (PID的值代表的就是进程号) export 设置环境变量 export FOO = foo ,让当前环境变量立即生效，source ~/.bash_profile 执行这个脚本文件（source在当前进程中直接执行而不是复制子进程执行）感觉直接在命令行这样export FOO = foo 好像就直接生效了，但是如果修改bash_profile 文件的话，要执行source才能生效 env 查看环境变量，比如查看刚刚的环境变量是否生效 env | grep FOO cp 复制文件 cp 源文件 目标文件 ，如果是文件夹 记得带上 -r 参数 mv 剪贴文件 rm -rf 删除文件 lsof -i|grep 3306 查看端口号 ps -ef | grep httpd 查看httpd进程是否在 tar -xjvf 解压 wc -l 查看行数 awk cat /etc/passwd | awk -F ‘:’ ‘{print %1}’ 筛选内容 cut 切割, cut -d ‘:’ -f 1,2 -d 按照什么进行切割，-f 要获取哪些行数，一般这两个搭配着用 sed sed -n ‘2p’ /etc/passwd 修改内容，类似程序用的vim sort 排序 find / -name ‘php.ini’ 查找文件 locate 查找文件之前 updatedb ln -s 创造软链接 tail -f top 查看cpu啊内存啊之类的占用情况 df -h 查看服务器硬盘占用，itbasic 服务器就经常磁盘被写满了 常用端口号 ： http 80 https 443 mysql 3306 redis 6379 ssh 22 ~代表家目录，root用户 /root,普通用户/home/用户名]]></content>
       <categories>
         <category>Linux</category>
       </categories>
@@ -553,9 +553,9 @@
         <category>PHP</category>
       </categories>
       <tags>
-        <tag>框架</tag>
         <tag>apache</tag>
         <tag>linux</tag>
+        <tag>框架</tag>
         <tag>php</tag>
       </tags>
   </entry>

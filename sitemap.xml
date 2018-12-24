@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yoursite.com/2017/11/28/Linux%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E6%80%BB%E7%BB%93/</loc>
+    
+    <lastmod>2018-12-21T10:19:18.425Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/2018/07/29/%E5%85%B3%E4%BA%8Ecomposer/</loc>
     
     <lastmod>2018-12-13T11:09:53.439Z</lastmod>
@@ -236,13 +243,6 @@
     <loc>http://yoursite.com/2018/05/18/cookie%E5%92%8Csession%E7%9A%84%E6%80%9D%E8%80%83/</loc>
     
     <lastmod>2018-05-21T10:30:31.308Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2017/11/28/Linux%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E6%80%BB%E7%BB%93/</loc>
-    
-    <lastmod>2018-04-26T13:19:33.435Z</lastmod>
     
   </url>
   

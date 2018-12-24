@@ -97,9 +97,9 @@
     
       <category term="PHP" scheme="http://yoursite.com/tags/PHP/"/>
     
-      <category term="ThinkPHP" scheme="http://yoursite.com/tags/ThinkPHP/"/>
-    
       <category term="框架" scheme="http://yoursite.com/tags/%E6%A1%86%E6%9E%B6/"/>
+    
+      <category term="ThinkPHP" scheme="http://yoursite.com/tags/ThinkPHP/"/>
     
   </entry>
   

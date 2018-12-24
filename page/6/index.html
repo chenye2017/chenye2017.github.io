@@ -1024,7 +1024,7 @@
         
           
             <ol>
-<li>netstat -an 展示所有的端口号，-a 表示包括tcp和utp，-n表示不用域名代替ip地址</li>
+<li>netstat -an  查看网络连接，-a 表示包括tcp和utp，-n表示不用域名代替ip地址 </li>
 <li>ll -a ls-la  展示该目录下所有文件包括隐藏文件</li>
 <li>cd  进入目录，~ 普通用户的家目录 /home/vagrant, root用户 /home</li>
 <li>pwd 展示路径</li>
@@ -1043,9 +1043,22 @@
 <li>export 设置环境变量 export FOO = foo ,让当前环境变量立即生效，source ~/.bash_profile 执行这个脚本文件（source在当前进程中直接执行而不是复制子进程执行）感觉直接在命令行这样export FOO = foo 好像就直接生效了，但是如果修改bash_profile 文件的话，要执行source才能生效</li>
 <li>env 查看环境变量，比如查看刚刚的环境变量是否生效 env | grep FOO </li>
 <li>cp 复制文件  cp 源文件 目标文件 ，如果是文件夹 记得带上 -r 参数</li>
+<li>mv 剪贴文件</li>
+<li>rm -rf 删除文件</li>
 <li>lsof -i|grep 3306 查看端口号</li>
 <li>ps -ef | grep httpd  查看httpd进程是否在</li>
 <li>tar -xjvf  解压</li>
+<li>wc -l 查看行数</li>
+<li>awk   cat /etc/passwd | awk -F ‘:’ ‘{print %1}’  筛选内容</li>
+<li>cut  切割, cut -d ‘:’ -f 1,2   -d 按照什么进行切割，-f 要获取哪些行数，一般这两个搭配着用</li>
+<li>sed  sed -n ‘2p’ /etc/passwd  修改内容，类似程序用的vim</li>
+<li>sort 排序</li>
+<li>find  / -name ‘php.ini’  查找文件</li>
+<li>locate  查找文件之前 updatedb</li>
+<li>ln -s  创造软链接</li>
+<li>tail -f </li>
+<li>top 查看cpu啊内存啊之类的占用情况</li>
+<li>df -h 查看服务器硬盘占用，itbasic 服务器就经常磁盘被写满了</li>
 </ol>
 <p>常用端口号 ：</p>
 <p>http 80</p>
@@ -2062,7 +2075,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count"> | 博客全站共74.3k字</span>
+  <span class="post-count"> | 博客全站共74.5k字</span>
 </div>
 
 
