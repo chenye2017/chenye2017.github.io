@@ -81,18 +81,18 @@
 
 
 
-<meta name="description" content="netstat -an  查看网络连接，-a 表示包括tcp和utp，-n表示不用域名代替ip地址  ll -a ls-la  展示该目录下所有文件包括隐藏文件 cd  进入目录，~ 普通用户的家目录 /home/vagrant, root用户 /home pwd 展示路径 mkdir  创建目录 chmod -R (文件夹)  755 修改权限 chown root:root 文件名 修改文件">
+<meta name="description" content="netstat -an  查看网络连接，-a 表示包括tcp和utp，-n表示不用域名代替ip地址  ps -ef | grep httpd  查看httpd进程是否在 (注意这个筛选是没有端口号的，你想啊，如果一个脚本就监听一个端口还好，要是类似 nginx apache ,listen 那么多端口，你怎么显示呢) ll -a ls-la  展示该目录下所有文件包括隐藏文件 cd  进入目录，">
 <meta name="keywords" content="Linux,命令,工具">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Linux常用命令总结">
 <meta property="og:url" content="http://yoursite.com/2017/11/28/Linux常用命令总结/index.html">
 <meta property="og:site_name" content="语法糖的博客">
-<meta property="og:description" content="netstat -an  查看网络连接，-a 表示包括tcp和utp，-n表示不用域名代替ip地址  ll -a ls-la  展示该目录下所有文件包括隐藏文件 cd  进入目录，~ 普通用户的家目录 /home/vagrant, root用户 /home pwd 展示路径 mkdir  创建目录 chmod -R (文件夹)  755 修改权限 chown root:root 文件名 修改文件">
+<meta property="og:description" content="netstat -an  查看网络连接，-a 表示包括tcp和utp，-n表示不用域名代替ip地址  ps -ef | grep httpd  查看httpd进程是否在 (注意这个筛选是没有端口号的，你想啊，如果一个脚本就监听一个端口还好，要是类似 nginx apache ,listen 那么多端口，你怎么显示呢) ll -a ls-la  展示该目录下所有文件包括隐藏文件 cd  进入目录，">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-12-21T10:19:18.425Z">
+<meta property="og:updated_time" content="2018-12-24T09:04:51.656Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linux常用命令总结">
-<meta name="twitter:description" content="netstat -an  查看网络连接，-a 表示包括tcp和utp，-n表示不用域名代替ip地址  ll -a ls-la  展示该目录下所有文件包括隐藏文件 cd  进入目录，~ 普通用户的家目录 /home/vagrant, root用户 /home pwd 展示路径 mkdir  创建目录 chmod -R (文件夹)  755 修改权限 chown root:root 文件名 修改文件">
+<meta name="twitter:description" content="netstat -an  查看网络连接，-a 表示包括tcp和utp，-n表示不用域名代替ip地址  ps -ef | grep httpd  查看httpd进程是否在 (注意这个筛选是没有端口号的，你想啊，如果一个脚本就监听一个端口还好，要是类似 nginx apache ,listen 那么多端口，你怎么显示呢) ll -a ls-la  展示该目录下所有文件包括隐藏文件 cd  进入目录，">
 
 
 
@@ -384,6 +384,7 @@
       
         <ol>
 <li>netstat -an  查看网络连接，-a 表示包括tcp和utp，-n表示不用域名代替ip地址 </li>
+<li>ps -ef | grep httpd  查看httpd进程是否在 (注意这个筛选是没有端口号的，你想啊，如果一个脚本就监听一个端口还好，要是类似 nginx apache ,listen 那么多端口，你怎么显示呢)</li>
 <li>ll -a ls-la  展示该目录下所有文件包括隐藏文件</li>
 <li>cd  进入目录，~ 普通用户的家目录 /home/vagrant, root用户 /home</li>
 <li>pwd 展示路径</li>
@@ -405,19 +406,21 @@
 <li>mv 剪贴文件</li>
 <li>rm -rf 删除文件</li>
 <li>lsof -i|grep 3306 查看端口号</li>
-<li>ps -ef | grep httpd  查看httpd进程是否在</li>
 <li>tar -xjvf  解压</li>
 <li>wc -l 查看行数</li>
 <li>awk   cat /etc/passwd | awk -F ‘:’ ‘{print %1}’  筛选内容</li>
 <li>cut  切割, cut -d ‘:’ -f 1,2   -d 按照什么进行切割，-f 要获取哪些行数，一般这两个搭配着用</li>
 <li>sed  sed -n ‘2p’ /etc/passwd  修改内容，类似程序用的vim</li>
 <li>sort 排序</li>
+<li>unique  经常结合sort 使用，因为unique 只能合并连续的两行</li>
 <li>find  / -name ‘php.ini’  查找文件</li>
 <li>locate  查找文件之前 updatedb</li>
 <li>ln -s  创造软链接</li>
 <li>tail -f </li>
 <li>top 查看cpu啊内存啊之类的占用情况</li>
 <li>df -h 查看服务器硬盘占用，itbasic 服务器就经常磁盘被写满了</li>
+<li>wget 下载</li>
+<li>curl 下载</li>
 </ol>
 <p>常用端口号 ：</p>
 <p>http 80</p>
@@ -610,7 +613,7 @@ var jiathis_config={
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">60</span>
+                  <span class="site-state-item-count">61</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -632,7 +635,7 @@ var jiathis_config={
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">56</span>
+                  <span class="site-state-item-count">58</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -751,7 +754,7 @@ var jiathis_config={
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count"> | 博客全站共74.5k字</span>
+  <span class="post-count"> | 博客全站共76.7k字</span>
 </div>
 
 

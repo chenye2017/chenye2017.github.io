@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[LBS 和 redis mongodb]]></title>
+    <url>%2F2018%2F12%2F24%2FLBS-%E5%92%8C-redis-mongodb%2F</url>
+    <content type="text"><![CDATA[LBS,刚听起来挺高大上的，其实简单理解就是附近的人。其实这个需求蛮常见的，比如大众点评中搜索摸某一个店铺按照离我当前位置距离进行排序，又或者某些社交软件中的附近的人，实现的方式有很多，php + mysql ， php + redis ， php+ mongodb， 其中mysql 的话，就是把所有的点的坐标保存下来，然后通过编写sql语句，直接通过sql去查询每个点离我们的距离，然后排序返回，但数据量大的时候，可能不太好，所以就有了后面的nosql ， redis 和 mongodb 的相关应用，其中 mongodb 在这方面应该是我听得最多的，当初想试这个功能也是因为想教一下前端朋友mongodb的相关功能，方便他面试，但后来发现其实还是redis 实现比较方便，因为php的mongodb扩展 mongo(php5） 和 mongodb(php7) 接口一点都不一样，而且中文文档比较少啦。其实通过es 也是可以实现的，方法很多.详细见这篇文章 Redisredis 自从3.2就有了对于经纬度的处理，但注意并不是新增了一个一个数据结构，这个经纬度是在 有序集合zset 的基础上发展而来的，所以我们对于zset 的操作都能对经纬度使用，比如123zrange key 0 10 # 把key 中所有的member 都取出来 zrange cy1 0 10zcard key # key 中有多少个member, zcard cy1zsore key member # key 中具体的member 的score，对于经纬度这个取出来看不懂 穿插一句：刚开始使用redis 的时候，虽然他的api很简单，便于理解，但是和sql编程还是不同的，为什么我们一个对象有了member 这个名称还需要key 呢，你想啊，我么需要从一个集合中获取离这个点比较近的点，这个集合的名称就是 key,这个是事先我们往集合中塞就定好的，后面我们可能变化的是member 的名称，需要我们从外边传入。关于php使用redis, 大致分成两种方法，有通过编译c扩展，还有就是通过composer 安装predis,这是两种方法，我们不要混淆了，平时我们大部分用的是c扩展额，然后自己封装其中基本的方法和连接方式，需要注意的是关于重连啊，或者单例模式是的使用啊之类的，还有就是其中__call方法的使用，如果有那些我们没有封装的方法，但是自己还使用了，默认就会调用这个方法。一般很多时候调用方法正确的放回是0和1，所以我们不能根据0和1来判定方法是否执行成功，很多时候他代表着影响的行数，比如新增返回1，修改返回0。还有c扩展方式安装的，比如 geoRadiusByMember, 不知道这个方法的参数都是啥，也不知道在哪能找到，只能凭着redis的使用去猜测，比如最后一个option 应该传数组，但其实如果传错的话，也有提示，感谢扩展报错信息的详细 geoadd: 增加地理位置的坐标。geodist: 获取两个地理位置的距离。geohash: 获取地理位置的GeoHash值。geopos: 获取地理位置的坐标。georadius: 根据给定经纬度坐标获取指定范围内的地理位置集合。georadiusbymember: 根据给定地理位置获取指定范围内的地理位置集合。 georadius 和 georadiusbymember 的参数 WITHDIST: 同时返回地理位置与给定位置的距离WITHCOORD: 同时返回地理位置的经纬度坐标WITHHASH: 同时返回Redis内部的GeoHash值（非标准算法值），一般用于debugASC|DESC：结果按距离升降序排序STORE|STOREDIST: 结果存到新的有序集合中，前者以GeoHash值做score，后者以与指定位置的距离作score，该选项与WITH[DIST|COORD|HASH]选项冲突 1234567891011121314151617181920212223242526272829303132333435363738public function addLocation() &#123; $redis = new Redis(); //var_dump($redis-&gt;geodist(&apos;cy1&apos;, &apos;a&apos;, &apos;b&apos;));exit; $lnt = Request::instance()-&gt;post(&apos;lnt&apos;); $lat = Request::instance()-&gt;post(&apos;lat&apos;); $name = Request::instance()-&gt;post(&apos;name&apos;); // 1 成功 新增 // 0 也可能是成功 修改 $res = $redis-&gt;geoadd(&apos;cy1&apos;, $lnt ,$lat, $name); // 相同的名称就直接替换了 return $res; &#125; public function dist() &#123; $member1 = Request::instance()-&gt;post(&apos;member1&apos;); $member2 = Request::instance()-&gt;post(&apos;member2&apos;); $redis = new Redis(); var_dump($redis-&gt;geodist(&apos;cy1&apos;, $member1, $member2)); &#125; public function fujin() &#123; $radius = Request::instance()-&gt;post(&apos;radius&apos;); // 多少半径 $member = Request::instance()-&gt;post(&apos;member&apos;); // 点的名称 $unit = Request::instance()-&gt;post(&apos;unit&apos;); // 单位 $option = [&apos;withdist&apos;, &apos;withcoord&apos;]; $redis = new Redis(); var_dump($redis-&gt;georadiusbymember(&apos;cy1&apos;, $member, $radius, $unit, $option )); &#125; 验证方法，通过求得两个点的距离之后按照多少米之内半径调整圆的大小，来观察另一点是否在圆圈内来验证. Mongodb关于mongodb的安装就看菜鸟教程吧，也是解压完就能用，类似redis,然后服务端启动是 mongod, 客户端shell是 mongo(然后据说是js shell，不知道需不需要node的支持，反正我的服务器上node 是必须的，因为vue 啊 或者 hexo 啊 都需要node), 启动的时候要设置 dbpath 和 log path,直接写到配置文件中就可以 mongod启动了。 小插曲：因为这个mongo启动的时候输了一堆的信息，然后又看不懂，所以就像通过检查端口号来看是否启动成功，这又到了用ps 和 netstat 的时候了。先通过ps -ef|grep 27017 没有，是不是这个命令本来就不输出端口号呢？ps -ef |grep nginx,果然没有端口号，于是netstat -antp|grep 27017,看到了，害怕这个应用层服务不是基于tcp (也许是多虑吧)，我把t 去掉了，查到了。完事之后自己思考了下，ps 主要是用来检查进程的，netstat 是用来检查网络连接的，拿nginx 来举例，他可能有一个manage 进程，然后有个master 子进程，然后每个master还有worker进程，然后他监听了 80 ，443 等端口，所以ps 查出来的只能是进程相关，netstat 查出来的才是各种提供的服务和端口号。 mongodb 和 redis 同属于nosql，拿现在比较流行的话说，他也是对标mysql的产品，很多教程拿他和mysql做对比，确实也更容易理解 我们刚开始进入shell :show dbs 显示有哪些数据库，默认 local 和 admin可是默认我们在test 下面，为什么test 没有显示，因为test 中没有内容呀，但凡我们插入数据，就可以有了 数据库use test 切换数据库，如果没有就新建 db 显示当前数据库 db.dropdatabase 删除当前数据库 表db.runoob.drop 删除当前表/collection show tables 显示当前数据库中有哪些表 show collections 同上 db.createCollection(‘test’) 创建表 db.createCollection(“mycol”, { capped : true, autoIndexId : true, size : 6142800, max : 10000 } ) 创建表 插入db.runoob.insert({“name”:”菜鸟教程”}) 插入数据 ，这个runoob 是表的名字，在mongodb 中是文档的意思，然后mongo 中table 中 field 不需要统一 db.col.insert({title: ‘MongoDB 教程’, description: ‘MongoDB 是一个 Nosql 数据库’, by: ‘菜鸟教程’, url: ‘http://www.runoob.com‘, tags: [‘mongodb’, ‘database’, ‘NoSQL’], likes: 100}) // 往col 表里面插入数据 查找db.col.find({title:’cy’, sex:’boy’}) //查找col 表里面数据,and 条件db.col.find().pretty() 更好的显示出来 更新db.col.update({‘title’:’MongoDB 教程’},{$set:{‘title’:’MongoDB’}}) db.col.save({ “_id” : ObjectId(“56064f89ade2f21f36b03136”), “title” : “MongoDB”, “description” : “MongoDB 是一个 Nosql 数据库”, “by” : “Runoob”, “url” : “http://www.runoob.com“, “tags” : [ “mongodb”, “NoSQL” ], “likes” : 110}) save 的话，保存id 就是更新，没有id 的话就是新增 默认的话只能更新一条，如下可以更新多条，因为第二个布尔值代表多条的意思 db.col.update( { “count” : { $gt : 3 } } , { $set : { “test2” : “OK”} },false,true ); 删除db.col.remove({‘title’:’MongoDB 教程’})db.col.remove({‘title’:’MongoDB 教程’}， 1) // 只想删除一个，just one 参数设置为1 条件db.col.find({likes : {$lt :200, $gt : 100}}) typedb.col.find({“title” : {$type : 2}}) 分页db.COLLECTION_NAME.find().limit(NUMBER).skip(NUMBER) 排序db.COLLECTION_NAME.find().sort({KEY:1}) 索引db.col.createIndex({“title”:1})db.values.createIndex({open: 1, close: 1}, {background: true})，第二个是参数，前面的1是升序，-1是降序 未完待续····（坑爹的php 的 mongodb扩展，感觉不知道咋用呀）]]></content>
+      <categories>
+        <category>Redis</category>
+      </categories>
+      <tags>
+        <tag>redis</tag>
+        <tag>mongodb</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[常用的接口(-)]]></title>
     <url>%2F2018%2F12%2F07%2F%E5%B8%B8%E7%94%A8%E7%9A%84%E6%8E%A5%E5%8F%A3%2F</url>
     <content type="text"><![CDATA[关于登陆，现在的网站有第三方登陆（qq,微信，微博）， 手机号登陆，用户名密码登陆，sso登陆，找回密码，注销 感觉其实都差不多 第三方登陆其实国内的大多数第三方登陆都是基于oauth 2.0的变种，同理还有微信上消息more按钮点击能跳转到公司网站同样实现登陆都是基于这个，那什么是oauth2.0呢，阮老师这篇文章讲解的很清楚oauth2.0，而我们用的更多的又是其中的授权码模式，大致逻辑如下 其中比较重要的两点就是用户授权code和access_token, code作用代表用户同意登陆了，access_token 代表这个用户资源（有时候像之前的小程序，是拿着用户同意之后返回的code 去换回openid, 这个openid 类似这个access_token, 他在每个应用中是唯一的，代表了一个用户，如果我们想把不同app上同一个微信用户绑在一起，需要我们去微信联合平台绑定需要处理的app，然后下次请求的时候会返回一个unit id ，这个对于同一个微信用户在不同的app内部是唯一的） for example 微信消息跳转itbasic网站1.引导用户点击授权链接，微信给的授权链接上会有参数绑定回调地址和state参数，当用户点击的时候，微信会重定向（注意不是回调）填写的会掉地址，并携带参数state,还有code ,也就是用户授权码，下面是我们的重定向地址代码2.1234567891011121314151617181920212223242526272829303132public function dologin($req) &#123; $code = $req-&gt;param(&apos;code&apos;); # 用户授权码 $state = $req-&gt;param(&apos;state&apos;); # 自己定义的参数，比如这次登陆来自微信，或者登陆之后需要跳转的地址 $accesstoken = $this-&gt;getAccessToken(); # 微信这块的access_token不需要用户的授权即可获取，但后面获取用户信息还是需要授权码，所以原理和上面是一样的 $url = &apos;https://qyapi.weixin.qq.com/cgi-bin/user/getuserinfo?access_token=&apos;.$accesstoken.&apos;&amp;code=&apos;.$code; $res =$this-&gt;http($url); #获取用户信息 if (!array_key_exists(&apos;UserId&apos;, $res[&apos;result&apos;])) &#123; // 记录错误信息（微信）到日志,获取用户信息出错 &#125; // 根据实际业务处理，我这块是登陆 // 你可以根据返回的用户名称，判断是新用户，还是老用户，新用户的话会往数据库插入数据 $user_model = Box::getObject(&apos;user&apos;, model); $res = $user_model-&gt;search($res[&apos;name&apos;]); if (!$res) &#123; // 记录错误信息（itbaisc） 到日志，查找用户失败 &#125; $userinfo = $res; $userinfo = [&apos;userid&apos; =&gt; $userinfo[&apos;id&apos;], &apos;username&apos; =&gt; $userinfo[&apos;username&apos;], &apos;status&apos; =&gt; $userinfo[&apos;status&apos;], &apos;deptsid&apos; =&gt; $userinfo[&apos;deptsid&apos;], &apos;postsid&apos; =&gt; $userinfo[&apos;postsid&apos;], &apos;role&apos; =&gt; $userinfo[&apos;role&apos;], &apos;long&apos; =&gt; true]; Session::set(&apos;userinfo&apos;, $userinfo); //实现登陆 $state = urldecode($state); // 之前我们自己绑定的参数，因为url在http参数中需要加密，防止多余的http这些参数 header( &quot;Location: $state&quot; );exit; &#125; 手机号登陆首先生成验证码,存入缓存中，手机号=》验证码（过期时间，离开当前页面让其失效，只能使用一次），然后调用第三方接口发送给手机上这个验证码，用户收到验证码之后调用新的接口进行验证，我们在缓存中寻找手机号验证码是否匹配，如果匹配代表成功，后面是登陆啊，还是绑定啊看自己的业务需求 sso登陆一处登陆处处登陆，一处注销，处处注销(itbasic的原理类似oauth2。首先用户验证是否在的登陆中心登陆，如果没有，先登录，登陆中心成功后返回一个access_token,重定向到你来时候那个地址，相当于帮你发出请求，你拿着这个access_token获取用户信息，干啥都是你自己的事情。下次用户再来的时候，验证中心已经登陆上了，直接返回access_token然后重定向)（注销，我们在每次去验证中心验证的时候，都记住有哪些来的网站，注销的时候都请求他们注销的地址就好了，这个时候可以直接请求，不用重定向，因为不用种cookie,直接销毁服务端数据就好了） 找回密码通过邮箱。首先填写用户名和邮箱（为了防止别人恶意找回用户），确保用户名和邮箱和登陆的时候绑定一致，才发送修改密码的邮件，邮件内容是 这样其实就足够了，这个token 是我们之前发送邮件时候生成的，我们只需要保证 用户名 =&gt;token,当用户请求这个接口的时候（注意一定是get请求，因为是点击），我们通过这个token,知道是哪个用户就好了，然后返回一个界面让用户修改密码就可以了. 熟悉了几个函数的使用 http_query_build ,拼接http请求参数（这个对url 好像还会进行urlencode加密） parse_str, 把上面的拼接内容分开 当然上面各个案例的解决方案很多，比如找回密码用手机而不是用邮箱，只是简单记录下常用的方式]]></content>
@@ -31,8 +43,8 @@
       </categories>
       <tags>
         <tag>PHP</tag>
-        <tag>框架</tag>
         <tag>ThinkPHP</tag>
+        <tag>框架</tag>
       </tags>
   </entry>
   <entry>
@@ -243,9 +255,9 @@
         <category>apache</category>
       </categories>
       <tags>
+        <tag>框架</tag>
         <tag>apache</tag>
         <tag>linux</tag>
-        <tag>框架</tag>
       </tags>
   </entry>
   <entry>
@@ -523,7 +535,7 @@
   <entry>
     <title><![CDATA[Linux常用命令总结]]></title>
     <url>%2F2017%2F11%2F28%2FLinux%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E6%80%BB%E7%BB%93%2F</url>
-    <content type="text"><![CDATA[netstat -an 查看网络连接，-a 表示包括tcp和utp，-n表示不用域名代替ip地址 ll -a ls-la 展示该目录下所有文件包括隐藏文件 cd 进入目录，~ 普通用户的家目录 /home/vagrant, root用户 /home pwd 展示路径 mkdir 创建目录 chmod -R (文件夹) 755 修改权限 chown root:root 文件名 修改文件所有者和组 chgrp 修改组 useradd 添加用户 passwd 修改密码 （切换到当前用户下就可以修改了哦，不知道怎么修改别的用户的） groupadd 添加组 touch 新建文件 echo 11 &gt;&gt; 文件名 把这个内容输出到文件中 vim i 修改模式 ：wq 保存 ：q 退出不保存 ：q！强制退出 / 查找 ：num 多少行 ：$末尾 cat 查看 echo 输出，比如输出当前进程号 echo $$ (PID的值代表的就是进程号) export 设置环境变量 export FOO = foo ,让当前环境变量立即生效，source ~/.bash_profile 执行这个脚本文件（source在当前进程中直接执行而不是复制子进程执行）感觉直接在命令行这样export FOO = foo 好像就直接生效了，但是如果修改bash_profile 文件的话，要执行source才能生效 env 查看环境变量，比如查看刚刚的环境变量是否生效 env | grep FOO cp 复制文件 cp 源文件 目标文件 ，如果是文件夹 记得带上 -r 参数 mv 剪贴文件 rm -rf 删除文件 lsof -i|grep 3306 查看端口号 ps -ef | grep httpd 查看httpd进程是否在 tar -xjvf 解压 wc -l 查看行数 awk cat /etc/passwd | awk -F ‘:’ ‘{print %1}’ 筛选内容 cut 切割, cut -d ‘:’ -f 1,2 -d 按照什么进行切割，-f 要获取哪些行数，一般这两个搭配着用 sed sed -n ‘2p’ /etc/passwd 修改内容，类似程序用的vim sort 排序 find / -name ‘php.ini’ 查找文件 locate 查找文件之前 updatedb ln -s 创造软链接 tail -f top 查看cpu啊内存啊之类的占用情况 df -h 查看服务器硬盘占用，itbasic 服务器就经常磁盘被写满了 常用端口号 ： http 80 https 443 mysql 3306 redis 6379 ssh 22 ~代表家目录，root用户 /root,普通用户/home/用户名]]></content>
+    <content type="text"><![CDATA[netstat -an 查看网络连接，-a 表示包括tcp和utp，-n表示不用域名代替ip地址 ps -ef | grep httpd 查看httpd进程是否在 (注意这个筛选是没有端口号的，你想啊，如果一个脚本就监听一个端口还好，要是类似 nginx apache ,listen 那么多端口，你怎么显示呢) ll -a ls-la 展示该目录下所有文件包括隐藏文件 cd 进入目录，~ 普通用户的家目录 /home/vagrant, root用户 /home pwd 展示路径 mkdir 创建目录 chmod -R (文件夹) 755 修改权限 chown root:root 文件名 修改文件所有者和组 chgrp 修改组 useradd 添加用户 passwd 修改密码 （切换到当前用户下就可以修改了哦，不知道怎么修改别的用户的） groupadd 添加组 touch 新建文件 echo 11 &gt;&gt; 文件名 把这个内容输出到文件中 vim i 修改模式 ：wq 保存 ：q 退出不保存 ：q！强制退出 / 查找 ：num 多少行 ：$末尾 cat 查看 echo 输出，比如输出当前进程号 echo $$ (PID的值代表的就是进程号) export 设置环境变量 export FOO = foo ,让当前环境变量立即生效，source ~/.bash_profile 执行这个脚本文件（source在当前进程中直接执行而不是复制子进程执行）感觉直接在命令行这样export FOO = foo 好像就直接生效了，但是如果修改bash_profile 文件的话，要执行source才能生效 env 查看环境变量，比如查看刚刚的环境变量是否生效 env | grep FOO cp 复制文件 cp 源文件 目标文件 ，如果是文件夹 记得带上 -r 参数 mv 剪贴文件 rm -rf 删除文件 lsof -i|grep 3306 查看端口号 tar -xjvf 解压 wc -l 查看行数 awk cat /etc/passwd | awk -F ‘:’ ‘{print %1}’ 筛选内容 cut 切割, cut -d ‘:’ -f 1,2 -d 按照什么进行切割，-f 要获取哪些行数，一般这两个搭配着用 sed sed -n ‘2p’ /etc/passwd 修改内容，类似程序用的vim sort 排序 unique 经常结合sort 使用，因为unique 只能合并连续的两行 find / -name ‘php.ini’ 查找文件 locate 查找文件之前 updatedb ln -s 创造软链接 tail -f top 查看cpu啊内存啊之类的占用情况 df -h 查看服务器硬盘占用，itbasic 服务器就经常磁盘被写满了 wget 下载 curl 下载 常用端口号 ： http 80 https 443 mysql 3306 redis 6379 ssh 22 ~代表家目录，root用户 /root,普通用户/home/用户名]]></content>
       <categories>
         <category>Linux</category>
       </categories>
@@ -553,9 +565,9 @@
         <category>PHP</category>
       </categories>
       <tags>
+        <tag>框架</tag>
         <tag>apache</tag>
         <tag>linux</tag>
-        <tag>框架</tag>
         <tag>php</tag>
       </tags>
   </entry>
