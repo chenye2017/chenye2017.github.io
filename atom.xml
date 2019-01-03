@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-12-25T03:49:08.051Z</updated>
+  <updated>2019-01-03T16:04:46.368Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,30 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>laravel 核心技术读书笔记</title>
+    <link href="http://yoursite.com/2019/01/03/laravel-%E6%A0%B8%E5%BF%83%E6%8A%80%E6%9C%AF%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
+    <id>http://yoursite.com/2019/01/03/laravel-核心技术读书笔记/</id>
+    <published>2019-01-03T15:31:06.000Z</published>
+    <updated>2019-01-03T16:04:46.368Z</updated>
+    
+    <content type="html"><![CDATA[<p>关于laravel 框架核心技术一书的阅读感受<br><a id="more"></a><br>1.关于命名空间<br>我理解的命名空间是文件中的namespace 可以定义成任意的值，但是composer 的自动加载因为符合psr4 ，所以要求命名空间和文件路径一致，文件名和类名保持一样。当我们不适用composer的自动加载的时候，就可以随便指定文件中的namespace是多少了，比如<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">namespace test;</span><br><span class="line">class test</span><br><span class="line">&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p><p>可以保存在任意位置任意名称的文件中，但是不能写在composer autoload 驱动的框架中，除非改成别的方式加载，比如map<br>还记得我们在控制器中引用别的类吗，通过use,然后就能直接使用new classname()了，但是我们在脚本中使用的时候，我们一定要用到include 先去包含这个文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line"></span><br><span class="line">namespace test;</span><br><span class="line"></span><br><span class="line">include &apos;test2.php&apos;;</span><br><span class="line"></span><br><span class="line">use test2\test5;</span><br><span class="line"></span><br><span class="line">class test </span><br><span class="line">&#123;</span><br><span class="line">  public function test2()</span><br><span class="line">  &#123;</span><br><span class="line">      test1();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">function test1()</span><br><span class="line">&#123;</span><br><span class="line">    echo 1;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">$a = new test();</span><br><span class="line">$a-&gt;test2();</span><br><span class="line"></span><br><span class="line">$b = new test5();</span><br><span class="line">$b-&gt;test3();</span><br></pre></td></tr></table></figure></p><p>可能你在想，既然我们都include 了，那为啥还要使用use，use在这个地方的作用是什么，当你使用 use test2\test5的时候，你在使用 new test5(), 它实际new 的是 test2\test5(), 如果没有 new test5(), 当前命名空间下的test5类，所以你明白了use 并不是导入包含文件，只是引入一个类的前缀，想不适用前缀，那就 new \test5() ，绝对路径吧，如果想使用当前命名空间下的 test5(),那就把外来引入的换个名称吧，比如 as。现在想想，其实我们平时同一个文件夹下面命名空间一样，本质上是写在一个文件中的，只是我们为了方便好看，才把分到多个文件中，但是我们互相引用的时候，同一个命名空间下面，不用use，因为默认就在当前文件夹下面找。</p><p>当我接触use 的时候，书中还有一句话，use只能引用类，并不能引用常量，函数··！！难道还可以这样<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line"></span><br><span class="line">namespace test;</span><br><span class="line"></span><br><span class="line">//include &apos;test2.php&apos;;</span><br><span class="line"></span><br><span class="line">use test2\test5;</span><br><span class="line"></span><br><span class="line">class test </span><br><span class="line">&#123;</span><br><span class="line">  public function test2()</span><br><span class="line">  &#123;</span><br><span class="line">      test1();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">/* class test5</span><br><span class="line">&#123;</span><br><span class="line">    public function test3()</span><br><span class="line">    &#123;</span><br><span class="line">        echo 1;</span><br><span class="line">    &#125;</span><br><span class="line">&#125; */</span><br><span class="line"></span><br><span class="line">function test1()</span><br><span class="line">&#123;</span><br><span class="line">    echo 1;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function autoload($class) &#123;</span><br><span class="line">    echo $class;</span><br><span class="line">    include &apos;./test2.php&apos;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">spl_autoload_register(&apos;test\autoload&apos;);</span><br><span class="line"></span><br><span class="line">$a = new test();</span><br><span class="line">$a-&gt;test2();</span><br><span class="line"></span><br><span class="line">$b = new test5();</span><br><span class="line">$b-&gt;test3();</span><br></pre></td></tr></table></figure></p><p>对，你没看错，class 的外面还能定义function, 然后我们当前命名空间中可以直接使用，如果是不同的命名空间，需要加前缀</p><ol><li>spl_autoload_register 和 <strong>autoload</strong>autload已经被废弃了，在7.2 中。__autoload 如果在一个库中出现多次，会出错的，虽然是魔术方法，但可以不在类中定义，spl_autolad_register ，可以绑定多个自动加载，还可以删除，composer的自动加载机制中就用到了删除。他是类似一种方法的执行，可以写在任意地方，可以直接是方法名<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">spl_autoload_register(&apos;test\autoload&apos;);</span><br></pre></td></tr></table></figure></li></ol><p>可以是面向对象的方式<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">spl_autoload_register([$this, &apos;autoload&apos;], true, true);</span><br></pre></td></tr></table></figure></p><p>第二个参数true 代表异常可以捕获，__autoload 就不行，第三个参数说实话不知道咋用，队列头部和队列尾部，就是先加载哪个自动加载函数的意思呗？</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;关于laravel 框架核心技术一书的阅读感受&lt;br&gt;
+    
+    </summary>
+    
+      <category term="PHP" scheme="http://yoursite.com/categories/PHP/"/>
+    
+    
+      <category term="Laravel" scheme="http://yoursite.com/tags/Laravel/"/>
+    
+      <category term="PHP" scheme="http://yoursite.com/tags/PHP/"/>
+    
+  </entry>
   
   <entry>
     <title>LBS 和 redis mongodb</title>
@@ -121,9 +145,9 @@
     
       <category term="PHP" scheme="http://yoursite.com/tags/PHP/"/>
     
-      <category term="ThinkPHP" scheme="http://yoursite.com/tags/ThinkPHP/"/>
-    
       <category term="框架" scheme="http://yoursite.com/tags/%E6%A1%86%E6%9E%B6/"/>
+    
+      <category term="ThinkPHP" scheme="http://yoursite.com/tags/ThinkPHP/"/>
     
   </entry>
   
@@ -132,7 +156,7 @@
     <link href="http://yoursite.com/2018/10/10/Laravel-%E5%85%B3%E4%BA%8Eblade(%E6%A8%A1%E6%9D%BF%E5%BC%95%E6%93%8E)/"/>
     <id>http://yoursite.com/2018/10/10/Laravel-关于blade(模板引擎)/</id>
     <published>2018-10-10T08:45:23.000Z</published>
-    <updated>2018-10-11T11:48:42.158Z</updated>
+    <updated>2019-01-03T16:03:57.512Z</updated>
     
     <content type="html"><![CDATA[<p>其实现在都是前后端分离的，应该蛮少用到模板引擎这种东西，作为上一个web时代的产物，其实模板引擎开发起来还是蛮快的，而且挺简单的。</p><a id="more"></a><p>itbasic 用的也是模板引擎，名twig，其实和blade没有多少不同的地方，只是自己发现的twig新功能还比较少，只是一直在原先的基础上堆代码，感觉上在模板引擎里面还是不要做过多的逻辑判断，否则后面会越写越复杂，而且难于维护。</p><p>对于web网站，我们有很多页面，但这些页面大部分都是相同的？因为我们的布局需要相同，这个其实在写itbasic的时候应该能感觉到，我们似乎只需要填充中间的content部分就好了</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;html&gt;</span><br><span class="line">    &lt;head&gt;</span><br><span class="line">        &lt;title&gt;@yield(&apos;title&apos;,&apos;测试&apos;)&lt;/title&gt;</span><br><span class="line">    &lt;/head&gt;</span><br><span class="line">    &lt;body&gt;</span><br><span class="line">        @yield(&apos;content&apos;)</span><br><span class="line">    &lt;/body&gt;</span><br><span class="line"></span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure><p>什么是yield ,就是让继承者可以填充的东西，继承者通过</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">@extends(&apos;layout.blade&apos;) //继承上一个模板</span><br><span class="line">@section(&apos;title&apos;, &apos;cy&apos;)  //填充数据</span><br><span class="line"></span><br><span class="line">@section(&apos;content&apos;)   //这种方式填充数据要有结束符号</span><br><span class="line">&lt;h1&gt;222&lt;/h1&gt;</span><br><span class="line">@stop</span><br></pre></td></tr></table></figure><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">@include(&apos;default.ce&apos;)  // 包含额外的页面</span><br><span class="line">//传递变量，include(&apos;default.ce&apos;, [&apos;user&apos;=&gt;$user])</span><br></pre></td></tr></table></figure><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">//判断</span><br><span class="line">@if ($a &gt; 0)</span><br><span class="line">&lt;h1&gt;cc&lt;/h1&gt;</span><br><span class="line">@endif</span><br><span class="line"></span><br><span class="line">//循环</span><br><span class="line">@foreach($counts as $count)</span><br><span class="line">&lt;li&gt;&lt;/li&gt;</span><br><span class="line">@endforeach</span><br></pre></td></tr></table></figure>]]></content>
     
@@ -379,24 +403,6 @@
     <summary type="html">
     
       &lt;p&gt;无线递归用到的地方还是蛮多的，如果是我们itbasic上的话，那就是部门之间的关系，支撑体系下面有战略中心，战略中心下面有数据部，如果设计数据表维持这之间的关系，还有bbs，如何维护评论之间的关系（其实像laravel的论坛，他的评论关系都是从上往下一条线的，只是在评论的开头有@人的标志，我们的论坛是分为1级评论和多级，除了1级之外的评论都是在1级评论的后面按照1条线排列，没有显示主从关系），当我们需要获取这个评论的顶级的时候，我们就需要用到无线递归的知识。&lt;/p&gt;
-    
-    </summary>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>跨域 cookie</title>
-    <link href="http://yoursite.com/2018/06/06/%E8%B7%A8%E5%9F%9F-cookie/"/>
-    <id>http://yoursite.com/2018/06/06/跨域-cookie/</id>
-    <published>2018-06-06T10:30:54.000Z</published>
-    <updated>2018-06-06T12:20:16.767Z</updated>
-    
-    <content type="html"><![CDATA[<p>cookie，对于传统的php开发web必不可少，为什么呢，因为http是无状态协议，为了让浏览器在不同的tab页面记住我这个人，我们通过让同一个浏览器在访问同一个网址的时候都使用同一个钥匙，这个钥匙就是cookie，这个钥匙能打开服务器端特定的箱子，就是session，这个session里面保存了完整的用户信息，这样就能让浏览器记住我的不同tab页对应的是哪一个人了。</p><a id="more"></a><p>cookie,对于传统的lamp架构，在服务器端想获取可以通过$_COOKIE[]数组获取到，但是对于swoole这种自己搭建web服务的东西，只能通过request请求获取，其实lamp里面本质也是这样，也是把apache或者nginx获取到的请求内容放到了php的\$_COOKIE里面，类似的\$_SERVER, \$_GET,这些在swoole里面都是永不了得，你可以把http-&gt;request-&gt;get 的值在请求到来的时候给与\$_GET数组，这样就能在swoole搭建的web服务里面和普通的lamp架构一样使用\$__GET数组了。正因为swoole的这些特性，像如果在swoole里面使用session登录机制需要自己去实现，还有对于一些框架的集成，因为外部传入的参数不在那些数组中了，所以需要对框架进行修改，让框架能获取到对应的参数，保证框架的运行，比如：swoole集成slime框架(swoole在客户端设置cookie也得用它自带的方法而不是setcookie)。</p><p>回归正题，通过上述，我们也只cookie是一个数组，那其中哪把钥匙是用来打开session的呢，答案是PHPSESSID,这个值是可以设定的，在php.ini,或者通过php的session函数来获取到。</p><p>对于session，我觉得他更像是一个模块的扩展，他不仅仅是提供一系列的简单的函数，这些函数其实还有具体的活动的封装。比如开启session的时候，session_start(),他做的东西有很多，首先检测客户端是否有 phpsessid，如果没有，通过函数setcookie，在客户端种植，其实底层就是通过在返回的header头信息中加入set-cookie，如果已经有phpsessid，会通过寻找客户端对应的session，获取里面的信息。那问题又来了，这个phpsessid的cookie是怎么传送给服务端的呢，我不记得我有加入这个cookie啊，一般情况下，在发送http请求的时候，默认都会带上浏览器的cookie。如果禁用了还可以通过url传递哦，话说从url中获取phpsessid也是在session_start()函数中实现的，可见这个函数的复杂性，和普通的函数还是不一样的，里面有具体的逻辑。</p><p>对于cookie的设置，也是有跨域问题的，a.test.com下的cookie,在b.test.com下面不能获取到，但是如果在test.com下面就能获取到了，为什么呢？看看跨域吧。不信？你可以设置下，在/path页面下设置另一个path的cookie，然后去对应的path下刷新，看是否有，答案是肯定有的啦。所以cookie的设定。path是不影响的。</p><p>既然能设定，自然就能删除，设定和删除可以归为一类操作（直接把过期时间设定成当前时间-100就可以删除了，注意cookie有max-age存在的时间和expire过期时间之分，php的setcookie设定的时间是expire时间，所以需要在过期时间+time()!!之前就犯了这个错误）</p><p>其实php的setcookie也能验证这点。在控制器中调用setcookie，如果不传path，默认是当前path，但也可以加path,比如/。</p><p>但需要注意的是不同path下面不能相互读取!!!怎么试验呢，可以在chrom的application下面写,然后在当前path写同一个域名下的另一个path，刷新cookie，发现另一个页面下面的有这个设置的cookie，请求的时候也能带上，但是自己这个设定页面没有，所以有时候如果setcookie没错误，但也没出现cookie，可以考虑下是不是设置路径错误了，虽然设置上了，但是看不见。这种情况特别容易出现在前后端分离的情况下，前端在80端口下，后端在8080端口下，后端api设定cookie是装在了8080那个域名下面，所以你无论怎么刷新前端页面都不会有这个cookie，但是没关系，当你请求后端接口的时候，请求会自动加上！！但要注意，请求的时候，http请求只能把他当前能看到的cookie带上，对于他看不见的肯定不会带上。</p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;cookie，对于传统的php开发web必不可少，为什么呢，因为http是无状态协议，为了让浏览器在不同的tab页面记住我这个人，我们通过让同一个浏览器在访问同一个网址的时候都使用同一个钥匙，这个钥匙就是cookie，这个钥匙能打开服务器端特定的箱子，就是session，这个session里面保存了完整的用户信息，这样就能让浏览器记住我的不同tab页对应的是哪一个人了。&lt;/p&gt;
     
     </summary>
     

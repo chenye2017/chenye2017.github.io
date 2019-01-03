@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[laravel 核心技术读书笔记]]></title>
+    <url>%2F2019%2F01%2F03%2Flaravel-%E6%A0%B8%E5%BF%83%E6%8A%80%E6%9C%AF%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%2F</url>
+    <content type="text"><![CDATA[关于laravel 框架核心技术一书的阅读感受1.关于命名空间我理解的命名空间是文件中的namespace 可以定义成任意的值，但是composer 的自动加载因为符合psr4 ，所以要求命名空间和文件路径一致，文件名和类名保持一样。当我们不适用composer的自动加载的时候，就可以随便指定文件中的namespace是多少了，比如12345&lt;?phpnamespace test;class test&#123;&#125; 可以保存在任意位置任意名称的文件中，但是不能写在composer autoload 驱动的框架中，除非改成别的方式加载，比如map还记得我们在控制器中引用别的类吗，通过use,然后就能直接使用new classname()了，但是我们在脚本中使用的时候，我们一定要用到include 先去包含这个文件12345678910111213141516171819202122232425262728&lt;?phpnamespace test;include &apos;test2.php&apos;;use test2\test5;class test &#123; public function test2() &#123; test1(); &#125;&#125;function test1()&#123; echo 1;&#125;$a = new test();$a-&gt;test2();$b = new test5();$b-&gt;test3(); 可能你在想，既然我们都include 了，那为啥还要使用use，use在这个地方的作用是什么，当你使用 use test2\test5的时候，你在使用 new test5(), 它实际new 的是 test2\test5(), 如果没有 new test5(), 当前命名空间下的test5类，所以你明白了use 并不是导入包含文件，只是引入一个类的前缀，想不适用前缀，那就 new \test5() ，绝对路径吧，如果想使用当前命名空间下的 test5(),那就把外来引入的换个名称吧，比如 as。现在想想，其实我们平时同一个文件夹下面命名空间一样，本质上是写在一个文件中的，只是我们为了方便好看，才把分到多个文件中，但是我们互相引用的时候，同一个命名空间下面，不用use，因为默认就在当前文件夹下面找。 当我接触use 的时候，书中还有一句话，use只能引用类，并不能引用常量，函数··！！难道还可以这样12345678910111213141516171819202122232425262728293031323334353637383940414243&lt;?phpnamespace test;//include &apos;test2.php&apos;;use test2\test5;class test &#123; public function test2() &#123; test1(); &#125;&#125;/* class test5&#123; public function test3() &#123; echo 1; &#125;&#125; */function test1()&#123; echo 1;&#125;function autoload($class) &#123; echo $class; include &apos;./test2.php&apos;;&#125;spl_autoload_register(&apos;test\autoload&apos;);$a = new test();$a-&gt;test2();$b = new test5();$b-&gt;test3(); 对，你没看错，class 的外面还能定义function, 然后我们当前命名空间中可以直接使用，如果是不同的命名空间，需要加前缀 spl_autoload_register 和 autoload autload已经被废弃了，在7.2 中。__autoload 如果在一个库中出现多次，会出错的，虽然是魔术方法，但可以不在类中定义，spl_autolad_register ，可以绑定多个自动加载，还可以删除，composer的自动加载机制中就用到了删除。他是类似一种方法的执行，可以写在任意地方，可以直接是方法名1spl_autoload_register(&apos;test\autoload&apos;); 可以是面向对象的方式1spl_autoload_register([$this, &apos;autoload&apos;], true, true); 第二个参数true 代表异常可以捕获，__autoload 就不行，第三个参数说实话不知道咋用，队列头部和队列尾部，就是先加载哪个自动加载函数的意思呗？]]></content>
+      <categories>
+        <category>PHP</category>
+      </categories>
+      <tags>
+        <tag>Laravel</tag>
+        <tag>PHP</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[LBS 和 redis mongodb]]></title>
     <url>%2F2018%2F12%2F24%2FLBS-%E5%92%8C-redis-mongodb%2F</url>
     <content type="text"><![CDATA[LBS,刚听起来挺高大上的，其实简单理解就是附近的人。其实这个需求蛮常见的，比如大众点评中搜索摸某一个店铺按照离我当前位置距离进行排序，又或者某些社交软件中的附近的人，实现的方式有很多，php + mysql ， php + redis ， php+ mongodb， 其中mysql 的话，就是把所有的点的坐标保存下来，然后通过编写sql语句，直接通过sql去查询每个点离我们的距离，然后排序返回，但数据量大的时候，可能不太好，所以就有了后面的nosql ， redis 和 mongodb 的相关应用，其中 mongodb 在这方面应该是我听得最多的，当初想试这个功能也是因为想教一下前端朋友mongodb的相关功能，方便他面试，但后来发现其实还是redis 实现比较方便，因为php的mongodb扩展 mongo(php5） 和 mongodb(php7) 接口一点都不一样，而且中文文档比较少啦。其实通过es 也是可以实现的，方法很多.详细见这篇文章 Redis(参考)redis 自从3.2就有了对于经纬度的处理，但注意并不是新增了一个一个数据结构，这个经纬度是在 有序集合zset 的基础上发展而来的，所以我们对于zset 的操作都能对经纬度使用，比如123zrange key 0 10 # 把key 中所有的member 都取出来 zrange cy1 0 10zcard key # key 中有多少个member, zcard cy1zsore key member # key 中具体的member 的score，对于经纬度这个取出来看不懂 穿插一句：刚开始使用redis 的时候，虽然他的api很简单，便于理解，但是和sql编程还是不同的，为什么我们一个对象有了member 这个名称还需要key 呢，你想啊，我么需要从一个集合中获取离这个点比较近的点，这个集合的名称就是 key,这个是事先我们往集合中塞就定好的，后面我们可能变化的是member 的名称，需要我们从外边传入。关于php使用redis, 大致分成两种方法，有通过编译c扩展，还有就是通过composer 安装predis,这是两种方法，我们不要混淆了，平时我们大部分用的是c扩展额，然后自己封装其中基本的方法和连接方式，需要注意的是关于重连啊，或者单例模式是的使用啊之类的，还有就是其中__call方法的使用，如果有那些我们没有封装的方法，但是自己还使用了，默认就会调用这个方法。一般很多时候调用方法正确的放回是0和1，所以我们不能根据0和1来判定方法是否执行成功，很多时候他代表着影响的行数，比如新增返回1，修改返回0。还有c扩展方式安装的，比如 geoRadiusByMember, 不知道这个方法的参数都是啥，也不知道在哪能找到，只能凭着redis的使用去猜测，比如最后一个option 应该传数组，但其实如果传错的话，也有提示，感谢扩展报错信息的详细 geoadd: 增加地理位置的坐标。geodist: 获取两个地理位置的距离。geohash: 获取地理位置的GeoHash值。geopos: 获取地理位置的坐标。georadius: 根据给定经纬度坐标获取指定范围内的地理位置集合。georadiusbymember: 根据给定地理位置获取指定范围内的地理位置集合。 georadius 和 georadiusbymember 的参数 WITHDIST: 同时返回地理位置与给定位置的距离WITHCOORD: 同时返回地理位置的经纬度坐标WITHHASH: 同时返回Redis内部的GeoHash值（非标准算法值），一般用于debugASC|DESC：结果按距离升降序排序STORE|STOREDIST: 结果存到新的有序集合中，前者以GeoHash值做score，后者以与指定位置的距离作score，该选项与WITH[DIST|COORD|HASH]选项冲突 1234567891011121314151617181920212223242526272829303132333435363738public function addLocation() &#123; $redis = new Redis(); //var_dump($redis-&gt;geodist(&apos;cy1&apos;, &apos;a&apos;, &apos;b&apos;));exit; $lnt = Request::instance()-&gt;post(&apos;lnt&apos;); $lat = Request::instance()-&gt;post(&apos;lat&apos;); $name = Request::instance()-&gt;post(&apos;name&apos;); // 1 成功 新增 // 0 也可能是成功 修改 $res = $redis-&gt;geoadd(&apos;cy1&apos;, $lnt ,$lat, $name); // 相同的名称就直接替换了 return $res; &#125; public function dist() &#123; $member1 = Request::instance()-&gt;post(&apos;member1&apos;); $member2 = Request::instance()-&gt;post(&apos;member2&apos;); $redis = new Redis(); var_dump($redis-&gt;geodist(&apos;cy1&apos;, $member1, $member2)); &#125; public function fujin() &#123; $radius = Request::instance()-&gt;post(&apos;radius&apos;); // 多少半径 $member = Request::instance()-&gt;post(&apos;member&apos;); // 点的名称 $unit = Request::instance()-&gt;post(&apos;unit&apos;); // 单位 $option = [&apos;withdist&apos;, &apos;withcoord&apos;]; $redis = new Redis(); var_dump($redis-&gt;georadiusbymember(&apos;cy1&apos;, $member, $radius, $unit, $option )); &#125; 验证方法，通过求得两个点的距离之后按照多少米之内半径调整圆的大小，来观察另一点是否在圆圈内来验证. Mongodb关于mongodb的安装就看菜鸟教程吧，也是解压完就能用，类似redis,然后服务端启动是 mongod, 客户端shell是 mongo(然后据说是js shell，不知道需不需要node的支持，反正我的服务器上node 是必须的，因为vue 啊 或者 hexo 啊 都需要node), 启动的时候要设置 dbpath 和 log path,直接写到配置文件中就可以 mongod启动了。 小插曲：因为这个mongo启动的时候输了一堆的信息，然后又看不懂，所以就像通过检查端口号来看是否启动成功，这又到了用ps 和 netstat 的时候了。先通过ps -ef|grep 27017 没有，是不是这个命令本来就不输出端口号呢？ps -ef |grep nginx,果然没有端口号，于是netstat -antp|grep 27017,看到了，害怕这个应用层服务不是基于tcp (也许是多虑吧)，我把t 去掉了，查到了。完事之后自己思考了下，ps 主要是用来检查进程的，netstat 是用来检查网络连接的，拿nginx 来举例，他可能有一个manage 进程，然后有个master 子进程，然后每个master还有worker进程，然后他监听了 80 ，443 等端口，所以ps 查出来的只能是进程相关，netstat 查出来的才是各种提供的服务和端口号。 mongodb 和 redis 同属于nosql，拿现在比较流行的话说，他也是对标mysql的产品，很多教程拿他和mysql做对比，确实也更容易理解 我们刚开始进入shell :show dbs 显示有哪些数据库，默认 local 和 admin可是默认我们在test 下面，为什么test 没有显示，因为test 中没有内容呀，但凡我们插入数据，就可以有了 数据库use test 切换数据库，如果没有就新建 db 显示当前数据库 db.dropdatabase 删除当前数据库 表db.runoob.drop 删除当前表/collection show tables 显示当前数据库中有哪些表 show collections 同上 db.createCollection(‘test’) 创建表 db.createCollection(“mycol”, { capped : true, autoIndexId : true, size : 6142800, max : 10000 } ) 创建表 插入db.runoob.insert({“name”:”菜鸟教程”}) 插入数据 ，这个runoob 是表的名字，在mongodb 中是文档的意思，然后mongo 中table 中 field 不需要统一 db.col.insert({title: ‘MongoDB 教程’, description: ‘MongoDB 是一个 Nosql 数据库’, by: ‘菜鸟教程’, url: ‘http://www.runoob.com‘, tags: [‘mongodb’, ‘database’, ‘NoSQL’], likes: 100}) // 往col 表里面插入数据 查找db.col.find({title:’cy’, sex:’boy’}) //查找col 表里面数据,and 条件db.col.find().pretty() 更好的显示出来 更新db.col.update({‘title’:’MongoDB 教程’},{$set:{‘title’:’MongoDB’}}) db.col.save({ “_id” : ObjectId(“56064f89ade2f21f36b03136”), “title” : “MongoDB”, “description” : “MongoDB 是一个 Nosql 数据库”, “by” : “Runoob”, “url” : “http://www.runoob.com“, “tags” : [ “mongodb”, “NoSQL” ], “likes” : 110}) save 的话，保存id 就是更新，没有id 的话就是新增 默认的话只能更新一条，如下可以更新多条，因为第二个布尔值代表多条的意思 db.col.update( { “count” : { $gt : 3 } } , { $set : { “test2” : “OK”} },false,true ); 删除db.col.remove({‘title’:’MongoDB 教程’})db.col.remove({‘title’:’MongoDB 教程’}， 1) // 只想删除一个，just one 参数设置为1 条件db.col.find({likes : {$lt :200, $gt : 100}}) typedb.col.find({“title” : {$type : 2}}) 分页db.COLLECTION_NAME.find().limit(NUMBER).skip(NUMBER) 排序db.COLLECTION_NAME.find().sort({KEY:1}) 索引db.col.createIndex({“title”:1})db.values.createIndex({open: 1, close: 1}, {background: true})，第二个是参数，前面的1是升序，-1是降序 未完待续····（坑爹的php 的 mongodb扩展，感觉不知道咋用呀）]]></content>
@@ -43,8 +55,8 @@
       </categories>
       <tags>
         <tag>PHP</tag>
-        <tag>ThinkPHP</tag>
         <tag>框架</tag>
+        <tag>ThinkPHP</tag>
       </tags>
   </entry>
   <entry>
@@ -255,9 +267,9 @@
         <category>apache</category>
       </categories>
       <tags>
-        <tag>框架</tag>
         <tag>apache</tag>
         <tag>linux</tag>
+        <tag>框架</tag>
       </tags>
   </entry>
   <entry>
@@ -565,9 +577,9 @@
         <category>PHP</category>
       </categories>
       <tags>
-        <tag>框架</tag>
         <tag>apache</tag>
         <tag>linux</tag>
+        <tag>框架</tag>
         <tag>php</tag>
       </tags>
   </entry>
