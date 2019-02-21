@@ -1,9 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[加密解密]]></title>
+    <url>%2F2019%2F02%2F21%2F%E5%8A%A0%E5%AF%86%E8%A7%A3%E5%AF%86%2F</url>
+    <content type="text"><![CDATA[作为一个底层码农，其实加密解密平时是用不到的，毕竟平时写的就是cms 的curd, 但随着API的流行以及老大对代码质量的重视，还有和别的部门的交互，于是需要加解密啦。原文 首先的区分下加解密和hash 的不同，对于md5() 这样加密之后理论上就不能解密的方式，我们一般称之为hash,在我们以往的网站编程中，对于用户的密码保存一般都是通过hash这种方式，通过把用户的密码拼接一个字符串，然后md5下生成的值保存到数据库中，下次用户登陆的时候，再次把用户输入的密码做上次同样的操作，对比和数据库中值是否一致，如果一致说明密码正确，否则密码错误。 加密我们平时生活中遇到最多的应该就是https 解析过程，因为非对称加密太消耗性能，所以我们传输过程需要对称加密（对称加密就是加密密钥和解密密钥一致，非对称反之），而对于密钥的传输我们用的是非对称（非对称因为密钥的不同又有公钥和私钥之分：公钥加密，私钥解密，数据不会被获取；私钥加密，公钥解密，数据不会被篡改）。 对称加密算法一般有AES(itbasic 请求datrix 那边用的就是这种),DES,3DES，非对称有RSA 上图中，123456 就是对称加密过程中的密钥 最一开始的时候，我朝人民一般都是倾向于使用“天王盖地虎”，“宝塔镇河妖”这种加解密技术；然而，美帝用了一种叫做DES的技术进行对称加解密，这玩意一度成为业界通用的对称加解密技术，银行、五角大楼都爱用这玩意，可惜好景不长、世风日下、世态炎凉，这玩意的破解成本越来越低越来越低～～ 于是，为了续命，就又有一些白胡子老头给DES打补丁，缝缝补补搞出来一个玩意叫做3DES，继续用，又不是不能用…这个顾名思义就行了，别打我，真的：3DES就是用DES处理（注意是处理，我没说是加密）了三次的意思。就目前看来，3DES实际上用的可能也并不是十分广泛了，所以如果大家在选择对称加解密技术的时候，尽量避开DES和3DES就可以了。 呵呵，喜新厌旧的沙雕人类…虽然DES已经没人用了，但毕竟也是辉煌过，我觉得还是得动手表演一波儿。我们知道，在php7里，原来的mcrypt系列加解密已经被放弃掉了，官方建议我们使用openssl系列来进行加解密，所以确保你的PHP环境里安装了openssl标准扩展。 上面是原文中对于DES 和 3DES 的描述 1234567891011121314151617// 这个函数打印出来openssl支持的所有加密方法以及模式的组合$arr_ava_methods = openssl_get_cipher_methods(true);print_r( $arr_ava_methods );exit;// 返回值 [123] =&gt; aes-192-cfb8 [124] =&gt; aes-192-ctr [125] =&gt; aes-192-ecb [126] =&gt; aes-192-gcm [127] =&gt; aes-192-ocb [128] =&gt; aes-192-ofb [129] =&gt; aes-256-cbc [130] =&gt; aes-256-ccm [131] =&gt; aes-256-cfb [132] =&gt; aes-256-cfb1 [133] =&gt; aes-256-cfb8 [134] =&gt; aes-256-ctr 其中带有ede的，比如des-ede*这样的就表示是3DES 其中des 有如下几种 1234des-cbcdes-cfb*（注意后面的通配符星号）des-ecbdes-ofb 下面是如何通过des-ecb 的方式加密 123456789101112131415161718// 我们就选用des-ecb方法进行一次des加密$ava_methods = openssl_get_cipher_methods();$my_method = &apos;des-ecb&apos;;if ( !in_array( $my_method, $ava_methods ) ) &#123; exit( &apos;错误的加密方法&apos;.PHP_EOL );&#125;$key = &quot;123456&quot;;$data = &quot;helloMOTO&quot;;echo &quot;明文：&quot;.$data.PHP_EOL;$enc_data = openssl_encrypt( $data, $my_method, $key );echo &quot;密文：&quot;.$enc_data.PHP_EOL;$dec_data = openssl_decrypt( $enc_data, $my_method, $key );echo &quot;明文：&quot;.$dec_data.PHP_EOL;// 输出明文：helloMOTO密文：IbpWiZbAoNMiknX3jdeqmQ==明文：helloMOTO 接下来我们说说aes 的加密方式 12345678910111213$ava_methods = openssl_get_cipher_methods();// 选用aes-128-ecb$my_method = &apos;aes-128-ecb&apos;;if ( !in_array( $my_method, $ava_methods ) ) &#123; exit( &apos;错误的加密方法&apos;.PHP_EOL );&#125;// 加密用的密码$key = &quot;1234567812345678&quot;;// 加密的内容$data = &quot;12345678abcdxxoo12345678abcdxxoo&quot;;$enc_data = openssl_encrypt( $data, $my_method, $key, OPENSSL_RAW_DATA );$hex = bin2hex( $enc_data );echo $hex.&apos; : &apos;.strlen( $hex ).PHP_EOL; aes-128-ecb, 其中128代表密钥的长度，多余的长度会被直接街去掉(这个可以通过代码验证下，比如12345 用密钥1234567812345678和12345678123456789分别加密，看结果是否一样，最后再用不满128bit来加密123456781234567 )，128bit 128/8=16 位，aes-192-ecb, aes-256-ecb, 这其中的192 ，256，都是同样的意思。 最后一个参数是OPENSSL_RAW_DATA，如果选用这个option的话，经过加密后的数据会是奇怪的二进制数据，无法直接通过文本方式查看，所以要看的话必须先使用bin2hex函数处理一下。 上面这段话一定要注意理解，反正我第一次没有理解，导致第一次加密数据失败，网上的很多aes-128-ecb 这种加密代码的封装中都携带着自己的逻辑，所以会误导视野。上述opensssl_encrypt(),如果没有用最后一个参数，直接返回的结果是加密结果base64 的结果，如果有了，返回的是一段奇怪的二进制数据数据，这里我们可以理解成原始数据（加密数据最原始的样子），我们可以通过base64或者 bin2hex 转换城对应的base64格式或者16进制格式 123456789101112明文：12345678abcdxxoo12345678abcdxxoo密文：c1391e34caf38f8c2a477cbda3772533c1391e34caf38f8c2a477cbda3772533d96aa42b59151a9e9b5925fc9d95adaf// 上面密文切分的结果c1391e34caf38f8c2a477cbda3772533 | c1391e34caf38f8c2a477cbda3772533 | d96aa42b59151a9e9b5925fc9d95adaf难道说明文“12345678abcdxxoo”被密钥“1234567812345678”加密后后的密文就是“c1391e34caf38f8c2a477cbda3772533”？DES和3DES会将明文以64bit（8字节）作为一个单元进行分组；AES则会将明文以128bit（16字节）作为一个单元进行分组；无论是AES还是DES，当最后一个分组的数据长度不满足分组标准长度的时候，会用某种填充方式进行填充；AES对一个16字节分组加密完毕后，分组大小依然为16字节；DES也一样 上面就是aes ecb 的处理过程 如果我们把加密的内容分组之后稍微修改下分组顺序再解密，可以得到原文分组顺序的不同 ecb太不靠谱了，竟然能修改，出现了cbc 模式 123456789101112131415161718192021222324$ava_methods = openssl_get_cipher_methods();$my_method = &apos;aes-128-cbc&apos;;if ( !in_array( $my_method, $ava_methods ) ) &#123; exit( &apos;错误的加密方法&apos;.PHP_EOL );&#125;// 密钥 和 明文$key = &quot;1234567812345678&quot;;$data = &quot;12345678abcdxxooxxooabcd12345678i&quot;;// 每种方法都有自己需要的iv向量的长度$iv_length = openssl_cipher_iv_length( $my_method );// 根据长度生成相应iv$iv = openssl_random_pseudo_bytes( $iv_length, $cstrong ); // 我就是一直把这玩意当成一个随机的字符串看待的echo &quot;明文：&quot;.$data.PHP_EOL;$enc_data = openssl_encrypt( $data, $my_method, $key, OPENSSL_RAW_DATA, $iv );$dec_data = openssl_decrypt( $enc_data, $my_method, $key, OPENSSL_RAW_DATA, $iv );echo &quot;解密：&quot;.$dec_data.PHP_EOL;// 神器的代码test2(1,$c); // 这样竟让不会报错function test2 ($a, &amp;$b) &#123; var_dump($a+$b, $b);&#125;exit; 这个传说中的iv向量终于他妈出现了！相对于ECB模式，CBC在加密之前多了一个XOR异或运算的环节，但是第一个明文分组和谁做异或呢？所以这个iv向量就是初始化后给第一个明文分组做XOR异或运算用的，第二个明文分组就与第一个密文分组做XOR异或运算，然后再加密得到第二个密文分组…依次重复下去。 xor 就是异或，相同的取0，不同的取1 总结： AES和DES以及3DES这种加密方式被称为分组密码，分组密码每次只能加密固定长度的明文，所以如果明文很长的话，就需要轮流为每个分组明文进行加密，AES的分组长度是128bit，而DES的分组长度为64bit；如果一旦需要对多个分组进行轮流加密，加入明文被分成了三个明文分组，那么就需要对三个明文进行迭代加密（粗暴理解就是轮流加密），然而会有很多种不同的迭代方式，这种不同的迭代方式专业名词就叫“模式”，这些模式有：ECB、CBC、OFB、CFB、CTR… … 对明文进行分组的方式是固定的，唯一不同的就是分组长度不一样而已；模式是指对多个明文从第一个开始轮流加密到最后一个的这个过程，是怎么轮流执行的。 非对称加解密就不copy了，以后用到的时候再看吧 自己的总结： 其实上面用到的也就怎么用php 进行aes-128-ecb加密，加密出来的数据让别的语言可以解析出来 这其中会遇到很多问题，比如之前曾经遇到过但是没有记录的和java通信过程中的padding 填充问题，以后遇到了再补充吧。]]></content>
+      <categories>
+        <category>编程</category>
+      </categories>
+      <tags>
+        <tag>PHP</tag>
+        <tag>API</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[PHP面试题]]></title>
+    <url>%2F2019%2F02%2F21%2FPHP%E9%9D%A2%E8%AF%95%E9%A2%98%2F</url>
+    <content type="text"><![CDATA[收集一些有意义常用的面试题]]></content>
+      <categories>
+        <category>PHP</category>
+      </categories>
+      <tags>
+        <tag>PHP</tag>
+        <tag>interview</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[laravel 核心技术读书笔记]]></title>
     <url>%2F2019%2F01%2F03%2Flaravel-%E6%A0%B8%E5%BF%83%E6%8A%80%E6%9C%AF%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%2F</url>
-    <content type="text"><![CDATA[关于laravel 框架核心技术一书的阅读感受1.关于命名空间我理解的命名空间是文件中的namespace 可以定义成任意的值，但是composer 的自动加载因为符合psr4 ，所以要求命名空间和文件路径一致，文件名和类名保持一样。当我们不适用composer的自动加载的时候，就可以随便指定文件中的namespace是多少了，比如12345&lt;?phpnamespace test;class test&#123;&#125; 可以保存在任意位置任意名称的文件中，但是不能写在composer autoload 驱动的框架中，除非改成别的方式加载，比如map还记得我们在控制器中引用别的类吗，通过use,然后就能直接使用new classname()了，但是我们在脚本中使用的时候，我们一定要用到include 先去包含这个文件12345678910111213141516171819202122232425262728&lt;?phpnamespace test;include &apos;test2.php&apos;;use test2\test5;class test &#123; public function test2() &#123; test1(); &#125;&#125;function test1()&#123; echo 1;&#125;$a = new test();$a-&gt;test2();$b = new test5();$b-&gt;test3(); 可能你在想，既然我们都include 了，那为啥还要使用use，use在这个地方的作用是什么，当你使用 use test2\test5的时候，你在使用 new test5(), 它实际new 的是 test2\test5(), 如果没有 new test5(), 当前命名空间下的test5类，所以你明白了use 并不是导入包含文件，只是引入一个类的前缀，想不适用前缀，那就 new \test5() ，绝对路径吧，如果想使用当前命名空间下的 test5(),那就把外来引入的换个名称吧，比如 as。现在想想，其实我们平时同一个文件夹下面命名空间一样，本质上是写在一个文件中的，只是我们为了方便好看，才把分到多个文件中，但是我们互相引用的时候，同一个命名空间下面，不用use，因为默认就在当前文件夹下面找。 当我接触use 的时候，书中还有一句话，use只能引用类，并不能引用常量，函数··！！难道还可以这样12345678910111213141516171819202122232425262728293031323334353637383940414243&lt;?phpnamespace test;//include &apos;test2.php&apos;;use test2\test5;class test &#123; public function test2() &#123; test1(); &#125;&#125;/* class test5&#123; public function test3() &#123; echo 1; &#125;&#125; */function test1()&#123; echo 1;&#125;function autoload($class) &#123; echo $class; include &apos;./test2.php&apos;;&#125;spl_autoload_register(&apos;test\autoload&apos;);$a = new test();$a-&gt;test2();$b = new test5();$b-&gt;test3(); 对，你没看错，class 的外面还能定义function, 然后我们当前命名空间中可以直接使用，如果是不同的命名空间，需要加前缀 spl_autoload_register 和 autoload autload已经被废弃了，在7.2 中。__autoload 如果在一个库中出现多次，会出错的，虽然是魔术方法，但可以不在类中定义，spl_autolad_register ，可以绑定多个自动加载，还可以删除，composer的自动加载机制中就用到了删除。他是类似一种方法的执行，可以写在任意地方，可以直接是方法名1spl_autoload_register(&apos;test\autoload&apos;); 可以是面向对象的方式1spl_autoload_register([$this, &apos;autoload&apos;], true, true); 第二个参数true 代表异常可以捕获，__autoload 就不行，第三个参数说实话不知道咋用，队列头部和队列尾部，就是先加载哪个自动加载函数的意思呗？]]></content>
+    <content type="text"><![CDATA[关于laravel 框架核心技术一书的阅读感受 ###1.关于命名空间我理解的命名空间是文件中的namespace 可以定义成任意的值，但是composer 的自动加载因为符合psr4 ，所以要求命名空间和文件路径一致，文件名和类名保持一样。当我们不适用composer的自动加载的时候，就可以随便指定文件中的namespace是多少了，比如12345&lt;?phpnamespace test;class test&#123;&#125; 可以保存在任意位置任意名称的文件中，但是不能写在composer autoload 驱动的框架中，除非改成别的方式加载，比如map还记得我们在控制器中引用别的类吗，通过use,然后就能直接使用new classname()了，但是我们在脚本中使用的时候，我们一定要用到include 先去包含这个文件12345678910111213141516171819202122232425262728&lt;?phpnamespace test;include &apos;test2.php&apos;;use test2\test5;class test &#123; public function test2() &#123; test1(); &#125;&#125;function test1()&#123; echo 1;&#125;$a = new test();$a-&gt;test2();$b = new test5();$b-&gt;test3(); 可能你在想，既然我们都include 了，那为啥还要使用use，use在这个地方的作用是什么，当你使用 use test2\test5的时候，你在使用 new test5(), 它实际new 的是 test2\test5(), 如果没有 new test5(), 当前命名空间下的test5类，所以你明白了use 并不是导入包含文件，只是引入一个类的前缀，想不适用前缀，那就 new \test5() ，绝对路径吧，如果想使用当前命名空间下的 test5(),那就把外来引入的换个名称吧，比如 as。现在想想，其实我们平时同一个文件夹下面命名空间一样，本质上是写在一个文件中的，只是我们为了方便好看，才把分到多个文件中，但是我们互相引用的时候，同一个命名空间下面，不用use，因为默认就在当前文件夹下面找。 当我接触use 的时候，书中还有一句话，use只能引用类，并不能引用常量，函数··！！难道还可以这样12345678910111213141516171819202122232425262728293031323334353637383940414243&lt;?phpnamespace test;//include &apos;test2.php&apos;;use test2\test5;class test &#123; public function test2() &#123; test1(); &#125;&#125;/* class test5&#123; public function test3() &#123; echo 1; &#125;&#125; */function test1()&#123; echo 1;&#125;function autoload($class) &#123; echo $class; include &apos;./test2.php&apos;;&#125;spl_autoload_register(&apos;test\autoload&apos;);$a = new test();$a-&gt;test2();$b = new test5();$b-&gt;test3(); 对，你没看错，class 的外面还能定义function, 然后我们当前命名空间中可以直接使用，如果是不同的命名空间，需要加前缀 ###2.spl_autoloadregister 和 __autoload\_autoload已经被废弃了，在7.2 中。__autoload 如果在一个库中出现多次，会出错的，虽然是魔术方法，但可以不在类中定义，spl_autolad_register ，可以绑定多个自动加载，还可以删除，composer的自动加载机制中就用到了删除。他是类似一种方法的执行，可以写在任意地方，可以直接是方法名1spl_autoload_register(&apos;test\autoload&apos;); 可以是面向对象的方式1spl_autoload_register([$this, &apos;autoload&apos;], true, true); 第二个参数true 代表异常可以捕获，__autoload 就不行，第三个参数说实话不知道咋用，队列头部和队列尾部，就是先加载哪个自动加载函数的意思呗？]]></content>
       <categories>
         <category>PHP</category>
       </categories>
@@ -55,8 +79,8 @@
       </categories>
       <tags>
         <tag>PHP</tag>
-        <tag>框架</tag>
         <tag>ThinkPHP</tag>
+        <tag>框架</tag>
       </tags>
   </entry>
   <entry>
@@ -267,9 +291,9 @@
         <category>apache</category>
       </categories>
       <tags>
+        <tag>框架</tag>
         <tag>apache</tag>
         <tag>linux</tag>
-        <tag>框架</tag>
       </tags>
   </entry>
   <entry>
@@ -335,7 +359,7 @@
   <entry>
     <title><![CDATA[PHP知识点]]></title>
     <url>%2F2018%2F03%2F26%2FPHP%E7%9F%A5%E8%AF%86%E7%82%B9%2F</url>
-    <content type="text"><![CDATA[PHP中很多稍微高级的知识点自己都不是很熟悉，trait, 闭包，又或者composer等， 记录下来，成为现代phper。 PHP中闭包]]></content>
+    <content type="text"><![CDATA[PHP中很多稍微高级的知识点自己都不是很熟悉，trait, 闭包，又或者composer等， 记录下来，成为现代phper。 PHP中闭包 PHP 时间处理(DateTime) 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647// 打印当前时间$a = new DateTime();echo $a-&gt;format(&apos;Y-m-d H:i:s&apos;);// 打印特定的时间（接受一个特定的时间，反应出周边信息，感觉通过DateTime 这个类就能获取一个时间点的所有资源）$a = new DateTime(&apos;2019-02-21&apos;);echo $a-&gt;format(&apos;U&apos;); // 转换成一个unix 时间戳$a = new DateTime(&apos;tomorrow&apos;); // strtotime 的所有功能都能实现(既能接受日期，也能接受string)echo $a-&gt;format(&apos;Y-m-d&apos;)$a = new DateTime(&apos;+2 days&apos;)echo $a-&gt;format(&apos;Y-m-d H:i:s&apos;)// 还可以在获取到一个事件之后进行时间的修改$a = new DateTime();$a-&gt;modify(&apos;+1 day&apos;)echo $a-&gt;format(&apos;Y-m-d&apos;)$a-&gt;setDate(2018,1,19)echo $a-&gt;format(&apos;Y-m-d&apos;)$a-&gt;setTime(9,9,9);echo $a-&gt;format(&apos;Y-m-d&apos;)// 转换时间戳$date = new DateTime(&apos;@1408950651&apos;);$date-&gt;setTimezone(new DateTimeZone(&apos;Asia/Shanghai&apos;)); // 这个时区很重要，影响转换的内容echo $date-&gt;format(&apos;Y-m-d H:i:s&apos;);echo &quot;\n&quot;;// 比较日期差额$date1 = new DateTime();$date2 = new DateTime(&apos;2014-09-15&apos;);$diff = $date1-&gt;diff($date2);echo $diff-&gt;format(&quot;The future will come in %Y years %m months and %d days&quot;);// 比较日期大小$date1 = new DateTime();$date2 = new DateTime(&apos;2014-09-15&apos;);if($date1 &lt; $date2) &#123; echo $date2-&gt;format(&apos;Y-m-d H:i:s&apos;) . &apos; is in the future&apos;;&#125;总结对比：这个new DateTime() 能接受的参数有很多，很方便$a = new DateTime(&apos;2019-2-21&apos;); // 在这之前想实例化任意一天需要 strtotime(),普通的date(&apos;Y-m-d&apos;, time()), 后面的参数默认是当前时间戳，time() 获取的也是当前时间戳，不能根据自定义获取时间戳echo $a-&gt;format(&apos;Y-m-d&apos;); // 格式化时间echo $a-&gt;format(&apos;Y-m-t&apos;); // 某个月结束日期，开始日期直接 —01-01 ​ todo: 时间戳转换，格式化日期，当前时间，修改当前日期，每个月结尾（30号还是31号），循环每周四，时间前后比较， PHP7 新特性的使用 12345678910$a = $a ?? 9;$a = isset($a) ? $a : 9;// 上面的三元表达式在变量的判断中使用的还是比较少的，更多的是用在判断数组的key 是否存在，因为如果不存在的话是可以直接使用的，但是会给warning,这样也是不好的$a = $a ?: 9;if ($a) &#123; $a = $a;&#125; else &#123; $a = 9;&#125;// 这个是很久就出来的写法，三元表达式的简写 PHP 数组操作 array_slice() 截取数组，对于关联数组和索引数组都能截取，因为关联数组没有顺序，所以array_pop 那些数组头部尾部的操作不能生效，这时候array_slice 就有用了，比如获取排行榜前5位 PHP 常用函数 sprintf(‘%02d’, 9) 对于 1 显示成01 这样很方便 number_formate() 1234.45 显示成 1,234.45 很方便 感觉除了foreach 外，while 比for 好用 123456789101112$month = 5;$num = 5;$res[$month] = $num;$tmpM = $month;while ($tmpM - 1 &gt; 0) &#123; $join = 2; $quit = 1; $num = $num - $join + $quit; $tmpM = $tmpM - 1; $res[$tmpM] = $num; &#125;var_dump($res);exit; // 虽然tmpM 也可以设置成临界变量 continue 调出本次循环， foreach 继续； break 跳出(终止)整个foreach 循环 ​]]></content>
       <categories>
         <category>PHP</category>
       </categories>
@@ -389,8 +413,8 @@
       </categories>
       <tags>
         <tag>PHP</tag>
-        <tag>token</tag>
         <tag>API</tag>
+        <tag>token</tag>
       </tags>
   </entry>
   <entry>
@@ -577,9 +601,9 @@
         <category>PHP</category>
       </categories>
       <tags>
+        <tag>框架</tag>
         <tag>apache</tag>
         <tag>linux</tag>
-        <tag>框架</tag>
         <tag>php</tag>
       </tags>
   </entry>

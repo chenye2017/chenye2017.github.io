@@ -2,9 +2,30 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yoursite.com/2019/02/21/%E5%8A%A0%E5%AF%86%E8%A7%A3%E5%AF%86/</loc>
+    
+    <lastmod>2019-02-21T07:28:40.945Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2018/03/26/PHP%E7%9F%A5%E8%AF%86%E7%82%B9/</loc>
+    
+    <lastmod>2019-02-21T03:47:19.682Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2019/02/21/PHP%E9%9D%A2%E8%AF%95%E9%A2%98/</loc>
+    
+    <lastmod>2019-02-21T02:51:48.293Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/2019/01/03/laravel-%E6%A0%B8%E5%BF%83%E6%8A%80%E6%9C%AF%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/</loc>
     
-    <lastmod>2019-01-03T16:04:46.368Z</lastmod>
+    <lastmod>2019-01-03T16:10:40.018Z</lastmod>
     
   </url>
   
@@ -327,13 +348,6 @@
     <loc>http://yoursite.com/2018/03/30/Laravel-%E6%95%B0%E6%8D%AE%E5%A1%AB%E5%85%85/</loc>
     
     <lastmod>2018-03-30T06:41:23.788Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2018/03/26/PHP%E7%9F%A5%E8%AF%86%E7%82%B9/</loc>
-    
-    <lastmod>2018-03-26T14:22:12.108Z</lastmod>
     
   </url>
   

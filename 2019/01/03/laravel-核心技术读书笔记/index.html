@@ -89,7 +89,7 @@
 <meta property="og:site_name" content="语法糖的博客">
 <meta property="og:description" content="关于laravel 框架核心技术一书的阅读感受">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-01-03T16:04:46.368Z">
+<meta property="og:updated_time" content="2019-01-03T16:10:40.018Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="laravel 核心技术读书笔记">
 <meta name="twitter:description" content="关于laravel 框架核心技术一书的阅读感受">
@@ -382,16 +382,13 @@
       
 
       
-        <p>关于laravel 框架核心技术一书的阅读感受<br><a id="more"></a><br>1.关于命名空间<br>我理解的命名空间是文件中的namespace 可以定义成任意的值，但是composer 的自动加载因为符合psr4 ，所以要求命名空间和文件路径一致，文件名和类名保持一样。当我们不适用composer的自动加载的时候，就可以随便指定文件中的namespace是多少了，比如<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">namespace test;</span><br><span class="line">class test</span><br><span class="line">&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+        <p>关于laravel 框架核心技术一书的阅读感受<br><a id="more"></a></p>
+<p>###1.关于命名空间<br>我理解的命名空间是文件中的namespace 可以定义成任意的值，但是composer 的自动加载因为符合psr4 ，所以要求命名空间和文件路径一致，文件名和类名保持一样。当我们不适用composer的自动加载的时候，就可以随便指定文件中的namespace是多少了，比如<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">namespace test;</span><br><span class="line">class test</span><br><span class="line">&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>可以保存在任意位置任意名称的文件中，但是不能写在composer autoload 驱动的框架中，除非改成别的方式加载，比如map<br>还记得我们在控制器中引用别的类吗，通过use,然后就能直接使用new classname()了，但是我们在脚本中使用的时候，我们一定要用到include 先去包含这个文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line"></span><br><span class="line">namespace test;</span><br><span class="line"></span><br><span class="line">include &apos;test2.php&apos;;</span><br><span class="line"></span><br><span class="line">use test2\test5;</span><br><span class="line"></span><br><span class="line">class test </span><br><span class="line">&#123;</span><br><span class="line">  public function test2()</span><br><span class="line">  &#123;</span><br><span class="line">      test1();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">function test1()</span><br><span class="line">&#123;</span><br><span class="line">    echo 1;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">$a = new test();</span><br><span class="line">$a-&gt;test2();</span><br><span class="line"></span><br><span class="line">$b = new test5();</span><br><span class="line">$b-&gt;test3();</span><br></pre></td></tr></table></figure></p>
 <p>可能你在想，既然我们都include 了，那为啥还要使用use，use在这个地方的作用是什么，当你使用 use test2\test5的时候，你在使用 new test5(), 它实际new 的是 test2\test5(), 如果没有 new test5(), 当前命名空间下的test5类，所以你明白了use 并不是导入包含文件，只是引入一个类的前缀，想不适用前缀，那就 new \test5() ，绝对路径吧，如果想使用当前命名空间下的 test5(),那就把外来引入的换个名称吧，比如 as。现在想想，其实我们平时同一个文件夹下面命名空间一样，本质上是写在一个文件中的，只是我们为了方便好看，才把分到多个文件中，但是我们互相引用的时候，同一个命名空间下面，不用use，因为默认就在当前文件夹下面找。</p>
 <p>当我接触use 的时候，书中还有一句话，use只能引用类，并不能引用常量，函数··！！难道还可以这样<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line"></span><br><span class="line">namespace test;</span><br><span class="line"></span><br><span class="line">//include &apos;test2.php&apos;;</span><br><span class="line"></span><br><span class="line">use test2\test5;</span><br><span class="line"></span><br><span class="line">class test </span><br><span class="line">&#123;</span><br><span class="line">  public function test2()</span><br><span class="line">  &#123;</span><br><span class="line">      test1();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">/* class test5</span><br><span class="line">&#123;</span><br><span class="line">    public function test3()</span><br><span class="line">    &#123;</span><br><span class="line">        echo 1;</span><br><span class="line">    &#125;</span><br><span class="line">&#125; */</span><br><span class="line"></span><br><span class="line">function test1()</span><br><span class="line">&#123;</span><br><span class="line">    echo 1;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function autoload($class) &#123;</span><br><span class="line">    echo $class;</span><br><span class="line">    include &apos;./test2.php&apos;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">spl_autoload_register(&apos;test\autoload&apos;);</span><br><span class="line"></span><br><span class="line">$a = new test();</span><br><span class="line">$a-&gt;test2();</span><br><span class="line"></span><br><span class="line">$b = new test5();</span><br><span class="line">$b-&gt;test3();</span><br></pre></td></tr></table></figure></p>
 <p>对，你没看错，class 的外面还能定义function, 然后我们当前命名空间中可以直接使用，如果是不同的命名空间，需要加前缀</p>
-<ol>
-<li>spl_autoload_register 和 <strong>autoload
-</strong>autload已经被废弃了，在7.2 中。__autoload 如果在一个库中出现多次，会出错的，虽然是魔术方法，但可以不在类中定义，spl_autolad_register ，可以绑定多个自动加载，还可以删除，composer的自动加载机制中就用到了删除。他是类似一种方法的执行，可以写在任意地方，可以直接是方法名<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">spl_autoload_register(&apos;test\autoload&apos;);</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
+<p>###2.spl_autoload<em>register 和 __autoload<br>\</em>_autoload已经被废弃了，在7.2 中。__autoload 如果在一个库中出现多次，会出错的，虽然是魔术方法，但可以不在类中定义，spl_autolad_register ，可以绑定多个自动加载，还可以删除，composer的自动加载机制中就用到了删除。他是类似一种方法的执行，可以写在任意地方，可以直接是方法名<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">spl_autoload_register(&apos;test\autoload&apos;);</span><br></pre></td></tr></table></figure></p>
 <p>可以是面向对象的方式<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">spl_autoload_register([$this, &apos;autoload&apos;], true, true);</span><br></pre></td></tr></table></figure></p>
 <p>第二个参数true 代表异常可以捕获，__autoload 就不行，第三个参数说实话不知道咋用，队列头部和队列尾部，就是先加载哪个自动加载函数的意思呗？</p>
 
@@ -475,6 +472,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/02/21/PHP面试题/" rel="prev" title="PHP面试题">
+                PHP面试题 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -572,7 +573,7 @@ var jiathis_config={
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">62</span>
+                  <span class="site-state-item-count">64</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -583,7 +584,7 @@ var jiathis_config={
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-count">13</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -594,7 +595,7 @@ var jiathis_config={
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">58</span>
+                  <span class="site-state-item-count">59</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -713,7 +714,7 @@ var jiathis_config={
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count"> | 博客全站共77.6k字</span>
+  <span class="post-count"> | 博客全站共80.7k字</span>
 </div>
 
 

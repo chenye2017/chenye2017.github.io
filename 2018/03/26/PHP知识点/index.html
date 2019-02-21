@@ -89,7 +89,7 @@
 <meta property="og:site_name" content="语法糖的博客">
 <meta property="og:description" content="PHP中很多稍微高级的知识点自己都不是很熟悉，trait, 闭包，又或者composer等， 记录下来，成为现代phper。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-03-26T14:22:12.108Z">
+<meta property="og:updated_time" content="2019-02-21T03:47:19.682Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="PHP知识点">
 <meta name="twitter:description" content="PHP中很多稍微高级的知识点自己都不是很熟悉，trait, 闭包，又或者composer等， 记录下来，成为现代phper。">
@@ -384,9 +384,35 @@
       
         <p>PHP中很多稍微高级的知识点自己都不是很熟悉，trait, 闭包，又或者composer等， 记录下来，成为现代phper。</p>
 <a id="more"></a>
-<ol>
+<ul>
 <li><a href="https://chenye2017.github.io/2018/03/26/PHP%E9%97%AD%E5%8C%85/#more" target="_blank" rel="noopener">PHP中闭包</a></li>
-</ol>
+</ul>
+<ul>
+<li><p>PHP 时间处理(DateTime)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">// 打印当前时间</span><br><span class="line">$a = new DateTime();</span><br><span class="line">echo $a-&gt;format(&apos;Y-m-d H:i:s&apos;);</span><br><span class="line"></span><br><span class="line">// 打印特定的时间（接受一个特定的时间，反应出周边信息，感觉通过DateTime 这个类就能获取一个时间点的所有资源）</span><br><span class="line">$a = new DateTime(&apos;2019-02-21&apos;);</span><br><span class="line">echo $a-&gt;format(&apos;U&apos;); // 转换成一个unix 时间戳</span><br><span class="line">$a = new DateTime(&apos;tomorrow&apos;); // strtotime 的所有功能都能实现(既能接受日期，也能接受string)</span><br><span class="line">echo $a-&gt;format(&apos;Y-m-d&apos;)</span><br><span class="line">$a = new DateTime(&apos;+2 days&apos;)</span><br><span class="line">echo $a-&gt;format(&apos;Y-m-d H:i:s&apos;)</span><br><span class="line"></span><br><span class="line">// 还可以在获取到一个事件之后进行时间的修改</span><br><span class="line">$a = new DateTime();</span><br><span class="line">$a-&gt;modify(&apos;+1 day&apos;)</span><br><span class="line">echo $a-&gt;format(&apos;Y-m-d&apos;)</span><br><span class="line">$a-&gt;setDate(2018,1,19)</span><br><span class="line">echo $a-&gt;format(&apos;Y-m-d&apos;)</span><br><span class="line">$a-&gt;setTime(9,9,9);</span><br><span class="line">echo $a-&gt;format(&apos;Y-m-d&apos;)</span><br><span class="line"></span><br><span class="line">// 转换时间戳</span><br><span class="line">$date = new DateTime(&apos;@1408950651&apos;);</span><br><span class="line">$date-&gt;setTimezone(new DateTimeZone(&apos;Asia/Shanghai&apos;)); // 这个时区很重要，影响转换的内容</span><br><span class="line">echo $date-&gt;format(&apos;Y-m-d H:i:s&apos;);</span><br><span class="line">echo &quot;\n&quot;;</span><br><span class="line"></span><br><span class="line">// 比较日期差额</span><br><span class="line">$date1 = new DateTime();</span><br><span class="line">$date2 = new DateTime(&apos;2014-09-15&apos;);</span><br><span class="line"></span><br><span class="line">$diff = $date1-&gt;diff($date2);</span><br><span class="line">echo $diff-&gt;format(&quot;The future will come in %Y years %m months and %d days&quot;);</span><br><span class="line"></span><br><span class="line">// 比较日期大小</span><br><span class="line">$date1 = new DateTime();</span><br><span class="line">$date2 = new DateTime(&apos;2014-09-15&apos;);</span><br><span class="line"></span><br><span class="line">if($date1 &lt; $date2) &#123;</span><br><span class="line">    echo $date2-&gt;format(&apos;Y-m-d H:i:s&apos;) . &apos; is in the future&apos;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">总结对比：</span><br><span class="line">这个new DateTime() 能接受的参数有很多，很方便</span><br><span class="line">$a = new DateTime(&apos;2019-2-21&apos;); // 在这之前想实例化任意一天需要 strtotime(),普通的date(&apos;Y-m-d&apos;, time()), 后面的参数默认是当前时间戳，time() 获取的也是当前时间戳，不能根据自定义获取时间戳</span><br><span class="line">echo $a-&gt;format(&apos;Y-m-d&apos;); // 格式化时间</span><br><span class="line">echo $a-&gt;format(&apos;Y-m-t&apos;); // 某个月结束日期，开始日期直接 —01-01</span><br></pre></td></tr></table></figure>
+<p>​</p>
+<p>todo: 时间戳转换，格式化日期，当前时间，修改当前日期，每个月结尾（30号还是31号），循环每周四，时间前后比较，</p>
+</li>
+<li><p>PHP7 新特性的使用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$a = $a ?? 9;</span><br><span class="line">$a = isset($a) ? $a : 9;</span><br><span class="line">// 上面的三元表达式在变量的判断中使用的还是比较少的，更多的是用在判断数组的key 是否存在，因为如果不存在的话是可以直接使用的，但是会给warning,这样也是不好的</span><br><span class="line">$a = $a ?: 9;</span><br><span class="line">if ($a) &#123;</span><br><span class="line">   $a = $a;</span><br><span class="line">&#125; else &#123;</span><br><span class="line">  $a = 9;</span><br><span class="line">&#125;</span><br><span class="line">// 这个是很久就出来的写法，三元表达式的简写</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>PHP 数组操作</p>
+<p>array_slice() 截取数组，对于关联数组和索引数组都能截取，因为关联数组没有顺序，所以array_pop 那些数组头部尾部的操作不能生效，这时候array_slice 就有用了，比如获取排行榜前5位</p>
+</li>
+<li><p>PHP 常用函数</p>
+<p>sprintf(‘%02d’, 9) 对于 1 显示成01 这样很方便</p>
+<p>number_formate()  1234.45 显示成 1,234.45 很方便</p>
+</li>
+</ul>
+<ul>
+<li><p>感觉除了foreach 外，while 比for 好用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">$month = 5;</span><br><span class="line">$num = 5;</span><br><span class="line">$res[$month] = $num;</span><br><span class="line">$tmpM = $month;</span><br><span class="line">while ($tmpM - 1 &gt; 0) &#123;</span><br><span class="line">    $join = 2;</span><br><span class="line">    $quit = 1;</span><br><span class="line">    $num = $num - $join + $quit;</span><br><span class="line">    $tmpM = $tmpM - 1;</span><br><span class="line">    $res[$tmpM] = $num;                </span><br><span class="line">&#125;</span><br><span class="line">var_dump($res);exit;  // 虽然tmpM 也可以设置成临界变量</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>continue 调出本次循环， foreach 继续； break 跳出(终止)整个foreach 循环</p>
+</li>
+<li><p>​</p>
+</li>
+</ul>
 
       
     </div>
@@ -567,7 +593,7 @@ var jiathis_config={
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">62</span>
+                  <span class="site-state-item-count">64</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -578,7 +604,7 @@ var jiathis_config={
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-count">13</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -589,7 +615,7 @@ var jiathis_config={
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">58</span>
+                  <span class="site-state-item-count">59</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -708,7 +734,7 @@ var jiathis_config={
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count"> | 博客全站共77.6k字</span>
+  <span class="post-count"> | 博客全站共80.7k字</span>
 </div>
 
 
