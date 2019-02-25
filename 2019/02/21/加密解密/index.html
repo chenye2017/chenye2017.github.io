@@ -92,7 +92,7 @@
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5525740-b0ca983394ce8b5a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5525740-f9d3aff215a407a8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5525740-83bd4bcca97d0aa0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2019-02-21T07:28:40.945Z">
+<meta property="og:updated_time" content="2019-02-25T09:29:46.636Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="加密解密">
 <meta name="twitter:description" content="作为一个底层码农，其实加密解密平时是用不到的，毕竟平时写的就是cms 的curd, 但随着API的流行以及老大对代码质量的重视，还有和别的部门的交互，于是需要加解密啦。原文">
@@ -434,6 +434,15 @@
 <p>自己的总结：</p>
 <p>其实上面用到的也就怎么用php 进行aes-128-ecb加密，加密出来的数据让别的语言可以解析出来</p>
 <p>这其中会遇到很多问题，比如之前曾经遇到过但是没有记录的和java通信过程中的padding 填充问题，以后遇到了再补充吧。</p>
+<p>顺带补充一下：</p>
+<p><a href="https://www.devglan.com/online-tools/aes-encryption-decryption" target="_blank" rel="noopener">https://www.devglan.com/online-tools/aes-encryption-decryption</a></p>
+<p>这个网站以及下面的php代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">$data = &apos;陈野&apos;;</span><br><span class="line">$key = &apos;1234567812345678&apos;;</span><br><span class="line"></span><br><span class="line">echo $key.PHP_EOL;</span><br><span class="line"></span><br><span class="line">$enc_data = openssl_encrypt( $data, $my_method, $key, OPENSSL_RAW_DATA);</span><br><span class="line">echo $enc_data.PHP_EOL;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">echo base64_encode($enc_data).PHP_EOL;</span><br><span class="line"></span><br><span class="line">echo bin2hex( $enc_data );</span><br></pre></td></tr></table></figure>
+<p>默认的填充方式</p>
+<p>pkcs5padding or pkcs7padding (不确定)</p>
+<p>字符集（utf8）</p>
+<p><a href="http://tool.chacuo.net/cryptaes" target="_blank" rel="noopener">http://tool.chacuo.net/cryptaes</a></p>
+<p>上面这个网站才是真正意义上详细的加密，参数可以选择</p>
 
       
     </div>
@@ -515,6 +524,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/02/25/框架学习-获取请求参数/" rel="prev" title="框架学习-获取请求参数">
+                框架学习-获取请求参数 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -612,7 +625,7 @@ var jiathis_config={
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">64</span>
+                  <span class="site-state-item-count">65</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -634,7 +647,7 @@ var jiathis_config={
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">59</span>
+                  <span class="site-state-item-count">60</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -753,7 +766,7 @@ var jiathis_config={
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count"> | 博客全站共80.7k字</span>
+  <span class="post-count"> | 博客全站共83.2k字</span>
 </div>
 
 

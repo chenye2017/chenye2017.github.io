@@ -88,7 +88,7 @@
 <meta property="og:site_name" content="语法糖的博客">
 <meta property="og:description" content="跨域这个问题其实前端很容易碰到，为什么呢?因为前端一直用浏览器啊，浏览器可以看做一个http客户端，前端和http打交道主要用的就是这个客户端，但如果后端和http打交道，一般只能使用curl这类工具，又因为浏览器的同源策略才产生了跨域，换句话说跨域的时候，后端对前端的数据进行了处理，并返回了对应的数据，但是浏览器检测到了跨域，所以把数据屏蔽了，这才产生了跨域，所以前端相比后端会更容易碰到跨域问题">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-06-06T13:55:05.334Z">
+<meta property="og:updated_time" content="2019-02-25T06:43:28.935Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="跨域">
 <meta name="twitter:description" content="跨域这个问题其实前端很容易碰到，为什么呢?因为前端一直用浏览器啊，浏览器可以看做一个http客户端，前端和http打交道主要用的就是这个客户端，但如果后端和http打交道，一般只能使用curl这类工具，又因为浏览器的同源策略才产生了跨域，换句话说跨域的时候，后端对前端的数据进行了处理，并返回了对应的数据，但是浏览器检测到了跨域，所以把数据屏蔽了，这才产生了跨域，所以前端相比后端会更容易碰到跨域问题">
@@ -374,12 +374,26 @@
 <p>对于前端，像jquery有对jsonp的封装，可以自定义函数，然后传入，返回的数据会先走定义的函数，然后来到success函数里面，注意success传入的参数data是不包括后端返回的内容中的函数，而是函数的参数们。</p>
 <p>juqery默认传的自定义函数名称是jquery带一长串数字，具体的用法可以百度查看，我没咋用过。</p>
 <p>还有哦，jsonp只能支持get请求。</p>
-<p>鉴于上面诸多的麻烦，我用的主要是cors。</p>
-<p>首先我们需要知道浏览器将跨域请求分成了简单请求和非简单请求，什么是非简单请求，就是那些不是get post（请求方式）,返回头信息中加入token这类自定义的东西，就是非简单请求，一般情况下，我们的请求都是非简单请求，毕竟简单请求content-type 好像都不能是json类型。</p>
+<h1 id="重点"><a href="#重点" class="headerlink" title="重点"></a>重点</h1><p>鉴于上面诸多的麻烦，我用的主要是cors。</p>
+<p>首先我们需要知道浏览器将跨域请求分成了简单请求和非简单请求，什么是简单请求，</p>
+<p>http 方法：</p>
+<p>head, get,post</p>
+<p>http 头部：</p>
+<p>Accept,Accept-Language,Content-Lanuage,Last-Event-ID</p>
+<p>Content-type 仅能是下列之一：</p>
+<p>application/x-www-form-urlencoded，multipart/form-data，text/plain</p>
+<p>不是简单请求，那就是非简单请求</p>
+<p>大部分情况下我们的请求都是非简单请求，因为很多时候我们需要的content-type application/json。</p>
 <p>对于非简单请求，会先在正式请求之前发送一个options请求，当有跨域请求的时候，我们可以看下Chrome的控制面板，很清楚的能看到。对于返回信息，我们需要加以下头信息</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$response-&gt;header(&quot;Access-Control-Allow-Origin&quot;, &apos;*&apos;); //允许的ip</span><br><span class="line">$response-&gt;header(&apos;Access-Control-Allow-Methods&apos;, &apos;POST, GET&apos;); //允许的方法</span><br><span class="line">$response-&gt;header(&apos;Access-Control-Allow-Headers&apos;, &apos;Content-Type, token&apos;);</span><br><span class="line">//自定义的头部信息</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$response-&gt;header(&quot;Access-Control-Allow-Origin&quot;, &apos;*&apos;); //允许的ip</span><br><span class="line">$response-&gt;header(&apos;Access-Control-Allow-Methods&apos;, &apos;POST, GET&apos;); //允许的方法</span><br><span class="line">$response-&gt;header(&apos;Access-Control-Allow-Headers&apos;, &apos;Content-Type, token, Authorizon&apos;);</span><br><span class="line">//自定义的头部信息, 比如jwt 需要传递Authorizon 这个头部的时候</span><br></pre></td></tr></table></figure>
+<p>notice:</p>
+<p>options 请求只是个探针请求，我们并不需要他执行业务处理，他的功能只是获取我们response中的一些头部信息，而且因为他有些信息不回携带，别入header 中不会有Authorizon 这个属性，所以很多业务他也走不通，比如对于Authorizon 中数据的验证，当options 请求成功后，后面才会继续发送真正的请求，这时候我们才是真正的逻辑处理，所以很多时候web server 比如nginx 直接过滤掉了options 请求，我们在swoole 中这么处理</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">if ($request-&gt;server[&apos;request_method&apos;] == &apos;OPTIONS&apos;) &#123;</span><br><span class="line">       return $response-&gt;end();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>其实上面那样设置header 中允许的请求域并不是太好，没有太多的安全限制，一般可以给个白名单，而且还有个问题就是如果设置成* 并不能允许携带cookie</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">客户端：</span><br><span class="line">xhr.withCredentials = true;</span><br><span class="line"></span><br><span class="line">报错信息：</span><br><span class="line">Access to XMLHttpRequest at &apos;https://itbasic.datatom.com/bbsapi/datatalk/develop/perMonthProductIncome&apos; from origin &apos;http://localhost:64331&apos; has been blocked by CORS policy: Response to preflight request doesn&apos;t pass access control check: The value of the &apos;Access-Control-Allow-Origin&apos; header in the response must not be the wildcard &apos;*&apos; when the request&apos;s credentials mode is &apos;include&apos;. The credentials mode of requests initiated by the XMLHttpRequest is controlled by the withCredentials attribute.</span><br><span class="line"></span><br><span class="line">处理方式：</span><br><span class="line">String origin = req.getHeader(&quot;Origin&quot;);</span><br><span class="line">if(origin == null) &#123;</span><br><span class="line">     origin = req.getHeader(&quot;Referer&quot;);</span><br><span class="line">&#125;    </span><br><span class="line">resp.setHeader(&quot;Access-Control-Allow-Origin&quot;, origin); </span><br><span class="line"></span><br><span class="line">更好的处理方式添加如下代码</span><br><span class="line"> </span><br><span class="line"> if (origin in array[xxx]) &#123;</span><br><span class="line">  resp.setHeader(&quot;Access-Control-Allow-Origin&quot;, origin); // 这样会更加安全</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>更多详细的cors 跨域参考这篇<a href="https://juejin.im/post/5ad17c006fb9a028d82c329c#heading-13" target="_blank" rel="noopener">文章</a></p>
 <p>大致只需要做这些处理，一般像php，只需要在router的 end（返回具体信息）之前加上上面的信息就可以了。</p>
-<p>像node，或者swoole都在启动web服务的文件处加上即可。</p>
+<p>像node，或者swoole都在启动web服务的文件处加上即可。    </p>
 <p>​    </p>
 
       
@@ -535,8 +549,17 @@ var jiathis_config={
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -555,7 +578,7 @@ var jiathis_config={
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">64</span>
+                  <span class="site-state-item-count">65</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -577,7 +600,7 @@ var jiathis_config={
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">59</span>
+                  <span class="site-state-item-count">60</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -648,6 +671,22 @@ var jiathis_config={
       </section>
 
       
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#重点"><span class="nav-number">1.</span> <span class="nav-text">重点</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
 
       
 
@@ -696,7 +735,7 @@ var jiathis_config={
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count"> | 博客全站共80.7k字</span>
+  <span class="post-count"> | 博客全站共83.2k字</span>
 </div>
 
 
