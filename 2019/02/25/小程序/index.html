@@ -93,7 +93,7 @@
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5525740-2226a06bb4bb7aac.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5525740-1fc62e0aee7a00af.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5525740-d78190d6a7276f55.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2019-02-26T10:38:28.006Z">
+<meta property="og:updated_time" content="2019-02-27T13:06:47.839Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="小程序">
 <meta name="twitter:description" content="最近学习了下小程序的编写，理由：  vue 还有 react 没学会，小程序是真的简单 ，类似后台模板引擎 微信不会弹广告，vue或者react 编写的webapp 在一些安卓手机浏览器上，比如魅族自带的浏览器，访问的时候会有很多广告的出现 不用记域名，之前在做itbasic的时候，就发现大家都记不住域名，导致pc端还好，大家可以收藏域名，手机端完全不会去使用 练习js, 熟悉es6这篇文章的目的">
@@ -408,6 +408,8 @@
 <p>positon<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">position:relative (相较于自身)</span><br><span class="line">position:absolute(因为一般只有固定在底部或者首部用到，所以一般这样定位的话就是相对于页面)</span><br></pre></td></tr></table></figure></p>
 <p>目前用到的元素：view ,image(类似view)<br>绑定点击事件 bind:tap, bind:like<br>引入组件：在该pages json 文件中引入，或者全局json 中引入，（父组件给子组件传值通过属性）然后用组件名称使用，在父组件上定义属性，传入子组件定义的data中（子组件给父组件传值通过事件，子组件抛出事件，触发父组件绑定的事件）</p>
 <h5 id="js"><a href="#js" class="headerlink" title="js"></a>js</h5><p>let 新的定义变量方式，if 或者 for 中定义的，外面获取不到<br>const 不能改变的量<br>onLoad 方法中一般写入初始化的时候对后台接口的请求（蛋疼的就是经常页面加载的时候出现抖动，当返回数据比较慢的时候）<br>自定义的方法就写在最外层就好了<br>data : 定义页面中的值，初始化<br>setData :改变页面中的值<br>wx.getStorage()  感觉这些就是类似调用系统接口，应该安卓和ios 中用的比较多，这是微信封装的，注意其中的同步和异步之分</p>
+<h3 id="推荐组件"><a href="#推荐组件" class="headerlink" title="推荐组件"></a>推荐组件</h3><p>vant 有赞出的小程序组件，只有用过小程序原生组件才会知道vant 用起来有多么方便，npm 安装</p>
+<p>值的注意的是：事件 event.detail 能获取到这个组件本身，之前我们经常用event.detail.value 获取组件传递的值，通过event.detail去调用组件自身的一些方法，比如日期picker 上显示的日期大小</p>
 
       
     </div>
@@ -489,6 +491,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/03/06/PHP-反射/" rel="prev" title="PHP 反射">
+                PHP 反射 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -595,7 +601,7 @@ var jiathis_config={
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">66</span>
+                  <span class="site-state-item-count">67</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -617,7 +623,7 @@ var jiathis_config={
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">62</span>
+                  <span class="site-state-item-count">64</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -697,7 +703,7 @@ var jiathis_config={
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#目录结构"><span class="nav-number">1.</span> <span class="nav-text">目录结构</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#app-wxss"><span class="nav-number">1.0.0.0.1.</span> <span class="nav-text">app.wxss</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#iconfont-的使用"><span class="nav-number">1.0.0.0.2.</span> <span class="nav-text">iconfont 的使用</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#app-json"><span class="nav-number">1.0.0.0.3.</span> <span class="nav-text">app.json</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#components"><span class="nav-number">1.0.0.1.</span> <span class="nav-text">components</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#小程序知识"><span class="nav-number">2.</span> <span class="nav-text">小程序知识</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#wxml"><span class="nav-number">2.0.0.0.1.</span> <span class="nav-text">wxml</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#js"><span class="nav-number">2.0.0.1.</span> <span class="nav-text">js</span></a></li></ol></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#目录结构"><span class="nav-number">1.</span> <span class="nav-text">目录结构</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#app-wxss"><span class="nav-number">1.0.0.0.1.</span> <span class="nav-text">app.wxss</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#iconfont-的使用"><span class="nav-number">1.0.0.0.2.</span> <span class="nav-text">iconfont 的使用</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#app-json"><span class="nav-number">1.0.0.0.3.</span> <span class="nav-text">app.json</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#components"><span class="nav-number">1.0.0.1.</span> <span class="nav-text">components</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#小程序知识"><span class="nav-number">2.</span> <span class="nav-text">小程序知识</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#wxml"><span class="nav-number">2.0.0.0.1.</span> <span class="nav-text">wxml</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#js"><span class="nav-number">2.0.0.1.</span> <span class="nav-text">js</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#推荐组件"><span class="nav-number">2.1.</span> <span class="nav-text">推荐组件</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -752,7 +758,7 @@ var jiathis_config={
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count"> | 博客全站共84.3k字</span>
+  <span class="post-count"> | 博客全站共87.0k字</span>
 </div>
 
 
