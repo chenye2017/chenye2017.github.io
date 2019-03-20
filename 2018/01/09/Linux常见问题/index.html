@@ -89,7 +89,7 @@
 <meta property="og:site_name" content="语法糖的博客">
 <meta property="og:description" content="因为linux平时用的不是很频繁，所以经常会遇见一些问题，然后很容易忘记，然后还经常遇到，所以记录下来。 目录：  yum源替换 修改密码 locate 查找文件 添加环境变量 ~ 普通用户和root用户">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-04-17T07:46:05.617Z">
+<meta property="og:updated_time" content="2019-03-15T09:10:59.952Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linux常见问题">
 <meta name="twitter:description" content="因为linux平时用的不是很频繁，所以经常会遇见一些问题，然后很容易忘记，然后还经常遇到，所以记录下来。 目录：  yum源替换 修改密码 locate 查找文件 添加环境变量 ~ 普通用户和root用户">
@@ -416,6 +416,8 @@
 </li>
 </ol>
 <p>5.普通用户的 ~代表家目录，比如/home/vagrant,但是root用户的这个~代表根目录 /home</p>
+<p>6.别名 alias 这个还是挺重要的，编辑环境变量可以帮助我们添加一些可以直接执行的命令（类似封装了 /opt/php/bin/php -&gt; php），别名其实和这个作用类似，但是如果我们安装了两个版本的php, 都添加到环境变量里面，容易分不清楚，我们可以取别名，比如 （alias php7.1=’/opt/php7.1/bin/php’ ）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">// 实际例子</span><br><span class="line">alias composer7=&apos;php7.2 /usr/bin/composer&apos;</span><br><span class="line">// 我们在使用php 进行composer 安装的时候提示php 版本过低</span><br><span class="line">composer install 其实是  php composer.phar install</span><br><span class="line">所以我就想到了</span><br><span class="line">alias composer7=&apos;/opt/php7.2/bin/php /usr/local/composer.phar&apos;</span><br></pre></td></tr></table></figure>
 <p>​     </p>
 
       
@@ -599,7 +601,7 @@ var jiathis_config={
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">67</span>
+                  <span class="site-state-item-count">68</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -610,7 +612,7 @@ var jiathis_config={
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-count">15</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -740,7 +742,7 @@ var jiathis_config={
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count"> | 博客全站共87.0k字</span>
+  <span class="post-count"> | 博客全站共87.8k字</span>
 </div>
 
 
