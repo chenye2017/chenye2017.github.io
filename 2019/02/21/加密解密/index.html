@@ -92,7 +92,7 @@
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5525740-b0ca983394ce8b5a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5525740-f9d3aff215a407a8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5525740-83bd4bcca97d0aa0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2019-02-25T09:29:46.636Z">
+<meta property="og:updated_time" content="2019-07-01T08:05:15.148Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="加密解密">
 <meta name="twitter:description" content="作为一个底层码农，其实加密解密平时是用不到的，毕竟平时写的就是cms 的curd, 但随着API的流行以及老大对代码质量的重视，还有和别的部门的交互，于是需要加解密啦。原文">
@@ -421,6 +421,19 @@
 <p><img src="https://upload-images.jianshu.io/upload_images/5525740-83bd4bcca97d0aa0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
 <p>ecb太不靠谱了，竟然能修改，出现了cbc 模式</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">$ava_methods = openssl_get_cipher_methods();</span><br><span class="line">$my_method   = &apos;aes-128-cbc&apos;;</span><br><span class="line">if ( !in_array( $my_method, $ava_methods ) ) &#123;</span><br><span class="line">  exit( &apos;错误的加密方法&apos;.PHP_EOL );</span><br><span class="line">&#125;</span><br><span class="line">// 密钥 和 明文</span><br><span class="line">$key  = &quot;1234567812345678&quot;;</span><br><span class="line">$data = &quot;12345678abcdxxooxxooabcd12345678i&quot;;</span><br><span class="line">// 每种方法都有自己需要的iv向量的长度</span><br><span class="line">$iv_length = openssl_cipher_iv_length( $my_method );</span><br><span class="line">// 根据长度生成相应iv</span><br><span class="line">$iv        = openssl_random_pseudo_bytes( $iv_length, $cstrong ); // 我就是一直把这玩意当成一个随机的字符串看待的</span><br><span class="line">echo &quot;明文：&quot;.$data.PHP_EOL;</span><br><span class="line">$enc_data = openssl_encrypt( $data, $my_method, $key, OPENSSL_RAW_DATA, $iv );</span><br><span class="line">$dec_data = openssl_decrypt( $enc_data, $my_method, $key, OPENSSL_RAW_DATA, $iv );</span><br><span class="line">echo &quot;解密：&quot;.$dec_data.PHP_EOL;</span><br><span class="line"></span><br><span class="line">// 神器的代码</span><br><span class="line">test2(1,$c); // 这样竟让不会报错</span><br><span class="line">function test2 ($a, &amp;$b) &#123;</span><br><span class="line">        var_dump($a+$b, $b);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">exit;</span><br></pre></td></tr></table></figure>
+<p>今天和我司员工对接cbc模式，~~不出意外，这条产品线的小伙伴也是在网上copy网上代码，结果直接没有给我iv向量，没有iv向量怎么可以解密呢，哈哈哈，其实之前我也不知道解密需要iv，我以为这个iv是包自带的，不需要我们管，但是当我在网上的在线平台使用的时候，发现cbc必须填写iv向量，最少还是16个字节，也就是16个英文字符（吐槽一下php自身生成的那个应该是二进制，需要转换一下，否则根本复制不下来，复制下来也不是16个字符长度），怎么办呢，这时候我逐渐意识到是不是加解密还需要iv,老李代码中反正有，</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$enc_data = openssl_encrypt( $data, $my_method, $key, OPENSSL_RAW_DATA, $iv ); // 加密</span><br><span class="line">$dec_data = openssl_decrypt( $enc_data, $my_method, $key, OPENSSL_RAW_DATA, $iv ); // 解密</span><br></pre></td></tr></table></figure>
+<p>其实老李上面那段代码也写了注释，把iv当做一个随机的字符串，看来真的可能需要iv,这时候就开始翻他的go代码，但是他的go代码中没有传递iv变量这个值呀，看到了下面</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">blockMode := cipher.NewCBCEncrypter(block, key[:blockSize])</span><br></pre></td></tr></table></figure>
+<p>~~对了，就是这个 这个key[:blocksS]，这个就是iv,怪不得他不用传递，原来是约定的,</p>
+<blockquote>
+<h2 id="初始化向量-IV"><a href="#初始化向量-IV" class="headerlink" title="初始化向量(IV)"></a><a href="http://blog.csdn.net/xiaohu50/article/details/51682849" target="_blank" rel="noopener">初始化向量(IV)</a></h2><p><a href="http://blog.csdn.net/xiaohu50/article/details/51682849" target="_blank" rel="noopener">http://blog.csdn.net/xiaohu50/article/details/51682849</a></p>
+<p>初始化向量（IV，Initialization Vector）是许多工作模式中用于随机化加密的一块数据，因此可以由相同的明文，相同的密钥产生不同的密文，而无需重新产生密钥，避免了通常相当复杂的这一过程。</p>
+<p>初始化向量与密钥相比有不同的安全性需求，因此IV通常无须保密，然而在大多数情况中，不应当在使用同一密钥的情况下两次使用同一个IV。对于CBC和CFB，重用IV会导致泄露明文首个块的某些信息，亦包括两个不同消息中相同的前缀。对于OFB和CTR而言，重用IV会导致完全失去安全性。另外，在CBC模式中，IV在加密时必须是无法预测的；特别的，在许多实现中使用的产生IV的方法，例如SSL2.0使用的，即采用上一个消息的最后一块密文作为下一个消息的IV，是不安全的。</p>
+<p>因为刚做了一个接口的用户信息加解密，加密至URL，然后那边后台解析，一开始IV不一致老是有一个参数解析不了，后来问同事是IV的问题，所以在这边做个记录，对这个还不是很了解。。。</p>
+<p>如果加解密的IV不一致的话会导致数据不一致，所以解密失败，IV如果不变的话会导致不安全</p>
+</blockquote>
+<p>上面是我在百度go cbc 加解密的时候看到的， 起初还以为go的cbc加密iv有什么特殊化，看来是我多虑了，就像很多时候aes加密本身不需要base64，但很多时候网上代码都加上了，因为默认约定这样好看点，或者字符长度确定了便于存储</p>
 <blockquote>
 <p>这个传说中的iv向量终于他妈出现了！相对于ECB模式，CBC在加密之前多了一个XOR异或运算的环节，但是第一个明文分组和谁做异或呢？所以这个iv向量就是初始化后给第一个明文分组做XOR异或运算用的，第二个明文分组就与第一个密文分组做XOR异或运算，然后再加密得到第二个密文分组…依次重复下去。</p>
 <p>xor 就是异或，相同的取0，不同的取1</p>
@@ -605,8 +618,17 @@ var jiathis_config={
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -625,7 +647,7 @@ var jiathis_config={
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">69</span>
+                  <span class="site-state-item-count">70</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -718,6 +740,22 @@ var jiathis_config={
       </section>
 
       
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#初始化向量-IV"><span class="nav-number">1.</span> <span class="nav-text">初始化向量(IV)</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
 
       
 
@@ -766,7 +804,7 @@ var jiathis_config={
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count"> | 博客全站共92.6k字</span>
+  <span class="post-count"> | 博客全站共94.3k字</span>
 </div>
 
 
