@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="PHP,API," />
+  <meta name="keywords" content="PHP,API,JWT," />
 
 
 
@@ -82,21 +82,25 @@
 
 
 <meta name="description" content="作为一个底层码农，其实加密解密平时是用不到的，毕竟平时写的就是cms 的curd, 但随着API的流行以及老大对代码质量的重视，还有和别的部门的交互，于是需要加解密啦。原文">
-<meta name="keywords" content="PHP,API">
+<meta name="keywords" content="PHP,API,JWT">
 <meta property="og:type" content="article">
 <meta property="og:title" content="加密解密">
 <meta property="og:url" content="http://yoursite.com/2019/02/21/加密解密/index.html">
 <meta property="og:site_name" content="语法糖的博客">
 <meta property="og:description" content="作为一个底层码农，其实加密解密平时是用不到的，毕竟平时写的就是cms 的curd, 但随着API的流行以及老大对代码质量的重视，还有和别的部门的交互，于是需要加解密啦。原文">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5525740-b0ca983394ce8b5a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5525740-f9d3aff215a407a8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5525740-83bd4bcca97d0aa0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2019-07-01T08:05:15.148Z">
+<meta property="og:image" content="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/20190712143357.png">
+<meta property="og:image" content="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/20190712150709.png">
+<meta property="og:image" content="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/20190712235429.png">
+<meta property="og:image" content="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/20190712235458.png">
+<meta property="og:image" content="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/20190712235511.png">
+<meta property="og:image" content="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/20190712225542.png">
+<meta property="og:image" content="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/20190712234533.png">
+<meta property="og:updated_time" content="2019-07-12T15:56:43.106Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="加密解密">
 <meta name="twitter:description" content="作为一个底层码农，其实加密解密平时是用不到的，毕竟平时写的就是cms 的curd, 但随着API的流行以及老大对代码质量的重视，还有和别的部门的交互，于是需要加解密啦。原文">
-<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/5525740-b0ca983394ce8b5a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta name="twitter:image" content="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/20190712143357.png">
 
 
 
@@ -388,10 +392,45 @@
       
         <p>作为一个底层码农，其实加密解密平时是用不到的，毕竟平时写的就是cms 的curd, 但随着API的流行以及老大对代码质量的重视，还有和别的部门的交互，于是需要加解密啦。<a href="https://t.ti-node.com/thread/6497068236977209344" target="_blank" rel="noopener">原文</a></p>
 <a id="more"></a>
+<p>hash 和 加解密 </p>
+<p>hash :  md5, sha1, hamc</p>
+<p>加解密：base64, aes</p>
+<p>用途：</p>
+<p>hash ： 因为不能解密，所以一般用在签名过程中，怎么验证是否数据被用户修改了呢，用相同的密钥对于传递过来的数据重新加密一遍，和sign 比对，如果相等，那就没有人修改签名(注意这个密钥一定不能被知道，因为一旦被知道，劫持者可以根据密钥帮修改后的数据生成对应sign, 起不到保护的作用)</p>
+<p><a href="https://blog.csdn.net/dengjiexian123/article/details/53313913" target="_blank" rel="noopener">这篇文章是关于上面3种hash的解释</a></p>
+<p>md5: 经常用到，有时候我们需要固定长度的字符串，就可以用md5加密一下,md5 可以生成32位或者64位，依据不同的算法，js 好像经常出64位的，和php对接的时候要注意一下</p>
+<p>sha1: 感觉和上面的md5类似（感觉就是两种不同的加密算法）</p>
+<blockquote>
+<p>其实跟前面的MD5同期的还有一个SHA1加密方式的，不过也是算法比较简单，所以这里就一笔带过吧。而这里即将要说到的<code>SHA256</code> 和 <code>SHA512</code>都是来自于SHA2家族的加密函数，看名字可能你就猜的出来了。</p>
+</blockquote>
+<p>hmac: hmac 其实就是用上面两种算法（hmac-sha256, hmac-md5），再加上一个密钥进行加密（这个密钥感觉又类似salt 的存在）</p>
+<p>bcrypt : <a href="https://www.jianshu.com/p/2b131bfc2f10" target="_blank" rel="noopener">关于bcrypt 这里有个解释很清楚</a>， 感觉上其实就是另一种算法的hash</p>
+<p><img src="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/20190712143357.png" alt=""></p>
+<p>我之前很好奇这种hash, 怎么验证，也不能解密呀，当看到上面这张图片的时候，完全明白了，他的salt 存在了他加密后的字符串中，有了salt 就和以前的md5加解密一样了(注意上面各个字段的意思，10代表hash 10次)，php现在经常用的一种加密密码的方式也很好用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">md5(‘123456’) e10adc3949ba59abbe56e057f20f883e </span><br><span class="line">md5(‘123456’ . ($salt = ‘salt’)) 207acd61a3c1bd506d7e9a4535359f8a </span><br><span class="line">sha1(‘123456’) 40位密文 </span><br><span class="line">hash(‘sha256’, ‘123456’) 64位密文  // sha2</span><br><span class="line">hash(‘sha512’, ‘123456’) 128位密文 // sha2</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$str = password_hash(123, PASSWORD_DEFAULT);  //默认 bcrypt， PASSWORD_DEFAULT 也代表了 PASSWORD_BCRYPT.二者都是1</span><br><span class="line">password_verify(123, $str); // 验证</span><br><span class="line"></span><br><span class="line">password_hash() – 对密码加密.</span><br><span class="line">password_verify() – 验证已经加密的密码，检验其hash字串是否一致. </span><br><span class="line">password_needs_rehash() – 给密码重新加密. // 其实感觉没啥必要，主要是因为感觉algo或者cost hash次数改变就会改变</span><br><span class="line">password_get_info() – 返回加密算法的名称和一些相关信息.</span><br></pre></td></tr></table></figure>
+<p><a href="https://www.codecasts.com/blog/post/php-password-hash-in-the-right-way" target="_blank" rel="noopener">这篇文章php的password api说的挺好的</a></p>
+<blockquote>
+<h2 id="散列消息身份验证码-Hashed-Message-Authentication-Code-。它不是散列函数，而是采用了将MD5或SHA1散列函数与共享机密秘钥（与公钥-秘钥对不同）一起使用的消息身份验证机制。消息与秘钥组合并运行散列函数（md5或sha1），然后运行结果与秘钥组合并再次运行散列函数。"><a href="#散列消息身份验证码-Hashed-Message-Authentication-Code-。它不是散列函数，而是采用了将MD5或SHA1散列函数与共享机密秘钥（与公钥-秘钥对不同）一起使用的消息身份验证机制。消息与秘钥组合并运行散列函数（md5或sha1），然后运行结果与秘钥组合并再次运行散列函数。" class="headerlink" title="散列消息身份验证码 Hashed Message Authentication Code 。它不是散列函数，而是采用了将MD5或SHA1散列函数与共享机密秘钥（与公钥/秘钥对不同）一起使用的消息身份验证机制。消息与秘钥组合并运行散列函数（md5或sha1），然后运行结果与秘钥组合并再次运行散列函数。"></a>散列消息身份验证码 Hashed Message Authentication Code 。它不是散列函数，而是采用了将MD5或SHA1散列函数与共享机密秘钥（与公钥/秘钥对不同）一起使用的消息身份验证机制。消息与秘钥组合并运行散列函数（md5或sha1），然后运行结果与秘钥组合并再次运行散列函数。</h2><p>HMAC-SHA1简要来说，就是采用sha1算法，与HMAC机制相结合，制造出更加难以破解的加密串。</p>
+<p>hash_hmac</p>
+<p>在php中hash_hmac函数就能将HMAC和一部分哈希加密算法相结合起来实现HMAC-SHA1  HMAC-SHA256 HMAC-MD5等等算法。函数介绍如下：</p>
+<p>string hash_hmac(string $algo, string $data, string $key, bool $raw_output = false)</p>
+<p>algo：要使用的哈希算法名称，可以是上述提到的md5,sha1等</p>
+<p>data：要进行哈希运算的消息，也就是需要加密的明文。</p>
+<p>key：使用HMAC生成信息摘要是所使用的密钥。</p>
+<p>raw_output：该参数为可选参数，默认为false，如果设为true，则返回原始二进制数据表示的信息摘要，否则返回16进制小写字符串格式表示的信息摘要（注意是16进制数，而非简单的字母加数字）。</p>
+</blockquote>
+<p>加解密：数据</p>
+<p>base64:</p>
+<p>base64_encode</p>
+<p>base64_decode</p>
+<p>(感觉url_encode 也不能算是加密，只能算是字符转换，因为那个转换之后得到的内容基本都能分辨出来)</p>
+<p>这种最原始的方式，因为不需要密钥，感觉不能算上加解密，确实在各个网站上也是这么感觉的</p>
+<p><img src="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/20190712150709.png" alt=""></p>
 <p>首先的区分下加解密和hash 的不同，对于md5() 这样加密之后理论上就不能解密的方式，我们一般称之为hash,在我们以往的网站编程中，对于用户的密码保存一般都是通过hash这种方式，通过把用户的密码拼接一个字符串，然后md5下生成的值保存到数据库中，下次用户登陆的时候，再次把用户输入的密码做上次同样的操作，对比和数据库中值是否一致，如果一致说明密码正确，否则密码错误。</p>
 <p>加密我们平时生活中遇到最多的应该就是https 解析过程，因为非对称加密太消耗性能，所以我们传输过程需要对称加密（对称加密就是加密密钥和解密密钥一致，非对称反之），而对于密钥的传输我们用的是非对称（非对称因为密钥的不同又有公钥和私钥之分：公钥加密，私钥解密，数据不会被获取；私钥加密，公钥解密，数据不会被篡改）。</p>
-<p>对称加密算法一般有AES(itbasic 请求datrix 那边用的就是这种),DES,3DES，非对称有RSA</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/5525740-b0ca983394ce8b5a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="加解密的原理图"></p>
+<p>对称加密算法一般有AES(itbasic 请求datrix 那边用的就是这种，ecb 没有$iv 偏移量，cbc 有偏移量 ),DES,3DES，非对称有RSA</p>
+<p><img src="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/20190712235429.png" alt=""></p>
 <p>上图中，123456 就是对称加密过程中的密钥</p>
 <blockquote>
 <p>最一开始的时候，我朝人民一般都是倾向于使用“天王盖地虎”，“宝塔镇河妖”这种加解密技术；然而，美帝用了一种叫做DES的技术进行对称加解密，这玩意一度成为业界通用的对称加解密技术，银行、五角大楼都爱用这玩意，可惜好景不长、世风日下、世态炎凉，这玩意的破解成本越来越低越来越低～～ 于是，为了续命，就又有一些白胡子老头给DES打补丁，缝缝补补搞出来一个玩意叫做3DES，继续用，又不是不能用…这个顾名思义就行了，别打我，真的：3DES就是用DES处理（注意是处理，我没说是加密）了三次的意思。就目前看来，3DES实际上用的可能也并不是十分广泛了，所以如果大家在选择对称加解密技术的时候，尽量避开DES和3DES就可以了。</p>
@@ -415,12 +454,12 @@
 </blockquote>
 <p>上面这段话一定要注意理解，反正我第一次没有理解，导致第一次加密数据失败，网上的很多aes-128-ecb 这种加密代码的封装中都携带着自己的逻辑，所以会误导视野。上述opensssl_encrypt(),如果没有用最后一个参数，直接返回的结果是加密结果base64 的结果，如果有了，返回的是一段奇怪的二进制数据数据，这里我们可以理解成原始数据（加密数据最原始的样子），我们可以通过base64或者 bin2hex 转换城对应的base64格式或者16进制格式</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">明文：</span><br><span class="line">12345678abcdxxoo12345678abcdxxoo</span><br><span class="line">密文：c1391e34caf38f8c2a477cbda3772533c1391e34caf38f8c2a477cbda3772533d96aa42b59151a9e9b5925fc9d95adaf</span><br><span class="line">// 上面密文切分的结果</span><br><span class="line">c1391e34caf38f8c2a477cbda3772533 | c1391e34caf38f8c2a477cbda3772533 | d96aa42b59151a9e9b5925fc9d95adaf</span><br><span class="line"></span><br><span class="line">难道说明文“12345678abcdxxoo”被密钥“1234567812345678”加密后后的密文就是“c1391e34caf38f8c2a477cbda3772533”？</span><br><span class="line"></span><br><span class="line">DES和3DES会将明文以64bit（8字节）作为一个单元进行分组；</span><br><span class="line">AES则会将明文以128bit（16字节）作为一个单元进行分组；</span><br><span class="line">无论是AES还是DES，当最后一个分组的数据长度不满足分组标准长度的时候，会用某种填充方式进行填充；</span><br><span class="line">AES对一个16字节分组加密完毕后，分组大小依然为16字节；DES也一样</span><br></pre></td></tr></table></figure>
-<p><img src="https://upload-images.jianshu.io/upload_images/5525740-f9d3aff215a407a8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p><img src="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/20190712235458.png" alt=""></p>
 <p>上面就是aes ecb 的处理过程</p>
 <p>如果我们把加密的内容分组之后稍微修改下分组顺序再解密，可以得到原文分组顺序的不同</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/5525740-83bd4bcca97d0aa0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p><img src="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/20190712235511.png" alt=""></p>
 <p>ecb太不靠谱了，竟然能修改，出现了cbc 模式</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">$ava_methods = openssl_get_cipher_methods();</span><br><span class="line">$my_method   = &apos;aes-128-cbc&apos;;</span><br><span class="line">if ( !in_array( $my_method, $ava_methods ) ) &#123;</span><br><span class="line">  exit( &apos;错误的加密方法&apos;.PHP_EOL );</span><br><span class="line">&#125;</span><br><span class="line">// 密钥 和 明文</span><br><span class="line">$key  = &quot;1234567812345678&quot;;</span><br><span class="line">$data = &quot;12345678abcdxxooxxooabcd12345678i&quot;;</span><br><span class="line">// 每种方法都有自己需要的iv向量的长度</span><br><span class="line">$iv_length = openssl_cipher_iv_length( $my_method );</span><br><span class="line">// 根据长度生成相应iv</span><br><span class="line">$iv        = openssl_random_pseudo_bytes( $iv_length, $cstrong ); // 我就是一直把这玩意当成一个随机的字符串看待的</span><br><span class="line">echo &quot;明文：&quot;.$data.PHP_EOL;</span><br><span class="line">$enc_data = openssl_encrypt( $data, $my_method, $key, OPENSSL_RAW_DATA, $iv );</span><br><span class="line">$dec_data = openssl_decrypt( $enc_data, $my_method, $key, OPENSSL_RAW_DATA, $iv );</span><br><span class="line">echo &quot;解密：&quot;.$dec_data.PHP_EOL;</span><br><span class="line"></span><br><span class="line">// 神器的代码</span><br><span class="line">test2(1,$c); // 这样竟让不会报错</span><br><span class="line">function test2 ($a, &amp;$b) &#123;</span><br><span class="line">        var_dump($a+$b, $b);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">exit;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">$ava_methods = openssl_get_cipher_methods();</span><br><span class="line">$my_method   = &apos;aes-128-cbc&apos;;</span><br><span class="line">if ( !in_array( $my_method, $ava_methods ) ) &#123;</span><br><span class="line">  exit( &apos;错误的加密方法&apos;.PHP_EOL );</span><br><span class="line">&#125;</span><br><span class="line">// 密钥 和 明文</span><br><span class="line">$key  = &quot;1234567812345678&quot;;</span><br><span class="line">$data = &quot;12345678abcdxxooxxooabcd12345678i&quot;;</span><br><span class="line">// 每种方法都有自己需要的iv向量的长度</span><br><span class="line">$iv_length = openssl_cipher_iv_length( $my_method );</span><br><span class="line">// 根据长度生成相应iv</span><br><span class="line">$iv        = openssl_random_pseudo_bytes( $iv_length, $cstrong ); // 我就是一直把这玩意当成一个随机的字符串看待的，他真的就是一个随机字符串</span><br><span class="line">echo &quot;明文：&quot;.$data.PHP_EOL;</span><br><span class="line">$enc_data = openssl_encrypt( $data, $my_method, $key, OPENSSL_RAW_DATA, $iv );</span><br><span class="line">$dec_data = openssl_decrypt( $enc_data, $my_method, $key, OPENSSL_RAW_DATA, $iv );</span><br><span class="line">echo &quot;解密：&quot;.$dec_data.PHP_EOL;</span><br><span class="line"></span><br><span class="line">// 神器的代码</span><br><span class="line">test2(1,$c); // 这样竟让不会报错</span><br><span class="line">function test2 ($a, &amp;$b) &#123;</span><br><span class="line">        var_dump($a+$b, $b);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">exit;</span><br></pre></td></tr></table></figure>
 <p>今天和我司员工对接cbc模式，~~不出意外，这条产品线的小伙伴也是在网上copy网上代码，结果直接没有给我iv向量，没有iv向量怎么可以解密呢，哈哈哈，其实之前我也不知道解密需要iv，我以为这个iv是包自带的，不需要我们管，但是当我在网上的在线平台使用的时候，发现cbc必须填写iv向量，最少还是16个字节，也就是16个英文字符（吐槽一下php自身生成的那个应该是二进制，需要转换一下，否则根本复制不下来，复制下来也不是16个字符长度），怎么办呢，这时候我逐渐意识到是不是加解密还需要iv,老李代码中反正有，</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$enc_data = openssl_encrypt( $data, $my_method, $key, OPENSSL_RAW_DATA, $iv ); // 加密</span><br><span class="line">$dec_data = openssl_decrypt( $enc_data, $my_method, $key, OPENSSL_RAW_DATA, $iv ); // 解密</span><br></pre></td></tr></table></figure>
 <p>其实老李上面那段代码也写了注释，把iv当做一个随机的字符串，看来真的可能需要iv,这时候就开始翻他的go代码，但是他的go代码中没有传递iv变量这个值呀，看到了下面</p>
@@ -456,6 +495,26 @@
 <p>字符集（utf8）</p>
 <p><a href="http://tool.chacuo.net/cryptaes" target="_blank" rel="noopener">http://tool.chacuo.net/cryptaes</a></p>
 <p>上面这个网站才是真正意义上详细的加密，参数可以选择</p>
+<p>今天着重研究了下pkcs5padding 和 pkcs7padding , 网上说的 5p 是7 p的子集， 7p的填充 1 到255 字节都可以， 5p的填充只能 1 到 8字节 ，可是我发现aes 是16字节分组的（不管是 128 还是 256 算法，都是16字节分组），按理说5p只能填充 1到8 那如果只有1个字符的话，怎么填充呢，是填充7个字节还是15字节呢，反正，当我填充15的时候php的openssl nopading  出来的数据和 openssl  raw data 出来的数据是一样的，那么应该就是填充15了</p>
+<p>网上看到7p和5p的区别大致上都是：5p是7p子集，5p只支持到8的block，7p可以支持到255，所以</p>
+<p><a href="https://github.com/keel/aes-cross/blob/master/info-cn/README.md" target="_blank" rel="noopener">这篇文章上说的aes 5p和7p是一样的</a>， 感觉是错的，就是aes没有5p的padding</p>
+<p>关于nopadding， 字面意思上就是不填充，对于aes，不填充的话，必须保证是16字节整数倍，否则会加密失败</p>
+<p>关于zeropadding, php的 openssl 虽然有这个参数，但是要是不满16字节，仍然是会报错，既然这样，zeropadding 感觉和nopadding 就差不多了，实践了一下，果然zero_padding 就是base64了一下no_padding的结果</p>
+<p>关于老版本的加密函数的转换，据说是老版本因为是zero_padding 导致数据出来和新版本不一样，zero_padding ,在末尾填充的是 chr(0), 代表0 这个ascii 对应的 字符，很多网上写的是 \0(很奇怪的是chr(\0)  能得到和 chr(0) 一样的字符，但是这个字符我们键盘是不能表示出来的，  chr(\1) 和 chr(1) 却不一样) ，当我们拼凑到16字节之后，再解密，只需要过滤掉\0这个特殊字符就好了</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">// 这是php 的7padding ,</span><br><span class="line">function pad($data, $blocksize = 16)</span><br><span class="line">&#123;</span><br><span class="line">    $pad = $blocksize - (strlen($data) % $blocksize);</span><br><span class="line">    return $data . str_repeat(chr($pad), $pad);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 因为最后7padding 最后一个字符肯定是填充的自己长度，所以只需要截取未填充的部分就好</span><br><span class="line"> function unpad($text)</span><br><span class="line">&#123;</span><br><span class="line">    $pad = ord($text[strlen($text) - 1]); // 填充的字符</span><br><span class="line">  // var_dump($pad);</span><br><span class="line">                        </span><br><span class="line">    if ($pad &gt; strlen($text))</span><br><span class="line">    &#123;</span><br><span class="line">        </span><br><span class="line">        return false;</span><br><span class="line">    &#125;</span><br><span class="line">                            </span><br><span class="line">    if (strspn($text, chr($pad), strlen($text) - $pad) != $pad)</span><br><span class="line">    &#123;</span><br><span class="line">        return false;</span><br><span class="line">    &#125;</span><br><span class="line">                        </span><br><span class="line">    return substr($text, 0, -1 * $pad);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注意一下填充时候的length, 我们计算的时候都是用的strlen, 并不是 中文字符的len</p>
+<p>注意一下，我们没填充之前，已经是一个完整的string, 我们每次填充的内容，都是我们肉眼可以识别的字符，或者说是我们可以处理的字符，所以我们可以裁剪substr， 或者trim过滤掉我们添加的字符</p>
+<p>总结：hash 和 加解密大致就是上面那些东西了，后面jwt 这些认证方式，其实就是 hash 和 加解密的实际运用，本质上并不是一个新的东西</p>
+<p>现在重看， <a href="http://www.ruanyifeng.com/blog/2018/07/json_web_token-tutorial.html" target="_blank" rel="noopener">阮一峰</a> 老师的这篇jwt，讲解的真的好，jwt首先就可以看做一个token,自带token 相比较传统的cookie session,更便于扩展，由客户端自己维持登陆态。缺点token 签发了没法主动让他失效，除非到达失效时间，或者像我们一样添加额外逻辑，token 必须在redis中有对应内容，才能生效。</p>
+<p>jwt token ,是由三个字符串base64加密而成,  因为base64解密不需要密钥，所以我们很容易根据base64解密出来</p>
+<p>第一段是 alg + type. 算法 + 类型（JWT）</p>
+<p>第二段是我们自定义的一个数组，当然可能有些属性是必须的，比如签发时间和过期时间</p>
+<p>第三段是sign，为了防止第二段被别人修改，利用的加密算法是前面的alg (可能更确切的说是hash)</p>
+<p><img src="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/20190712225542.png" alt=""></p>
+<p>综上：所以事先起来感觉很简单，前面两段都是base64, 就是最后一个用hash，之后再base64, 有个问题就是这块的base64不是普通的base64, base64之后再替换三个字符，我的感觉是怕用户把这个字段连接在url后面当做get请求发送，base64中的参数影响到这个url的正确性</p>
+<p>当我们明白过程之后，我们就很容易自己实现一个jwt，就不需要用网上的加密包了，我们可以看看php的 firebase/php-jwt 包，蛮简单的，默认hsh256, php 的hash_hmac 很容易实现。</p>
+<p>到此为止 ，我们就剩rs256 公钥和私钥没有去研究，以后遇到了再去研究这个firebase的包（从下面也可以看出，hash_hmac 用来hash的函数，openssl 一般是用来加密的函数）</p>
+<p><img src="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/20190712234533.png" alt=""></p>
 
       
     </div>
@@ -516,6 +575,8 @@
             <a href="/tags/PHP/" rel="tag"><i class="fa fa-tag"></i> PHP</a>
           
             <a href="/tags/API/" rel="tag"><i class="fa fa-tag"></i> API</a>
+          
+            <a href="/tags/JWT/" rel="tag"><i class="fa fa-tag"></i> JWT</a>
           
         </div>
       
@@ -669,7 +730,7 @@ var jiathis_config={
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">66</span>
+                  <span class="site-state-item-count">68</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -749,7 +810,7 @@ var jiathis_config={
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#初始化向量-IV"><span class="nav-number">1.</span> <span class="nav-text">初始化向量(IV)</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#散列消息身份验证码-Hashed-Message-Authentication-Code-。它不是散列函数，而是采用了将MD5或SHA1散列函数与共享机密秘钥（与公钥-秘钥对不同）一起使用的消息身份验证机制。消息与秘钥组合并运行散列函数（md5或sha1），然后运行结果与秘钥组合并再次运行散列函数。"><span class="nav-number">1.</span> <span class="nav-text">散列消息身份验证码 Hashed Message Authentication Code 。它不是散列函数，而是采用了将MD5或SHA1散列函数与共享机密秘钥（与公钥/秘钥对不同）一起使用的消息身份验证机制。消息与秘钥组合并运行散列函数（md5或sha1），然后运行结果与秘钥组合并再次运行散列函数。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#初始化向量-IV"><span class="nav-number">2.</span> <span class="nav-text">初始化向量(IV)</span></a></li></ol></div>
             
 
           </div>
@@ -804,7 +865,7 @@ var jiathis_config={
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count"> | 博客全站共94.3k字</span>
+  <span class="post-count"> | 博客全站共99.3k字</span>
 </div>
 
 

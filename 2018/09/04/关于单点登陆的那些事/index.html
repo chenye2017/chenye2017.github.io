@@ -89,7 +89,7 @@
 <meta property="og:description" content="最近老大希望把项目中的用户登陆模块独立出来，起初是公司的各个部门都有一些自己的小项目，但因为是公司内部的项目，所以肯定就不能走一半网站的那种注册流程，一般情况下需要个审批人，注册的时候只有公司内部员工可以通过。可能通过接口ip的限制，比如智能内网访问注册接口可以起到同样的作用，但他们一致决定后这个东西还是独立出来，然后老大就交给了我，于是乎开始了解了下单点登录.">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5525740-5f9c1b27e370fabf.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2018-09-04T03:38:30.788Z">
+<meta property="og:updated_time" content="2019-07-09T10:53:35.267Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="关于单点登陆的那些事">
 <meta name="twitter:description" content="最近老大希望把项目中的用户登陆模块独立出来，起初是公司的各个部门都有一些自己的小项目，但因为是公司内部的项目，所以肯定就不能走一半网站的那种注册流程，一般情况下需要个审批人，注册的时候只有公司内部员工可以通过。可能通过接口ip的限制，比如智能内网访问注册接口可以起到同样的作用，但他们一致决定后这个东西还是独立出来，然后老大就交给了我，于是乎开始了解了下单点登录.">
@@ -365,6 +365,11 @@
 <p>2.单点退出<br>一处退出，处处退出。<br>我是这样做的，当登陆成功后，会在数据库中写入，这个用户的登出地址，当我们登出的时候，查询数据库，所有用户的登出地址，循环调用，需要注意的是我们传给用户的是只能是user_id之类的公有信息，各个子网站接收到之后，需要拿这个信息获取用户的登陆凭证，然后让其失效。我是这样做的：redis中存储着phpsessid（我们用的传统的cookie session）,然后curl 模拟请求的时候cookie带上这个，··然后就实现啦</p>
 <p>思考：如果我们模拟请求的时候带上完全一样的头信息，是不是就能达到和浏览器一样的效果了，··有些能，比如上面的登出，但是设置cookie不可以，明明就是header加上点信息嘛，为什么不可以呢，因为cookie只能在浏览器上使用？<br>还有很多优化的空间，比如回调多个登出接口，用的消息队列，如果一个出错，是记日志吗，还是什么zzz<br>每个网站需要自己的登陆界面嘛，这样每次未登录定位到登陆界面之后就只有个登陆按钮，点击之后才能进入sso输入用户名和密码，相比较之前略麻烦，但是如果sso登陆之后，我们点击就能直接跳转到我们的网站，感觉这样更符合单点登录。<br>而且住校之后我们可以定位到普通网站的登陆界面，而且点击因为可以加回调地址，我觉得还是不能省略的。<br>代码就不放了，放些接口的函数吧<br>sso :<br>login :检测是直接跳转到登陆页面还是检测cookie是否有效，有效回调web1站点地址，无效跳转到登陆界面（看了下仿佛ajax中header location 就是有点问题）<br>logout</p>
 <p>web1:<br>login: 判断是去sso还是直接登陆<br>logout:退出，需要回调 sso 的logout, 注销sso还有各个子网站<br>ssologin:回调登陆地址<br>ssologout：回调登出地址</p>
+<p>关于上面跳转的问题：</p>
+<p>今天看到群里面说的header 跳转不了疑问，其实我之前也遇到过，当时说是ajax 里面不给跳转，验证一下：</p>
+<p>首先我们在一个接口中调用header跳转成功，说明接口没问题，ajax中调用，跳转不了。console.log 中报错</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Response to preflight request doesn&apos;t pass access control check: Redirect is not allowed for a preflight request</span><br><span class="line"></span><br><span class="line">对预检请求的响应未通过访问控制检查：预检请求不允许重定向</span><br></pre></td></tr></table></figure>
+<p>也就是options 请求没有带回我们想要的内容，其实这个options请求是对于我们header的那个url 的返回，和我们ajax的url 返回没啥关系，所以我把那个header 那个url 链接从原来的baidu改成我可以控制返回内容的请求，这下果然访问成功了，可是出现了新的问题页面没有改变，打开network ，发现有请求新的url,开始考虑原因: 我们在地址栏输入的api 接口可以看做是全局的，整个页面显示的是他的返回，ajax是局部的请求，他只能得到一个值，页面并不能跟随他的返回而改变，毕竟ajax是啥时候返回我们并不知道，我们平时看见的局部改变是我们根据ajax的返回主动修改页面内容的。</p>
 
       
     </div>
@@ -561,7 +566,7 @@ var jiathis_config={
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">66</span>
+                  <span class="site-state-item-count">68</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -680,7 +685,7 @@ var jiathis_config={
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count"> | 博客全站共94.3k字</span>
+  <span class="post-count"> | 博客全站共99.3k字</span>
 </div>
 
 

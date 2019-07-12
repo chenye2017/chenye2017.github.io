@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="PHP,无限递归," />
 
 
 
@@ -82,13 +82,14 @@
 
 
 <meta name="description" content="无线递归用到的地方还是蛮多的，如果是我们itbasic上的话，那就是部门之间的关系，支撑体系下面有战略中心，战略中心下面有数据部，如果设计数据表维持这之间的关系，还有bbs，如何维护评论之间的关系（其实像laravel的论坛，他的评论关系都是从上往下一条线的，只是在评论的开头有@人的标志，我们的论坛是分为1级评论和多级，除了1级之外的评论都是在1级评论的后面按照1条线排列，没有显示主从关系），当我">
+<meta name="keywords" content="PHP,无限递归">
 <meta property="og:type" content="article">
 <meta property="og:title" content="无限递归">
 <meta property="og:url" content="http://yoursite.com/2018/06/13/无限递归/index.html">
 <meta property="og:site_name" content="语法糖的博客">
 <meta property="og:description" content="无线递归用到的地方还是蛮多的，如果是我们itbasic上的话，那就是部门之间的关系，支撑体系下面有战略中心，战略中心下面有数据部，如果设计数据表维持这之间的关系，还有bbs，如何维护评论之间的关系（其实像laravel的论坛，他的评论关系都是从上往下一条线的，只是在评论的开头有@人的标志，我们的论坛是分为1级评论和多级，除了1级之外的评论都是在1级评论的后面按照1条线排列，没有显示主从关系），当我">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-11-15T07:21:59.684Z">
+<meta property="og:updated_time" content="2019-07-12T15:57:24.890Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="无限递归">
 <meta name="twitter:description" content="无线递归用到的地方还是蛮多的，如果是我们itbasic上的话，那就是部门之间的关系，支撑体系下面有战略中心，战略中心下面有数据部，如果设计数据表维持这之间的关系，还有bbs，如何维护评论之间的关系（其实像laravel的论坛，他的评论关系都是从上往下一条线的，只是在评论的开头有@人的标志，我们的论坛是分为1级评论和多级，除了1级之外的评论都是在1级评论的后面按照1条线排列，没有显示主从关系），当我">
@@ -332,6 +333,28 @@
           </span>
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/PHP/" itemprop="url" rel="index">
+                    <span itemprop="name">PHP</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -365,9 +388,9 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line"></span><br><span class="line">$address = array(</span><br><span class="line">    array(&apos;id&apos;=&gt;1  , &apos;address&apos;=&gt;&apos;安徽&apos; , &apos;parent_id&apos; =&gt; 0),</span><br><span class="line">    array(&apos;id&apos;=&gt;2  , &apos;address&apos;=&gt;&apos;江苏&apos; , &apos;parent_id&apos; =&gt; 0),</span><br><span class="line">    array(&apos;id&apos;=&gt;3  , &apos;address&apos;=&gt;&apos;合肥&apos; , &apos;parent_id&apos; =&gt; 1),</span><br><span class="line">    array(&apos;id&apos;=&gt;4  , &apos;address&apos;=&gt;&apos;庐阳区&apos; , &apos;parent_id&apos; =&gt; 3),</span><br><span class="line">    array(&apos;id&apos;=&gt;5  , &apos;address&apos;=&gt;&apos;大杨镇&apos; , &apos;parent_id&apos; =&gt; 4),</span><br><span class="line">    array(&apos;id&apos;=&gt;6  , &apos;address&apos;=&gt;&apos;南京&apos; , &apos;parent_id&apos; =&gt; 2),</span><br><span class="line">    array(&apos;id&apos;=&gt;7  , &apos;address&apos;=&gt;&apos;玄武区&apos; , &apos;parent_id&apos; =&gt; 6),</span><br><span class="line">    array(&apos;id&apos;=&gt;8  , &apos;address&apos;=&gt;&apos;梅园新村街道&apos;, &apos;parent_id&apos; =&gt; 7),</span><br><span class="line">    array(&apos;id&apos;=&gt;9  , &apos;address&apos;=&gt;&apos;上海&apos; , &apos;parent_id&apos; =&gt; 0),</span><br><span class="line">    array(&apos;id&apos;=&gt;10 , &apos;address&apos;=&gt;&apos;黄浦区&apos; , &apos;parent_id&apos; =&gt; 9),</span><br><span class="line">    array(&apos;id&apos;=&gt;11 , &apos;address&apos;=&gt;&apos;外滩&apos; , &apos;parent_id&apos; =&gt; 10),</span><br><span class="line">    array(&apos;id&apos;=&gt;12 , &apos;address&apos;=&gt;&apos;安庆&apos; , &apos;parent_id&apos; =&gt; 1)</span><br><span class="line">    );</span><br><span class="line"></span><br><span class="line">function test($data, $pid)</span><br><span class="line">&#123;</span><br><span class="line">    static $arr = [];</span><br><span class="line">    foreach ($data as $key=&gt;$value) &#123;</span><br><span class="line">        if ($value[&apos;id&apos;] == $pid) &#123;</span><br><span class="line">            $arr[] = $value;</span><br><span class="line">            test($data, $value[&apos;parent_id&apos;]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return $arr;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">var_dump(test($address, 4));</span><br><span class="line"></span><br><span class="line">// 上面方法在多次循环获取的时候因为static变量的原因会出现一直叠加的错误</span><br><span class="line">// 下面是改进的方法</span><br><span class="line"></span><br><span class="line">function test1($data, $pid, &amp;$arr)</span><br><span class="line">&#123;</span><br><span class="line">    </span><br><span class="line">    foreach ($data as $key=&gt;$value) &#123;</span><br><span class="line">        if ($value[&apos;id&apos;] == $pid) &#123;</span><br><span class="line">            $arr[] = $value;</span><br><span class="line">            test($data, $value[&apos;parent_id&apos;]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return $arr;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">var_dump(test($address, 4, []));</span><br></pre></td></tr></table></figure>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">庐阳区，合肥，安徽</span><br></pre></td></tr></table></figure>
 <p>子孙树的实现</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">function test1($data, $id, $level = 1， &amp;$arr)</span><br><span class="line">&#123;</span><br><span class="line">    </span><br><span class="line">    foreach ($data as $key=&gt;$value) &#123;</span><br><span class="line">        if ($value[&apos;parent_id&apos;] == $id) &#123;</span><br><span class="line">            $value[&apos;level&apos;] = $level;</span><br><span class="line">            $arr[] = $value;</span><br><span class="line">            test1($data, $value[&apos;id&apos;], $level + 1);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line">//level主要用来显示是几级的儿子</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">function test1($data, $id, $level = 1， &amp;$arr)</span><br><span class="line">&#123;</span><br><span class="line">    </span><br><span class="line">    foreach ($data as $key=&gt;$value) &#123;</span><br><span class="line">        if ($value[&apos;parent_id&apos;] == $id) &#123;</span><br><span class="line">            $value[&apos;level&apos;] = $level;</span><br><span class="line">            $arr[] = $value;</span><br><span class="line">            test1($data, $value[&apos;id&apos;], $level + 1);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line">//level主要用来显示是几级的儿子</span><br><span class="line">// 上面这种方式其实不能实现层级结构，只能用level来表示，因为从开始往下面读的话，开始的数据先计算出来，是不能改变的，所以为了实现层级结构只能从后往前读</span><br><span class="line">// 不借助 &amp;$arr来实现</span><br><span class="line">function children($id) &#123;</span><br><span class="line">  $self = self($id);</span><br><span class="line">  $children = getChildrenByPid($self[&apos;id&apos;]);</span><br><span class="line">  if ($children) &#123;</span><br><span class="line">  foreach($children as $value) &#123;</span><br><span class="line">  	$slef[&apos;children&apos;][] = children($value[&apos;id&apos;]); // 这个地方很重要，如果想不出来的话，可当做是最后一层  a-&gt;a1,a2-&gt;a3, 我们怎么返回a这个node节点的结构</span><br><span class="line">&#125;</span><br><span class="line">  </span><br><span class="line">&#125; else &#123;</span><br><span class="line"> $self[&apos;children&apos;] = [];</span><br><span class="line">&#125;</span><br><span class="line">return $self;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>还记得我们在大学学习数据结构的时候，因为递归对于效率有影响，所以经常需要把递归改成迭代，上述家谱树容易修改，子孙树需要用到栈，自己不是很理解</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">// 家谱树递归的修改成普通方式</span><br><span class="line">function test2($data, $pid， &amp;$arr)</span><br><span class="line">&#123;</span><br><span class="line">    while ($pid != 0) &#123;</span><br><span class="line">        foreach($data as $key=&gt;$value) &#123;</span><br><span class="line">            if ($value[&apos;id&apos;] == $pid) &#123;</span><br><span class="line">                $arr[] = $value;</span><br><span class="line">                $pid = $value[&apos;parent_id&apos;];</span><br><span class="line">                break;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return $arr;</span><br><span class="line">&#125;</span><br><span class="line">var_dump(test2($address, 4));</span><br><span class="line">//迭代和递归的转换主要就是靠迭代找到那个停止往上找的条件</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">// 家谱树递归的修改成普通方式</span><br><span class="line">function test2($data, $pid， &amp;$arr)</span><br><span class="line">&#123;</span><br><span class="line">    while ($pid != 0) &#123;</span><br><span class="line">        foreach($data as $key=&gt;$value) &#123;</span><br><span class="line">            if ($value[&apos;id&apos;] == $pid) &#123;</span><br><span class="line">                $arr[] = $value;</span><br><span class="line">                $pid = $value[&apos;parent_id&apos;];</span><br><span class="line">                break;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return $arr;</span><br><span class="line">&#125;</span><br><span class="line">var_dump(test2($address, 4));</span><br><span class="line">//迭代和递归的转换主要就是靠迭代找到那个停止往上找的条件</span><br><span class="line">// 今天看了别人的代码 https://github.com/chenye2017/china-divisions</span><br><span class="line">// 更加理解递归，我们只需要保存当前的状态并返回，可以不借助 &amp;地址 符</span><br><span class="line">function ancestors($id)</span><br><span class="line">&#123;</span><br><span class="line">  $slef = self($id);  //获取自己信息</span><br><span class="line">  if ($info) &#123;</span><br><span class="line">   $parent = ancesotrs($id);</span><br><span class="line">   $parent[] = $self; // 保存当时环境(只需要考虑当前环境就好，不用考虑递归)，并传递给上一个调用者，用来叠加</span><br><span class="line">   return $parent;</span><br><span class="line">&#125; else &#123;</span><br><span class="line">  return []; // 相当于</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>大致就是上面这些，像面包屑导航，不要看着从左到右，其实他也是一棵家谱树，因为他从始至终就只有一棵树。</p>
 <p>还有就是移动各个部门位置问题：</p>
 <p>想象一下，一棵树，我把某个分支截取下来放到另一个分支上是很正常的事情，但问题是有时候，我会出现把父亲节点的父亲设置成自己的子节点，这样树枝就断了，这样是不可取的，除此之外，任意移动都是可以的。</p>
@@ -425,6 +448,14 @@
     
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/PHP/" rel="tag"><i class="fa fa-tag"></i> PHP</a>
+          
+            <a href="/tags/无限递归/" rel="tag"><i class="fa fa-tag"></i> 无限递归</a>
+          
+        </div>
       
 
       
@@ -567,7 +598,7 @@ var jiathis_config={
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">66</span>
+                  <span class="site-state-item-count">68</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -686,7 +717,7 @@ var jiathis_config={
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count"> | 博客全站共94.3k字</span>
+  <span class="post-count"> | 博客全站共99.3k字</span>
 </div>
 
 

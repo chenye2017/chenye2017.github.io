@@ -84,15 +84,15 @@
 <meta name="description" content="lamp的源码编译安装。！！！注意哦，这里面是lamp，不是lnmp。之前的lamp中，apache和php的交流主要是apache把php作为自身的一个模块，而ngixn是通过cgi，php-fpm进行管理进程（这段话有待考证，因为apache也能使用php-fpm进行管理，并不是php-fpm和apache绑定的。我们那个lamp环境搭建的时候安装好apache,编译php 的时候要指定apx">
 <meta name="keywords" content="Linux,环境,lamp">
 <meta property="og:type" content="article">
-<meta property="og:title" content="lamp 源码编译">
+<meta property="og:title" content="lamp 和 lnmp 源码编译">
 <meta property="og:url" content="http://yoursite.com/2018/01/19/lamp-源码编译/index.html">
 <meta property="og:site_name" content="语法糖的博客">
 <meta property="og:description" content="lamp的源码编译安装。！！！注意哦，这里面是lamp，不是lnmp。之前的lamp中，apache和php的交流主要是apache把php作为自身的一个模块，而ngixn是通过cgi，php-fpm进行管理进程（这段话有待考证，因为apache也能使用php-fpm进行管理，并不是php-fpm和apache绑定的。我们那个lamp环境搭建的时候安装好apache,编译php 的时候要指定apx">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://ozys8fka7.bkt.clouddn.com/mysql-status.jpg">
-<meta property="og:updated_time" content="2018-10-31T14:44:12.111Z">
+<meta property="og:updated_time" content="2019-07-11T13:40:36.591Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="lamp 源码编译">
+<meta name="twitter:title" content="lamp 和 lnmp 源码编译">
 <meta name="twitter:description" content="lamp的源码编译安装。！！！注意哦，这里面是lamp，不是lnmp。之前的lamp中，apache和php的交流主要是apache把php作为自身的一个模块，而ngixn是通过cgi，php-fpm进行管理进程（这段话有待考证，因为apache也能使用php-fpm进行管理，并不是php-fpm和apache绑定的。我们那个lamp环境搭建的时候安装好apache,编译php 的时候要指定apx">
 <meta name="twitter:image" content="http://ozys8fka7.bkt.clouddn.com/mysql-status.jpg">
 
@@ -130,7 +130,7 @@
 
 
 
-  <title>lamp 源码编译 | 语法糖的博客</title>
+  <title>lamp 和 lnmp 源码编译 | 语法糖的博客</title>
   
 
 
@@ -312,7 +312,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">lamp 源码编译</h1>
+          <h1 class="post-title" itemprop="name headline">lamp 和 lnmp 源码编译</h1>
         
 
         <div class="post-meta">
@@ -420,6 +420,9 @@
 <li><p>默认apache 运行用户是daemon,当我们在php 中运行写日志的比如seaslog,默认写入是/var/log,daemon用户没有写入这个文件夹的权限，我们需要修改文件夹权限或者新建新的文件夹或者修改运行用户等</p>
 </li>
 </ul>
+<h3 id="nginx-编译安装"><a href="#nginx-编译安装" class="headerlink" title="nginx 编译安装"></a>nginx 编译安装</h3><p>参考网上</p>
+<p>nginx -s reload  重启</p>
+<p>nginx -t -c conf 检查配置文件的语法，并不会执行</p>
 <h3 id="mysql-编译安装"><a href="#mysql-编译安装" class="headerlink" title="mysql 编译安装"></a>mysql 编译安装</h3><p>失败，用的yum安装（直接下载编译好的二进制码比较好，比如subline下载之后直接就能使用，不用安装，这些java写的东西啊，好用，但是mysql不行，即使是编译过的二进制码，还要执行一些脚本）</p>
 <h3 id="postgresql-的编译安装（网上的教程很详细）"><a href="#postgresql-的编译安装（网上的教程很详细）" class="headerlink" title="postgresql 的编译安装（网上的教程很详细）"></a>postgresql 的编译安装（网上的教程很详细）</h3><p>这个下载速度很快，可以考虑源码安装</p>
 <ol>
@@ -439,12 +442,27 @@
 <p>注意这时候时没有配置文件的，到解压的php文件夹下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost php-7.1.10]#cp php.ini-production /etc/php.ini</span><br></pre></td></tr></table></figure></p>
 <p>notice</p>
 <ol>
-<li>编译php7的时候with-config-file-path 指定了配置文件的位置,这个是很重要的，因为要不然我们没有指定也没有放在默认的php文件存放位置，以后每次运行php 的时候都要指定 配置配置文件的位置很麻烦</li>
-<li>测试phpinfo， 看到了local value 还有另一行没，之前看过好像一个是apache 中指定的位置，但是本地可以通过脚本修改，所以local value 是实际的位置</li>
-<li>讲道理，上面的编译参数运行不了， –with-config-file-scan-dir=/etc/php.d \，感觉是这个参数在作怪，不太明白这个文件夹中装的啥，反正是开启了一些curl 等的扩展，但实际上好像没有开启，所以需要把屏蔽掉（上面的php 编译参数不太好用，像curl 都没有开启，在项目中用会出错）</li>
-<li>php 源码包的作用。像pgsql 这些扩展，源码包中都是有的，如果想开启，不用再网上下载，直接去源码包的ext 下面找就好了，然后phpize ```编译，修改php.ini, php -m 查看是否成功。需要注意的是，一个包编译失败之后，再次编译，最好make clean一下。（pgsql 和 pdo_pgsql 是两个扩展···）</li>
-<li>关于错误信息的输出。php.ini 有不同的两个版本，development, product， 虽然我没有研究过他们的不同，但目前发现最基本的就是，开发版本会把错误信息输出在页面上，但是生产版本不会，是php.ini 中一个选项的原因，生产版本可以把错误信息输出到日志中保存，好像nginx fpm 那种比较复杂，lamp这种直接在apache 的错误日志中就可以找到。（多熟悉lnmp,最好完全切过来，熟悉swoole）</li>
+<li><p>编译php7的时候with-config-file-path 指定了配置文件的位置,这个是很重要的，因为要不然我们没有指定也没有放在默认的php文件存放位置，以后每次运行php 的时候都要指定 配置配置文件的位置很麻烦</p>
+</li>
+<li><p>测试phpinfo， 看到了local value 还有另一行没，之前看过好像一个是apache 中指定的位置，但是本地可以通过脚本修改，所以local value 是实际的位置</p>
+</li>
+<li><p>讲道理，上面的编译参数运行不了， –with-config-file-scan-dir=/etc/php.d \，感觉是这个参数在作怪，不太明白这个文件夹中装的啥，反正是开启了一些curl 等的扩展，但实际上好像没有开启，所以需要把屏蔽掉（上面的php 编译参数不太好用，像curl 都没有开启，在项目中用会出错）</p>
+</li>
+<li><p>php 源码包的作用。像pgsql 这些扩展，源码包中都是有的，如果想开启，不用再网上下载，直接去源码包的ext 下面找就好了，然后phpize <figure class="highlight plain"><figcaption><span>php -m 查看是否成功。需要注意的是，一个包编译失败之后，再次编译，最好make clean一下。（pgsql 和 pdo_pgsql 是两个扩展···）(知道pgsql 和 pdo_pgsql 的关系嘛， pgsql 只是一个pgsql 的驱动，pdo_pgsql 只有在他之上，才能和php 进行交互，同理联想mysql, php的mysql引擎是 mysqlnd, pdo_mysql 是在这个引擎之上让php和mysql 进行交互的，感觉我要是用了mysqli扩展是不是不用安装mysqlnd扩展了)</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">   ![](https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/20190711170145.png)</span><br><span class="line"></span><br><span class="line">5. 关于错误信息的输出。php.ini 有不同的两个版本，development, product， 虽然我没有研究过他们的不同，但目前发现最基本的就是，开发版本会把错误信息输出在页面上，但是生产版本不会，是php.ini 中一个选项的原因，生产版本可以把错误信息输出到日志中保存，好像nginx fpm 那种比较复杂，lamp这种直接在apache 的错误日志中就可以找到。（多熟悉lnmp,最好完全切过来，熟悉swoole）</span><br><span class="line"></span><br><span class="line">6. 关于php-fpm的配置。这里拿lnmp 来举例，nginx 接受外来请求，转发到php-fpm (php进程管理器，默认监听端口9000) master 进程长，master 进程分别把请求转发给work进程，woker 进程实现了fast-cgi协议 (默认启动几个woker进程，接受请求，请求接受完不断开链接，接着等待，但是可以设置最大请求数量，当达到最大请求数量的时候进程会重启，防止内存泄漏，感觉类似swoole 的进程模型，只是这里面每次还是会重新加载php脚本，所以每次我们修改代码不需要重启)，内嵌php解释器，需要注意的点就是在上面架构中nginx 只是起到转发的作用，我们需要把一些必要的参数携带上转发给我们的php-fpm，这样我们的php才能正常接收到外来请求（php-fpm和 nginx 通信可以通过sock ，常见 tcp 127.0.0.1:9000, 或者unix socket文件，但是unix文件不能让部署在另一台机器上的php-fpm和这台机器上的nginx通信）</span><br></pre></td></tr></table></figure></p>
+<pre><code>location ~ \.php {
+</code></pre><p> 36            root  /home/itbasic/new_datatalk/api/;<br> 37            fastcgi_pass   127.0.0.1:9000; // tcp连接<br> 38            fastcgi_index  index.php;<br> 39            access_log logs/access_datatalk_api.log  test;<br> 40            error_log logs/error_datatalk_api.log  error;<br> 41            fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name; </p>
+<h1 id="这个script-filename-将会被传递给php-fpm-php-fpm-也会传递给php"><a href="#这个script-filename-将会被传递给php-fpm-php-fpm-也会传递给php" class="headerlink" title="这个script_filename 将会被传递给php-fpm,php-fpm 也会传递给php"></a>这个script_filename 将会被传递给php-fpm,php-fpm 也会传递给php</h1><h1 id="index-php-api-leave-count-php-能识别这样的连接，并且识别index-php-是脚本-api-leave-count-是uri"><a href="#index-php-api-leave-count-php-能识别这样的连接，并且识别index-php-是脚本-api-leave-count-是uri" class="headerlink" title="/index.php/api/leave/count, php 能识别这样的连接，并且识别index.php 是脚本,/api/leave/count 是uri"></a>/index.php/api/leave/count, php 能识别这样的连接，并且识别index.php 是脚本,/api/leave/count 是uri</h1><p> 42            include        fastcgi_params;<br> 43<br> 44         }<br> 45<br> 46         # 因为前后端分离，后端是在/api下面</p>
+<pre><code># 调试nginx 的几个方法，return &apos;200 ok&apos;; 注意末尾都要有分号，但是这个return 好像只能返回状态码，只能用在nginx 的正则中进行测试，看是否走到这个 location 中，如果想查看nginx 中变量的值的话，可以通过log_fmat  test &quot;$request_filename&quot;  access_log log/access.log test ,这样记录到日志中，在日志中查看
+# 对于虚拟站点的请求最好都写上access_Log 和 error_log ,监控请求是否按照我们的想法走
+</code></pre><p> 47         location /api/ {</p>
+<pre><code>root /home/itbasic/new_datatalk/api/;  # 每个匹配都要加上root, 因为各个匹配是平级的关系，后面判断request_filename 的时候是会拼接上这个root的
+</code></pre><p> 48            access_log logs/access_datatalk_api.log main;<br> 48            access_log logs/access_datatalk_api.log main;<br> 49            root /home/itbasic/new_datatalk/api/;<br> 50            if (!-e $request_filename) {<br> 51               rewrite ^(.*)$ /index.php$1 last; # 代表在请求前面加上/index.php,last在location 里面代表直接跳出这个location，重走所有的location<br> 52               break;  # 感觉可有可无，这个地方是直接终止生命<br> 53            }<br> 54<br> 55<br> 56         }</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line">上面我们配置了nginx 的accesslog 和 errorlog,接下来我们需要配置php-fpm 的access_log  error log 和 slow_log</span><br><span class="line"></span><br><span class="line">access_log slow_log 在 php-fpm.d 下面的default  配置文件中，对于slow_log ,我们还要设置多长时间才记录，如果是0的话代表不开启</span><br><span class="line"></span><br><span class="line">error_log 在 php-fpm.conf 中，我是这么理解的，上面两个代表了某个站点的，所以需要单独配置，这个php-fpm 代表整个php-fpm 软件的，所以需要统一配置，他记录的是php-fpm这个软件的错误</span><br><span class="line"></span><br><span class="line">另外因为默认php-fpm 关闭了work进程的错误输出，我们是获取不到php的错误内容的，我们需要开启catch_work_error 这个配置，然后修改php.ini ,error_log 位置，error_reporting 级别，这样php的错误日志就能在 php.ini 中配置的地址出记录（！！注意不是php-fpm 的error日志），如果没有写权限，默认会输出到nginx 的错误日志上（注意我们的日志文件一定要有w权限，之前一直用的755 没有w权限）</span><br><span class="line"></span><br><span class="line">如果能写上，那就不会输出到nginx 的错误日志上</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">我们修改了php的配置文件一定要重启php-fpm(nginx 没必要重启)</span><br><span class="line"></span><br><span class="line">kill -USR2 pid (swoole 的重启USR1 ,并且不会修改pid, 当我们修改一些swoole的配置文件或者php自身的时候，一定要kill -9 再启动，否则上面的重启没有用)</span><br><span class="line"></span><br><span class="line">![](https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/20190711174208.png)</span><br><span class="line"></span><br><span class="line">上面是慢查询日志，主要看那个sleep ，剩下的函数都是因为那个sleep导致的</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">php 错误级别</span><br></pre></td></tr></table></figure>
+</li>
 </ol>
+<p>error_reporting=E_ALL &amp;  ~E_NOTICE  // ~代表出资之外，不包含的意思<br>```</p>
+<p>今天在使用composer安装文件的时候提示php版本太低，其实composer 本质上可以打开看一下是一个php的脚本，类似shell脚本，在脚本开始的地方定义了解释器，所以我们直接 composer 就能运行这个脚本，类似我们平时运行 shell 脚本一样，但是那个解释器是在我们没有指定解释器的情况下默认执行的，当我们制定了解释器，那个默认解释器就不起作用了，所以这时候我们只需要 php7.1 composer install xxx 就好了，但是如果composer不兼容以前的话，我们还是得下载最新的composer喽</p>
+<p>composer install xxx , 这个install 和 xxx 都会作为参数传进去，通过 $argv可以获取到</p>
 <h3 id="redis-的安装"><a href="#redis-的安装" class="headerlink" title="redis 的安装"></a>redis 的安装</h3><p>需要注意的就是 redis 启动服务要手动指定配置文件，</p>
 <ol>
 <li>遇到的问题就是估计之前别人在路径中加入过redis-server 这个命令，导致我用 redis-server /opt/redis/conf/redis.conf 不匹配，出错，</li>
@@ -530,8 +548,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/01/19/lnmp-yum安装/" rel="next" title="lnmp yum安装">
-                <i class="fa fa-chevron-left"></i> lnmp yum安装
+              <a href="/2018/01/19/lnmp-yum安装/" rel="next" title="lnmp 环境搭建">
+                <i class="fa fa-chevron-left"></i> lnmp 环境搭建
               </a>
             
           </div>
@@ -671,7 +689,7 @@ var jiathis_config={
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">66</span>
+                  <span class="site-state-item-count">68</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -751,7 +769,7 @@ var jiathis_config={
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#apahce-的编译安装"><span class="nav-number">1.</span> <span class="nav-text">apahce 的编译安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mysql-编译安装"><span class="nav-number">2.</span> <span class="nav-text">mysql 编译安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#postgresql-的编译安装（网上的教程很详细）"><span class="nav-number">3.</span> <span class="nav-text">postgresql 的编译安装（网上的教程很详细）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#php编译安装"><span class="nav-number">4.</span> <span class="nav-text">php编译安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#redis-的安装"><span class="nav-number">5.</span> <span class="nav-text">redis 的安装</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#apahce-的编译安装"><span class="nav-number">1.</span> <span class="nav-text">apahce 的编译安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#nginx-编译安装"><span class="nav-number">2.</span> <span class="nav-text">nginx 编译安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mysql-编译安装"><span class="nav-number">3.</span> <span class="nav-text">mysql 编译安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#postgresql-的编译安装（网上的教程很详细）"><span class="nav-number">4.</span> <span class="nav-text">postgresql 的编译安装（网上的教程很详细）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#php编译安装"><span class="nav-number">5.</span> <span class="nav-text">php编译安装</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#这个script-filename-将会被传递给php-fpm-php-fpm-也会传递给php"><span class="nav-number"></span> <span class="nav-text">这个script_filename 将会被传递给php-fpm,php-fpm 也会传递给php</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#index-php-api-leave-count-php-能识别这样的连接，并且识别index-php-是脚本-api-leave-count-是uri"><span class="nav-number"></span> <span class="nav-text">/index.php/api/leave/count, php 能识别这样的连接，并且识别index.php 是脚本,/api/leave/count 是uri</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#redis-的安装"><span class="nav-number">1.</span> <span class="nav-text">redis 的安装</span></a></li></ol></div>
             
 
           </div>
@@ -806,7 +824,7 @@ var jiathis_config={
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count"> | 博客全站共94.3k字</span>
+  <span class="post-count"> | 博客全站共99.3k字</span>
 </div>
 
 
