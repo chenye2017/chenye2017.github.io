@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2019-07-06T08:47:43.586Z</updated>
+  <updated>2019-07-20T09:17:01.840Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,58 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>同步 异步 阻塞 非阻塞</title>
+    <link href="http://yoursite.com/2019/07/20/%E5%90%8C%E6%AD%A5-%E5%BC%82%E6%AD%A5-%E9%98%BB%E5%A1%9E-%E9%9D%9E%E9%98%BB%E5%A1%9E/"/>
+    <id>http://yoursite.com/2019/07/20/同步-异步-阻塞-非阻塞/</id>
+    <published>2019-07-20T07:54:07.000Z</published>
+    <updated>2019-07-20T09:17:01.840Z</updated>
+    
+    <content type="html"><![CDATA[<p>灵感来源别人利用多进程写了个python 的下载器，于是想自己用php试一下</p><a id="more"></a><p>先说下多进程和单进程</p><p>lnmp请求过程</p><p>http请求到达nginx，nginx 转发给php-fpm(一个php进程管理器，~so，这个地方就是多进程啦)，每个进程中实现了fast-cgi 协议(请求完毕，并不重启进程，而是等待下一个请求的到来，除非到达该线程接受http请求最大数量，会自动重启，目的是为了防止一些代码不好，导致内存泄漏)，每个进程中其实就是 php index.php（请求处理完逐个往回返回）, 所以我们可以把lnmp 模型理解成多进程模型，同一时刻并发的数量就是php-fpm配置的进程数量，但为什么别人说php是单进程呢，因为我们平时在开发的过程中，所有的代码都是跑在一个请求中，也就是一个进程中，所以我们可以说php就是单进程的，但php真的只是单进程的吗，不是，php有个扩展叫pcntl ，这个扩展不建议在php-fpm模式下使用，但是在php-cli 下可以正常使用，也就是说我们不建议在php-fpm的工作进程中再fork新的子进程（同理swoole 中也不建议在worker进程中new process 新的进程），既然在工作进程中不涉及fork 子进程，而php也很少操作线程，那么php就和异步搭不上边了。</p><p>同步，异步区别：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">所谓同步，就是在发出一个功能调用时，在没有得到结果之前，该调用就不返回。也就是必须一件一件事做,等前一件做完了才能做下一件事。</span><br><span class="line">  异步的概念和同步相对。当一个异步过程调用发出后，调用者不能立刻得到结果。实际处理这个调用的部件在完成后，通过状态、通知和回调来通知调用者。</span><br></pre></td></tr></table></figure><p>最常见的异步莫过于前端的ajax，</p><p>ajax 允许浏览器在发出请求的时候浏览器（一个进程）还可以去做别的事情，而不用干等着（同步就不行了，同步阻塞显然不行，同步非阻塞呢？同步虽然进程还可以去做别的事情，但是进程但过一会还得再来询问一下，请求是否完成，所以哪怕是同步非阻塞，代码流程执行到这会，始终会停住，不会继续向下走，这和异步代码能继续往下跑是不一样的，所以同步更符合我们的日常习惯。</p><p>比如异步编程，我们不知道ajax执行的函数啥时候回给我们返回内容，所以我们无法用  $a = ajax(xxx), 去获取ajax 执行的内容，大部分情况下用的是回调函数，然而为什么php中也有回调函数呢，php中的回调更类似于js中的匿名函数，他只是代码同步执行到用户定义的函数中，调用了之前定义的一个匿名函数，和js的回调存在本质上的区别。js中的回调，更类似swoole的回调，发现了嘛，都是通过事件的触发机制（但是这个应该和事件io不一样，之前看的阻塞io 非阻塞io 事件io 信号io都属于同步，只有异步io属于异步方式）</p><p>所以我们平时在看php的代码中就不要考虑异步方式了，基本没有，因为都是同步的，又因为阻塞和非阻塞都会有返回值，所以我们平时的那些函数基本都有返回值，但是有些回调形式的函数返回值有没有用，那就另说，看定义这个函数的人怎么想了。（其实看同步和异步看函数的return 也能看出来，如果return外面能接收到，那就是同步,比如php-fpm,包了那么多header头信息，还是return就能返回，你看swoole中的return ，在事件回调中，他是通过 $response 返回给别的进程的，所以属于异步）。</p><p>为什么说swoole 的task任务是异步任务，因为我们在worker进程中调用task添加异步任务的时候，当异步任务执行完的时候，我们能在之前的worker进程 中收到task返回的消息（onFinishi事件中）。</p><p>swoole进程模型</p><p>master 整除ractor 线程和manager 进程，</p><p>manager 进程 生出 worker进程（异步非阻塞）和特殊worker进程（task进程，同步阻塞），负责进程重启和 回收</p><p>ractor 线程检查连接，还有可写的socket 发送给worker进程处理</p><p>swoole4之前请求过程</p><p>单个请求被单个worker处理，处理完再处理下一个</p><p>swoole4 之后</p><p>woker可以同时接受多个，遇到io，协程切换，处理下一个请求，当上一个请求io完毕，再切回来（感觉通过fd -&gt; 运行环境），继续往下执行（注意就是这儿，虽然说协程本质上还是异步，但是他的运行方式类似同步，更好理解）</p><p>相较于异步的不容易理解，比如回调地狱，swoole 希望我们仍旧用同步的方式编写代码，但是对于一些io操作同步返回太慢了，所以就出现了异步io，redis, mysql，没有用过~~，swoole4中为了把这个异步摒弃，又引入了上述的协程，协程是比进程线程粒度更小的资源管理。</p><p>关于阻塞和非阻塞：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"> 阻塞调用是指调用结果返回之前，当前线程会被挂起（线程进入非可执行状态，在这个状态下，cpu不会给线程分配时间片，即线程暂停运行）。函数只有在得到结果之后才会返回。</span><br><span class="line">有人也许会把阻塞调用和同步调用等同起来，实际上他是不同的。对于同步调用来说，很多时候当前线程还是激活的，只是从逻辑上当前函数没有返回而已。 例如，我们在socket中调用recv函数，如果缓冲区中没有数据，这个函数就会一直等待，直到有数据才返回。而此时，当前线程还会继续处理各种各样的消息。</span><br><span class="line">非阻塞和阻塞的概念相对应，指在不能立刻得到结果之前，该函数不会阻塞当前线程，而会立刻返回。</span><br></pre></td></tr></table></figure><p>php中虽然sleep， file_get_contents 中有同步阻塞io，但是string， arr这些函数还是同步非阻塞函数</p><p>当我们在项目在swoole的http server中，没有用上面的同步阻塞io的时候，我们整个项目代码就是异步的，但凡用了，那我们的项目代码就是同步的，所以这个同步和异步由两部分决定，一个是swoole server， 一个是我们的项目代码。</p><p>swoole 本质上是为了对标php-fpm,和php本身没有什么关系，他对项目的性能提升类似php7对项目代码的提升，我们不用修改源代码，就能提升并发量，只是php7是对php中函数的改造，而swoole 是对php-fpm的改造或者说php的运行环境的改造，他吧php-fpm 的功能也纳入到我们项目代码中。</p><p>所以总结一下：</p><p>php多进程 ： 针对php-fpm， 或者php-cli 模式下的php进程而言</p><p>php单进程：针对php-fpm模式下php进程而言</p><p>同步: 针多 php-fpm 而言</p><p>异步：针对 swoole 封装的一些io操作而言，比如redis ,mysql ，还有http tcp server，</p><p>还有之前的多进程下载的实现，遍历url，每个url都放到task中执行，完美多进程，easy(不要想着在worker 在生成新的process 哦， 官网上说很占资源)</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;灵感来源别人利用多进程写了个python 的下载器，于是想自己用php试一下&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="PHP" scheme="http://yoursite.com/categories/PHP/"/>
+    
+    
+      <category term="PHP" scheme="http://yoursite.com/tags/PHP/"/>
+    
+      <category term="socket" scheme="http://yoursite.com/tags/socket/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>PHP string</title>
+    <link href="http://yoursite.com/2019/07/13/PHP-string/"/>
+    <id>http://yoursite.com/2019/07/13/PHP-string/</id>
+    <published>2019-07-12T16:07:33.000Z</published>
+    <updated>2019-07-12T16:07:33.664Z</updated>
+    
+    <summary type="html">
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>PHP array</title>
+    <link href="http://yoursite.com/2019/07/13/PHP-array/"/>
+    <id>http://yoursite.com/2019/07/13/PHP-array/</id>
+    <published>2019-07-12T16:07:25.000Z</published>
+    <updated>2019-07-12T16:07:25.616Z</updated>
+    
+    <summary type="html">
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>docker</title>
@@ -197,13 +249,13 @@
     <link href="http://yoursite.com/2019/02/21/PHP%E9%9D%A2%E8%AF%95%E9%A2%98/"/>
     <id>http://yoursite.com/2019/02/21/PHP面试题/</id>
     <published>2019-02-21T02:50:35.000Z</published>
-    <updated>2019-02-21T02:51:48.293Z</updated>
+    <updated>2019-07-18T12:05:26.483Z</updated>
     
-    <content type="html"><![CDATA[<p>收集一些有意义常用的面试题</p><a id="more"></a>]]></content>
+    <content type="html"><![CDATA[<p>收集一些总是考的面试题</p><a id="more"></a><h1 id="PHP"><a href="#PHP" class="headerlink" title="PHP"></a>PHP</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$z = 0.58;</span><br><span class="line">var_dump(intval($z * 100));</span><br></pre></td></tr></table></figure><p>答案是 57，所有语言对于小数的存取都是不精确的， 0.58其实是0.57999999，而且intval() 总是从遇到第一个不是数字开始截取，导致了0.57，比较通用的方法是转成别用intval, 或者用数学函数，bcmath扩展计算</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cookie 和 session 的 区别</span><br><span class="line">cookie 更像一个钥匙，因为没有加密，所以客户端可以查看和随意更改cookie的数据，cookie 对应的 session 才是服务端真正存储的序列化数据，</span><br><span class="line">php 中 cookie 默认名称是 phpsessid , 通过这个值，服务端php能识别客户端对应的用户</span><br></pre></td></tr></table></figure><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">判断一个日期是否合法</span><br><span class="line">// 思路</span><br><span class="line">把一个日期转用strtotime 转换成时间戳再通过 date(), 转换成标准时间，和原先的日期比对是否相同，相同就合法，不同不合法</span><br><span class="line">// 注意：错误的时间date 也能转换，只是可能转换成1970 这样的时间</span><br><span class="line">// 字符串的比对比较耗时</span><br></pre></td></tr></table></figure><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">单引号，双引号区别</span><br><span class="line">单引号解析变量</span><br><span class="line">双引号不解析变量</span><br></pre></td></tr></table></figure><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">平时开发用的设计模式</span><br><span class="line"></span><br><span class="line">单例</span><br><span class="line">工厂</span><br><span class="line">注册树</span><br><span class="line">门面</span><br><span class="line">装饰模式（laravel 的路由，核心 array_reduce）</span><br></pre></td></tr></table></figure><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">trait Singleton &#123;&#125;</span><br><span class="line">多继承的实现</span><br><span class="line"></span><br><span class="line">class Db</span><br><span class="line">&#123;</span><br><span class="line">  use Singleton;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">抽象类只能继承， extend ，接口可以实现多个，比如我想我这个类拥有foreach, 之类的功能， implement</span><br><span class="line"></span><br><span class="line">abstract 抽象类</span><br><span class="line">抽象类不能实例化</span><br><span class="line">抽象类中方法可以有方法体，没有方法体的只能定义abstract</span><br><span class="line"></span><br><span class="line">abstract 介于 class 和 interface 之间</span><br><span class="line"></span><br><span class="line">interface 接口</span><br><span class="line">interface 中不能用变量,但是可以有常量</span><br><span class="line">interface 中方法的访问权限只能是public, 不能是protected或者prviate</span><br></pre></td></tr></table></figure><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line">static ,延迟静态绑定，</span><br><span class="line">self, parent 调用方法的时候都是以当前类为标准，</span><br><span class="line">static 根据实际调用对象，每当到了static 的 时候调用的上一个确定了调用类的对象</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class A &#123;</span><br><span class="line"></span><br><span class="line">    public static function who()</span><br><span class="line">    &#123;</span><br><span class="line">        echo __CLASS__;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public static function test()</span><br><span class="line">    &#123;</span><br><span class="line">        static::who();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class B extends A&#123;</span><br><span class="line">    protected static function who()</span><br><span class="line">    &#123;</span><br><span class="line">        echo __CLASS__;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">B::test(); // 调用不了， 在 a 中调用b的protected</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class A &#123;</span><br><span class="line">    public static function foo()</span><br><span class="line">    &#123;</span><br><span class="line">        static::who();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public static function who()</span><br><span class="line">    &#123;</span><br><span class="line">        echo __CLASS__;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class B extends A &#123;</span><br><span class="line">    public static function test()</span><br><span class="line">    &#123;</span><br><span class="line">        A::foo();</span><br><span class="line">        parent::foo();</span><br><span class="line">        self::foo();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public static function who()</span><br><span class="line">    &#123;</span><br><span class="line">        echo __CLASS__;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class C extends B &#123;</span><br><span class="line">    public static function who() &#123;</span><br><span class="line">        echo __CLASS__;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">C::test();</span><br><span class="line"></span><br><span class="line">A C C</span><br></pre></td></tr></table></figure><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">防止sql 注入</span><br><span class="line">sql 注入本质上就是害怕用户拼接sql, 在sql后面携带着用户传入的内容</span><br><span class="line"></span><br><span class="line">select name from user limit 10 offset . $offset;</span><br><span class="line"></span><br><span class="line">$offset = &apos; 0; select * from user&apos;;</span><br><span class="line"></span><br><span class="line">上述代码在pgsql 扩展中可以直接执行， 索然mysqli 中执行不了，</span><br><span class="line"></span><br><span class="line">handle:</span><br><span class="line">最好的方法就是利用预处理语句（那种 绑定??， 不能单纯的理解成嵌套变量进去，如果真的那样那还是防止不了sql注入）</span><br><span class="line"></span><br><span class="line">参数类型限定</span><br><span class="line">我们平时可以通过 转义 str_replace 之类的，但感觉这样很容易误伤，所以干脆还是用pdo的预处理语句吧</span><br></pre></td></tr></table></figure><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">红包，我能想到比较简单的方法</span><br><span class="line">存在一定可能性死循环，就是后面数字的和已经不够一人一个了，已解决，每次计算剩余的最小值至少是每个1分，如果少于，则重新计算</span><br><span class="line">// mt_rand 只能产生随机整数，对于现实生活中的分，可以通过扩大100倍来解决</span><br><span class="line">// mt_getrandmx() 那个例子产生随机浮点数也是同样的道理</span><br><span class="line">// arr 是目前产生的数组</span><br><span class="line">// num 是剩余的值</span><br><span class="line">function productRand($arr, $num, $leave)</span><br><span class="line">&#123;</span><br><span class="line">    $tmp = mt_rand(0, $num);</span><br><span class="line">    $leveTotal = $num - $tmp; // 剩余的钱不能少于每个红包1分钱</span><br><span class="line">    if ($tmp == 0 || $tmp == $num || $leaveTotal &lt; $leave * 1) &#123;</span><br><span class="line">        return productRand($arr, $num);</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        $arr[] = $tmp;</span><br><span class="line">        $num -= $tmp;</span><br><span class="line">        return [$arr, $num];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// $total 代表总数量</span><br><span class="line">// $count 代表红包个数</span><br><span class="line">function hongbao($total, $count)</span><br><span class="line">&#123;</span><br><span class="line">    $num = $num * 100;</span><br><span class="line">    $arr = [];</span><br><span class="line">    $top = $num;</span><br><span class="line">    for ($i = 0; $i &lt; $cishu - 1; $i++) &#123;</span><br><span class="line">    $leave = $count - $i - 1; // 剩余红包个数</span><br><span class="line">        $res = productRand($arr, $top, $leave);</span><br><span class="line">        $arr = $res[0];</span><br><span class="line">        $top = $res[1]; </span><br><span class="line">    &#125;</span><br><span class="line">    $arr[] = $num - array_sum($arr);</span><br><span class="line">    return $arr;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">var_dump(hongbao(11, 4));</span><br><span class="line"></span><br><span class="line">exit;</span><br></pre></td></tr></table></figure><h1 id="MYSQL"><a href="#MYSQL" class="headerlink" title="MYSQL"></a>MYSQL</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mysql 性能优化</span><br><span class="line">1. 建立索引，优化索引</span><br><span class="line">2. 分库分表</span><br></pre></td></tr></table></figure><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql(1) 和 mysql(11)的区别</span><br><span class="line">都是占用 4个字节，1 和 11 代表显示长度，除非添加 zerofill 要不然没区别</span><br></pre></td></tr></table></figure><h1 id="NGINX"><a href="#NGINX" class="headerlink" title="NGINX"></a>NGINX</h1><p><img src="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/20190718195208.png" alt=""></p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">404   最长匹配原则，但是只能匹配到 a</span><br><span class="line">500   ~* 不区分大小写， 权重比 / 高</span><br></pre></td></tr></table></figure>]]></content>
     
     <summary type="html">
     
-      &lt;p&gt;收集一些有意义常用的面试题&lt;/p&gt;
+      &lt;p&gt;收集一些总是考的面试题&lt;/p&gt;
     
     </summary>
     
@@ -412,52 +464,6 @@
     
     
       <category term="git" scheme="http://yoursite.com/tags/git/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>关于单点登陆的那些事</title>
-    <link href="http://yoursite.com/2018/09/04/%E5%85%B3%E4%BA%8E%E5%8D%95%E7%82%B9%E7%99%BB%E9%99%86%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B/"/>
-    <id>http://yoursite.com/2018/09/04/关于单点登陆的那些事/</id>
-    <published>2018-09-04T02:15:49.000Z</published>
-    <updated>2019-07-09T10:53:35.267Z</updated>
-    
-    <content type="html"><![CDATA[<p>最近老大希望把项目中的用户登陆模块独立出来，起初是公司的各个部门都有一些自己的小项目，但因为是公司内部的项目，所以肯定就不能走一半网站的那种注册流程，一般情况下需要个审批人，注册的时候只有公司内部员工可以通过。可能通过接口ip的限制，比如智能内网访问注册接口可以起到同样的作用，但他们一致决定后这个东西还是独立出来，然后老大就交给了我，于是乎开始了解了下单点登录.<br><a id="more"></a><br>单点登录：简单理解成一处登陆，到处登陆，一处登出，各处登出。其实在生活中的应用还是满广泛的。比如你登录淘宝的网站，可能当你跳转到天猫上，也不需要登陆，光从界面上看，也能分辨这是两个网站，这两个网站肯定有各自的登陆机制，其实内部就是用了单点登录的原理，让用户无感知的情况下实现一个账户在各个网站下的登陆登出。<br>后来在写的过程中，发现这个单点登录也有点第三方登陆的意思，这个第三方就是sso登陆中心。<br>很多人广从字面意义上看，可能会觉的单点登录应该是这样：一个用户在这个地方登陆了，比如手机上或者上海登陆了，当在电脑上登陆或者安徽登陆了，之前登陆过的账号会下线，但这并不是单点登录哦，想了下，上述功能实现起来也挺简单，比如我们经常存取 token =》 用户信息这样的登陆凭证，又或者是session_id =&gt; session 信息（用户信息）这样的登陆凭证，不妨我们在用户登陆的时候，再存储一封 用户id =&gt; 用户信息，这样我们可以很方便的统计有哪些在线用户，哪个用户是否在线（前面第一种的话需要遍历所有的session文件取出用户id）。当我们登陆接口产生了一个新的token =》 用户信息的时候，我们检测下这个用户是否在已登录列表，如果有，我们服务端直接让之前的token失效就可以了，就能实现前面账号的下线。<br>回归正题，关于单点登录<br><img src="https://upload-images.jianshu.io/upload_images/5525740-5f9c1b27e370fabf.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="797930-20161203152650974-276822362.png"><br>单点登录的原理大致就是上面了：<br>1.先登录普通web1，web1后台检测是否登陆了，如果登陆过，直接跳转到web1,如果没有登陆，跳转到sso登陆中心。sso中心检测这个用户是否登陆过，如果没有登陆，跳转到sso登陆界面，输入用户名和密码（之前为什么说单点登录很像第三方登陆呢，因为接入单点登录的web1也不知道即使能登陆到他这个平台上的用户的用户名和密码，用户登陆的操作逻辑都是sso 这个第三方维护的，web1只是在登陆sso成功之后维护一个用户和web1的登陆态，比如web1派发给用户一把钥匙，以后拿着这把钥匙就代表你是web用户了），用户成功登陆sso这个中央站点后（用户和sso之间的登陆成功搭建成，之前我是通过jwt的方式维护用户和sso之间的，jwt相比较传统的cookie和session就是通过签名的方式能防止用户篡改已登录人的信息），sso会回调web1站点上提前设置好的接口（这个我当时是在跳转到登陆中心的时候附带在url后面参数，其实这个可以提前设定好，然后通过传入一个参数web1，sso去后台查找需要的会掉地址），传给他一个参数，可以理解成一个ticket，web1拿着这个ticket可以换取正在登陆的用户的用户信息，拿到之后web1就能实现自己的业务逻辑了，比如检测这个用户是不是第一次登陆，如果是第一次登陆的话需要绑定用户信息之类的，然后维护用户和web1之间的登陆状态建成。<br>上面需要注意的点就是客户端如何接受服务端生成的登陆凭证.<br>首先是用户和sso中心，这个好解决，因为我们的登陆页面可以可以当做一个静态页面，我们可以在上面写js，这就方便了，我们发送一个ajax请求给sso，成功后把返回的登陆凭证放在cookie中，每次调用sso接口比如验证用户是否登陆的时候都会携带着这个cookie，！！！千万要注意，携带这个中在客户端浏览器的cookie的前提是通过ajax之类的访问，你别通过curl之类的访问，curl需要自己手动设置cookie，并不会像浏览器一样自动添加上，所以我们在后台一般要用header  location之类的跳转，而不是curl.<br>web1和用户之间登陆态的维护：<br>这块我没有使用header location跳转，用的是ajax返回给前端页面，前端页面去跳转，之所以这么做，好像是用第一种好像有点问题，没有去研究了，因为时间赶啊！！！前端拿着这个ticket，哈哈哈，你是不是担心不安全，我也担心呢！！而且我这块直接用的url跳转，为什么呢，因为我的后台是获取用户信息之后直接跳转，并不需要ajax那种返回了，如果这里用返回，首先是前台页面并不知道维护好登陆信息之后需要挑战的地址（这个静态页面是sso的），然后呢，如果通过ajax，后台跳转可能有些错误，之前那个sso登陆成功后台跳转不到web1，可能就是这个问题。<br>web1的回调地址里面通过ticket拿到用户信息之后可以做很多自己事情了，比如绑定用户，比如验证用户是否合法等等</p><p>2.单点退出<br>一处退出，处处退出。<br>我是这样做的，当登陆成功后，会在数据库中写入，这个用户的登出地址，当我们登出的时候，查询数据库，所有用户的登出地址，循环调用，需要注意的是我们传给用户的是只能是user_id之类的公有信息，各个子网站接收到之后，需要拿这个信息获取用户的登陆凭证，然后让其失效。我是这样做的：redis中存储着phpsessid（我们用的传统的cookie session）,然后curl 模拟请求的时候cookie带上这个，··然后就实现啦</p><p>思考：如果我们模拟请求的时候带上完全一样的头信息，是不是就能达到和浏览器一样的效果了，··有些能，比如上面的登出，但是设置cookie不可以，明明就是header加上点信息嘛，为什么不可以呢，因为cookie只能在浏览器上使用？<br>还有很多优化的空间，比如回调多个登出接口，用的消息队列，如果一个出错，是记日志吗，还是什么zzz<br>每个网站需要自己的登陆界面嘛，这样每次未登录定位到登陆界面之后就只有个登陆按钮，点击之后才能进入sso输入用户名和密码，相比较之前略麻烦，但是如果sso登陆之后，我们点击就能直接跳转到我们的网站，感觉这样更符合单点登录。<br>而且住校之后我们可以定位到普通网站的登陆界面，而且点击因为可以加回调地址，我觉得还是不能省略的。<br>代码就不放了，放些接口的函数吧<br>sso :<br>login :检测是直接跳转到登陆页面还是检测cookie是否有效，有效回调web1站点地址，无效跳转到登陆界面（看了下仿佛ajax中header location 就是有点问题）<br>logout</p><p>web1:<br>login: 判断是去sso还是直接登陆<br>logout:退出，需要回调 sso 的logout, 注销sso还有各个子网站<br>ssologin:回调登陆地址<br>ssologout：回调登出地址</p><p>关于上面跳转的问题：</p><p>今天看到群里面说的header 跳转不了疑问，其实我之前也遇到过，当时说是ajax 里面不给跳转，验证一下：</p><p>首先我们在一个接口中调用header跳转成功，说明接口没问题，ajax中调用，跳转不了。console.log 中报错</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Response to preflight request doesn&apos;t pass access control check: Redirect is not allowed for a preflight request</span><br><span class="line"></span><br><span class="line">对预检请求的响应未通过访问控制检查：预检请求不允许重定向</span><br></pre></td></tr></table></figure><p>也就是options 请求没有带回我们想要的内容，其实这个options请求是对于我们header的那个url 的返回，和我们ajax的url 返回没啥关系，所以我把那个header 那个url 链接从原来的baidu改成我可以控制返回内容的请求，这下果然访问成功了，可是出现了新的问题页面没有改变，打开network ，发现有请求新的url,开始考虑原因: 我们在地址栏输入的api 接口可以看做是全局的，整个页面显示的是他的返回，ajax是局部的请求，他只能得到一个值，页面并不能跟随他的返回而改变，毕竟ajax是啥时候返回我们并不知道，我们平时看见的局部改变是我们根据ajax的返回主动修改页面内容的。</p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;最近老大希望把项目中的用户登陆模块独立出来，起初是公司的各个部门都有一些自己的小项目，但因为是公司内部的项目，所以肯定就不能走一半网站的那种注册流程，一般情况下需要个审批人，注册的时候只有公司内部员工可以通过。可能通过接口ip的限制，比如智能内网访问注册接口可以起到同样的作用，但他们一致决定后这个东西还是独立出来，然后老大就交给了我，于是乎开始了解了下单点登录.&lt;br&gt;
-    
-    </summary>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>关于nginx的那些事</title>
-    <link href="http://yoursite.com/2018/08/20/%E5%85%B3%E4%BA%8Enginx%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B/"/>
-    <id>http://yoursite.com/2018/08/20/关于nginx的那些事/</id>
-    <published>2018-08-20T03:42:26.000Z</published>
-    <updated>2018-08-20T03:42:26.033Z</updated>
-    
-    <summary type="html">
-    
-    </summary>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>Laravel  数据库相关操作</title>
-    <link href="http://yoursite.com/2018/07/29/Laravel-%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9B%B8%E5%85%B3%E6%93%8D%E4%BD%9C/"/>
-    <id>http://yoursite.com/2018/07/29/Laravel-数据库相关操作/</id>
-    <published>2018-07-29T15:42:59.000Z</published>
-    <updated>2018-07-29T15:42:59.679Z</updated>
-    
-    <summary type="html">
-    
-    </summary>
-    
     
   </entry>
   

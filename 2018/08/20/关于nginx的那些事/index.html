@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="nginx," />
 
 
 
@@ -81,17 +81,20 @@
 
 
 
-<meta name="description" content="想用善良改变世界">
+<meta name="description" content="lnmp 是php最常用的模式，工作中经常要自己搭建环境，nginx 的学习少不了，记录生活中经常用到的，方便查找">
+<meta name="keywords" content="nginx">
 <meta property="og:type" content="article">
 <meta property="og:title" content="关于nginx的那些事">
 <meta property="og:url" content="http://yoursite.com/2018/08/20/关于nginx的那些事/index.html">
 <meta property="og:site_name" content="语法糖的博客">
-<meta property="og:description" content="想用善良改变世界">
+<meta property="og:description" content="lnmp 是php最常用的模式，工作中经常要自己搭建环境，nginx 的学习少不了，记录生活中经常用到的，方便查找">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-08-20T03:42:26.033Z">
+<meta property="og:image" content="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/20190718185551.png">
+<meta property="og:updated_time" content="2019-07-18T12:12:18.299Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="关于nginx的那些事">
-<meta name="twitter:description" content="想用善良改变世界">
+<meta name="twitter:description" content="lnmp 是php最常用的模式，工作中经常要自己搭建环境，nginx 的学习少不了，记录生活中经常用到的，方便查找">
+<meta name="twitter:image" content="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/20190718185551.png">
 
 
 
@@ -332,6 +335,28 @@
           </span>
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/运维/" itemprop="url" rel="index">
+                    <span itemprop="name">运维</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -359,7 +384,33 @@
       
 
       
-        
+        <p>lnmp 是php最常用的模式，工作中经常要自己搭建环境，nginx 的学习少不了，记录生活中经常用到的，方便查找</p>
+<a id="more"></a>
+<p>常用命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">nginx -s reload   让配置文件生效，并重启</span><br><span class="line">nginx -s stop   快速关闭</span><br><span class="line">nginx -s quit  平滑关闭</span><br><span class="line">nginx -t -c  nginx.conf  测试配置文件是否有语法错误</span><br><span class="line">nginx -v  查看版本</span><br><span class="line">nginx -V  查看编译信息，可能有时候要添加一些新的扩展</span><br></pre></td></tr></table></figure>
+<p>   http</p>
+<p>​       server</p>
+<p>复杂均衡  http层upstream (session 需要分布式，可以考虑用redis ,或者jwt token)</p>
+<p>server 层 proxy_pass</p>
+<p>轮训  权重都是1</p>
+<p>加权轮训  weight</p>
+<p>最少连接</p>
+<p>ip hash</p>
+<p>普通hash </p>
+<p>虚拟主机， 所有匹配的location 是同一级别，都需要配置root</p>
+<p>nginx 处理跨域，其实等同于php 处理跨域，只是nginx 那个语法还不太熟悉</p>
+<p>允许访问的域名</p>
+<p>允许访问的方法</p>
+<p>允许携带的参数</p>
+<p>对于options 请求的处理</p>
+<p>nginx 的调试</p>
+<p>通过写日志  // 这个比较方便，return 的话很多内容不能记录</p>
+<p>通过return 内容</p>
+<p>curl 直接调试  -H ‘host: xxx.com’ 添加请求头</p>
+<p><img src="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/20190718185551.png" alt=""></p>
+<p>其实这个比较容易看出来的，host 在寻址找到服务器之后，域名已经不重要了，只是起到header 中一个变量的作用</p>
+<p>默认第一个server 是匹配不到走的server (当然可以指定default server)</p>
+
       
     </div>
     
@@ -413,6 +464,12 @@
     
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/nginx/" rel="tag"><i class="fa fa-tag"></i> nginx</a>
+          
+        </div>
       
 
       
@@ -533,7 +590,7 @@ var jiathis_config={
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">70</span>
+                  <span class="site-state-item-count">73</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -544,7 +601,7 @@ var jiathis_config={
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">16</span>
+                  <span class="site-state-item-count">17</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -555,7 +612,7 @@ var jiathis_config={
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">68</span>
+                  <span class="site-state-item-count">70</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -674,7 +731,7 @@ var jiathis_config={
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count"> | 博客全站共99.3k字</span>
+  <span class="post-count"> | 博客全站共102.9k字</span>
 </div>
 
 
