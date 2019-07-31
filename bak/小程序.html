@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content=",," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="语法糖的博客" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="最近学习了下小程序的编写，理由：  vue 还有 react 没学会，小程序是真的简单 ，类似后台模板引擎 微信不会弹广告，vue或者react 编写的webapp 在一些安卓手机浏览器上，比如魅族自带的浏览器，访问的时候会有很多广告的出现 不用记域名，之前在做itbasic的时候，就发现大家都记不住域名，导致pc端还好，大家可以收藏域名，手机端完全不会去使用 练习js, 熟悉es6这篇文章的目的">
+<meta name="keywords" content="小程序,js">
+<meta property="og:type" content="website">
+<meta property="og:title" content="小程序">
+<meta property="og:url" content="http://yoursite.com/bak/小程序.html">
+<meta property="og:site_name" content="语法糖的博客">
+<meta property="og:description" content="最近学习了下小程序的编写，理由：  vue 还有 react 没学会，小程序是真的简单 ，类似后台模板引擎 微信不会弹广告，vue或者react 编写的webapp 在一些安卓手机浏览器上，比如魅族自带的浏览器，访问的时候会有很多广告的出现 不用记域名，之前在做itbasic的时候，就发现大家都记不住域名，导致pc端还好，大家可以收藏域名，手机端完全不会去使用 练习js, 熟悉es6这篇文章的目的">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5525740-f3ba6c063e063b59.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5525740-2226a06bb4bb7aac.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5525740-1fc62e0aee7a00af.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5525740-d78190d6a7276f55.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2019-02-27T13:06:47.839Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="小程序">
+<meta name="twitter:description" content="最近学习了下小程序的编写，理由：  vue 还有 react 没学会，小程序是真的简单 ，类似后台模板引擎 微信不会弹广告，vue或者react 编写的webapp 在一些安卓手机浏览器上，比如魅族自带的浏览器，访问的时候会有很多广告的出现 不用记域名，之前在做itbasic的时候，就发现大家都记不住域名，导致pc端还好，大家可以收藏域名，手机端完全不会去使用 练习js, 熟悉es6这篇文章的目的">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/5525740-f3ba6c063e063b59.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/bak/小程序.html"/>
+
+
+
+
+
+  <title>小程序 | 语法糖的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+
+    <script type="text/javascript" src="/live2d/script.js"></script>
+    <canvas id="live2dcanvas" width="150" height="300" class="live2d"></canvas>
+    <style>
+      #live2dcanvas {
+        position: fixed;
+        right: 0px;
+        z-index: 999;
+        pointer-events: none;
+        bottom: -40px;
+      }
+    </style>
+    <script>loadlive2d("live2dcanvas" ,"/live2d/assets/wanko/wanko.model.json",0.5)</script>
+  
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">语法糖的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">爱动漫，热爱LOL</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+    
+    
+    <div class="post-block page">
+      <header class="post-header">
+
+	<h1 class="post-title" itemprop="name headline">小程序</h1>
+
+
+
+</header>
+
+      
+      
+      
+      <div class="post-body">
+        
+        
+          <p>最近学习了下小程序的编写，理由：</p>
+<ol>
+<li>vue 还有 react 没学会，小程序是真的简单 ，类似后台模板引擎</li>
+<li>微信不会弹广告，vue或者react 编写的webapp 在一些安卓手机浏览器上，比如魅族自带的浏览器，访问的时候会有很多广告的出现</li>
+<li>不用记域名，之前在做itbasic的时候，就发现大家都记不住域名，导致pc端还好，大家可以收藏域名，手机端完全不会去使用</li>
+<li>练习js, 熟悉es6<br>这篇文章的目的不是介绍小程序的简单使用，只是想记录下容易忽略的知识点（包括es6中），完成了项目的时候才发现，<strong>代码是练出来的，而不是看出来的</strong><a id="more"></a>
+</li>
+</ol>
+<h2 id="目录结构"><a href="#目录结构" class="headerlink" title="目录结构"></a>目录结构</h2><p><img src="https://upload-images.jianshu.io/upload_images/5525740-f3ba6c063e063b59.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<h6 id="app-wxss"><a href="#app-wxss" class="headerlink" title="app.wxss"></a>app.wxss</h6><p> 是全局样式文件，比如我们想让每个page页面的背景色从白色变成灰色，可以在这里面定义，又比如我们对iconfont 的使用。</p>
+<h6 id="iconfont-的使用"><a href="#iconfont-的使用" class="headerlink" title="iconfont 的使用"></a>iconfont 的使用</h6><p>我们在编写前端页面的时候经常会需要小图标，现在比较流行iconfont, 我们在阿里的那个官网上选择好图标<img src="https://upload-images.jianshu.io/upload_images/5525740-2226a06bb4bb7aac.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"><br>然后选择添加至项目<br><img src="https://upload-images.jianshu.io/upload_images/5525740-1fc62e0aee7a00af.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>选择项目名称<br><img src="https://upload-images.jianshu.io/upload_images/5525740-d78190d6a7276f55.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>选择font class ,在线链接，查看线上地址，复制所有css ,保存到本地，然后在这个全局css 中引入，就可以全局使用了<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@import &apos;styles/iconfont.wxss&apos;;</span><br></pre></td></tr></table></figure></p>
+<p>我们通过修改font-size 和 color 可以修改图标的大小和颜色（毕竟实际上这些图标都是字体）</p>
+<h6 id="app-json"><a href="#app-json" class="headerlink" title="app.json"></a>app.json</h6><p>主要是页面pages 路径的配置，一些基础配置，tabBar (注意tabBar 没有对应的pages ，pages页面上是不会显示tabBar的)， 引入的组件如果想全局使用，也可以在这个页面上配置</p>
+<h5 id="components"><a href="#components" class="headerlink" title="components"></a>components</h5><p>编写的组件位置，其实和pages文件夹差不多，感觉就是组件里面文件一般用index 命名，而pages 里面一般用文件夹名称命名</p>
+<p>其他的文件夹都是可以自己定义的，其实小程序只是给了一个标准的最简单的项目目录，很多时候都可以自己定义文件夹，然后引入<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">引入 js</span><br><span class="line">import &#123;config&#125; from &apos;../config.js&apos;</span><br><span class="line"></span><br><span class="line">这个config.js 中被引入的内容需要在文件中导出</span><br><span class="line">const config = 4;</span><br><span class="line">export &#123;config&#125;</span><br><span class="line"></span><br><span class="line">感觉和PHP 不一样的地方就是php 一般都是include 文件，而不是对具体变量的引入和导出，当然现在很多时候php 一个文件就是一个class,也是类似一个变量的存在</span><br></pre></td></tr></table></figure></p>
+<h2 id="小程序知识"><a href="#小程序知识" class="headerlink" title="小程序知识"></a>小程序知识</h2><h6 id="wxml"><a href="#wxml" class="headerlink" title="wxml"></a>wxml</h6><p>页面，<br>wx:if , wx:for  去判断，循环页面元素，<br>rpx 是小程序上的计量单位，没听懂，反正知道通过使用它，可以实现页面的自适应<br>flex 页面布局<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">display:flex;</span><br><span class="line">flex-direction: row;</span><br><span class="line">just-content: (主轴) row 横着排列（横 主 纵 副）column (纵 主 横 副) space-between 等（todo: flex 均分怎么实现）</span><br><span class="line">align-item: （副轴）</span><br></pre></td></tr></table></figure></p>
+<p>positon<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">position:relative (相较于自身)</span><br><span class="line">position:absolute(因为一般只有固定在底部或者首部用到，所以一般这样定位的话就是相对于页面)</span><br></pre></td></tr></table></figure></p>
+<p>目前用到的元素：view ,image(类似view)<br>绑定点击事件 bind:tap, bind:like<br>引入组件：在该pages json 文件中引入，或者全局json 中引入，（父组件给子组件传值通过属性）然后用组件名称使用，在父组件上定义属性，传入子组件定义的data中（子组件给父组件传值通过事件，子组件抛出事件，触发父组件绑定的事件）</p>
+<h5 id="js"><a href="#js" class="headerlink" title="js"></a>js</h5><p>let 新的定义变量方式，if 或者 for 中定义的，外面获取不到<br>const 不能改变的量<br>onLoad 方法中一般写入初始化的时候对后台接口的请求（蛋疼的就是经常页面加载的时候出现抖动，当返回数据比较慢的时候）<br>自定义的方法就写在最外层就好了<br>data : 定义页面中的值，初始化<br>setData :改变页面中的值<br>wx.getStorage()  感觉这些就是类似调用系统接口，应该安卓和ios 中用的比较多，这是微信封装的，注意其中的同步和异步之分</p>
+<h3 id="推荐组件"><a href="#推荐组件" class="headerlink" title="推荐组件"></a>推荐组件</h3><p>vant 有赞出的小程序组件，只有用过小程序原生组件才会知道vant 用起来有多么方便，npm 安装</p>
+<p>值的注意的是：事件 event.detail 能获取到这个组件本身，之前我们经常用event.detail.value 获取组件传递的值，通过event.detail去调用组件自身的一些方法，比如日期picker 上显示的日期大小</p>
+
+        
+      </div>
+      
+      
+      
+    </div>
+    
+    
+    
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/my.png"
+                alt="chenye2017" />
+            
+              <p class="site-author-name" itemprop="name">chenye2017</p>
+              <p class="site-description motion-element" itemprop="description">想用善良改变世界</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">73</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">71</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/chenye2017" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:1967196626@qq.com" target="_blank" title="E-Mail">
+                    
+                      <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://weibo.com/3215254425" target="_blank" title="Weibo">
+                    
+                      <i class="fa fa-fw fa-globe"></i>Weibo</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-crosshairs"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.baidu.com/" title="百度" target="_blank">百度</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.google.com/" title="谷歌" target="_blank">谷歌</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#目录结构"><span class="nav-number">1.</span> <span class="nav-text">目录结构</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#app-wxss"><span class="nav-number">1.0.0.0.1.</span> <span class="nav-text">app.wxss</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#iconfont-的使用"><span class="nav-number">1.0.0.0.2.</span> <span class="nav-text">iconfont 的使用</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#app-json"><span class="nav-number">1.0.0.0.3.</span> <span class="nav-text">app.json</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#components"><span class="nav-number">1.0.0.1.</span> <span class="nav-text">components</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#小程序知识"><span class="nav-number">2.</span> <span class="nav-text">小程序知识</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#wxml"><span class="nav-number">2.0.0.0.1.</span> <span class="nav-text">wxml</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#js"><span class="nav-number">2.0.0.1.</span> <span class="nav-text">js</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#推荐组件"><span class="nav-number">2.1.</span> <span class="nav-text">推荐组件</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">chenye2017</span>
+
+  
+</div>
+
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span> |
+</span>
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.3</div>
+
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count"> | 博客全站共112.7k字</span>
+</div>
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+  
+   <canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.2.0/anime.min.js"></script>
+   <script type="text/javascript" src="/js/src/fireworks.js"></script>
+
+
+
+</body>
+</html>

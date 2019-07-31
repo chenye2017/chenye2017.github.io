@@ -89,17 +89,17 @@
 <meta property="og:site_name" content="语法糖的博客">
 <meta property="og:description" content="上面要求代码从svn改成git,需要一个私有化的代码管理工具，于是想到了gitlab, 其实我们人这么少，一般一个前端，一个后端，流程简单，svn和git 用起来没啥区别，可是呢上面说了，那就改吧">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5525740-9b6fda318458402b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/1564555527.png">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5525740-1313d8fff713f69a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5525740-de997e9e384c70cc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5525740-7989fc4b0855b256.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5525740-c828d921114d9f37.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5525740-20282f376d80872b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2019-04-11T04:49:32.807Z">
+<meta property="og:image" content="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/1564555538.png">
+<meta property="og:image" content="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/1564555539.png">
+<meta property="og:image" content="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/1564555540.png">
+<meta property="og:image" content="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/1564555540.png">
+<meta property="og:updated_time" content="2019-07-31T06:45:44.928Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="持续交付">
 <meta name="twitter:description" content="上面要求代码从svn改成git,需要一个私有化的代码管理工具，于是想到了gitlab, 其实我们人这么少，一般一个前端，一个后端，流程简单，svn和git 用起来没啥区别，可是呢上面说了，那就改吧">
-<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/5525740-9b6fda318458402b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta name="twitter:image" content="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/1564555527.png">
 
 
 
@@ -392,23 +392,23 @@
         <p>上面要求代码从svn改成git,需要一个私有化的代码管理工具，于是想到了gitlab, 其实我们人这么少，一般一个前端，一个后端，流程简单，svn和git 用起来没啥区别，可是呢上面说了，那就改吧<br><a id="more"></a></p>
 <ul>
 <li>gitlab 搭建<br><a href="https://blog.csdn.net/Abysscarry/article/details/79402695" target="_blank" rel="noopener">https://blog.csdn.net/Abysscarry/article/details/79402695</a><br>慕课网教程上那么复杂是因为配置了本地https<br>唯一一点没有提到的就是自定义域名的文件位置，如果用yum安装的话<br>在 /etc/gitlab/gitlab.rb下面。</li>
-<li>gitlab使用<br>默认有个root账户，自己设置密码，<br><img src="https://upload-images.jianshu.io/upload_images/5525740-9b6fda318458402b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></li>
+<li>gitlab使用<br>默认有个root账户，自己设置密码，<br><img src="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/1564555527.png" alt="image.png"></li>
 </ul>
 <ol>
 <li><p>可以创建用户和项目<br>创建项目类似github 上创建项目，后面项目的提交就是git 的使用<br><img src="https://upload-images.jianshu.io/upload_images/5525740-1313d8fff713f69a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"><br>创建用户的话如上，主要是那个reqular和admin, 这块不是项目权限，应该是类似整个gitlab 的权限， 新建的用户可以给个初始密码，然后用户登陆的时候可以修改，用户提交代码需要把ssh 公钥粘贴到gitlab 上，一切和github类似</p>
 </li>
-<li><p>配置项目权限 （管理员才有这些权限，比如root）<br><img src="https://upload-images.jianshu.io/upload_images/5525740-de997e9e384c70cc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<li><p>配置项目权限 （管理员才有这些权限，比如root）<br><img src="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/1564555538.png" alt="image.png"></p>
 </li>
 </ol>
 <p>点击项目，给项目配置人员信息</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/5525740-7989fc4b0855b256.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
-<p><img src="https://upload-images.jianshu.io/upload_images/5525740-c828d921114d9f37.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p><img src="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/1564555539.png" alt="image.png"></p>
+<p><img src="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/1564555540.png" alt="image.png"></p>
 <p>目前只配置了develop和 master ,develop 是开发者，开发者不能向master 分支提交代码。只能自己开个feature分支，提交之后再gitlab 上面提交merge 申请，这个项目的master 可以merge , 这个项目的master 可以直接向master 分支提交代码</p>
 <p>上面的administrator / test , administrator  是用户名， test 是项目名</p>
 <ol>
 <li>监控系统信息(感觉这个可以放在一般的管理系统中，掌握服务器情况)</li>
 </ol>
-<p><img src="https://upload-images.jianshu.io/upload_images/5525740-20282f376d80872b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p><img src="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/1564555540.png" alt="image.png"></p>
 <p>今天新建一个项目的时候总是显示密码错误，主要原因可能是项目建成了private ， 没有解决问题，但发现了另一个问题，我下载项目的时候总是显示password ,那他是怎么识别我的name呢，答案是gitlab 上贴的ssh key，我们的每一个gitlab 用户或者 github 用户都要至少绑定一个ssh key,就是通过这个ssh key 识别我们用户名称的,我们在用gitlab 提交代码时候总是显示要配置用户名和密码，可以全局配置也可以在单个项目中配置，所以这个并不是我们登陆github 或者gitlab 的用户名，这个只是我们提交时候日志上面显示的内容。</p>
 
       

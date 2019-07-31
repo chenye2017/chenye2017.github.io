@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="语法糖的博客" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="升级https的原因：老大把公司人事管理系统升级到了https,面试的时候可能经常问到https,自己之前了解过https,但是没有去实践过，现在太多网站都是https····还有升级过程并不是十分复杂，那就去做呗。">
+<meta property="og:type" content="website">
+<meta property="og:title" content="网站升级https">
+<meta property="og:url" content="http://yoursite.com/bak/网站升级https.html">
+<meta property="og:site_name" content="语法糖的博客">
+<meta property="og:description" content="升级https的原因：老大把公司人事管理系统升级到了https,面试的时候可能经常问到https,自己之前了解过https,但是没有去实践过，现在太多网站都是https····还有升级过程并不是十分复杂，那就去做呗。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/5525740-442e10f7747a4d2f.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5525740-260206ef40194be3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5525740-62f2352ceaf4787a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5525740-95302aaf96bdae3b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-09-11T06:57:58.961Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="网站升级https">
+<meta name="twitter:description" content="升级https的原因：老大把公司人事管理系统升级到了https,面试的时候可能经常问到https,自己之前了解过https,但是没有去实践过，现在太多网站都是https····还有升级过程并不是十分复杂，那就去做呗。">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/5525740-442e10f7747a4d2f.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/bak/网站升级https.html"/>
+
+
+
+
+
+  <title>网站升级https | 语法糖的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+
+    <script type="text/javascript" src="/live2d/script.js"></script>
+    <canvas id="live2dcanvas" width="150" height="300" class="live2d"></canvas>
+    <style>
+      #live2dcanvas {
+        position: fixed;
+        right: 0px;
+        z-index: 999;
+        pointer-events: none;
+        bottom: -40px;
+      }
+    </style>
+    <script>loadlive2d("live2dcanvas" ,"/live2d/assets/wanko/wanko.model.json",0.5)</script>
+  
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">语法糖的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">爱动漫，热爱LOL</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+    
+    
+    <div class="post-block page">
+      <header class="post-header">
+
+	<h1 class="post-title" itemprop="name headline">网站升级https</h1>
+
+
+
+</header>
+
+      
+      
+      
+      <div class="post-body">
+        
+        
+          <p>升级https的原因：老大把公司人事管理系统升级到了https,面试的时候可能经常问到https,自己之前了解过https,但是没有去实践过，现在太多网站都是https····还有升级过程并不是十分复杂，那就去做呗。</p>
+<a id="more"></a>
+<p>https原理<br>HTTPS采用共享密钥加密(对称加密)和公开密钥加密(非对称加密，比较出名的有RSA)两者并用的混合加密机制。在交换密钥使用环节使用公开密钥加密方式，之后建立的通信交换报文阶段则使用共享密钥加密方式<br>之所以传输过程中用对称加密，是因为非对称很浪费资源</p>
+<p>(hash加密是单向的，例如md5,不能解密)<br>和对称加密还有非对称加密都是不一样的，不管是对称加密还是非对称加密，通过秘钥都是能解密的，但是hash，只能维持 hash(内容)之后的值保持一致，这也是我们数据库中只保存用户密码加密后的值就可以验证用户的密码是否正确了，因为我们可以每次获取到用户信息之后只要hash一下，然后和数据库中做下对比就可以了。</p>
+<p>https ,首先让服务器和ca交互，获取服务器的公钥，这个过程是非对称加密，获取到公钥</p>
+<p>https升级过程中遇到的问题:</p>
+<ul>
+<li>不允许脚本调用http，可以先把接口转发到我们本地的服务起的https上，然后通过nginx转发到别人网站上的接口，因为本身调用外来接口接口比较少，这样能符合我们的需求</li>
+</ul>
+<p><img src="http://upload-images.jianshu.io/upload_images/5525740-442e10f7747a4d2f.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image"></p>
+<ul>
+<li>https证书申请无效（每个域名都需要申请单独的证书，之前以为只要申请一个www.chenye2017.cn证书就可以了，chrome直接显示https不安全，其实通过微软的edage浏览器访问，能清楚的看到证书不匹配的原因）</li>
+</ul>
+<p>（证书申请是通过腾讯云，腾讯云上有详细的教程，唯一不足的是没有给文件夹权限，导致第一次访问403）</p>
+<p>（https配置虚拟主机应该就和我们在vhost文件里面配置虚拟主机一样，现在是在ssl配置文件里面写）<br>（话说我现在的服务器，域名用的是阿里的，服务器用的是京东的，https证书用的是腾讯的，zz）<br>（还有不知道是hexo的原因还是github page 的原因，我的网站上有http的资源竟然不会显示https错误，不知道他是怎么解决这种http资源不出错的，有空可以了解下）</p>
+<p>https和http的区别</p>
+<p>简单看就是 https = http + SSL</p>
+<p>SSL的运行机制，可以参考<a href="http://www.ruanyifeng.com/blog/2014/02/ssl_tls.html" target="_blank" rel="noopener">阮一峰老师的文章</a>，我对上面的一些内容做了些自己理解的笔记</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/5525740-260206ef40194be3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<ol>
+<li>其中加密传播是因为我们的传播内容都是通过生成一个第三方不知道的公钥，这个公钥是怎么来的呢，首先通过ca证书，因为系统内容ca的公钥，ca用私钥加密文件内容（私钥加密，公钥解密，不被篡改），我们获取服务器的公钥，这个公钥是干什么的呢，并不是用来进行数据的加密的，而是用来加密传递的数据给服务器（公钥加密，私钥解密，不被获取），服务器接收到客户端的数据进行生成公共密钥，这个密钥是我们以后加密数据用来传递的<br>(感觉只要记住证书里面的内容都是能保证绝对正确就好了)</li>
+<li>具有校验机制，是因为我们的证书具有这个作用，比如我上次把我从www.chenye2017.cn 上获取的证书放到虚拟站点blog.chenye2017.cn就直接报错</li>
+<li>配备身份证书，估计也是这个意思</li>
+</ol>
+<p><img src="https://upload-images.jianshu.io/upload_images/5525740-62f2352ceaf4787a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"><br>所以ssl 和 tsl 是一样的意思嘛</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/5525740-95302aaf96bdae3b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"><br>感觉这个握手不是tcp的那个三次握手，这个开始的时候tcp那个三次握手应该都搭建好了，而且这个也是4次握手</p>
+<p>剩下的内容就是4次握手的详细内容了，为什么要4次握手，写的都很详细，就不再补充了，总之这个生成传输加密内容的秘钥也是通过非对称加密，再后面就是http了。</p>
+<p>总结一下：</p>
+<ol>
+<li>通过CA 证书，发送服务器公钥，利用的是非对称加密算法，用的公钥和私钥来自CA（证书的作用是为了保证服务器公钥的正确性，不被篡改）</li>
+<li>通过CA得到的服务器公钥，大家都可能有，但是我们通过公钥加密，私钥才能解密，和服务器交互，让两端都能生成一致的对称加密算法钥匙（随机因素可以通过客户端利用服务器公钥加密传给服务器）</li>
+<li>利用生成的公共密钥进行对称加密，传输数据（这个公共密钥在每次连接的时候生成，别人不知道）</li>
+</ol>
+
+        
+      </div>
+      
+      
+      
+    </div>
+    
+    
+    
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/my.png"
+                alt="chenye2017" />
+            
+              <p class="site-author-name" itemprop="name">chenye2017</p>
+              <p class="site-description motion-element" itemprop="description">想用善良改变世界</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">73</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">71</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/chenye2017" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:1967196626@qq.com" target="_blank" title="E-Mail">
+                    
+                      <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://weibo.com/3215254425" target="_blank" title="Weibo">
+                    
+                      <i class="fa fa-fw fa-globe"></i>Weibo</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-crosshairs"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.baidu.com/" title="百度" target="_blank">百度</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.google.com/" title="谷歌" target="_blank">谷歌</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">chenye2017</span>
+
+  
+</div>
+
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span> |
+</span>
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.3</div>
+
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count"> | 博客全站共112.7k字</span>
+</div>
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+  
+   <canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.2.0/anime.min.js"></script>
+   <script type="text/javascript" src="/js/src/fireworks.js"></script>
+
+
+
+</body>
+</html>

@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content=",,,," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="语法糖的博客" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="这篇文章主要是对于php运行环境的搭建中运行起来框架的总结，其实运行框架，不管是yii，还是tp，还是laravel，还是我们那个项目框架，与其说是运行起来，不如说是找到框架的入口文件，然后剩下的就直接交给了框架进行处理（route.php的处理，restful api等等，通过解析模块，控制器，方法），绝大部分时候就这这么简单，至少上面三个都不用对apache进行特殊的配置（目前的这篇文章只是单">
+<meta name="keywords" content="linux,apache,框架,php">
+<meta property="og:type" content="website">
+<meta property="og:title" content="window下运行各种框架总结">
+<meta property="og:url" content="http://yoursite.com/bak/window下运行各种框架总结.html">
+<meta property="og:site_name" content="语法糖的博客">
+<meta property="og:description" content="这篇文章主要是对于php运行环境的搭建中运行起来框架的总结，其实运行框架，不管是yii，还是tp，还是laravel，还是我们那个项目框架，与其说是运行起来，不如说是找到框架的入口文件，然后剩下的就直接交给了框架进行处理（route.php的处理，restful api等等，通过解析模块，控制器，方法），绝大部分时候就这这么简单，至少上面三个都不用对apache进行特殊的配置（目前的这篇文章只是单">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://ozys8fka7.bkt.clouddn.com/TIM%E5%9B%BE%E7%89%8720171125172354.png">
+<meta property="og:image" content="http://ozys8fka7.bkt.clouddn.com/TIM%E5%9B%BE%E7%89%8720171125172431.png">
+<meta property="og:updated_time" content="2018-02-23T12:49:25.069Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="window下运行各种框架总结">
+<meta name="twitter:description" content="这篇文章主要是对于php运行环境的搭建中运行起来框架的总结，其实运行框架，不管是yii，还是tp，还是laravel，还是我们那个项目框架，与其说是运行起来，不如说是找到框架的入口文件，然后剩下的就直接交给了框架进行处理（route.php的处理，restful api等等，通过解析模块，控制器，方法），绝大部分时候就这这么简单，至少上面三个都不用对apache进行特殊的配置（目前的这篇文章只是单">
+<meta name="twitter:image" content="http://ozys8fka7.bkt.clouddn.com/TIM%E5%9B%BE%E7%89%8720171125172354.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/bak/window下运行各种框架总结.html"/>
+
+
+
+
+
+  <title>window下运行各种框架总结 | 语法糖的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+
+    <script type="text/javascript" src="/live2d/script.js"></script>
+    <canvas id="live2dcanvas" width="150" height="300" class="live2d"></canvas>
+    <style>
+      #live2dcanvas {
+        position: fixed;
+        right: 0px;
+        z-index: 999;
+        pointer-events: none;
+        bottom: -40px;
+      }
+    </style>
+    <script>loadlive2d("live2dcanvas" ,"/live2d/assets/wanko/wanko.model.json",0.5)</script>
+  
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">语法糖的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">爱动漫，热爱LOL</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+    
+    
+    <div class="post-block page">
+      <header class="post-header">
+
+	<h1 class="post-title" itemprop="name headline">window下运行各种框架总结</h1>
+
+
+
+</header>
+
+      
+      
+      
+      <div class="post-body">
+        
+        
+          <p>这篇文章主要是<strong>对于php运行环境的搭建中运行起来框架的总结，其实运行框架，不管是yii，还是tp，还是laravel，还是我们那个项目框架，与其说是运行起来，不如</strong>说是找到框架的入口文件<strong>，然后剩下的就直接交给了框架进行处理（route.php的处理，restful api等等，通过解析模块，控制器，方法），绝大部分时候就这这么简单，至少上面三个都不用对apache</strong>进行特殊的配置（目前的这篇文章只是单纯的针对Apache）。</p>
+<a id="more"></a>
+<p>so，简化的思考了一下，就是找public下面的index.php 文件（tp  laravel都是这个文件 yii是在web目录下，其实找一下就行了，大部分都是reqire项目的核心库这种东西。例如yii</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line"></span><br><span class="line">// comment out the following two lines when deployed to production</span><br><span class="line">defined(&apos;YII_DEBUG&apos;) or define(&apos;YII_DEBUG&apos;, true);</span><br><span class="line">defined(&apos;YII_ENV&apos;) or define(&apos;YII_ENV&apos;, &apos;dev&apos;);</span><br><span class="line"></span><br><span class="line">require(__DIR__ . &apos;/../vendor/autoload.php&apos;);</span><br><span class="line">require(__DIR__ . &apos;/../vendor/yiisoft/yii2/Yii.php&apos;);</span><br><span class="line"></span><br><span class="line">$config = require(__DIR__ . &apos;/../config/web.php&apos;);</span><br><span class="line"></span><br><span class="line">(new yii\web\Application($config))-&gt;run();</span><br></pre></td></tr></table></figure>
+<p>），所以只要配置好了一个环境，剩下的框架的运行基本就一样了。<br>上面已经说了我们这片文章的目的了，运行起来框架，通过的是直接下载代码的这种方式（现在绝大部分框架都是支持composer来安装）。我们先安装好xampp，xampp会帮我们集成安装好apache和mysql，他们和在linux下是一样的，至少我到现在还没有发现什么不同，so，因为太过相似了，导致我从前以为xampp是在window环境下集成安装了lamp这种，其实这个l（linux是没有的），他的环境准确说是wamp（我代表 window这种架构）。他把php，mysql还有apache都放在了他自己也就是xampp的安装目录下，我们找到apache的安装目录，在conf文件夹里面找到（httpd-vhosts.conf）这个配置虚拟域名的文件，我记得以前apache配置虚拟域名是在一块的，都是写在httpd.conf文件里面，现在分开了，其实是包含了conf文件下的所有文件，但这样更清楚。<br>接下来我们就开始配置虚拟主机了（配置虚拟主机的意思就是在一个服务器上配置多域名访问的站点，其实不通过域名通过端口号啊什么的都可以，本质上就是把不同的请求分发到不同的目录下。我们的itbasic就是通过Nginx通过域名的不同把对80端口不同的域名请求分发到不同的端口下，然后通过apache虚拟主机的配置（通过的是端口的不同）来达到发送到不同目录下）。<br>添加<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;VirtualHost *:800&gt;</span><br><span class="line">    ##ServerAdmin webmaster@dummy-host2.example.com</span><br><span class="line">    ##DocumentRoot &quot;D:/xampp/htdocs/dummy-host2.example.com&quot;</span><br><span class="line">    ##ServerName dummy-host2.example.com</span><br><span class="line">    ##ErrorLog &quot;logs/dummy-host2.example.com-error.log&quot;</span><br><span class="line">    ##CustomLog &quot;logs/dummy-host2.example.com-access.log&quot; common</span><br><span class="line">     DocumentRoot &quot;D:\code\laravel-v5.1.11\laravel-v5.1.11\public&quot;  </span><br><span class="line">    ServerName laravel.app  </span><br><span class="line">        &lt;Directory &quot;D:\code\laravel-v5.1.11\laravel-v5.1.11\public&quot;&gt;  </span><br><span class="line">            Options Indexes FollowSymLinks Includes ExecCGI  </span><br><span class="line">            AllowOverride All  </span><br><span class="line">            Require all granted  </span><br><span class="line">        &lt;/Directory&gt;</span><br><span class="line">&lt;/VirtualHost&gt;</span><br></pre></td></tr></table></figure></p>
+<p>简单的记录下apache的语法 DocumentRoot 代表根目录<br>配置虚拟域名要写在virtualHost标签之间，后面的代表端口号，servername代表域名，directory里面allow代表接受任何的请求，之前安装larave的时候代开index.php嫌弃我权限不够，其实是这个directory标签的内容写错了，注意这个如果说打开文件夹没有权限，在window下你改这个目录的什么所有者权限啊什么都是没用的，我的理解是web请求的时候打开这个文件夹的用户不是我们能预测的，应该是other什么的，因为加了这句话，所以我们在window下安装这些框架不用修改日志文件，要么在linux下安装yii，laravel都要修改log日志文件夹的权限（感觉是因为写日志的操作是来自http的请求，像我们之前安装seaslog第三方的日志的时候，也得修改那个文件夹的权限，道理是一样的）<br>（yii框架的话conf文件夹下web.php cookiekey要随便填一个数，）</p>
+<p>当然还要配置个虚拟域名，因为之前apache里面填写的域名如果是假的话，在本地host文件里面配置一下（因为浏览器解析是通过缓存（贼端）host文件，dns解析来找的，配置之后ping一下能不能同，就可以啦）</p>
+<p>大功告成。</p>
+<p>总结一下,本机运行起来一个框架。</p>
+<p>1.安装集成环境（xampp）<br>2.修改apache配置文件，配置虚拟主机<br>3.修改host文件，修改域名到本机127.0.0.1</p>
+<p>注意的点：<br>1.配置虚拟主机之后，xampp原先那个localhost直接就访问不了了，所以把那个localhost也配置一个虚拟主机（localhost也属于一个域名）<br>2.如果访问不了，先ping一下域名，看是否能ping通，然后查看apache的access日志和error日志，如果没有，确认http服务是否起起来了，如果有查看日志（linux下tail -f 动态看），window下在文件的最下面，像我现在这个window下环境，就是因为端口号被占了，改成800，所以每次访问域名后面都得加 ： 800，这个Apache的错误日志里面会记录的很清楚</p>
+<p>附上三张框架图<br>1.<img src="http://ozys8fka7.bkt.clouddn.com/TIM%E5%9B%BE%E7%89%8720171125172354.png" alt="laravel"><br>2.<img src="http://ozys8fka7.bkt.clouddn.com/TIM%E5%9B%BE%E7%89%8720171125172431.png" alt="yii2"></p>
+<p>(其实在用外链的时候想到了树洞外链，GitHub上一个关于php的开源项目)<br>对了突然想起来yaf框架，其实因为yaf框架是需要扩展模块支持，所以得先安装php扩展（php扩展大部分都是c开发的，），然后原理是一样的（只是yaf框架需要手动生成基本目录）</p>
+<p><a href="http://blog.csdn.net/underclound/article/details/76835318" target="_blank" rel="noopener">地址</a></p>
+<p>简单记录下window下安装php扩展（phpinfo能输出php的详细信息，在框架的index.php目录下是唯一所有人都能访问的）然后去pecl下载php扩展，下载dll文件的时候要注意那个什么tc之类的，注意好，下载好放在php的扩展目录下ext，再在php.ini 里面模仿之前的php扩展，加上相应的话就好了，那个扩展还是可以配置一些属性的<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">zend_extension = D:\xampp\php\ext\php_xdebug-2.5.4-7.0-vc14.dll</span><br></pre></td></tr></table></figure></p>
+<p>像mysql这种，都是可以添加配置信息的<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[MSSQL]</span><br><span class="line">mssql.allow_persistent=On</span><br><span class="line">mssql.max_persistent=-1</span><br><span class="line">mssql.max_links=-1</span><br><span class="line">mssql.min_error_severity=10</span><br><span class="line">mssql.min_message_severity=10</span><br><span class="line">mssql.compatability_mode=Off</span><br><span class="line">mssql.secure_connection=Off</span><br></pre></td></tr></table></figure></p>
+<p>yaf好像不配置，不能再生产环境下用，有个参数，其实安装seaslog的时候那些日志模板啊，日志格式啊都是在这里配置的，就是初始化的感觉。linux下的安装扩展要先下载文件，然后编译成so文件放在对应目录下，然后配置php.ini，有机会再说。window下只要注意好下载对应的dll文件就可以了</p>
+
+        
+      </div>
+      
+      
+      
+    </div>
+    
+    
+    
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/my.png"
+                alt="chenye2017" />
+            
+              <p class="site-author-name" itemprop="name">chenye2017</p>
+              <p class="site-description motion-element" itemprop="description">想用善良改变世界</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">73</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">71</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/chenye2017" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:1967196626@qq.com" target="_blank" title="E-Mail">
+                    
+                      <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://weibo.com/3215254425" target="_blank" title="Weibo">
+                    
+                      <i class="fa fa-fw fa-globe"></i>Weibo</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-crosshairs"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.baidu.com/" title="百度" target="_blank">百度</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.google.com/" title="谷歌" target="_blank">谷歌</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">chenye2017</span>
+
+  
+</div>
+
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span> |
+</span>
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.3</div>
+
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count"> | 博客全站共112.7k字</span>
+</div>
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+  
+   <canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.2.0/anime.min.js"></script>
+   <script type="text/javascript" src="/js/src/fireworks.js"></script>
+
+
+
+</body>
+</html>

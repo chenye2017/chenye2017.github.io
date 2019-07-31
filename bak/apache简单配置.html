@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content=",,," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="语法糖的博客" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="关于apache的配置文件。不管是xampp安装的lamp环境，还是自己在linux下面搭建的lamp环境，之前关于apache的配置都是直接copy网上的，用的虚拟域名，本质是还是不够理解的，关于.htaccess 也只是刚开始学习tp的时候看到过，后来因为配置虚拟域名能解决问题，就没有过多的了解这个.htaccess了。">
+<meta name="keywords" content="apache,linux,框架">
+<meta property="og:type" content="website">
+<meta property="og:title" content="apache简单配置">
+<meta property="og:url" content="http://yoursite.com/bak/apache简单配置.html">
+<meta property="og:site_name" content="语法糖的博客">
+<meta property="og:description" content="关于apache的配置文件。不管是xampp安装的lamp环境，还是自己在linux下面搭建的lamp环境，之前关于apache的配置都是直接copy网上的，用的虚拟域名，本质是还是不够理解的，关于.htaccess 也只是刚开始学习tp的时候看到过，后来因为配置虚拟域名能解决问题，就没有过多的了解这个.htaccess了。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-11-30T03:14:04.903Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="apache简单配置">
+<meta name="twitter:description" content="关于apache的配置文件。不管是xampp安装的lamp环境，还是自己在linux下面搭建的lamp环境，之前关于apache的配置都是直接copy网上的，用的虚拟域名，本质是还是不够理解的，关于.htaccess 也只是刚开始学习tp的时候看到过，后来因为配置虚拟域名能解决问题，就没有过多的了解这个.htaccess了。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/bak/apache简单配置.html"/>
+
+
+
+
+
+  <title>apache简单配置 | 语法糖的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+
+    <script type="text/javascript" src="/live2d/script.js"></script>
+    <canvas id="live2dcanvas" width="150" height="300" class="live2d"></canvas>
+    <style>
+      #live2dcanvas {
+        position: fixed;
+        right: 0px;
+        z-index: 999;
+        pointer-events: none;
+        bottom: -40px;
+      }
+    </style>
+    <script>loadlive2d("live2dcanvas" ,"/live2d/assets/wanko/wanko.model.json",0.5)</script>
+  
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">语法糖的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">爱动漫，热爱LOL</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+    
+    
+    <div class="post-block page">
+      <header class="post-header">
+
+	<h1 class="post-title" itemprop="name headline">apache简单配置</h1>
+
+
+
+</header>
+
+      
+      
+      
+      <div class="post-body">
+        
+        
+          <p>关于apache的配置文件。不管是xampp安装的lamp环境，还是自己在linux下面搭建的lamp环境，之前关于apache的配置都是直接copy网上的，用的虚拟域名，本质是还是不够理解的，关于.htaccess 也只是刚开始学习tp的时候看到过，后来因为配置虚拟域名能解决问题，就没有过多的了解这个.htaccess了。</p>
+<a id="more"></a>
+<p>首先说一下之前遇到的问题。某次，帮助交付的一个同事配置xampp环境，他当时对多站点的配置文件都写在了apache的主配置文件中，httpd.conf,当时因为已经了解了虚拟域名，所以我在同级目录extra下面的httpd-vhost.conf中帮他写了新的配置，当时用的是不同域名分发到不同文件夹下的方式，其实这在实际生活中也是这样的，因为如果靠的是端口号的话，因为web服务默认是80端口，如果用了别的端口号，比如http:\\www.baidu.com:800, 这样访问百度的web服务，这对广大用户是不友好的，因为对于非程序员来说，根本不知道:800是什么。如果不想用域名开进行分发，端口号也是可以的，但为了不让用户去记忆端口号，可以通过nginx来帮忙。比如itbasic.datatom.com和bbs.datatom.com虽然绑定的是同一个服务器，但是通过nginx的转发，到了不同的端口，一个因为是从itbasic.datatom.com+ 80端口来的，所以转发到本服务器的8080端口，一个是从bbs.datatom.com+80端口来的，所以到了8081端口。我就是通过上述两种方式之一的域名不同来帮那个同事写的vhost配置的，可是呢，当我输入域名的时候，他虽然能访问，但是访问的还是之前他的一个网站，fuck！！！算了，配置文件写的这么乱，我就没找原因了，直接帮他copy了以前主配置文件里面写的一个站点配置。</p>
+<p>其实后来我差不多知道原因了，大概是直接在主配置文件里面写了</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">ServerName localhost:80</span><br><span class="line">DocumentRoot &quot;F:/www&quot;</span><br><span class="line">&lt;Directory &quot;F:/www&quot;&gt;</span><br><span class="line">    #</span><br><span class="line">    # Possible values for the Options directive are &quot;None&quot;, &quot;All&quot;,</span><br><span class="line">    # or any combination of:</span><br><span class="line">    #   Indexes Includes FollowSymLinks SymLinksifOwnerMatch ExecCGI MultiViews</span><br><span class="line">    #</span><br><span class="line">    # Note that &quot;MultiViews&quot; must be named *explicitly* --- &quot;Options All&quot;</span><br><span class="line">    # doesn&apos;t give it to you.</span><br><span class="line">    #</span><br><span class="line">    # The Options directive is both complicated and important.  Please see</span><br><span class="line">    # http://httpd.apache.org/docs/2.4/mod/core.html#options</span><br><span class="line">    # for more information.</span><br><span class="line">    #</span><br><span class="line">    Options Indexes FollowSymLinks Includes ExecCGI</span><br><span class="line"></span><br><span class="line">    #</span><br><span class="line">    # AllowOverride controls what directives may be placed in .htaccess files.</span><br><span class="line">    # It can be &quot;All&quot;, &quot;None&quot;, or any combination of the keywords:</span><br><span class="line">    #   AllowOverride FileInfo AuthConfig Limit</span><br><span class="line">    #</span><br><span class="line">    AllowOverride All</span><br><span class="line"></span><br><span class="line">    #</span><br><span class="line">    # Controls who can get stuff from this server.</span><br><span class="line">    #</span><br><span class="line">    Require all granted</span><br><span class="line">&lt;/Directory&gt;</span><br></pre></td></tr></table></figure>
+<p>问题的关键就是那个server name，因为是localhost：80，但凡是host（windows下）里面127.0.0.1 用的80端口，统一转发到这个目录下，造成了上述结果。其实itbasic的服务器配置上也是这么写的，但之外的那些bbs，51dana用的却是虚拟域名，为啥那个能正常访问呢，在于配置文件上面定义了server name itbasic.datatom.com。其实itbasic那个也是可以通过域名来进行分发的，主要在每个vhost里面加个server name 就可以了。itbasic那个完全也可以不用端口进行转发，完全可以通过域名，在每个vhost里面加上server name就可以了</p>
+<p>先说一下关于vhost的配置方法吧</p>
+<p>打开apache的配置文件 htppd.cnf。分别打开重写扩展和虚拟主机扩展：</p>
+<blockquote>
+<p>LoadModule rewrite_module modules/mod_rewrite.so 这句前面的 注释 # 去掉</p>
+<p>Include conf/extra/httpd-vhosts.conf 这句前面的 注释 # 去掉</p>
+</blockquote>
+<p>但现在一般apache都是默认开启的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&lt;VirtualHost *:80&gt;   //包裹的内容代表虚拟主机，端口号80</span><br><span class="line">    DocumentRoot &quot;D:/wamp/www/testphp/&quot;  //项目的根目录</span><br><span class="line">    ServerName php.iyangyi.com   //域名</span><br><span class="line">    ServerAlias www.pptv.cn #可省略  //这个是我们的虚拟域名的别名，可以不要，他的出现场景就是我们希望另外一个域名也往这个目录下调整。比如 www.pptv.cn 我们也希望跳到这里来，就可以这样做，但是前提是 www.pptv.cn 也要绑定host 127.0.0.1</span><br><span class="line">    ServerAdmin stefan321@qq.com #可省略  //这里填 服务器管理员的邮箱，也可以不要，当服务器出现故障后，如果提前有配置邮箱的话，会往这个邮箱发邮件，或者是显示在网页的错误信息当中。一般我们可以不填。</span><br><span class="line">    ErrorLog logs/dev-error.log #可省略  //当访问出现错误的时候，就会记录到这里，注意：logs/dev-error.log 这个文件路径是apache的安装目录下的logs 目录 。可以不要。</span><br><span class="line">    CustomLog logs/dev-access.log common #可省略 //这里填 访问日志，用来记录每一次的请求访问，可以不要。注意：logs/dev-access.log 这个文件路径是apache的安装目录下的logs 目录 。记住：路径后面加common。</span><br><span class="line">    ErrorDocument 404 logs/404.html #可省略 //这里填 403,404等错误信息调整页面，用来访问出现404页面等情况时的错误页面展示，比较有用，也可以不要。注意：/404.html 这个文件路径是项目的根目录，不是apache的目录。</span><br><span class="line">    &lt;Directory &quot;D:/wamp/www/testphp/&quot;&gt;</span><br><span class="line">        Options Indexes FollowSymLinks</span><br><span class="line">        AllowOverride All</span><br><span class="line">        Order Allow,Deny</span><br><span class="line">        Allow from all</span><br><span class="line">        RewriteEngine on</span><br><span class="line">        RewriteCond %&#123;REQUEST_FILENAME&#125; !-d</span><br><span class="line">        RewriteCond %&#123;REQUEST_FILENAME&#125; !-f</span><br><span class="line">        RewriteRule ^(.*)$ index.php/$1 [QSA,PT,L]</span><br><span class="line">    &lt;/Directory&gt;</span><br><span class="line">&lt;/VirtualHost&gt;</span><br></pre></td></tr></table></figure>
+<p>一般配置的时候，上面写了可省略的都不会配置。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;Directory &quot;D:/wamp/www/testphp/&quot;&gt;</span><br></pre></td></tr></table></figure>
+<p>是最重要的一步了，这里也是填本项目的路径，然后所有的<code>rewrite</code>规则都是在里面完成。所以这个是很重要的。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Options Indexes FollowSymLinks</span><br></pre></td></tr></table></figure>
+<p>作用我访问php.iyangyi.com，如果文件根目录里有 index.html(index.php)，浏览器就会显示 index.html的内容，如果没有 index.html，浏览器就会显示这文件根目录的目录列表，目录列表包括文件根目录下的文件和子目录。</p>
+<p>到底是优先显示index.php还是index.html 有apache的配置决定的：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;IfModule dir_module&gt;</span><br><span class="line">    DirectoryIndex index.html index.htm index.php index.php3  </span><br><span class="line">&lt;/IfModule&gt;</span><br></pre></td></tr></table></figure>
+<p>这个是单独写出来的，而不是写在上述标签之内。这个感觉应该是统一定义一个就行了，或者是在vhost里面直接写directoryindx 这个标签，如果没写默认是index.html或者是index.php</p>
+<p>之前遇到一个问题就是public文件夹因为是统一对外开放的嘛，不做处理的话，比如itbasic.datatom.com/userpic,可以访问服务器上public下面这个userpic文件夹，为了不让用户访问，我们可以去掉</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Options Indexes FollowSymLinks</span><br></pre></td></tr></table></figure>
+<p>的indexes,用户就不能访问了。</p>
+<p><code>Order Deny,Allow Allow from all</code>这2个一般是组合在一起用。用来<code>设置访问权限</code> ，设置哪些ip可以访问这个域名, 哪些ip禁止访问。</p>
+<p>所以order是设置这2个的组合排序, 不区分大小写，中间用<code>,</code>分开，中间不能有空格。 </p>
+<p>所以order是设置这2个的组合排序, 不区分大小写，中间用<code>,</code>分开，中间不能有空格。<br><code>Order Deny,Allow</code> ：表示设定“先检查禁止设定，没有设定禁止的全部允许”</p>
+<p><code>Order Allow,Deny</code> : 表示设定“先检查允许设定，没有设定允许的全部禁止”</p>
+<p><strong>而且最后的访问结果有第二参数决定！</strong></p>
+<p><code>Deny from All</code> <code>Deny from 127.0.0.1</code> 禁止访问的ip， all 表示全部 </p>
+<p><code>Deny from All</code> <code>Deny from 127.0.0.1</code> 禁止访问的ip， all 表示全部<br><code>Allow from All</code> <code>Allow from 127.0.0.1</code> 允许访问的ip， all 表示全部</p>
+<p>我们看几个他们2个组合的例子。</p>
+<p>这个例子：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Order Deny,Allow</span><br><span class="line">Deny from All</span><br></pre></td></tr></table></figure>
+<p>表示先检查允许的, 没有允许的全部禁止。但是下却没有Allow，那么就表示是无条件禁止了所有的访问了。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Order Deny,Allow</span><br><span class="line">Deny from all</span><br><span class="line">Allow from 127.0.0.1</span><br></pre></td></tr></table></figure>
+<p>上面表示 只允许127.0.0.1访问</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Order Allow,Deny</span><br><span class="line">Allow from all</span><br><span class="line">Deny from 127.0.0.1 192.168.1.51</span><br></pre></td></tr></table></figure>
+<p>上面表示禁止127.0.0.1和192.168.1.51访问，其他都可以！</p>
+<p>所以这个的组合就可以达到很多的过滤访问效果。</p>
+<p>但现在一般不用那个了</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Require all granted</span><br></pre></td></tr></table></figure>
+<p>才能解决，要么一直都是403。</p>
+<h2 id="RewriteCond-与-RewriteRule-指令格式配置详解"><a href="#RewriteCond-与-RewriteRule-指令格式配置详解" class="headerlink" title="RewriteCond 与 RewriteRule 指令格式配置详解"></a>RewriteCond 与 RewriteRule 指令格式配置详解</h2><p>上面花了大量的时间讲述<code>VirtualHost</code> 里面的一些配置参数的写法和作用，接下来就是rewrite的重点了，3个核心的东西：<strong>RewriteEngine，RewriteCond，RewriteRule</strong></p>
+<p><strong>RewriteEngine</strong> </p>
+<p><strong>RewriteEngine</strong><br>这个是rewrite的<code>总开关</code>，用来开启是否启动url rewrite，要想打开，像这样就可以了：</p>
+<blockquote>
+<p>RewriteEngine on</p>
+</blockquote>
+<p><strong>RewriteCond 和 RewriteRule</strong> </p>
+<p><strong>RewriteCond 和 RewriteRule</strong><br>表示指令定义和匹配一个规则条件，让RewriteRule来重写。说的简单点，RewriteCond就像我们程序中的if语句一样，表示如果符合某个或某几个条件则执行RewriteCond下面紧邻的RewriteRule语句，这就是RewriteCond最原始、基础的功能。</p>
+<p>先看个例子：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">RewriteEngine on</span><br><span class="line">RewriteCond  %&#123;HTTP_USER_AGENT&#125;  ^Mozilla//5/.0.*</span><br><span class="line">RewriteRule  index.php            index.m.php</span><br></pre></td></tr></table></figure>
+<p>上面的匹配规则就是：如果匹配到http请求中HTTP_USER_AGENT 是 Mozilla//5/.0.* 开头的，也就是用FireFox浏览器访问index.php这个文件的时候，会自动让你访问到index.m.php这个文件。</p>
+<p><strong>RewriteCond 和 RewriteRule 是上下对应的关系。可以有1个或者好几个RewriteCond来匹配一个RewriteRule</strong></p>
+<p>RewriteCond一般是这样使用的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">RewriteCond %&#123;XXXXXXX&#125; + 正则匹配条件</span><br></pre></td></tr></table></figure>
+<p>那么RewriteCond可以匹配什么样的数据请求呢？ </p>
+<p>那么RewriteCond可以匹配什么样的数据请求呢？<br>它的使用方式是：<code>RewriteCond %{NAME_OF_VARIABLE} REGX</code> FLAG</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">RewriteCond %&#123;HTTP_REFERER&#125; (www.test.cn)</span><br><span class="line">RewriteCond %&#123;HTTP_USER_AGENT&#125;  ^Mozilla//5/.0.*</span><br><span class="line">RewriteCond %&#123;REQUEST_FILENAME&#125; !-f</span><br></pre></td></tr></table></figure>
+<p>上面是常见的3种最常见使用最多的<code>HTTP头连接与请求</code>匹配。</p>
+<p><strong>HTTP_REFERER</strong> </p>
+<p><strong>HTTP_REFERER</strong><br>这个匹配访问者的地址，php中$_REQUREST中也有这个，当我们需要判断或者限制访问的来源的时候，就可以用它。</p>
+<p>比如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">RewriteCond %&#123;HTTP_REFERER&#125; (www.test.cn)</span><br><span class="line">RewriteRule (.*)$ test.php</span><br></pre></td></tr></table></figure>
+<p>上面语句的作用是如果你访问的上一个页面的主机地址是www.test.cn，则无论你当前访问的是哪个页面，都会跳转到对test.php的访问。</p>
+<p>再比如，也可以利用 HTTP_REFERER <code>防倒链</code>，就是限制别人网站使用我网站的图片。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">RewriteCond %&#123;HTTP_REFERER&#125; !^$ [NC]</span><br><span class="line">RewriteCond %&#123;HTTP_REFERER&#125; !www.iyangyi.com [NC]</span><br><span class="line">RewriteRule \.(jpg|gif) http://image.baidu.com/ [R,NC,L]</span><br></pre></td></tr></table></figure>
+<p>NC nocase的意思，忽略大小写。第一句呢，是必须要有域名，第一句就是看域名如果不是 www.iyangyi.com 的，当访问.jpg或者.gif文件时候，就都会自动跳转到 <a href="http://image.baidu.com/" target="_blank" rel="noopener">http://image.baidu.com/</a> 上，很好的达到了防盗链的要求。</p>
+<p><strong>REQUEST_FILENAME</strong> </p>
+<p><strong>REQUEST_FILENAME</strong><br>这个基本是用的最多的，以为url重写是用的最多的，它是匹配当前访问的域名文件，那哪一块属于REQUEST_FILENAME 呢？是url 除了host域名外的。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://www.rainleaves.com/html/1569.html?replytocom=265</span><br></pre></td></tr></table></figure>
+<p>这个url，那么 REQUEST_FILENAME 就是 <code>html/1569.html?replytocom=265</code></p>
+<p>看个例子：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">RewriteCond %&#123;REQUEST_FILENAME&#125; !-f</span><br><span class="line">RewriteCond %&#123;REQUEST_FILENAME&#125; !-d</span><br><span class="line">RewriteRule ^room/video/(\d+)\.html web/index\.php?c=room&amp;a=video&amp;r=$1 [QSA,NC,L]</span><br></pre></td></tr></table></figure>
+<p><code>-d</code> 是否是一个目录. 判断TestString是否不是一个目录可以这样: <code>!-d</code> </p>
+<p><code>-d</code> 是否是一个目录. 判断TestString是否不是一个目录可以这样: <code>!-d</code><br><code>-f</code> 是否是一个文件. 判断TestString是否不是一个文件可以这样: <code>!-f</code></p>
+<p>这两句语句<code>RewriteCond</code>的意思是请求的文件或路径是不存在的，如果文件或路径存在将返回已经存在的文件或路径。一般是这样结合在一起用的。</p>
+<p>上面<code>RewriteRule</code>正则的意思是以 room开头的 room/video/123.html 这样子，变成 web/index.php?c=room&amp;a=video&amp;r=123</p>
+<p><code>$1</code> 表示匹配到的第一个参数。</p>
+<h2 id="RewriteRule-写法和规则"><a href="#RewriteRule-写法和规则" class="headerlink" title="RewriteRule 写法和规则"></a>RewriteRule 写法和规则</h2><p>RewriteRule是配合RewriteCond一起使用，可以说，RewriteRule是RewriteCond成功匹配后的执行结果，所以，它是很重要的。</p>
+<p>来看一下 <code>RewriteRule</code>的写法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">RewriteRule Pattern Substitution [flags]</span><br></pre></td></tr></table></figure>
+<p><code>Pattern</code>是一个正则匹配。<code>Substitution</code>是匹配的替换 <code>[flags]</code>是一些参数限制；</p>
+<p>我们看几个例子：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">RewriteRule ^room/video/(\d+)\.html web/index\.php?c=room&amp;a=video&amp;r=$1 [QSA,NC,L]</span><br></pre></td></tr></table></figure>
+<p>意思是 以 room开头的 room/video/123.html 这样子，变成 web/index.php?c=room&amp;a=video&amp;r=123</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">RewriteRule \.(jpg|gif) http://image.baidu.com/ [R,NC,L]</span><br></pre></td></tr></table></figure>
+<p>意思是以为是访问.jpg或者gif的文件，都会调整到 <a href="http://image.baidu.com/" target="_blank" rel="noopener">http://image.baidu.com</a></p>
+<p>所以，掌握正则级是关键所在了。以后，我会专门搞一个正则的篇章来学习下。</p>
+<p>我们再看看<code>[flags]</code>是什么意思？</p>
+<p>因为它太多了。我就挑几个最常用的来说说吧。</p>
+<p><code>[QSA]</code> qsappend(追加查询字符串)的意思，次标记强制重写引擎在已有的替换字符串中追加一个查询字符串，而不是简单的替换。如果需要通过重写规则在请求串中增加信息，就可以使用这个标记。上面那个<code>room</code>的例子，就必须用它。</p>
+<p><code>NC</code> nocase(忽略大小写)的意思，它使Pattern忽略大小写，也就是在Pattern与当前URL匹配时，”A-Z”和”a-z”没有区别。这个一般也会加上，因为我们的url本身就不区分大小写的。</p>
+<p><code>R</code> redirect(强制重定向)的意思，适合匹配Patter后，Substitution是一个http地址url的情况，就调整出去了。上面那个调整到image.baidu.com的例子，就必须也用它。</p>
+<p><code>L</code> last(结尾规则)的意思，就是已经匹配到了，就立即停止，不再匹配下面的Rule了，类似于编程语言中的<code>break</code>语法，跳出去了。</p>
+<p>其他的一些具体的语法，可以参考以下资料：</p>
+<p><a href="http://www.skygq.com/2011/02/21/apache%E4%B8%ADrewritecond%E8%A7%84%E5%88%99%E5%8F%82%E6%95%B0%E4%BB%8B%E7%BB%8D%E8%BD%AC/" target="_blank" rel="noopener">http://www.skygq.com/2011/02/21/apache%E4%B8%ADrewritecond%E8%A7%84%E5%88%99%E5%8F%82%E6%95%B0%E4%BB%8B%E7%BB%8D%E8%BD%AC/</a></p>
+<p><a href="http://www.2cto.com/os/201201/116040.html" target="_blank" rel="noopener">http://www.2cto.com/os/201201/116040.html</a></p>
+<p><a href="http://www.cnblogs.com/adforce/archive/2012/11/23/2784664.html" target="_blank" rel="noopener">http://www.cnblogs.com/adforce/archive/2012/11/23/2784664.html</a></p>
+<h2 id="htaccess文件的使用"><a href="#htaccess文件的使用" class="headerlink" title=".htaccess文件的使用"></a>.htaccess文件的使用</h2><p><code>.htaccess</code>文件是啥呢？我们前面说了这么多的配置和修改，都是针对于apache的配置文件来修改的。.htaccess文件就是它的一个替代品。为啥呢？因为你每次修改apache的配置文件，都必须重启apache服务器，很麻烦不说，有些共享apache的服务器，你还没权限修改和重启apache。所以，.htaccess文件就应运而生了。（不用重启apache,是真的挺方便的）</p>
+<p><code>.htaccess</code>分布式配置文件。它文件名字比较奇怪，没有文件名，只有一个文件后缀就是<code>.htaccess</code>。所以一般在windows下还没法新建这个文件，因为windows不允许文件名是空的，比较蛋疼。但是我相信你总归会有办法新建这个文件的。（在linux下新建一个，下载到windows中呗）</p>
+<p><code>.htaccess</code>同时是一个针对目录的配置，你可以把它放到项目的根目录下，那么它就多整个项目其效果，如果你把它放到一个单独的子目录下，那么它就对这个子目录其效果了。</p>
+<p><strong>.htaccess</strong>文件如何生效呢。上面讲配置的时候，我讲过了<code>AllowOverride All</code>这个配置，它就是启动<code>.htaccess</code>文件是否可以使用的。<code>AllowOverrideAll</code>表示可以。<code>AllowOverride None</code>表示禁止使用。还是蛮简单的。</p>
+<p><strong>那.htaccess文件里的语法是怎么写额呢？</strong></p>
+<p>其实和上面说的一模一样的写法。可以完全的搬过来用。没问题。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"> &lt;Directory &quot;D:/wamp/www/testphp/&quot;&gt;</span><br><span class="line">    Options Indexes FollowSymLinks</span><br><span class="line">    AllowOverride All</span><br><span class="line">    Order Allow,Deny</span><br><span class="line">    Allow from all</span><br><span class="line">    RewriteEngine on</span><br><span class="line">    RewriteCond %&#123;REQUEST_FILENAME&#125; !-d</span><br><span class="line">    RewriteCond %&#123;REQUEST_FILENAME&#125; !-f</span><br><span class="line">    RewriteRule ^(.*)$ index.php/$1 [QSA,PT,L]</span><br><span class="line">&lt;/Directory&gt;</span><br></pre></td></tr></table></figure>
+<p>上面的apache的<code>`里的这一块就可以完全的搬到</code>.htaccess`文件中来，且效果一模一样。</p>
+<p>上面就是vhost文件里面的配置的大致写法，其实httpd.conf里面也是这么写的，毕竟vhost最后还是包含到主配置文件里面。</p>
+<p>documentroot 其实自己一直好奇为啥和directory参数一样其实本质上该项目文件夹下只有这个document root能访问，所以重写规则也好，针对的都是这个document root，导致了二者之间的相同。</p>
+<p>有一点要注意的就是，如果通过开不同的端口号转发到不同的文件夹，需要早配置文件的开头写上Listen 127.0.0.1：8080 这样，开启端口号。</p>
+
+        
+      </div>
+      
+      
+      
+    </div>
+    
+    
+    
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/my.png"
+                alt="chenye2017" />
+            
+              <p class="site-author-name" itemprop="name">chenye2017</p>
+              <p class="site-description motion-element" itemprop="description">想用善良改变世界</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">73</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">71</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/chenye2017" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:1967196626@qq.com" target="_blank" title="E-Mail">
+                    
+                      <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://weibo.com/3215254425" target="_blank" title="Weibo">
+                    
+                      <i class="fa fa-fw fa-globe"></i>Weibo</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-crosshairs"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.baidu.com/" title="百度" target="_blank">百度</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.google.com/" title="谷歌" target="_blank">谷歌</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#RewriteCond-与-RewriteRule-指令格式配置详解"><span class="nav-number">1.</span> <span class="nav-text">RewriteCond 与 RewriteRule 指令格式配置详解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RewriteRule-写法和规则"><span class="nav-number">2.</span> <span class="nav-text">RewriteRule 写法和规则</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#htaccess文件的使用"><span class="nav-number">3.</span> <span class="nav-text">.htaccess文件的使用</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">chenye2017</span>
+
+  
+</div>
+
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span> |
+</span>
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.3</div>
+
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count"> | 博客全站共112.7k字</span>
+</div>
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+  
+   <canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.2.0/anime.min.js"></script>
+   <script type="text/javascript" src="/js/src/fireworks.js"></script>
+
+
+
+</body>
+</html>

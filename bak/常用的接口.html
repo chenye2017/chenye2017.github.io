@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content=",," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="语法糖的博客" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="关于登陆，现在的网站有第三方登陆（qq,微信，微博）， 手机号登陆，用户名密码登陆，sso登陆，找回密码，注销 感觉其实都差不多">
+<meta name="keywords" content="PHP,API">
+<meta property="og:type" content="website">
+<meta property="og:title" content="常用的接口(-)">
+<meta property="og:url" content="http://yoursite.com/bak/常用的接口.html">
+<meta property="og:site_name" content="语法糖的博客">
+<meta property="og:description" content="关于登陆，现在的网站有第三方登陆（qq,微信，微博）， 手机号登陆，用户名密码登陆，sso登陆，找回密码，注销 感觉其实都差不多">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5525740-517ca8a069faf690.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5525740-804e1f534d3a4917.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-12-07T16:32:34.037Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="常用的接口(-)">
+<meta name="twitter:description" content="关于登陆，现在的网站有第三方登陆（qq,微信，微博）， 手机号登陆，用户名密码登陆，sso登陆，找回密码，注销 感觉其实都差不多">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/5525740-517ca8a069faf690.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/bak/常用的接口.html"/>
+
+
+
+
+
+  <title>常用的接口(-) | 语法糖的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+
+    <script type="text/javascript" src="/live2d/script.js"></script>
+    <canvas id="live2dcanvas" width="150" height="300" class="live2d"></canvas>
+    <style>
+      #live2dcanvas {
+        position: fixed;
+        right: 0px;
+        z-index: 999;
+        pointer-events: none;
+        bottom: -40px;
+      }
+    </style>
+    <script>loadlive2d("live2dcanvas" ,"/live2d/assets/wanko/wanko.model.json",0.5)</script>
+  
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">语法糖的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">爱动漫，热爱LOL</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+    
+    
+    <div class="post-block page">
+      <header class="post-header">
+
+	<h1 class="post-title" itemprop="name headline">常用的接口(-)</h1>
+
+
+
+</header>
+
+      
+      
+      
+      <div class="post-body">
+        
+        
+          <p>关于登陆，现在的网站有第三方登陆（qq,微信，微博）， 手机号登陆，用户名密码登陆，sso登陆，找回密码，注销 感觉其实都差不多<br><a id="more"></a></p>
+<p><strong>第三方登陆</strong><br>其实国内的大多数第三方登陆都是基于oauth 2.0的变种，同理还有微信上消息more按钮点击能跳转到公司网站同样实现登陆都是基于这个，那什么是oauth2.0呢，阮老师这篇文章讲解的很清楚<a href="http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html" target="_blank" rel="noopener">oauth2.0</a>，而我们用的更多的又是其中的授权码模式，大致逻辑如下</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/5525740-517ca8a069faf690.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>其中比较重要的两点就是用户授权code和access_token, code作用代表用户同意登陆了，access_token 代表这个用户资源（有时候像之前的小程序，是拿着用户同意之后返回的code 去换回openid, 这个openid 类似这个access_token, 他在每个应用中是唯一的，代表了一个用户，如果我们想把不同app上同一个微信用户绑在一起，需要我们去微信联合平台绑定需要处理的app，然后下次请求的时候会返回一个unit id ，这个对于同一个微信用户在不同的app内部是唯一的）</p>
+<p>for example 微信消息跳转itbasic网站<br>1.引导用户点击授权链接，微信给的授权链接上会有参数绑定回调地址和state参数，当用户点击的时候，微信会重定向（注意不是回调）填写的会掉地址，并携带参数state,还有code ,也就是用户授权码，下面是我们的重定向地址代码<br>2.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">public function dologin($req)</span><br><span class="line">    &#123;</span><br><span class="line">        $code = $req-&gt;param(&apos;code&apos;);  # 用户授权码</span><br><span class="line">        $state = $req-&gt;param(&apos;state&apos;);  # 自己定义的参数，比如这次登陆来自微信，或者登陆之后需要跳转的地址</span><br><span class="line">        $accesstoken = $this-&gt;getAccessToken(); # 微信这块的access_token不需要用户的授权即可获取，但后面获取用户信息还是需要授权码，所以原理和上面是一样的</span><br><span class="line">         </span><br><span class="line">        $url = &apos;https://qyapi.weixin.qq.com/cgi-bin/user/getuserinfo?access_token=&apos;.$accesstoken.&apos;&amp;code=&apos;.$code;  </span><br><span class="line"></span><br><span class="line">        $res =$this-&gt;http($url); #获取用户信息</span><br><span class="line"></span><br><span class="line">        if (!array_key_exists(&apos;UserId&apos;, $res[&apos;result&apos;])) &#123;</span><br><span class="line">             // 记录错误信息（微信）到日志,获取用户信息出错</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        </span><br><span class="line">           // 根据实际业务处理，我这块是登陆</span><br><span class="line">          // 你可以根据返回的用户名称，判断是新用户，还是老用户，新用户的话会往数据库插入数据</span><br><span class="line">            $user_model = Box::getObject(&apos;user&apos;, model);</span><br><span class="line">            $res = $user_model-&gt;search($res[&apos;name&apos;]);</span><br><span class="line"></span><br><span class="line">            if (!$res) &#123;</span><br><span class="line">                // 记录错误信息（itbaisc） 到日志，查找用户失败</span><br><span class="line">            &#125;</span><br><span class="line">        </span><br><span class="line">            $userinfo = $res;</span><br><span class="line">            $userinfo = [&apos;userid&apos; =&gt; $userinfo[&apos;id&apos;], &apos;username&apos; =&gt; $userinfo[&apos;username&apos;], &apos;status&apos; =&gt; $userinfo[&apos;status&apos;], &apos;deptsid&apos; =&gt; $userinfo[&apos;deptsid&apos;], &apos;postsid&apos; =&gt; $userinfo[&apos;postsid&apos;], &apos;role&apos; =&gt; $userinfo[&apos;role&apos;], &apos;long&apos; =&gt; true];</span><br><span class="line">            Session::set(&apos;userinfo&apos;, $userinfo);  //实现登陆</span><br><span class="line">        </span><br><span class="line">        $state = urldecode($state);  // 之前我们自己绑定的参数，因为url在http参数中需要加密，防止多余的http这些参数</span><br><span class="line">        header( &quot;Location: $state&quot; );exit;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
+<p><strong>手机号登陆</strong><br>首先生成验证码,存入缓存中，手机号=》验证码（过期时间，离开当前页面让其失效，只能使用一次），然后调用第三方接口发送给手机上这个验证码，用户收到验证码之后调用新的接口进行验证，我们在缓存中寻找手机号验证码是否匹配，如果匹配代表成功，后面是登陆啊，还是绑定啊看自己的业务需求</p>
+<p><strong>sso登陆</strong><br>一处登陆处处登陆，一处注销，处处注销<br>(itbasic的原理类似oauth2。首先用户验证是否在的登陆中心登陆，如果没有，先登录，登陆中心成功后返回一个access_token,重定向到你来时候那个地址，相当于帮你发出请求，你拿着这个access_token获取用户信息，干啥都是你自己的事情。下次用户再来的时候，验证中心已经登陆上了，直接返回access_token然后重定向)<br>（注销，我们在每次去验证中心验证的时候，都记住有哪些来的网站，注销的时候都请求他们注销的地址就好了，这个时候可以直接请求，不用重定向，因为不用种cookie,直接销毁服务端数据就好了）</p>
+<p><strong>找回密码</strong><br>通过邮箱。首先填写用户名和邮箱（为了防止别人恶意找回用户），确保用户名和邮箱和登陆的时候绑定一致，才发送修改密码的邮件，邮件内容是</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/5525740-804e1f534d3a4917.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>这样其实就足够了，这个token 是我们之前发送邮件时候生成的，我们只需要保证 用户名 =&gt;token,当用户请求这个接口的时候（注意一定是get请求，因为是点击），我们通过这个token,知道是哪个用户就好了，然后返回一个界面让用户修改密码就可以了.</p>
+<p>熟悉了几个函数的使用</p>
+<p>http_query_build ,拼接http请求参数（这个对url 好像还会进行urlencode加密）</p>
+<p>parse_str, 把上面的拼接内容分开</p>
+<p>当然上面各个案例的解决方案很多，比如找回密码用手机而不是用邮箱，只是简单记录下常用的方式</p>
+
+        
+      </div>
+      
+      
+      
+    </div>
+    
+    
+    
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/my.png"
+                alt="chenye2017" />
+            
+              <p class="site-author-name" itemprop="name">chenye2017</p>
+              <p class="site-description motion-element" itemprop="description">想用善良改变世界</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">73</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">71</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/chenye2017" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:1967196626@qq.com" target="_blank" title="E-Mail">
+                    
+                      <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://weibo.com/3215254425" target="_blank" title="Weibo">
+                    
+                      <i class="fa fa-fw fa-globe"></i>Weibo</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-crosshairs"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.baidu.com/" title="百度" target="_blank">百度</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.google.com/" title="谷歌" target="_blank">谷歌</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">chenye2017</span>
+
+  
+</div>
+
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span> |
+</span>
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.3</div>
+
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count"> | 博客全站共112.7k字</span>
+</div>
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+  
+   <canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.2.0/anime.min.js"></script>
+   <script type="text/javascript" src="/js/src/fireworks.js"></script>
+
+
+
+</body>
+</html>

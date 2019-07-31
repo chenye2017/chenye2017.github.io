@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content=",," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="语法糖的博客" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="本来是不想写这篇文章的，因为感觉自己对于postgresql理解不够深入，但因为生活中对于postgresql有些问题总是遇到，所以记录下来，方便以后查找。">
+<meta name="keywords" content="postgresql,数据库">
+<meta property="og:type" content="website">
+<meta property="og:title" content="postgresql常见问题总结">
+<meta property="og:url" content="http://yoursite.com/bak/postgresql常见问题总结.html">
+<meta property="og:site_name" content="语法糖的博客">
+<meta property="og:description" content="本来是不想写这篇文章的，因为感觉自己对于postgresql理解不够深入，但因为生活中对于postgresql有些问题总是遇到，所以记录下来，方便以后查找。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://ozys8fka7.bkt.clouddn.com/TIM%E6%88%AA%E5%9B%BE20180417155030.png">
+<meta property="og:updated_time" content="2018-08-20T11:53:04.460Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="postgresql常见问题总结">
+<meta name="twitter:description" content="本来是不想写这篇文章的，因为感觉自己对于postgresql理解不够深入，但因为生活中对于postgresql有些问题总是遇到，所以记录下来，方便以后查找。">
+<meta name="twitter:image" content="http://ozys8fka7.bkt.clouddn.com/TIM%E6%88%AA%E5%9B%BE20180417155030.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/bak/postgresql常见问题总结.html"/>
+
+
+
+
+
+  <title>postgresql常见问题总结 | 语法糖的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+
+    <script type="text/javascript" src="/live2d/script.js"></script>
+    <canvas id="live2dcanvas" width="150" height="300" class="live2d"></canvas>
+    <style>
+      #live2dcanvas {
+        position: fixed;
+        right: 0px;
+        z-index: 999;
+        pointer-events: none;
+        bottom: -40px;
+      }
+    </style>
+    <script>loadlive2d("live2dcanvas" ,"/live2d/assets/wanko/wanko.model.json",0.5)</script>
+  
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">语法糖的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">爱动漫，热爱LOL</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+    
+    
+    <div class="post-block page">
+      <header class="post-header">
+
+	<h1 class="post-title" itemprop="name headline">postgresql常见问题总结</h1>
+
+
+
+</header>
+
+      
+      
+      
+      <div class="post-body">
+        
+        
+          <p>本来是不想写这篇文章的，因为感觉自己对于postgresql理解不够深入，但因为生活中对于postgresql有些问题总是遇到，所以记录下来，方便以后查找。</p>
+<a id="more"></a>
+<p>1.navicate连接postgresql</p>
+<p>第一次建立连接肯定会报错啦</p>
+<p><img src="http://ozys8fka7.bkt.clouddn.com/TIM%E6%88%AA%E5%9B%BE20180417155030.png" alt="navicate连接postgresql属性"></p>
+<p>上面初始数据库的意思并不是数据库的名称。毕竟这次连接成功后，里面有一堆的数据库</p>
+<blockquote>
+<p>The server doesn’t grant access to the database: the server reports<br>FATAL: no pg_hba.conf entry for host “192.168.0.123”, user “postgres”, database “postgres” FATAL: no pg_hba.conf entry for host “192.168.0.123”, user “postgres”, database “postgres”</p>
+</blockquote>
+<p>谷歌翻译</p>
+<blockquote>
+<p>服务器不授予对数据库的访问权限：服务器报告<br>FATAL：主机“192.168.0.123”，用户“postgres”，数据库“postgres”没有pg_hba.conf条目FATAL：主机“192.168.0.123”没有pg_hba.conf条目，用户“postgres”，数据库“postgres”</p>
+</blockquote>
+<p>其实字面意思就很容易理解，虽然我还是百度的错误答案。我自己理解就是入口不被允许,就觉办法如下</p>
+<blockquote>
+<p>PostgreSQL数据库为了安全，它不会监听除本地以外的所有连接请求，当用户通过JDBC访问是，会报一些如下的异常：</p>
+<p>org.postgresql.util.PSQLException: FATAL: no pg_hba.conf entry for host</p>
+<p>要解决这个问题，只需要在PostgreSQL数据库的安装目录下找到/data/pg_hba.conf,找到“# IPv4 local connections:”</p>
+<p>在其下加上请求连接的机器IP</p>
+<p>host all all 127.0.0.1/32 md5 //坑爹，那里面对于192.168.23.10当做192.168.23.1</p>
+<p>32是子网掩码的网段；md5是密码验证方法，可以改为trust</p>
+</blockquote>
+<p>一个服务器，有内网ip（类似192.168这些，有外网ip 211.这种，有127.0.0.1 这种，如果要包括所有的，就得用0.0.0.0，感觉如果你访问一个服务器用的是内网ip，应该意思就是你们在同一个局域网中吧。很奇怪的一点是，之前说vagrant会把ssh的22端口映射到host的2222端口，导致了127.0.0.1:2222或者192.168.23.10:22都能访问，其实不太懂这个原理，但好像这是由两个不同的网卡决定的，我好像把itbasic那上面一个网卡禁止了，导致127那种ssh访问不了，感觉就是虽然内网ip和外网ip可以对应同一个端口，但也可以对应不同的端口）</p>
+<p>2.导入导出数据库</p>
+<p>导出：/opt/pgsql/bin/pg_dump -U postgres itbasic &gt; /home/itbasic/itbasic.sql</p>
+<p>pg_dump 是postgresql安装之后的一个命令，-U 指定用户 postgres, itbasic,是数据库名，postgresql好像只能用postgres这个用户执行操作，itbasic这个数据库名一定要指定，还有pg_dump 这个命令所在目录没有加入系统变量的话，一定要加上路径，后面 &gt;/home/itbasic/itbasic.sql,代表数据导出到具体的文件中。</p>
+<p>导出</p>
+<p>数据库的导入必须要先创建这个数据库</p>
+<p>postgresql安装之后的命令会有createdb，但用这个创建数据库感觉挺麻烦，直接</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1. /opt/pgsql/bin/pgsql -U postgres itbasic  //进入pgsql 客户端</span><br><span class="line">2. create database project x   //创建数据库</span><br><span class="line">3. \q   //退出pgsql客户端</span><br><span class="line">4. /opt/pgsql/bin/pgsql -U postgres projectx -f /home/itbasic/projectx.sql   //导入数据库</span><br></pre></td></tr></table></figure>
+<p>3.导入导出表</p>
+<p>导入导出表和导入导出数据库的最大区别是导入导出数据库需要先建立一个数据库，而表则不用，最好还先把这张表删除了</p>
+<p>导出</p>
+<p>/opt/pgsql/bin/pg_dump -U postgres itbasic  -t dt_admin &gt; /home/itbasic/admin.sql</p>
+<p>导入</p>
+<p>/opt/pgsql/bin/psql -U postgres itbasic -f /home/itbasic/admin.sql</p>
+<p>4.数组类型</p>
+<p>array_remove  会把出现的元素全都移除掉，而不是只移除一个   love=array_remove(love, chen.ye)</p>
+<p>array_append   love= array_append(love, chen.ye)</p>
+<p>如果元素不存在，也不会报错，只会接着往下执行</p>
+<p>any()  chenye = any(love)  love这个字段中是否有陈野</p>
+<p>5.今天在到处数据的时候发现了一个不得了的问题，就是通过命令导出的数据的时候当文件一定大的时候，会自动停止，但是导出语句不会报错，这就坑爹了，也就是说我每天备份的那些文件都没有任何的意义</p>
+<p>可以通过</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/opt/pgsql/bin/pg_dump -U postgres itbasic -t &apos;(dt_user|dt_user_login|dt_userinfo)&apos; &gt; /home/itbasic/t4.sql</span><br></pre></td></tr></table></figure>
+<p>分表导出</p>
+<p>表名的话可以通过</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select tablename from pg_tables where tablename like &apos;dt_%&apos;</span><br></pre></td></tr></table></figure>
+<p>筛选出来再连接，果然定义成有前缀好处颇多，要不然筛选出好多自带的无用的表</p>
+<p>6.感觉要多看看别的项目是怎么进行数据备份的，之前的那种一次性导出的方式不行，当数据量大的时候，单表备份可能都不行。</p>
+
+        
+      </div>
+      
+      
+      
+    </div>
+    
+    
+    
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/my.png"
+                alt="chenye2017" />
+            
+              <p class="site-author-name" itemprop="name">chenye2017</p>
+              <p class="site-description motion-element" itemprop="description">想用善良改变世界</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">73</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">71</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/chenye2017" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:1967196626@qq.com" target="_blank" title="E-Mail">
+                    
+                      <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://weibo.com/3215254425" target="_blank" title="Weibo">
+                    
+                      <i class="fa fa-fw fa-globe"></i>Weibo</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-crosshairs"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.baidu.com/" title="百度" target="_blank">百度</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.google.com/" title="谷歌" target="_blank">谷歌</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">chenye2017</span>
+
+  
+</div>
+
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span> |
+</span>
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.3</div>
+
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count"> | 博客全站共112.7k字</span>
+</div>
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+  
+   <canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.2.0/anime.min.js"></script>
+   <script type="text/javascript" src="/js/src/fireworks.js"></script>
+
+
+
+</body>
+</html>

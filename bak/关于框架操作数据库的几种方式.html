@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="语法糖的博客" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="其实第一次有这方面的思考是来自七月老师的tp教程，他起了个头，他那个课程的核心就是为了提倡大家使用orm，后来在工作中开始留意这方面的知识.(如果没有那个引子，估计我会把builder query和orm弄混淆吧，因为真的挺相似，调用方法都是链式，orm对于bq方法的使用，又因为区别在于orm的面向对象这个特性上，而且现在基本都不用bq了，就算使用也是可以DB直接调用,而不用像orm那样需要定义一">
+<meta property="og:type" content="website">
+<meta property="og:title" content="关于框架操作数据库的几种方式">
+<meta property="og:url" content="http://yoursite.com/bak/关于框架操作数据库的几种方式.html">
+<meta property="og:site_name" content="语法糖的博客">
+<meta property="og:description" content="其实第一次有这方面的思考是来自七月老师的tp教程，他起了个头，他那个课程的核心就是为了提倡大家使用orm，后来在工作中开始留意这方面的知识.(如果没有那个引子，估计我会把builder query和orm弄混淆吧，因为真的挺相似，调用方法都是链式，orm对于bq方法的使用，又因为区别在于orm的面向对象这个特性上，而且现在基本都不用bq了，就算使用也是可以DB直接调用,而不用像orm那样需要定义一">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-07-28T15:12:14.011Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="关于框架操作数据库的几种方式">
+<meta name="twitter:description" content="其实第一次有这方面的思考是来自七月老师的tp教程，他起了个头，他那个课程的核心就是为了提倡大家使用orm，后来在工作中开始留意这方面的知识.(如果没有那个引子，估计我会把builder query和orm弄混淆吧，因为真的挺相似，调用方法都是链式，orm对于bq方法的使用，又因为区别在于orm的面向对象这个特性上，而且现在基本都不用bq了，就算使用也是可以DB直接调用,而不用像orm那样需要定义一">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/bak/关于框架操作数据库的几种方式.html"/>
+
+
+
+
+
+  <title>关于框架操作数据库的几种方式 | 语法糖的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+
+    <script type="text/javascript" src="/live2d/script.js"></script>
+    <canvas id="live2dcanvas" width="150" height="300" class="live2d"></canvas>
+    <style>
+      #live2dcanvas {
+        position: fixed;
+        right: 0px;
+        z-index: 999;
+        pointer-events: none;
+        bottom: -40px;
+      }
+    </style>
+    <script>loadlive2d("live2dcanvas" ,"/live2d/assets/wanko/wanko.model.json",0.5)</script>
+  
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">语法糖的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">爱动漫，热爱LOL</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+    
+    
+    <div class="post-block page">
+      <header class="post-header">
+
+	<h1 class="post-title" itemprop="name headline">关于框架操作数据库的几种方式</h1>
+
+
+
+</header>
+
+      
+      
+      
+      <div class="post-body">
+        
+        
+          <p>其实第一次有这方面的思考是来自七月老师的tp教程，他起了个头，他那个课程的核心就是为了提倡大家使用orm，后来在工作中开始留意这方面的知识.(如果没有那个引子，估计我会把builder query和orm弄混淆吧，因为真的挺相似，调用方法都是链式，orm对于bq方法的使用，又因为区别在于orm的面向对象这个特性上，而且现在基本都不用bq了，就算使用也是可以DB直接调用,而不用像orm那样需要定义一个model类，很难找出bq相对于orm的差别，换句话说因为本身orm就是基于bq的，所以我们需要发现的orm相对于bq的改变，但这个改变刚好是面向对象这种思想上，加上bq的少使用，这个改变很难发现)</p>
+<a id="more"></a>
+<p>看了下php关于linux方面的知识，pdo， builder query ，orm，我这种基础不好接触面不广的人经常混淆。在pdo之前应该是直接利用mysql 和 mysqli进行数据库连接操作，这种的只需要php开启对应的mysql或者mysqli扩展就好了（mysql已经废弃了），这还是我刚学习php的时候书上经常写的，后来在工作中这种的用的就比较少了，主要用的就是pdo了，个人感觉pdo和mysqli用起来查询那些操作还是差不多的，不管是函数还是查询到的结果集，感觉差别最大的还是 一个是new pdo一个是 mysqli_connect吧，:smile:。（pdo使用的时候除了安装pdo扩展，还要开启对应的驱动哦，比如 mysql_pdo）。</p>
+<p>还记的我在学习慕课那个高性能api接口时候接触到的dao层吗，其实dao后来理解起来感觉是不是只有在那种处理比较麻烦和严谨的时候使用</p>
+<pre><code>&lt;?php
+class DB_user extends DB_base {
+    public function find($username) {
+        $query = self::$db-&gt;prepare(&quot;select count(*) as c from yaf_user where username = ?&quot;);
+        $query-&gt;execute([$username]);
+        $count = $query-&gt;fetchAll();
+        if ($count[0][&apos;c&apos;] != 0) {
+            list(self::$errno, self::$errmsg) = Err_map::getCodeMessage(1004);
+            return false;
+        }
+        return true;
+    }
+</code></pre><p>看这种，查询一个结果要写这么多，肯定需要独立出来呢。</p>
+<p>后来是builder query，其实和orm是很像的，毕竟orm是基于builder query的，但二者不同之处在于orm把一张表看做一个模型model了，列看做模型对象的属性了，记录看做模型的实例(虽然我们在使用bq的时候可能也是这样想的，但orm不止是想这么简单，他是具体的实现了，比如下面同样调用all方法，虽然查出来的数据类型可能都是collection，但是展开看下，一个下面是关联数组，一个是对象，有具体的public 和private属性)。因为orm基于bq嘛，所以bq的那些方法orm都可以使用，所以我感觉方法的混用也是容易把orm和bq混淆的原因。但你是否还记得bq使用的时候调用的类是 DB,以laravel举例，DB是库facade下面的，但是orm使用的时候我们调用的类是继承model的那个类名字</p>
+<pre><code>DB::table(&apos;student&apos;)-&gt;all()
+Student::all()
+</code></pre><p>当我在学习yii的时候还接触到一个概念AR，其实AR只是实现orm的一种方式，比较常用的有AR和··mapper，laravel（Eloquent）和yii现在orm实现方式都是AR，所以不要把这个当做yii和laravel的区别啦。</p>
+<p>AR和mapper的区别在于，mapper把数据对象和数据持久化分开了（啥叫持久化，就是数据存储啊笨蛋···zz，心痛的感觉），mapper中对于数据的保存需要用类似bq中一个统一的类去实现，比如</p>
+<pre><code>//伪代码,方法名纯属虚构，因为懒得去查了
+$student = new Student();
+$student-&gt;name = &apos;cy&apos;;
+$student-&gt;age = 19;
+DBMAPPER-&gt;config($student);
+DBMAPPER-&gt;refresh($student);
+</code></pre><p>现在水平太低，也不知道这样的好处是啥：说是为了把数据对象独立出来，让他的作用就是在各个层中传递.</p>
+<p>大致就这些了吧，最后来一个laravel中最基础的model定义，让我们来更能理解orm的那几个定义</p>
+<pre><code>//orm把一张表看做一个模型model了，列看做模型对象的属性了，记录看做模型的实例
+
+&lt;?php
+
+namespace App;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Test extends Model
+{
+    //定义表名
+    protected $table = &apos;test&apos;;
+
+    //禁止更新时间戳，默认会更新created_at和updated_at
+    public $timestamps = false;
+
+    //可以批量赋值的属性，什么叫做批量赋值，就是我们可以通过create方法插入的，不是save那种，create是直接传入一个索引数组，
+    //save 是通过给实例的属性一个个赋值，就这点看来，确实有批量赋值的意思
+    protected $fillable = [&apos;name&apos;];
+}
+</code></pre><p>​    </p>
+<p>laravel 中orm的实现用了很多PHP的特性（魔术方法等），比如属性，写的挺好的，在laravel核心框架技术解析中有写到。</p>
+
+        
+      </div>
+      
+      
+      
+    </div>
+    
+    
+    
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/my.png"
+                alt="chenye2017" />
+            
+              <p class="site-author-name" itemprop="name">chenye2017</p>
+              <p class="site-description motion-element" itemprop="description">想用善良改变世界</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">73</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">71</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/chenye2017" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:1967196626@qq.com" target="_blank" title="E-Mail">
+                    
+                      <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://weibo.com/3215254425" target="_blank" title="Weibo">
+                    
+                      <i class="fa fa-fw fa-globe"></i>Weibo</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-crosshairs"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.baidu.com/" title="百度" target="_blank">百度</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.google.com/" title="谷歌" target="_blank">谷歌</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">chenye2017</span>
+
+  
+</div>
+
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span> |
+</span>
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.3</div>
+
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count"> | 博客全站共112.7k字</span>
+</div>
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+  
+   <canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.2.0/anime.min.js"></script>
+   <script type="text/javascript" src="/js/src/fireworks.js"></script>
+
+
+
+</body>
+</html>

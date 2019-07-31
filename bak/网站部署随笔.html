@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="语法糖的博客" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="618买了个网易云，2g内存1m带宽1核40g的存储，123一年，挺便宜的，相比较阿里云ecs和网易蜂巢还有腾讯云，之前同事有买过国外的vps搭建梯子，但在国内，vps这种的也就只能搭建梯子使用，如果想生活中用来玩玩，那是不利于个人的身心健康发展的，因为毕竟服务器架在国外，通过控制台或者xshell进行连接的时候真的有种想死的感觉，输入命令和幻灯片一样，但国外的vps好像是可以按照使用时间来计费的">
+<meta property="og:type" content="website">
+<meta property="og:title" content="网站部署随笔">
+<meta property="og:url" content="http://yoursite.com/bak/网站部署随笔.html">
+<meta property="og:site_name" content="语法糖的博客">
+<meta property="og:description" content="618买了个网易云，2g内存1m带宽1核40g的存储，123一年，挺便宜的，相比较阿里云ecs和网易蜂巢还有腾讯云，之前同事有买过国外的vps搭建梯子，但在国内，vps这种的也就只能搭建梯子使用，如果想生活中用来玩玩，那是不利于个人的身心健康发展的，因为毕竟服务器架在国外，通过控制台或者xshell进行连接的时候真的有种想死的感觉，输入命令和幻灯片一样，但国外的vps好像是可以按照使用时间来计费的">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-06-20T14:48:01.622Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="网站部署随笔">
+<meta name="twitter:description" content="618买了个网易云，2g内存1m带宽1核40g的存储，123一年，挺便宜的，相比较阿里云ecs和网易蜂巢还有腾讯云，之前同事有买过国外的vps搭建梯子，但在国内，vps这种的也就只能搭建梯子使用，如果想生活中用来玩玩，那是不利于个人的身心健康发展的，因为毕竟服务器架在国外，通过控制台或者xshell进行连接的时候真的有种想死的感觉，输入命令和幻灯片一样，但国外的vps好像是可以按照使用时间来计费的">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/bak/网站部署随笔.html"/>
+
+
+
+
+
+  <title>网站部署随笔 | 语法糖的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+
+    <script type="text/javascript" src="/live2d/script.js"></script>
+    <canvas id="live2dcanvas" width="150" height="300" class="live2d"></canvas>
+    <style>
+      #live2dcanvas {
+        position: fixed;
+        right: 0px;
+        z-index: 999;
+        pointer-events: none;
+        bottom: -40px;
+      }
+    </style>
+    <script>loadlive2d("live2dcanvas" ,"/live2d/assets/wanko/wanko.model.json",0.5)</script>
+  
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">语法糖的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">爱动漫，热爱LOL</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+    
+    
+    <div class="post-block page">
+      <header class="post-header">
+
+	<h1 class="post-title" itemprop="name headline">网站部署随笔</h1>
+
+
+
+</header>
+
+      
+      
+      
+      <div class="post-body">
+        
+        
+          <p>618买了个网易云，2g内存1m带宽1核40g的存储，123一年，挺便宜的，相比较阿里云ecs和网易蜂巢还有腾讯云，之前同事有买过国外的vps搭建梯子，但在国内，vps这种的也就只能搭建梯子使用，如果想生活中用来玩玩，那是不利于个人的身心健康发展的，因为毕竟服务器架在国外，通过控制台或者xshell进行连接的时候真的有种想死的感觉，输入命令和幻灯片一样，但国外的vps好像是可以按照使用时间来计费的，国内的一般都是年。当初以为云服务器除了ecs就是vps，其实这两个只是云服务器中比较出名的，一个是国内一个是国外，像腾讯云叫什么cloud，这些名字只是厂商给她们产品取得，并不是专有名词。</p>
+<a id="more"></a>
+<p>好久之前在阿里云上买过一个域名，29一年，chenye2017.cn,主要这个名字和我的github账号也是一致的，比较好记。当我想绑定域名到服务器上的时候，其实有点担心，我在阿里云上买的域名能绑定到服务器上吗？</p>
+<p>试试吧。首先需要对域名进行实名认证，域名的实名认证其实挺简单的，填下身份证号和联系电话就好了，后面需要备案，这点需要注意的是，我绑定的是京东云，所以需要在京东云上备案。之前对于域名的购买，我的理解是购买一款厂商的产品，但其实不是这样的，试想一下我们购买域名的时候是不是只要先构思一个自己想要的域名，然后查询域名是否在使用，如果没有使用就可以进行购买，这个凭空想象出来的域名厂商不可能提前为我们准备好，他能做的就是通过域名解析器dns把我们的域名注册进世界的万维网当中，当世界中的某个人通过浏览器进行访问的时候，dns能把域名解析成ip地址找到我们的服务器，既然这样，那我们是不是只需要在我们的服务器上搭建一个域名服务，就能不通过购买他的域名，直接使用自己注册的域名就可以了呢？理论上是可以的，但我没有去实践过。</p>
+<p>备案未完成…</p>
+<p>之前帮前端同事部署过一个vue项目，其实和部署一个php项目 极为相似，甚至更简单，都是通过找寻唯一入口文件，因为前端项目都是静态文件，而且apache默认找的文件夹下面的第一个文件就是index.html,所以都不需要进行特殊的设置（php的话因为要找index.php,所以要做更多的设置），唯一需要注意的就是前段项目的很多路径都是绝对路径，他本质上是相对网站的根目录来的，也就是默认项目部署在网站的根目录下，如果网站没有部署在根目录下，比如itbasic bbs，需要我对引入的静态资源路径进行适当的修改。比如给需要找的静态资源建立个软链接ln -s ,到新的静态资源目录下。</p>
+<p>因为之前是根据网上教程搭建的hexo，其实不懂他的实现原理。</p>
+<p>而且在教程的开始，就说了要使用node，对于我这种js都不好的人，看到node，首先就觉的完了。其实很多前端项目用到node，并不是用到nodejs的语法，而是用nodejs搭建了一个web服务，承载前端项目，然自己置身于一个联网的状态中，就能发出类似ajax这样的联网请求，因为当我们保存在本地的html在浏览器中打开的时候是file://开头的，这是默认禁止进行ajax请求的，但当我们使用node的时候，页面的路径就是<a href="http://开头了们可以进行ajax请求。因为当我们保存在本地的html在浏览器中打开的时候是file://开头的，这是默认禁止进行ajax请求的，但当我们使用node的时候，页面的路径就是http://开头了们可以进行ajax请求。" target="_blank" rel="noopener">http://开头了们可以进行ajax请求。因为当我们保存在本地的html在浏览器中打开的时候是file://开头的，这是默认禁止进行ajax请求的，但当我们使用node的时候，页面的路径就是http://开头了们可以进行ajax请求。</a></p>
+<p>我看了下上传到github上的文件夹，和我本地的项目代码结构还是有挺大区别的，我的理解就是把本地代码进行了打包，打包好的文件上传到github上了（类似vue代码的发布），上传到github上的文件夹全是静态目录结构，我惊喜的发现了index.html,于是大胆的假设了下如果把那个目录放在我的站点根目录下，是否也能进行访问了呢，我就不用通过chenye2017.github.io去访问，而是通过我自己的站点去访问呢，毕竟服务器在国内，访问速度也比较快。</p>
+<p>结果是成功的，印证了我的假设。</p>
+<p>在网站部署的时候还遇到了几个问题，比如源码编译apache2.4,在之前还需要安装apr,apr-util,之类的文件，apache2.4的改文件访问权限和之前的apache还不一样，还有文件夹名字结尾不能有空格，否则识别不出来，加载vhost.conf,启动apache失败，修改server localhost之类的apache配置文件，还有apachectl restart开始不管用，需要自己手动配置脚本····</p>
+
+        
+      </div>
+      
+      
+      
+    </div>
+    
+    
+    
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/my.png"
+                alt="chenye2017" />
+            
+              <p class="site-author-name" itemprop="name">chenye2017</p>
+              <p class="site-description motion-element" itemprop="description">想用善良改变世界</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">73</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">71</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/chenye2017" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:1967196626@qq.com" target="_blank" title="E-Mail">
+                    
+                      <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://weibo.com/3215254425" target="_blank" title="Weibo">
+                    
+                      <i class="fa fa-fw fa-globe"></i>Weibo</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-crosshairs"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.baidu.com/" title="百度" target="_blank">百度</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.google.com/" title="谷歌" target="_blank">谷歌</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">chenye2017</span>
+
+  
+</div>
+
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span> |
+</span>
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.3</div>
+
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count"> | 博客全站共112.7k字</span>
+</div>
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+  
+   <canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.2.0/anime.min.js"></script>
+   <script type="text/javascript" src="/js/src/fireworks.js"></script>
+
+
+
+</body>
+</html>

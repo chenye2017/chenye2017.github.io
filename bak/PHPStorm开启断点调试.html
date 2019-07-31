@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content=",,,,," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="语法糖的博客" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="关于xdebug。作为一个phper，相信大家平时的调试用的都是var_dump,echo之类的，像我之前不知道var_dump可以打印出多个变量，在写代码的时候，经常为了打印多个变量，要写很多var_dump,后来无意间解除了xdebug，虽然现在还是经常用var_dump,但我感觉这类的辅助工具都是为了更好的，更高效率的完成工作，得变通，什么方便，什么自己用的舒服就用什么。平时的我感觉xdeb">
+<meta name="keywords" content="PHP,Linux,调试,工具,Xdebug">
+<meta property="og:type" content="website">
+<meta property="og:title" content="PHPStorm开启断点调试">
+<meta property="og:url" content="http://yoursite.com/bak/PHPStorm开启断点调试.html">
+<meta property="og:site_name" content="语法糖的博客">
+<meta property="og:description" content="关于xdebug。作为一个phper，相信大家平时的调试用的都是var_dump,echo之类的，像我之前不知道var_dump可以打印出多个变量，在写代码的时候，经常为了打印多个变量，要写很多var_dump,后来无意间解除了xdebug，虽然现在还是经常用var_dump,但我感觉这类的辅助工具都是为了更好的，更高效率的完成工作，得变通，什么方便，什么自己用的舒服就用什么。平时的我感觉xdeb">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5525740-32a75cf19bd6d83b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5525740-1ab3743a383bdb6a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5525740-4470a10e28f5bfae.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5525740-df525bd45ebaf2d9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5525740-df86c7afa07c59df.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5525740-f0df19fb75fb0ca2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5525740-134a7998bd0de36b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5525740-b23bd5cc5acab8d8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5525740-c26c920e461b005a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5525740-50bd99192c24870d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2019-04-18T08:11:51.731Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="PHPStorm开启断点调试">
+<meta name="twitter:description" content="关于xdebug。作为一个phper，相信大家平时的调试用的都是var_dump,echo之类的，像我之前不知道var_dump可以打印出多个变量，在写代码的时候，经常为了打印多个变量，要写很多var_dump,后来无意间解除了xdebug，虽然现在还是经常用var_dump,但我感觉这类的辅助工具都是为了更好的，更高效率的完成工作，得变通，什么方便，什么自己用的舒服就用什么。平时的我感觉xdeb">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/5525740-32a75cf19bd6d83b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/bak/PHPStorm开启断点调试.html"/>
+
+
+
+
+
+  <title>PHPStorm开启断点调试 | 语法糖的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+
+    <script type="text/javascript" src="/live2d/script.js"></script>
+    <canvas id="live2dcanvas" width="150" height="300" class="live2d"></canvas>
+    <style>
+      #live2dcanvas {
+        position: fixed;
+        right: 0px;
+        z-index: 999;
+        pointer-events: none;
+        bottom: -40px;
+      }
+    </style>
+    <script>loadlive2d("live2dcanvas" ,"/live2d/assets/wanko/wanko.model.json",0.5)</script>
+  
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">语法糖的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">爱动漫，热爱LOL</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+    
+    
+    <div class="post-block page">
+      <header class="post-header">
+
+	<h1 class="post-title" itemprop="name headline">PHPStorm开启断点调试</h1>
+
+
+
+</header>
+
+      
+      
+      
+      <div class="post-body">
+        
+        
+          <p>关于xdebug。作为一个phper，相信大家平时的调试用的都是var_dump,echo之类的，像我之前不知道var_dump可以打印出多个变量，在写代码的时候，经常为了打印多个变量，要写很多var_dump,后来无意间解除了xdebug，虽然现在还是经常用var_dump,但我感觉这类的辅助工具都是为了更好的，更高效率的完成工作，得变通，什么方便，什么自己用的舒服就用什么。平时的我感觉xdebug对于框架的学习，和自己平时不熟悉的代码的时候用的方便，var_dump,我一般用来进行简单的调试。<br><a id="more"></a><br>1.原理<br>没去看了</p>
+<p>2.安装<br>首先得安装xdebug的php扩展。相比较windows和linux, 在他们各自下面安装扩展的方式不同，windows下需要考虑的难点就是thread safety 等因素对源码包的影响，我们该如何选择dll文件，linux下面就是源码编译安装啦。 这个xdebug的官网(百度他的网站，<a href="http://xdebug.org/wizard.php" target="_blank" rel="noopener">http://xdebug.org/wizard.php</a>)对xdbug的windows安装简直是更加友好，因为对于别的扩展，我们可能需要自己去网上查询windows下下载对应php扩展需要关注的一些信息，但是xdebug他的官网上只需要我们把你的安装的php的pathinfo() 的内容粘贴过去，她能自动帮你选择扩展版本，我们只需要把php的扩展放到对应的路径下就好了，然后修改php.ini。(关于linux下呢，同之前的文章linux下安装别的扩展，软件是一样的。先下载源码包，pecl上下载，然后查看是否包括 configure 文件，没有的话phpize生成，然后 make &amp;&amp; make install, 需要指定php版本的话通过 with-php-configu=路径/php-config)。安装完成之后查看pathinfo，搜索xdebug，或者php -m 查看xdebug是否安装成功。<br>这里注意下我们通过xampp这类软件安装的lamp其实不是lamp，这个l linux根本不存在，我们用的是w，windows。</p>
+<p>(如果没有在官网上找到如何帮你选择dll文件，可以看这篇文章 帮<a href="http://blog.csdn.net/hel12he/article/details/44425781" target="_blank" rel="noopener">xdebug选择合适的安装版本</a>)</p>
+<p>3.phpstorm的配置<br>之前的配置在网上找吧，因为懒得截图了<br><a href="https://www.jianshu.com/p/74a1d60ab5ef" target="_blank" rel="noopener">简书上的这篇文章对安装方法写的很详细</a></p>
+<p>4.注意事项</p>
+<ol>
+<li>首先是关于断点的位置。代码会在断点之前结束，所以如果想要获取断点处的内容，务必在该内容之后打上断点。记得老师在将课程的时候甚至在这个方法结束处的 } 打了断点。</li>
+<li>之前遇到的一个问题就是多个断点，只是执行了其中的几个断点，并没有执行完所有的断点，以为是使用的方法不对。后来发现其实是两个断点之间的代码有bug，导致后面的端点没有执行，··所以其实还是自身的问题。</li>
+<li>断点调试的时候，所以的端点前面会有 √ 的标志，断点执行的那行代码会有颜色加深的标志。断点执行完，所有的 √ 的标志会没有。只要断点执行完了，接口才会有输出，并不是执行到哪个断点，哪个端点前面会有 √的标志。</li>
+<li>代码可以一行一行的执行，也可以从这个断点直接跳转到下个断点，这样的好处是，对于复杂的框架可以知道代码是怎么执行的，然后断点间的跳转也可以迅速定位解决问题。但好像不同php文件断点间跳转，只有一个页面那个地方会对变量有输出。</li>
+<li>变量的输出在下面那个debug tab标签处，开启断点调试，会在页面的url路径后面有xdebug_session 标志，把这个标志粘贴到不同的url，就能对不同的api进行测试，其实感觉这个就像一个接口一样，只要传递这个参数，就能执行这个debug接口的服务功能。</li>
+<li>断点调试的关闭，··关闭那个phpstrom上方的类似电话的监听按钮肯定能关闭的，现在想了下，关闭下方tab肯定也是可以的，记得我每次close tab 他都会提醒是否close connect，断点调试的开始按钮是phpstorm的那个小瓢虫的标志。</li>
+</ol>
+<p>7.对于windows下xdebug的配置和linux下还不一样</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">xdebug.idekey = &quot;vagrant&quot;  // 这个要和phpstrom中添加的内容保持一致</span><br><span class="line">xdebug.default_enable = 1</span><br><span class="line">xdebug.remote_connect_back = 1</span><br><span class="line">xdebug.remote_port = 9001  // 和phpstrom中保持一致</span><br><span class="line">xdebug.remote_enable = 1  // 调试vagrant中的项目属于远程调试</span><br><span class="line">xdebug.remote_autostart = 1</span><br><span class="line">xdebug.remote_handler=&quot;dbgp&quot;</span><br></pre></td></tr></table></figure>
+<p>这个是php.ini 中需要添加的内容</p>
+<p>我们在调试部署在windows下的php代码的时候，属于本地调试，但我们调试部署在vagrant中的内容的属于远程调试，所以当我在查询如何安装xdebug的时候一定要加上vagrant或者是linux，因为有些小细节还是不一样的。</p>
+<p>notice:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">zend_extension = /opt/php/lib/php/extensions/no-debug-zts-20151012/xdebug.so</span><br></pre></td></tr></table></figure>
+<p>注意是zend_extension,要是extension的话，可能找不到</p>
+<p>详细的（配合vagrant）配置方案，防止以后找不到：</p>
+<ol>
+<li>这个地方的server就是上一步新建的server，我们这个地方需要新建PHP HTTP Request 或者是PHP Web Page，我一般用的都是PHP web page，这两个有什么不同呢，感觉简单的说就是一个是页面，一个是api接口，web page 会在每个url地址后面加上参数，但是api接口不用，web page通过安装一个xdebug的插件，可以让自己不用每次请求都手动添加那个参数。</li>
+</ol>
+<p><img src="https://upload-images.jianshu.io/upload_images/5525740-32a75cf19bd6d83b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>我们想调试，必须打开这个监听端口，也就是第二个按钮<br>打开后，我们就要开启调试了，点击第一个按钮<br>第三个按钮肯定就是停止这次调试的意思啦</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/5525740-1ab3743a383bdb6a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>第一个感觉就是重置的意思，比如重新打了断点，重新从头开始debug,相比较点击那个小瓢虫，感觉就是不会新开一个debug的框框，但是xdebug那个参数还是会变的<br>第二个就是类似脚本执行，一步一步往下走<br>第三个就是显示每一步代码的执行过程<br>第四个就是每次跳转到光标处，如果两个端点之间没有光标，会跳转到下一个端点处</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/5525740-4470a10e28f5bfae.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>凯哥说第一个还挺好用，但其实自己用的比较少，第二个可以展示当前执行到那个文件了，第三个控制是否展示空的数组内容，感觉还是显示吧，否则有些想用的变量都找不到</p>
+<p>2.首先我们需要在setting 目录配置php的解释器，</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/5525740-df525bd45ebaf2d9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/5525740-df86c7afa07c59df.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>虽然我们用的是vagrant，但最好不要选那个，因为默认是127.0.0.1：2222连接，但这个ssh是连不上我们的那个vagrant，但我又不知道如何修改这个默认连接，所以只能通过第二个。第二个的远程配置和我们通过修改本地代码实现线上同步是一个道理，都是通过sftp协议，然后注意要选择custom，因为这样我们就可以不通过用户名和密码，而是密钥的形式进行远程连接了（之所以这样，是因为很多服务器我不知道密码啊，只有密钥）</p>
+<p>3.</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/5525740-f0df19fb75fb0ca2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>接着是端口，和前面php.ini 中保持一致，注意php-fpm 是9001，别冲突了</p>
+<p>4.</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/5525740-134a7998bd0de36b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"><br>还记得之前php.ini中的设置吗，需要和这上面保持一致</p>
+<p>5.</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/5525740-b23bd5cc5acab8d8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"><br>这个注意下我红圈标注的地方就好了</p>
+<p>6.</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/5525740-c26c920e461b005a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>notice:</p>
+<p>我们每个项目中配置的xdebug，只能在该项目中使用，类似我之前在laravel 当中配置的sql语句调试工作，也只能在本项目中看见</p>
+<p>windows 下调试遇到的错误</p>
+<p>phpstorm报错：Remote file path ‘XXX’ is not mapped to any file path in project（本地调试不要勾选）</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/5525740-50bd99192c24870d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>下面是简单脚本的调试</p>
+<p><a href="https://www.cnblogs.com/yjken/p/8435018.html" target="_blank" rel="noopener">https://www.cnblogs.com/yjken/p/8435018.html</a></p>
+<p>今天凯哥教了一种脚本断点调试的方法，直接右键，debug 就好了，非常方便，我以前是按照上面的为每个脚本配置一个，很不方便</p>
+<p>凯哥平时跑的python 都是cli 模式</p>
+<p>php 除了cli 平时用的比较多的还是php-fpm 模式（之所以xdebug 那么难调整，是因为在php-fpm 下面比较难调整），对于php cli 下面还是和python 一样简单</p>
+
+        
+      </div>
+      
+      
+      
+    </div>
+    
+    
+    
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/my.png"
+                alt="chenye2017" />
+            
+              <p class="site-author-name" itemprop="name">chenye2017</p>
+              <p class="site-description motion-element" itemprop="description">想用善良改变世界</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">73</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">71</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/chenye2017" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:1967196626@qq.com" target="_blank" title="E-Mail">
+                    
+                      <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://weibo.com/3215254425" target="_blank" title="Weibo">
+                    
+                      <i class="fa fa-fw fa-globe"></i>Weibo</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-crosshairs"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.baidu.com/" title="百度" target="_blank">百度</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.google.com/" title="谷歌" target="_blank">谷歌</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">chenye2017</span>
+
+  
+</div>
+
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span> |
+</span>
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.3</div>
+
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count"> | 博客全站共112.7k字</span>
+</div>
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+  
+   <canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.2.0/anime.min.js"></script>
+   <script type="text/javascript" src="/js/src/fireworks.js"></script>
+
+
+
+</body>
+</html>

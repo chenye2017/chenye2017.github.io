@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content=",,," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="语法糖的博客" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="咱是写PHP的，可是PHP的很多特性咱都不是很熟，比如trait，闭包，咱不能只局限于表单的操作，不能只局限于面向过程的写法，记录下来那些年很少接触的特性。就从PHP的 闭包 开始咯">
+<meta name="keywords" content="PHP,匿名函数,闭包">
+<meta property="og:type" content="website">
+<meta property="og:title" content="PHP闭包">
+<meta property="og:url" content="http://yoursite.com/bak/PHP闭包.html">
+<meta property="og:site_name" content="语法糖的博客">
+<meta property="og:description" content="咱是写PHP的，可是PHP的很多特性咱都不是很熟，比如trait，闭包，咱不能只局限于表单的操作，不能只局限于面向过程的写法，记录下来那些年很少接触的特性。就从PHP的 闭包 开始咯">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-07-24T11:47:34.522Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="PHP闭包">
+<meta name="twitter:description" content="咱是写PHP的，可是PHP的很多特性咱都不是很熟，比如trait，闭包，咱不能只局限于表单的操作，不能只局限于面向过程的写法，记录下来那些年很少接触的特性。就从PHP的 闭包 开始咯">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/bak/PHP闭包.html"/>
+
+
+
+
+
+  <title>PHP闭包 | 语法糖的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+
+    <script type="text/javascript" src="/live2d/script.js"></script>
+    <canvas id="live2dcanvas" width="150" height="300" class="live2d"></canvas>
+    <style>
+      #live2dcanvas {
+        position: fixed;
+        right: 0px;
+        z-index: 999;
+        pointer-events: none;
+        bottom: -40px;
+      }
+    </style>
+    <script>loadlive2d("live2dcanvas" ,"/live2d/assets/wanko/wanko.model.json",0.5)</script>
+  
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">语法糖的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">爱动漫，热爱LOL</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+    
+    
+    <div class="post-block page">
+      <header class="post-header">
+
+	<h1 class="post-title" itemprop="name headline">PHP闭包</h1>
+
+
+
+</header>
+
+      
+      
+      
+      <div class="post-body">
+        
+        
+          <p>咱是写PHP的，可是PHP的很多特性咱都不是很熟，比如trait，闭包，咱不能只局限于表单的操作，不能只局限于面向过程的写法，记录下来那些年很少接触的特性。就从PHP的 <strong>闭包</strong> 开始咯<br><a id="more"></a></p>
+<blockquote>
+<p>1).闭包和匿名函数在PHP5.3中被引入。<br>2).闭包是指在创建时封装函数周围状态的函数，即使闭包所在的环境不存在了，闭包封装的状态依然存在，这一点和Javascript的闭包特性很相似。<br>3).匿名函数就是没有名称的函数，匿名函数可以赋值给变量，还可以像其他任何PHP对象一样传递。可以将匿名函数和闭包视作相同的概念。<br>4).需要注意的是闭包使用的语法和普通函数相同，但是他其实是伪装成函数的对象，是Closure类的实例。闭包和字符串或整数一样，是一等值类型。</p>
+</blockquote>
+<p>第一次接触闭包还是在js中，后来是在python中，最后才是php中！！!深刻的怀疑我是不是做php的。</p>
+<p>js 中闭包</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">function out() &#123;</span><br><span class="line">        var a = 1;</span><br><span class="line">        var b = function(name) &#123;</span><br><span class="line">            console.log(a);</span><br><span class="line">            console.log(name)</span><br><span class="line">        &#125;</span><br><span class="line">        return b;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    var a = 2;</span><br><span class="line">    var name = &apos;cy&apos;;</span><br><span class="line">    var c= out();</span><br><span class="line">    c(name);  // 输出 1， cy</span><br></pre></td></tr></table></figure>
+<p>上面这段代码虽然简单，但是包含了几个重要的知识点：</p>
+<p>js的闭包主要是靠两层函数的嵌套，然后通过调用外层的函数返回内层的函数，内层的函数可以调用外层函数中的变量，内层函数的执行可以通过后来调用的时候传入参数。</p>
+<p>php 中匿名函数和闭包是同一个意思，所以下面过程中说到php匿名函数可以自动脑补成闭包，或者说到php闭包可以自动替换成匿名函数。</p>
+<p>我觉得之所以php中匿名函数等同于闭包，是因为php中匿名函数完全符合闭包的定义，php中的匿名函数默认都是预定义接口closure 的一个实例，闭包本身是保存运行状态，他默认保存的是对象是预定义closure, 然后其他变量通过use 引入!!!这点很关键，看下面php 和 js 的代码，来看看php匿名(闭包)和js匿名函数(非闭包)，体会下区别</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">php</span><br><span class="line">&lt;?php</span><br><span class="line">$a = 1;</span><br><span class="line">$b = function () use ($a) &#123;</span><br><span class="line">  	var_dump($a);</span><br><span class="line">&#125;;</span><br><span class="line">$a = 2;</span><br><span class="line">$b();  // 1</span><br><span class="line"></span><br><span class="line">js</span><br><span class="line">var a = 1;</span><br><span class="line">var b = function () &#123;</span><br><span class="line">  console.log(a);</span><br><span class="line">&#125;;</span><br><span class="line">var a = 2;</span><br><span class="line">b();  // 2</span><br></pre></td></tr></table></figure>
+<p>use 关键字让php匿名函数保存了当时变量状态，但是js的匿名函数却不行</p>
+<p>相较于js 的闭包对象不可控，总是变（es6中有语法可以绑定）,php中的bind和bindto 方法是真的很方便，可以把匿名函数绑定到任何对象上，bind 属于 closure的静态方法（匿名函数, 对象，类名）， bindto（对象，类名）不是。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">php.net</span><br><span class="line">Closure::bindTo — 复制当前闭包对象，绑定指定的$this对象和类作用域。</span><br><span class="line">Closure::bind — 复制一个闭包，绑定指定的$this对象和类作用域。</span><br><span class="line">需要注意的是，我们绑定之后会返回一个新的closure，新的closure才是绑定对象的</span><br></pre></td></tr></table></figure>
+<p>（之前不知道为啥要绑定类名，为的是让匿名函数中可以用$obj 类似在绑定类中使用，要不然只绑定对象的话，是不能调用protected 和 private 方法的，蛮好理解的）</p>
+<p>(如果匿名函数在类中定义，匿名函数中的$this 指代的就是这个类对象， 要是在类外面定义指代的就是closure对象，要是在匿名函数没有绑定对象（定义在类外面并且没有用bind绑定对象），匿名函数中就不能直接使用 \$this 了)</p>
+<p>(虽然php中匿名函数可以绑定对象，但是就算绑定了新对象，他还是closure 的实例，只是有些属性改变了，如果不相信，可以直接打印这个实例, 正因为还是closure 实例，我们仍然可以给这个闭包绑定新的对象)</p>
+<p>说了这么多，看一下实际代码中的闭包</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">class Foo</span><br><span class="line">&#123;</span><br><span class="line">    public function __call($method, $args)</span><br><span class="line">    &#123;</span><br><span class="line">       var_dump(111);</span><br><span class="line">        // else throw exception</span><br><span class="line">    &#125;</span><br><span class="line">	</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$obj = new Foo(&apos;Sam&apos;);</span><br><span class="line">$obj-&gt;say = function () &#123;</span><br><span class="line">    return &apos;Hello World&apos;;</span><br><span class="line">&#125;;</span><br><span class="line">echo($obj-&gt;say());  // 111  ，触发 Foo __call</span><br><span class="line">echo(($obj-&gt;say)());  // Hello  World, 触发 closure __invoke</span><br></pre></td></tr></table></figure>
+<p>分析一下执行过程：当执行的say() 方法不存在的时候会自动执行 $obj所在类 的__call魔术方法，然后method 传入是字符串’say’，这里面args 因为是空(say())，所以自动传入为空。输出 111</p>
+<p>当执行(\$obj-&gt;say)(), 并没有触发\$obj 所在类的方法，而是触发closure类的方法</p>
+<p>php中匿名函数保存的变量能直接执行都是因为一个魔术方法__invoke, 这个魔术方法是在把类实例当做方法调用的时候会自动触发，因为php的匿名函数本质上都是closure类的实例（这个closure类中有四个方法 __invoke _<em>construct   static bind   bindTo）,所以当我们 var(), 这样的时候，自动触发closure 的 \</em>_invoke，(猜测这个__invoke 的作用就执行后面的匿名函数)所以匿名函数就被执行了。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">class Foo</span><br><span class="line">&#123;</span><br><span class="line">    private $name;</span><br><span class="line"></span><br><span class="line">    function __construct($name)</span><br><span class="line">    &#123;</span><br><span class="line">        $this-&gt;name = $name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$obj = new Foo(&apos;Sam&apos;);</span><br><span class="line"></span><br><span class="line">$cl = function() &#123;</span><br><span class="line">    return &quot;Hello &quot; . $this-&gt;name;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">$cl = $cl-&gt;bindTo($obj, $obj); //第二个$obj 感觉类名好点，这个实例的话也是通过反射获取类名的吧</span><br><span class="line">echo($cl());</span><br></pre></td></tr></table></figure>
+<p>下面这段台湾大佬的话感觉就是说明了一个意思，bindto的第二个参数或者bind的第三个参数是让代码的执行类似在绑定的类中,第二个参数就是扩大第一个参数的类的使用权限问题。但仅仅在于扩大原始的不能访问的protected和private，并不扩大注入对象没有关系的或者说注入对象所在类不能访问到的变量。</p>
+<blockquote>
+<p>我們不再執著該closure一定要動態成為 $obj的method，但要存取$obj property的目標不變，程式也不變，一樣使用$this。<br>假如我們能將$obj以手動注入的方式，讓closure內部的$this改指向$obj，我們就能達到如JavaScript的效果了。<br>$cl = $cl-&gt;bindTo($obj, $obj);<br>bindTo()如同__invoke()一樣，是closure物件內建的method，它的目的就是讓我們能手動注入一個物件，讓closure物件的$this指向手動注入的物件$obj。<br>因為在closure中我們有$this-&gt;name，經過bindTo()去手動注入 $obj後，$this已經改指向$obj，所以$this-&gt;name就相當於$obj-&gt;name。<br>根據bindTo()文件 :<br>若要讓closure物件只能存取其他物件的public變數，只傳第1個參數即可。<br>若要讓closure物件存取其他物件的private或protected變數，就要傳第2個參數。<br>bindTo()對於第2個參數的要求不嚴，有幾種傳法 :<br>傳進欲存取物件的class名稱，是字串。<br>傳進欲存取的物件也可以，bindTo()會自動得知該物件的class名稱。<br>在此就一併傳進與第一個參數相同的$obj。<br>echo($cl());<br>因為$obj已經透過bindTo() 手動注入進$cl()，此時$this已經指向$obj，所以執行$cl()就可順利存$obj的property</p>
+</blockquote>
+<p>bindto 实例代码</p>
+<p>接下来我们来看看bindTo方法，通过该方法，我们可以把闭包的内部状态绑定到其他对象上。这里bindTo方法的第二个参数显得尤为重要，其作用是指定绑定闭包的那个对象所属的PHP类，这样，闭包就可以在其他地方访问绑定闭包的对象中受保护和私有的成员变量。<br>你会发现，PHP框架经常使用bindTo方法把路由URL映射到匿名回调函数上，框架会把匿名回调函数绑定到应用对象上，这样在匿名函数中就可以使用$this关键字引用重要的应用对象：<br>class App {<br>    protected $routes = [];<br>    protected $responseStatus = ‘200 OK’;<br>    protected $responseContentType = ‘text/html’;<br>    protected $responseBody = ‘Hello World’;</p>
+<pre><code>public function addRoute($path, $callback) {
+    $this-&gt;routes[$path] = $callback-&gt;bindTo($this, __CLASS__);
+}
+
+public function dispatch($path) {
+    foreach ($this-&gt;routes as $routePath =&gt; $callback) {
+        if( $routePath === $path) {
+            $callback();
+        }
+    }
+    header(&apos;HTTP/1.1 &apos; . $this-&gt;responseStatus);
+    header(&apos;Content-Type: &apos; . $this-&gt;responseContentType);
+    header(&apos;Content-Length: &apos; . mb_strlen($this-&gt;responseBody));
+    echo $this-&gt;responseBody;
+}
+</code></pre><p>}<br>这里我们需要重点关注addRoute方法，这个方法的参数分别是一个路由路径和一个路由回调，dispatch方法的参数是当前HTTP请求的路径，它会调用匹配的路由回调。第9行是重点所在，我们将路由回调绑定到了当前的App实例上。这么做能够在回调函数中处理App实例的状态：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$app = new App();</span><br><span class="line">$app-&gt;addRoute(‘/user’, function()&#123;</span><br><span class="line">    $this-&gt;responseContentType = ‘application/json;charset=utf8’;</span><br><span class="line">    $this-&gt;responseBody = &apos;世界你好&apos;;</span><br><span class="line">&#125;);</span><br><span class="line">$app-&gt;dispatch(&apos;/user&apos;)</span><br></pre></td></tr></table></figure></p>
+<p>Laravel<br>中对闭包的使用<br>IoC 容器<br>匿名函数可以从父作用域继承变量，而这个父作用域是定义该闭包的函数（不一定是调用它的函数）。<br>利用这个特性，我们可以实现一个简单的控制反转IoC容器：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">class Container</span><br><span class="line">&#123;</span><br><span class="line">    protected static $bindings;</span><br><span class="line"> </span><br><span class="line">    public static function bind($abstract, Closure $concrete)</span><br><span class="line">    &#123;</span><br><span class="line">        static::$bindings[$abstract] = $concrete; </span><br><span class="line">        //如果还需要container自身的一些方法的话</span><br><span class="line">        //可以这么写： static::$bindings[$abstract] = $concrete-&gt;bindto($this, $this);</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    public static function make($abstract)</span><br><span class="line">    &#123;</span><br><span class="line">        return call_user_func(static::$bindings[$abstract]);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">class talk</span><br><span class="line">&#123;</span><br><span class="line">    public function greet($target)</span><br><span class="line">    &#123;</span><br><span class="line">        echo &apos;Hello &apos; . $target-&gt;getName();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class A</span><br><span class="line">&#123;</span><br><span class="line">    public function getName()</span><br><span class="line">    &#123;</span><br><span class="line">        return &apos;World&apos;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">// 创建一个talk类的实例</span><br><span class="line">$talk = new talk();</span><br><span class="line"> </span><br><span class="line">// 将A类绑定至容器，命名为foo</span><br><span class="line">Container::bind(&apos;foo&apos;, function() &#123;</span><br><span class="line">    return new A;</span><br><span class="line">&#125;);</span><br><span class="line"> </span><br><span class="line">// 通过容器取出实例</span><br><span class="line">$talk-&gt;greet(Container::make(&apos;foo&apos;)); // Hello World</span><br></pre></td></tr></table></figure></p>
+<p>上述例子中，其实并不是很能说明bindTo的特性，为什么呢，分析一下执行流程（分析这个例子主要是因为当时不太懂闭包的时候网上找的）：</p>
+<p>首先是把一个匿名函数绑定到一个类的属性中，然后获取这个属性的时候直接调用匿名函数，因为上面的匿名函数就是获取一个类的实例，根本用不到 this 相关的东西，所以和给这个closure 绑定对象毫无关系</p>
+<p>上面的写法其实转换一下就和下面一样 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line"></span><br><span class="line">class A &#123;</span><br><span class="line">    public function getName() &#123;</span><br><span class="line">        return &apos;cy&apos;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$app = [];</span><br><span class="line"></span><br><span class="line">$app[&apos;foo&apos;] = function () &#123;</span><br><span class="line">    return new A();</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class Talk&#123;</span><br><span class="line">    public function talk1 ($obj) &#123;</span><br><span class="line">        var_dump(&apos;hello &apos;. $obj-&gt;getName());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$t = new Talk();</span><br><span class="line"></span><br><span class="line">var_dump($t-&gt;talk1(($app[&apos;foo&apos;])()));</span><br><span class="line"></span><br><span class="line">exit;</span><br></pre></td></tr></table></figure>
+<p>今天说一下对于闭包的重新认识：</p>
+<p>首先是array_map里面的内容。array_map 用到了闭包的知识，函数作用：通过对传入的数组进行自定义的函数处理，传入的数组多少个，自定义的函数接受的参数就要多少个</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">array_map(function($i, $z) &#123;</span><br><span class="line">  var_dump($i+$z);</span><br><span class="line">&#125;, [1,2,3], [2,3,4]);</span><br></pre></td></tr></table></figure>
+<p>但如果我们想传入额外的参数呢</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$z = 100;</span><br><span class="line">array_map(function($i, $z) use ($z) &#123;</span><br><span class="line">  var_dump($i+$z);</span><br><span class="line">&#125;, [1,2,3], [2,3,4]);</span><br></pre></td></tr></table></figure>
+<p>通过use</p>
+<p>这和我之前看到的内容都是一致的，只是这次我希望不要把这个use和bindto绑定的参数作用弄混淆了，bindto的目的是修改closure类里面this对象.</p>
+<p>对了php的闭包很类似于js的万物皆是对象的概念，function也是对象</p>
+<p>对的php中的匿名函数，也就是闭包，他也是对象，他是closure类的实例</p>
+<p>但和js不同之处，php的对象不能改变，所以匿名函数中的this指向的是closure这个实例（但是可以改变比包中this 的指向），这个实例除了——invoke和 bind（静态方法）bindto() 一无所有</p>
+<p>但是我们可以通过bind，我的理解是让两个实例互相拥有对方的属性，其实不是</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">class Foo</span><br><span class="line">&#123;</span><br><span class="line">    private $name;</span><br><span class="line"></span><br><span class="line">    function __construct($name)</span><br><span class="line">    &#123;</span><br><span class="line">        $this-&gt;name = $name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$obj = new Foo(&apos;Sam&apos;);</span><br><span class="line"></span><br><span class="line">$cl = function() &#123;</span><br><span class="line">   var_dump($this instanceof Closure); //false</span><br><span class="line">   var_dump($this instanceof Foo); //true</span><br><span class="line">    return &quot;Hello &quot; . $this-&gt;name;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">$cl = $cl-&gt;bindTo($obj, $obj);</span><br><span class="line">echo($cl());</span><br></pre></td></tr></table></figure>
+<p>zzz,感觉绑定之后这个closure的实例就有了家的感觉，就变成了那个被绑定的类了（明明打印出来还是closure 类，但却是绑定的类的实例）。</p>
+<p>额外说一点：</p>
+<p>我们在使用闭包的时候，function(){}，这种只是定义了一个变量，并没有使用，我们想使用的话，比如function() {} (),这样，或者是 function(){} -&gt;__invoke();</p>
+<p>这个可以理解成 function(){}  是一个对象，当我们调用他的时候就自动触发了Closure类里面的__invoke方法，所以上述是等价的结果。(但感觉不要这样用吧，很少调用魔术方法)</p>
+<p>正因为匿名函数定义的时候没有调用，总是在需要的时候调用，所以容易造成异步的假象</p>
+<p>关于匿名函数的应用：</p>
+<p>匿名函数在laravel 中或者很多现代框架中大量使用，我们千万要注意，</p>
+<p>我们在写匿名函数的时候，只是在定义这个函数，实际调用是框架自身决定的，所以我们在匿名函数function() 中传入的参数是由框架执行的时候决定的，我们可以不传，没关系，因为php 可以在函数定义的时候没有参数，执行的时候有参数也不会报错，但是我们要是传了参数，就会和框架中执行的时候传入的参数对应上，也就是预定义参数，一般情况框架使用文档上都会有，拿laravel路由举例</p>
+<p>（特别注意，但是我们不能执行的时候没有穿, 定义的时候却有，除非是可变参数，否则都不可以）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">// 下面4种定义匿名函数都没有关系</span><br><span class="line">// 对于传入额外参数我是这样猜测的，获取非匿名函数定义的参数，和预定义参数合并，然后去执行</span><br><span class="line">$route-&gt;get(&apos;/&#123;id&#125;&apos;, function($id) &#123;</span><br><span class="line">  var_dump($id);</span><br><span class="line">&#125;);</span><br><span class="line">$route-&gt;get(&apos;/&#123;id&#125;&apos;, function() &#123;</span><br><span class="line"> </span><br><span class="line">&#125;);</span><br><span class="line">$route-&gt;get(&apos;/&#123;id&#125;&apos;, &apos;TestController@index&apos;)</span><br><span class="line"></span><br><span class="line">class TestController &#123;</span><br><span class="line">  public function index(class1 $a, class2 $b, $id) &#123;</span><br><span class="line">  </span><br><span class="line">&#125;  </span><br><span class="line"></span><br><span class="line">或者 </span><br><span class="line"> public function index(class1 $a, class2 $b) &#123;</span><br><span class="line">  </span><br><span class="line">&#125;  </span><br><span class="line">或者 </span><br><span class="line"> public function index(class1 $a, class2 $b, $name) &#123;</span><br><span class="line">    // 这里面的$name 等值于 $id</span><br><span class="line">&#125;  </span><br><span class="line">  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+        
+      </div>
+      
+      
+      
+    </div>
+    
+    
+    
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/my.png"
+                alt="chenye2017" />
+            
+              <p class="site-author-name" itemprop="name">chenye2017</p>
+              <p class="site-description motion-element" itemprop="description">想用善良改变世界</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">73</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">71</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/chenye2017" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:1967196626@qq.com" target="_blank" title="E-Mail">
+                    
+                      <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://weibo.com/3215254425" target="_blank" title="Weibo">
+                    
+                      <i class="fa fa-fw fa-globe"></i>Weibo</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-crosshairs"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.baidu.com/" title="百度" target="_blank">百度</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.google.com/" title="谷歌" target="_blank">谷歌</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">chenye2017</span>
+
+  
+</div>
+
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span> |
+</span>
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.3</div>
+
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count"> | 博客全站共112.7k字</span>
+</div>
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+  
+   <canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.2.0/anime.min.js"></script>
+   <script type="text/javascript" src="/js/src/fireworks.js"></script>
+
+
+
+</body>
+</html>

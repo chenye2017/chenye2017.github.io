@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content=",,," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="语法糖的博客" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="学习，为了更好地适应未来的工作。简单的解除了下tp和laravel，总体来说tp比laravel简单多了，封装的也没有那么深，所以用起来还是很方便的，用的是5.0，5.1和5.0区别就挺大了，不如有了门脸，又是一个使用类不知道到底用哪个命名空间下类比较好的时候了，还有获取参数的方式，5.1已经没有getInstance()这种东西了，记录一下这几天的感觉,方便交流">
+<meta name="keywords" content="PHP,ThinkPHP,框架">
+<meta property="og:type" content="website">
+<meta property="og:title" content="ThinkPHP的感觉">
+<meta property="og:url" content="http://yoursite.com/bak/ThinkPHP的感觉.html">
+<meta property="og:site_name" content="语法糖的博客">
+<meta property="og:description" content="学习，为了更好地适应未来的工作。简单的解除了下tp和laravel，总体来说tp比laravel简单多了，封装的也没有那么深，所以用起来还是很方便的，用的是5.0，5.1和5.0区别就挺大了，不如有了门脸，又是一个使用类不知道到底用哪个命名空间下类比较好的时候了，还有获取参数的方式，5.1已经没有getInstance()这种东西了，记录一下这几天的感觉,方便交流">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5525740-1711c1f695c442d4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5525740-3f4891bc6eed7db0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5525740-2a8c7fec8f0290ac.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5525740-ae6d9385c9e24a62.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5525740-916eb13b10cccba8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5525740-e2abedcb35db3400.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5525740-7f4cbfcd522b2d30.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5525740-e8cdd9dd8a20254d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5525740-70d997091c479147.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5525740-2ea087a1d37bc10a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5525740-bd87f301d2501d50.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5525740-da97683778092efd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5525740-3b17ab3543bd69a4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5525740-747c9b0c36acb611.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5525740-5fc354627abfef17.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5525740-993df227105522ea.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5525740-e8860b37d1293f63.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-11-23T14:49:20.988Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ThinkPHP的感觉">
+<meta name="twitter:description" content="学习，为了更好地适应未来的工作。简单的解除了下tp和laravel，总体来说tp比laravel简单多了，封装的也没有那么深，所以用起来还是很方便的，用的是5.0，5.1和5.0区别就挺大了，不如有了门脸，又是一个使用类不知道到底用哪个命名空间下类比较好的时候了，还有获取参数的方式，5.1已经没有getInstance()这种东西了，记录一下这几天的感觉,方便交流">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/5525740-1711c1f695c442d4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/bak/ThinkPHP的感觉.html"/>
+
+
+
+
+
+  <title>ThinkPHP的感觉 | 语法糖的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+
+    <script type="text/javascript" src="/live2d/script.js"></script>
+    <canvas id="live2dcanvas" width="150" height="300" class="live2d"></canvas>
+    <style>
+      #live2dcanvas {
+        position: fixed;
+        right: 0px;
+        z-index: 999;
+        pointer-events: none;
+        bottom: -40px;
+      }
+    </style>
+    <script>loadlive2d("live2dcanvas" ,"/live2d/assets/wanko/wanko.model.json",0.5)</script>
+  
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">语法糖的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">爱动漫，热爱LOL</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+    
+    
+    <div class="post-block page">
+      <header class="post-header">
+
+	<h1 class="post-title" itemprop="name headline">ThinkPHP的感觉</h1>
+
+
+
+</header>
+
+      
+      
+      
+      <div class="post-body">
+        
+        
+          <p>学习，为了更好地适应未来的工作。简单的解除了下tp和laravel，总体来说tp比laravel简单多了，封装的也没有那么深，所以用起来还是很方便的，用的是5.0，5.1和5.0区别就挺大了，不如有了门脸，又是一个使用类不知道到底用哪个命名空间下类比较好的时候了，还有获取参数的方式，5.1已经没有getInstance()这种东西了，记录一下这几天的感觉,方便交流</p>
+<a id="more"></a>
+<h3 id="目录结构"><a href="#目录结构" class="headerlink" title="目录结构"></a>目录结构</h3><p><img src="https://upload-images.jianshu.io/upload_images/5525740-1711c1f695c442d4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>首先是模块的创建，主要是为了方便后台模块和 api 模块的分开</p>
+<p>后台模块， 这个项目中主要是通过接口能返回html 模板</p>
+<p>但是 api 模块，单单只用返回json 数据</p>
+<h3 id="Controller"><a href="#Controller" class="headerlink" title="Controller"></a>Controller</h3><p>关于api 模块的json 返回，我们只要调用json() 方法就可以了，不需要做进一步的配置，  我们还可以通过json 方法的进一步封装，让调用起来更加方便</p>
+<p>[图片上传失败…(image-14c2c0-1542018168779)]</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/5525740-3f4891bc6eed7db0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>这种方法其实就是在返回头上加上个别的信息</p>
+<p>这种公共的方法我们可以写在 common.php 文件中</p>
+<p>控制器中获取传过来的参数</p>
+<p>有个坑就是5.0 和 5.1 通过request 获取参数的方式竟然就不一样了，</p>
+<p>5.0 中 其中一种 Request::instance()-&gt;get()</p>
+<p>5.1 Request::get() (5.1中已经开始出现faceade这种看不懂的东西了)</p>
+<p>其实用助手函数就没有上述问题了，···但无奈我不喜欢用，但感觉助手函数的话对不同版本的tp代码都是通用的</p>
+<p>对于put 参数，我们在用postman 提交代码的时候需要通过第二种方式提交，第一种方式是获取不到的，可能是因为表单默认屏蔽了put delete 提交方式</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/5525740-2a8c7fec8f0290ac.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/5525740-ae6d9385c9e24a62.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>这个header 头信息是真的坑，解决这个办法就是先把$header 信息保留成数组，然后再通过数组去寻找这个变量</p>
+<p>讲道理，还是有点不明白_initialize 和 __construct(） 的区别</p>
+<p>关于文件的定义，基本上除了配置文件，剩下的都是class 文件，按照psr4 ,类名要和文件名一样，我之前有过类名和文件名不一样，导致文件加载失败</p>
+<p>异常处理那块，当调用父的 异常处理函数，需要return ,否则会报错，感觉和调用模板也需要return 是一个道理</p>
+<h3 id="Router"><a href="#Router" class="headerlink" title="Router"></a>Router</h3><p>关于 tp 的路由，好久之前就知道被吐槽pathinfo 模式，虽然我不知道是因为什么被吐槽，除了pathinfo 还有别的模式吗？</p>
+<p>除了默认的pathinfo, 我们对于api 接口（admin 那种返回html 的可以不用管），可以使用路由注册的形式，就是在route.php 中进行路由注册，他会首先匹配,没找到的会使用pathinfo 模式，这块需要我们在配置文件中进行配置</p>
+<p>（可以完全关闭pathinfo 或者 路由注册的形式）</p>
+<p>（关于路由注册这块，tp 的路由注册和laravel 的还不一样，他不是使用命名空间的形式，用的是感觉自己定义的形式， 但感觉因为这个方面，路tp的路由方面应该不能单独拆出来给别的项目使用），但其实也挺好理解， 注意</p>
+<p>完全路由匹配，还有路由参数的限制</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/5525740-916eb13b10cccba8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>参照： <a href="https://www.jianshu.com/p/73ed6e42d389" target="_blank" rel="noopener">https://www.jianshu.com/p/73ed6e42d389</a></p>
+<h3 id="Config"><a href="#Config" class="headerlink" title="Config"></a>Config</h3><p>今天因为不太知道config() 助手函数都是从哪里获取的数据，查了一下，这篇文章写得还是蛮好的</p>
+<p><a href="https://www.jianshu.com/p/cd8b68143fde" target="_blank" rel="noopener">https://www.jianshu.com/p/cd8b68143fde</a></p>
+<p>比如我们那个api模块的接口需要很多额外的参数，我们只需要在application 最外层定义一个extra 的目录，然后会自动引入里面的文件</p>
+<p>我们配置文件的数据返回大致如下</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/5525740-e2abedcb35db3400.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>通过 config() 可以看到全局的配置参数</p>
+<h3 id="DB"><a href="#DB" class="headerlink" title="DB"></a>DB</h3><p>model 最近用的都是orm,不管是后台admin 还是api接口，都可以公用，所以新建了一个common模块，在里面写入了model,通过model() 或者命名空间的方式都能使用（我比较喜欢用命名空间的方式去使用，tp的orm可以分离出来去别的项目中使用，当然model()方法引入model类就不可以了，只能通过命名空间的方式）</p>
+<p>题外话 ：关于为什么用model() 就能引入common 模块下的model，我们可以理解成约定俗成，甚至可以理解成1 + 1  = 2， 之前我纠结这些问题很久，但其实他就像我们使用别的约定俗成的概念是一样的，只是这个可能是由于框架的封装，在我们的印象中很难站住脚 ，或者没有看到官方给的白纸黑字的文档，能做的就是看源码，model 是怎么执行加载的，表哥说过，你可以画上 1年半载去弄懂框架的源码，但如果你弄不懂的话，你也可以通过专注业务区提升自己的能力，有些东西能用就好了。</p>
+<p>基本的方法:</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/5525740-7f4cbfcd522b2d30.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>通过在数据库配置文件中设置表前缀，默认类名称是  ‘表前缀_类名’ ， laravel 是表名单数</p>
+<p><strong>查询</strong></p>
+<p>select   获取集合  ，这个直接json 返回外面就是array ,在项目里面打印是 是object ,这个项目里面转换成 array 需要 collection($arr)-&gt;toArray()， 这个Db::  用select , 查出来竟让也是 object ,想变成 array,可以通过toArray()</p>
+<p>find   只能获取一条 ,这个直接 就是数组</p>
+<p>column, 查询单列</p>
+<p>value  查询单个值（那种集合的查询调用 value 也是只返回一个值）</p>
+<p>field  获取哪些对应字段,还可以给字段取别名（感觉很强大，还能用函数 sum(score)）</p>
+<p>order   同上</p>
+<p>limit  5 size</p>
+<p>page  1  页码  (感觉这个page 还是和limit 分开来使用比较方便)</p>
+<p><strong>查询方法</strong></p>
+<p>where  =&gt;   [‘id’=&gt; 1, ‘status’=&gt; 1],  多条件等于情况， [‘id’, ‘status’]  代表两个column</p>
+<p>where =&gt; [‘id’ =&gt; [‘&gt;’, 3]]   id 大于3的情况</p>
+<p>whereOr</p>
+<p><strong>插入</strong></p>
+<p>insert</p>
+<p>insertAll  批量插入</p>
+<p>insertGetId  插入成功之后返回id</p>
+<p>getLastInsID  返回最新插入的id</p>
+<p><strong>更新</strong></p>
+<p>update</p>
+<p>setField 更新某个字段</p>
+<p>setInc   自增</p>
+<p>setDec 自减</p>
+<p><strong>删除</strong></p>
+<p>delete </p>
+<p>关于链式操作，注意select() ，table 这些不属于链式操作，所以需要放在最后面，剩下的那些链式操作没有顺序要求</p>
+<p>alias  给表取别名</p>
+<p>groupby  分组</p>
+<p>having  （最好在group by 中使用count这种的聚合函数）</p>
+<p>子查询和 union 基本不用</p>
+<p>distinct 唯一不同的值，不同的值，比如这个返回admin和chunice</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/5525740-e8cdd9dd8a20254d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>count  这个好像需要放在 where 条件后面，要不然也会报错</p>
+<p>orm 之所以能调用这些db的方法是因为orm 的基础是db</p>
+<p>自动写入时间戳都是针对orm 这种操作可以的，db 操作是不可以的， 上面的操作都是db 的操作</p>
+<p>注意用Db 进行操作的时候，命名前缀已经失效了，记住要用表的全名</p>
+<p>关于join 表，老师和表哥说都不要join ,因为数据多的时候join会出问题，对于用户和用户名的对应的时候，利用先找出所有数据，再把userid 取出来进行in 的查询，再通过遍历之前需要处理的数据，把username 链接进去，这样是可以的，但是对于zan这种，可能不存在这条数据</p>
+<p>这几种join是当初面试的时候经常问的</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/5525740-70d997091c479147.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>comment  给sql语句增加注释（··感觉好没用啊）</p>
+<p>fetchSql 返回sql 语句 （ 感觉挺好，可以知道执行了什么，但用with 那种关联关系，只能返回第一条语句···，太废物了）</p>
+<h3 id="ORM"><a href="#ORM" class="headerlink" title="ORM"></a>ORM</h3><p>其实，感觉：查询出来的是object 对象，还是纯种的array ,就是看调用者，如果是 Db::table 调用，就是 数组</p>
+<p>如果是 User::  这种方式调用，就是 object， object 又有 user  和 collection 之分</p>
+<p><strong>新增</strong></p>
+<p>save   插入 这个不能用静态方法，只能实例化调用</p>
+<p>saveAll 批量</p>
+<p>返回值是受影响的行数，我们想获取到自增id ,可以通过 </p>
+<p>$user = new User()</p>
+<p>$user-&gt;save([])</p>
+<p>echo $user-&gt;id ,这种方式获取到，因为save 不能非静态化的调用， save() 返回值是受影响的行数</p>
+<p>批量新增 saveAll()</p>
+<p>create  静态调用</p>
+<p>User::create() , 返回值是自增id</p>
+<p><strong>修改</strong></p>
+<p>save ,需要传入主键</p>
+<p>saveAll  批量</p>
+<p>update 静态调用 ,这个方法也可以直接调用，Db和模型都有这个方法</p>
+<p>据说通过 -&gt;where-&gt;update() 这种就不能使用tp模型的事件功能（什么是事件功能？就是那种更新表前会有什么操作，类似钩子）</p>
+<p>感觉这个方法除了静态调用，就不知道有什么比较方便的地方了，感觉那种直接通过模型只使用update() 方法不太好，不太直观，感觉很多时候应该是不止是就是用一个update 方法这么简单</p>
+<p><strong>删除</strong></p>
+<p>delete 删除，也是模型和Db 都能使用的</p>
+<p>destroy 删除</p>
+<p><strong>查询</strong></p>
+<p>get （条件） </p>
+<p>，find</p>
+<p>感觉查询的功能真的是各种强大，慢慢学习吧</p>
+<p>获取器的重要作用：</p>
+<p>其实我们在平时的开发中总会遇到类似的问题，就是数据库中对于status 存储着各种数字，然后给前端展示的时候，循环结果，把结果中的每条数据的status 对应的中文取出来，然后再加上，读取器就是为了这个产生的，我们在读取一个</p>
+<p>attr 的时候，类似定义一个钩子，他会自动帮我们把取到的数据进行修改（其实有两个参数的，第一个是这个值，第二个是整条数据的值）</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/5525740-2ea087a1d37bc10a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>all (条件) select ()</p>
+<p><strong>软删除</strong></p>
+<p>这种事很常用的，我们平时使用的时候通过加入一个标志位，然后tp中也是使用标志位，delete_time ,但筛选数据的时候不用我们处理，仿佛真的就删除一样，可是在管理工具中还是能看见</p>
+<p>关于orm 的执行日志，或者是说sql日志，统一的开启数据库调试模式，然后直接在log中查看就好了</p>
+<p>notice : 就是很灵活，因为orm 也是基于数据库的，所以数据库中的很多方法在orm 中也可以用，甚至同名，比如update,但返回的内容不一样，orm 的update 返回的是更新的实例，数据库的update 返回的是兽影响的行数</p>
+<p>感觉就是模型的话要是不用with 这些关联属性，意义会小很多，可是后来发现，那些处理orm 查出来的的数据，确实会方便很多</p>
+<p>关联：</p>
+<p>1对 1 ： </p>
+<p>虽然感觉有时候反着写也是对的，但最好还是遵从 （虽然七月老师说是二者是不对等的，比如 user 和 userinfo  ,userinfo 有 userid ,但user 找不到 userinfo ,但如果是 1对 1 ，是真的都能通过定义 hasOne 和 belongsTo 去获取对方）</p>
+<p>（按照编辑器的推荐，确实 hasOne 更准确点）</p>
+<p>（user  hasOne  userinfo   这个也更符合我们的习惯）</p>
+<p>感觉上反正很怪，如果编辑器能提醒就好了，但只能提醒是主键还是外键，并不是提醒是哪种表的主键，那张表的外键</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/5525740-bd87f301d2501d50.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>user  -&gt; info</p>
+<p>user 中定义 hasOne</p>
+<p>$this-&gt;hasOne(‘info’, ‘user_id’,’id’），这个提示比较符合大众的想法</p>
+<p>info 中定义 belongsTo</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/5525740-da97683778092efd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>$this-&gt;belongsTo(‘user’, ‘user_id,’id’)</p>
+<p>单个模型还能通过</p>
+<p>$banner-&gt;hidden([‘update_time’, ‘delete_time’]); 来隐藏对应的字段</p>
+<p><em>感觉最好还是在model 的定义的时候隐藏</em></p>
+<p><em>注意select () 这种查找出来的都是数据集合 collection</em></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/5525740-3b17ab3543bd69a4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>看一下这个例子，通过嵌套关系，可以实现images 内部数据的排序，所以关联关系也是可以嵌套的</p>
+<h3 id="Cache"><a href="#Cache" class="headerlink" title="Cache"></a>Cache</h3><p>自己新建的缓存文件不要和 thinkphp里面的字段名称一样，否则回报错误</p>
+<h3 id="Exception"><a href="#Exception" class="headerlink" title="Exception"></a><strong>Exception</strong></h3><p>配置文件中开启debug 模式，要不然总是 ‘tp 专为api而生，十年磨一剑’的错误信息</p>
+<p>开启之后还需要处理，因为我们前台只需要json数据，我们需要考虑程序上线之后如果发生错误了我们该怎么处理，其实没法处理，因为我们不知道什么时候会发生，想象一下如果我们知道他会发生，那我们为什么不去阻止而让他发生呢，此时我们需要一个监听全局异常事件的东西，当php抛出异常的时候我们只要去捕获他，然后处理就好了，类似前端的钩子 。 </p>
+<p>知道吗 ？在我们原生的php当中，其实有个专门对全局异常进行处理的函数，可以自己定义，可是呢··我没有自己去试过，首先是异常自己理解的比较浅，再者对于框架的使用比较少，</p>
+<p>tp的全局异常处理应该也是这个原理，本质上应该还是修改这个函数，当我们在tp中想改变全局异常处理函数只需要修改配置文件中的异常处理函数名称，改成自己需要配置的就好了</p>
+<p>接下来我们重写下全局异常处理函数，让他更符合我们的要求</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/5525740-747c9b0c36acb611.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>首先需要继承tp自带的异常处理，然后重写他的render 方法，，为什么？因为我们在bug模式的时候需要tp给我们提示错误信息，总比我们自己看 $e-&gt;getMessage() 方便详细的多</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/5525740-5fc354627abfef17.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>接下来， Basci Exception 是自己默认定义的exception， 既然是自己定义的错误，自然不用tp的异常处理，直接返回前台json 数据就好了，因为自己定义的错误，一般是手动抛出，自己了解错误的原因</p>
+<p>然后是非自己定义，首先要是判断是否开启了debug 模式，如果开启了，说明在调试，直接使用tp自带的就好了，千万注意要加上return ,要不然会报错，毕竟是html 页面的返回（类似可以想象一下tp中模板的返回）</p>
+<p>再者是如果是上线环境，只需要告知前台服务器错误就好了，定义个固定的数组，返回给前端，然后记日志</p>
+<p>（记录日志也是很简单的，log::error(), 写在runtime的log下面）</p>
+<p>异常处理定义完毕，就要开始定义异常类了。使用异常类的原因就是告别传统的遇到错误的返回方式，还记得之前我们在嵌套函数中执行错误后怎么返回的吗，只能层层往上抛出，到了最外层的controller 返回，可是异常就不一样了，当异常处理检测到这个地方抛出的异常，就能直接进入异常处理函数中，多方便。</p>
+<p>（还有一点我觉得定义异常的好处，就是之前我们对错误信息的输出总是 code =&gt; message =&gt; ,有时候为了规范我们通过写一个方法，通过code 去获取message ，但你想象一下，当你写完接口之后，满屏的 code ，你也不知道这个code 代表的啥意思，当然我们可以约定code的规范，如果我们通过throw new ParamErrorException([code=&gt; , message=&gt;]), 我们就会知道这个错误大致属于前端参数的错误）</p>
+<p>notice :<br>1.不管是什么框架，我们定义的异常都一定继承于最原始的php \Exception</p>
+<p>2.常用的方法 $e-&gt;getMessage(),获取错误信息</p>
+<p>3.注意异常类因为继承自exception，我们一定不能定义exception中有的属性，比如我之前在异常类中定义过一个message属性，这个属性是exception 中的protected，然后在参数验证那块会出现莫名其妙的异常错误</p>
+<h3 id="Validate"><a href="#Validate" class="headerlink" title="Validate"></a>Validate</h3><p>说实话，我到现在还没有明白验证器的具体作用，平时那种</p>
+<p>new Vdalidate()</p>
+<p>-&gt;bitch()-&gt;check()</p>
+<p>感觉就能符合需要，可是要是真的每次在valiate里面写上同样的验证规则， 确实可能会有重复定义的嫌疑</p>
+<p>但我感觉要真的发挥验证器的作用，必须介乎scene() 场景来使用，一个validate 对应一个类，或者model，这个validate有各个属性的校验，通过定义scene ，让我们不会定义过多的validate 类</p>
+<p>在 $rule 里面</p>
+<p>有各个报错信息 $message =  [‘id.require’ =&gt;] 这种细致的分层，让错误信息准确的定位，或者直接 id =&gt; ,这样可能id对应多个验证规则的时候，需要把错误信息都加上，如果出错了，不知道具体是哪条规则出错了</p>
+<p>scene ,对应场景，可能某个实体过来了，我需要验证其中valdiate 类中的某几个属性，我就用scene 去细分，如果不用scene 的话，想象一下，这个地方比如user 模型需要name 和 sex ，另一个地方需要 name 和 img ，难道我们需要为此定义两个validate ，感觉一点都不灵活（exception如果遇到这种通过向里面传入不同的参数来解决）</p>
+<p>重写validate 和 重写 exception 不一样，重写valdiate ，其实是对传统 validate check 方法的封装，和 定义方法的更多加入，因为check 之后，所有的错误信息都会储存在 error  这个属性中（或者 $this-&gt;geterror()来获取），然后通过异常把这个错误信息抛出去给前台页面</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/5525740-993df227105522ea.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><p><img src="https://upload-images.jianshu.io/upload_images/5525740-e8860b37d1293f63.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>laravel 中也有相似功能，感觉就和路由中间件一样，在执行到这一步之前都会先执行这个验证操作</p>
+<p>感觉这个比那个__initze() 什么方法方便多了</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a><strong>总结</strong></h3><p>还有太多太多我不会用的，所以后面的路还很长啊，只是 为了更好的入门</p>
+<p>### </p>
+
+        
+      </div>
+      
+      
+      
+    </div>
+    
+    
+    
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/my.png"
+                alt="chenye2017" />
+            
+              <p class="site-author-name" itemprop="name">chenye2017</p>
+              <p class="site-description motion-element" itemprop="description">想用善良改变世界</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">73</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">71</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/chenye2017" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:1967196626@qq.com" target="_blank" title="E-Mail">
+                    
+                      <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://weibo.com/3215254425" target="_blank" title="Weibo">
+                    
+                      <i class="fa fa-fw fa-globe"></i>Weibo</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-crosshairs"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.baidu.com/" title="百度" target="_blank">百度</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.google.com/" title="谷歌" target="_blank">谷歌</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#目录结构"><span class="nav-number">1.</span> <span class="nav-text">目录结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Controller"><span class="nav-number">2.</span> <span class="nav-text">Controller</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Router"><span class="nav-number">3.</span> <span class="nav-text">Router</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Config"><span class="nav-number">4.</span> <span class="nav-text">Config</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DB"><span class="nav-number">5.</span> <span class="nav-text">DB</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ORM"><span class="nav-number">6.</span> <span class="nav-text">ORM</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Cache"><span class="nav-number">7.</span> <span class="nav-text">Cache</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Exception"><span class="nav-number">8.</span> <span class="nav-text">Exception</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Validate"><span class="nav-number">9.</span> <span class="nav-text">Validate</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其他"><span class="nav-number">10.</span> <span class="nav-text">其他</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">11.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">chenye2017</span>
+
+  
+</div>
+
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span> |
+</span>
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.3</div>
+
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count"> | 博客全站共112.7k字</span>
+</div>
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+  
+   <canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.2.0/anime.min.js"></script>
+   <script type="text/javascript" src="/js/src/fireworks.js"></script>
+
+
+
+</body>
+</html>

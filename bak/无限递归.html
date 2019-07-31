@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content=",," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="语法糖的博客" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="无线递归用到的地方还是蛮多的，如果是我们itbasic上的话，那就是部门之间的关系，支撑体系下面有战略中心，战略中心下面有数据部，如果设计数据表维持这之间的关系，还有bbs，如何维护评论之间的关系（其实像laravel的论坛，他的评论关系都是从上往下一条线的，只是在评论的开头有@人的标志，我们的论坛是分为1级评论和多级，除了1级之外的评论都是在1级评论的后面按照1条线排列，没有显示主从关系），当我">
+<meta name="keywords" content="PHP,无限递归">
+<meta property="og:type" content="website">
+<meta property="og:title" content="无限递归">
+<meta property="og:url" content="http://yoursite.com/bak/无限递归.html">
+<meta property="og:site_name" content="语法糖的博客">
+<meta property="og:description" content="无线递归用到的地方还是蛮多的，如果是我们itbasic上的话，那就是部门之间的关系，支撑体系下面有战略中心，战略中心下面有数据部，如果设计数据表维持这之间的关系，还有bbs，如何维护评论之间的关系（其实像laravel的论坛，他的评论关系都是从上往下一条线的，只是在评论的开头有@人的标志，我们的论坛是分为1级评论和多级，除了1级之外的评论都是在1级评论的后面按照1条线排列，没有显示主从关系），当我">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-07-12T15:57:24.890Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="无限递归">
+<meta name="twitter:description" content="无线递归用到的地方还是蛮多的，如果是我们itbasic上的话，那就是部门之间的关系，支撑体系下面有战略中心，战略中心下面有数据部，如果设计数据表维持这之间的关系，还有bbs，如何维护评论之间的关系（其实像laravel的论坛，他的评论关系都是从上往下一条线的，只是在评论的开头有@人的标志，我们的论坛是分为1级评论和多级，除了1级之外的评论都是在1级评论的后面按照1条线排列，没有显示主从关系），当我">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/bak/无限递归.html"/>
+
+
+
+
+
+  <title>无限递归 | 语法糖的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+
+    <script type="text/javascript" src="/live2d/script.js"></script>
+    <canvas id="live2dcanvas" width="150" height="300" class="live2d"></canvas>
+    <style>
+      #live2dcanvas {
+        position: fixed;
+        right: 0px;
+        z-index: 999;
+        pointer-events: none;
+        bottom: -40px;
+      }
+    </style>
+    <script>loadlive2d("live2dcanvas" ,"/live2d/assets/wanko/wanko.model.json",0.5)</script>
+  
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">语法糖的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">爱动漫，热爱LOL</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+    
+    
+    <div class="post-block page">
+      <header class="post-header">
+
+	<h1 class="post-title" itemprop="name headline">无限递归</h1>
+
+
+
+</header>
+
+      
+      
+      
+      <div class="post-body">
+        
+        
+          <p>无线递归用到的地方还是蛮多的，如果是我们itbasic上的话，那就是部门之间的关系，支撑体系下面有战略中心，战略中心下面有数据部，如果设计数据表维持这之间的关系，还有bbs，如何维护评论之间的关系（其实像laravel的论坛，他的评论关系都是从上往下一条线的，只是在评论的开头有@人的标志，我们的论坛是分为1级评论和多级，除了1级之外的评论都是在1级评论的后面按照1条线排列，没有显示主从关系），当我们需要获取这个评论的顶级的时候，我们就需要用到无线递归的知识。</p>
+<a id="more"></a>
+<p>以部门举例，我们在使用的过程中，需要找到这个部门的相关父级部门（子孙树），或者我们需要知道某个部门是否属于某个部门，我们既可以用家谱树去实现，也可以用子孙树去实现，用子孙树去实现的一个好处就是，当我们知道父级节点，一次性求出这个父级节点的所有子孙，通过判断子节点是否在这个父级节点的子孙中，就能知道是否满足条件。但如果我们通过家谱树，我们需要每次根据子节点，去求一次家谱，然后来判断家谱树中是否有这个父级节点存在，来判断是否符合条件。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line"></span><br><span class="line">$address = array(</span><br><span class="line">    array(&apos;id&apos;=&gt;1  , &apos;address&apos;=&gt;&apos;安徽&apos; , &apos;parent_id&apos; =&gt; 0),</span><br><span class="line">    array(&apos;id&apos;=&gt;2  , &apos;address&apos;=&gt;&apos;江苏&apos; , &apos;parent_id&apos; =&gt; 0),</span><br><span class="line">    array(&apos;id&apos;=&gt;3  , &apos;address&apos;=&gt;&apos;合肥&apos; , &apos;parent_id&apos; =&gt; 1),</span><br><span class="line">    array(&apos;id&apos;=&gt;4  , &apos;address&apos;=&gt;&apos;庐阳区&apos; , &apos;parent_id&apos; =&gt; 3),</span><br><span class="line">    array(&apos;id&apos;=&gt;5  , &apos;address&apos;=&gt;&apos;大杨镇&apos; , &apos;parent_id&apos; =&gt; 4),</span><br><span class="line">    array(&apos;id&apos;=&gt;6  , &apos;address&apos;=&gt;&apos;南京&apos; , &apos;parent_id&apos; =&gt; 2),</span><br><span class="line">    array(&apos;id&apos;=&gt;7  , &apos;address&apos;=&gt;&apos;玄武区&apos; , &apos;parent_id&apos; =&gt; 6),</span><br><span class="line">    array(&apos;id&apos;=&gt;8  , &apos;address&apos;=&gt;&apos;梅园新村街道&apos;, &apos;parent_id&apos; =&gt; 7),</span><br><span class="line">    array(&apos;id&apos;=&gt;9  , &apos;address&apos;=&gt;&apos;上海&apos; , &apos;parent_id&apos; =&gt; 0),</span><br><span class="line">    array(&apos;id&apos;=&gt;10 , &apos;address&apos;=&gt;&apos;黄浦区&apos; , &apos;parent_id&apos; =&gt; 9),</span><br><span class="line">    array(&apos;id&apos;=&gt;11 , &apos;address&apos;=&gt;&apos;外滩&apos; , &apos;parent_id&apos; =&gt; 10),</span><br><span class="line">    array(&apos;id&apos;=&gt;12 , &apos;address&apos;=&gt;&apos;安庆&apos; , &apos;parent_id&apos; =&gt; 1)</span><br><span class="line">    );</span><br><span class="line"></span><br><span class="line">function test($data, $pid)</span><br><span class="line">&#123;</span><br><span class="line">    static $arr = [];</span><br><span class="line">    foreach ($data as $key=&gt;$value) &#123;</span><br><span class="line">        if ($value[&apos;id&apos;] == $pid) &#123;</span><br><span class="line">            $arr[] = $value;</span><br><span class="line">            test($data, $value[&apos;parent_id&apos;]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return $arr;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">var_dump(test($address, 4));</span><br><span class="line"></span><br><span class="line">// 上面方法在多次循环获取的时候因为static变量的原因会出现一直叠加的错误</span><br><span class="line">// 下面是改进的方法</span><br><span class="line"></span><br><span class="line">function test1($data, $pid, &amp;$arr)</span><br><span class="line">&#123;</span><br><span class="line">    </span><br><span class="line">    foreach ($data as $key=&gt;$value) &#123;</span><br><span class="line">        if ($value[&apos;id&apos;] == $pid) &#123;</span><br><span class="line">            $arr[] = $value;</span><br><span class="line">            test($data, $value[&apos;parent_id&apos;]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return $arr;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">var_dump(test($address, 4, []));</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">庐阳区，合肥，安徽</span><br></pre></td></tr></table></figure>
+<p>子孙树的实现</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">function test1($data, $id, $level = 1， &amp;$arr)</span><br><span class="line">&#123;</span><br><span class="line">    </span><br><span class="line">    foreach ($data as $key=&gt;$value) &#123;</span><br><span class="line">        if ($value[&apos;parent_id&apos;] == $id) &#123;</span><br><span class="line">            $value[&apos;level&apos;] = $level;</span><br><span class="line">            $arr[] = $value;</span><br><span class="line">            test1($data, $value[&apos;id&apos;], $level + 1);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line">//level主要用来显示是几级的儿子</span><br><span class="line">// 上面这种方式其实不能实现层级结构，只能用level来表示，因为从开始往下面读的话，开始的数据先计算出来，是不能改变的，所以为了实现层级结构只能从后往前读</span><br><span class="line">// 不借助 &amp;$arr来实现</span><br><span class="line">function children($id) &#123;</span><br><span class="line">  $self = self($id);</span><br><span class="line">  $children = getChildrenByPid($self[&apos;id&apos;]);</span><br><span class="line">  if ($children) &#123;</span><br><span class="line">  foreach($children as $value) &#123;</span><br><span class="line">  	$slef[&apos;children&apos;][] = children($value[&apos;id&apos;]); // 这个地方很重要，如果想不出来的话，可当做是最后一层  a-&gt;a1,a2-&gt;a3, 我们怎么返回a这个node节点的结构</span><br><span class="line">&#125;</span><br><span class="line">  </span><br><span class="line">&#125; else &#123;</span><br><span class="line"> $self[&apos;children&apos;] = [];</span><br><span class="line">&#125;</span><br><span class="line">return $self;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>还记得我们在大学学习数据结构的时候，因为递归对于效率有影响，所以经常需要把递归改成迭代，上述家谱树容易修改，子孙树需要用到栈，自己不是很理解</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">// 家谱树递归的修改成普通方式</span><br><span class="line">function test2($data, $pid， &amp;$arr)</span><br><span class="line">&#123;</span><br><span class="line">    while ($pid != 0) &#123;</span><br><span class="line">        foreach($data as $key=&gt;$value) &#123;</span><br><span class="line">            if ($value[&apos;id&apos;] == $pid) &#123;</span><br><span class="line">                $arr[] = $value;</span><br><span class="line">                $pid = $value[&apos;parent_id&apos;];</span><br><span class="line">                break;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return $arr;</span><br><span class="line">&#125;</span><br><span class="line">var_dump(test2($address, 4));</span><br><span class="line">//迭代和递归的转换主要就是靠迭代找到那个停止往上找的条件</span><br><span class="line">// 今天看了别人的代码 https://github.com/chenye2017/china-divisions</span><br><span class="line">// 更加理解递归，我们只需要保存当前的状态并返回，可以不借助 &amp;地址 符</span><br><span class="line">function ancestors($id)</span><br><span class="line">&#123;</span><br><span class="line">  $slef = self($id);  //获取自己信息</span><br><span class="line">  if ($info) &#123;</span><br><span class="line">   $parent = ancesotrs($id);</span><br><span class="line">   $parent[] = $self; // 保存当时环境(只需要考虑当前环境就好，不用考虑递归)，并传递给上一个调用者，用来叠加</span><br><span class="line">   return $parent;</span><br><span class="line">&#125; else &#123;</span><br><span class="line">  return []; // 相当于</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>大致就是上面这些，像面包屑导航，不要看着从左到右，其实他也是一棵家谱树，因为他从始至终就只有一棵树。</p>
+<p>还有就是移动各个部门位置问题：</p>
+<p>想象一下，一棵树，我把某个分支截取下来放到另一个分支上是很正常的事情，但问题是有时候，我会出现把父亲节点的父亲设置成自己的子节点，这样树枝就断了，这样是不可取的，除此之外，任意移动都是可以的。</p>
+
+        
+      </div>
+      
+      
+      
+    </div>
+    
+    
+    
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/my.png"
+                alt="chenye2017" />
+            
+              <p class="site-author-name" itemprop="name">chenye2017</p>
+              <p class="site-description motion-element" itemprop="description">想用善良改变世界</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">73</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">71</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/chenye2017" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:1967196626@qq.com" target="_blank" title="E-Mail">
+                    
+                      <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://weibo.com/3215254425" target="_blank" title="Weibo">
+                    
+                      <i class="fa fa-fw fa-globe"></i>Weibo</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-crosshairs"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.baidu.com/" title="百度" target="_blank">百度</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.google.com/" title="谷歌" target="_blank">谷歌</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">chenye2017</span>
+
+  
+</div>
+
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span> |
+</span>
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.3</div>
+
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count"> | 博客全站共112.7k字</span>
+</div>
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+  
+   <canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.2.0/anime.min.js"></script>
+   <script type="text/javascript" src="/js/src/fireworks.js"></script>
+
+
+
+</body>
+</html>

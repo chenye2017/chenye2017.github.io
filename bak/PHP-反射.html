@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content=",,," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="语法糖的博客" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="故事背景：在做文件上传的时候，对图片的上传和视频的上传走的是相同的接口，可是视频和图片有些参数是不同的，于是通过一个基类base,扩展出多个子类，image,video ···上传类，根绝参数的不同调用不同类的upload方法。  简单点说反射的就是让你拥有剖析类、函数的能力。 有的同学可能会问我剖析类有什么用，我为什么要学反射，我只能说不学反射并不会对你实现业务有任何影响，但是如果你想写出结构优">
+<meta name="keywords" content="PHP,反射,依赖注入">
+<meta property="og:type" content="website">
+<meta property="og:title" content="PHP 反射">
+<meta property="og:url" content="http://yoursite.com/bak/PHP-反射.html">
+<meta property="og:site_name" content="语法糖的博客">
+<meta property="og:description" content="故事背景：在做文件上传的时候，对图片的上传和视频的上传走的是相同的接口，可是视频和图片有些参数是不同的，于是通过一个基类base,扩展出多个子类，image,video ···上传类，根绝参数的不同调用不同类的upload方法。  简单点说反射的就是让你拥有剖析类、函数的能力。 有的同学可能会问我剖析类有什么用，我为什么要学反射，我只能说不学反射并不会对你实现业务有任何影响，但是如果你想写出结构优">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-05-08T10:26:09.270Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="PHP 反射">
+<meta name="twitter:description" content="故事背景：在做文件上传的时候，对图片的上传和视频的上传走的是相同的接口，可是视频和图片有些参数是不同的，于是通过一个基类base,扩展出多个子类，image,video ···上传类，根绝参数的不同调用不同类的upload方法。  简单点说反射的就是让你拥有剖析类、函数的能力。 有的同学可能会问我剖析类有什么用，我为什么要学反射，我只能说不学反射并不会对你实现业务有任何影响，但是如果你想写出结构优">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/bak/PHP-反射.html"/>
+
+
+
+
+
+  <title>PHP 反射 | 语法糖的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+
+    <script type="text/javascript" src="/live2d/script.js"></script>
+    <canvas id="live2dcanvas" width="150" height="300" class="live2d"></canvas>
+    <style>
+      #live2dcanvas {
+        position: fixed;
+        right: 0px;
+        z-index: 999;
+        pointer-events: none;
+        bottom: -40px;
+      }
+    </style>
+    <script>loadlive2d("live2dcanvas" ,"/live2d/assets/wanko/wanko.model.json",0.5)</script>
+  
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">语法糖的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">爱动漫，热爱LOL</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+    
+    
+    <div class="post-block page">
+      <header class="post-header">
+
+	<h1 class="post-title" itemprop="name headline">PHP 反射</h1>
+
+
+
+</header>
+
+      
+      
+      
+      <div class="post-body">
+        
+        
+          <p>故事背景：在做文件上传的时候，对图片的上传和视频的上传走的是相同的接口，可是视频和图片有些参数是不同的，于是通过一个基类base,扩展出多个子类，image,video ···上传类，根绝参数的不同调用不同类的upload方法。</p>
+<blockquote>
+<p>简单点说反射的就是让你拥有剖析类、函数的能力。</p>
+<p>有的同学可能会问我剖析类有什么用，我为什么要学反射，我只能说不学反射并不会对你实现业务有任何影响，但是如果你想写出结构优雅的程序，想写出维护性和扩展性都很高的程序，学习反射是必不可少的。</p>
+</blockquote>
+<p>Laravel 中依赖注入用的就是反射。<a href="http://www.dahouduan.com/2017/08/21/php-refleciton-1/" target="_blank" rel="noopener">参考文章</a></p>
+<a id="more"></a>
+<p>base类</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">namespace App;</span><br><span class="line"></span><br><span class="line">class Base</span><br><span class="line">&#123;</span><br><span class="line">  public $name = &apos;&apos;;</span><br><span class="line">  public function upload()</span><br><span class="line">  &#123;</span><br><span class="line">  	var_dump($this-&gt;name);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>video 类</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">namespace App</span><br><span class="line"></span><br><span class="line">class Video extends Base</span><br><span class="line">&#123;</span><br><span class="line">  public $name = &apos;video&apos;;</span><br><span class="line"> </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>image 类</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">namespace App</span><br><span class="line"></span><br><span class="line">class Image extends Base</span><br><span class="line">&#123;</span><br><span class="line">  public $name = &apos;image&apos;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>反射类</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">namespace App</span><br><span class="line"></span><br><span class="line">class Upload</span><br><span class="line">&#123;</span><br><span class="line">  public static alias()</span><br><span class="line">  &#123;</span><br><span class="line">  	return [</span><br><span class="line">  		&apos;video&apos; =&gt; \App\Video,</span><br><span class="line">  		&apos;image&apos; =&gt; \App\Image</span><br><span class="line">	]</span><br><span class="line">  </span><br><span class="line">	&#125;</span><br><span class="line">  public fileUpload($type)</span><br><span class="line">  &#123;</span><br><span class="line">  	$classArr = self::alias();</span><br><span class="line">  	$className = $classArr[$type];</span><br><span class="line">  	$reflection = new ReflectionClass($className); // 获取反射对象</span><br><span class="line">  	return $ref-&gt;newInstance() // 获取类实例化对象</span><br><span class="line">  &#125;</span><br><span class="line"> </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面代码只是一段很简单的使用反射实现的代码，其中对实例化参数的判断，类是否能实例化等诸多反射的方法都未使用到。</p>
+<p>总结一下我在使用easyswoole 写代码过程中的感觉：</p>
+<ul>
+<li><p>首先想熟练的使用easyswoole,必须得熟悉swoole,比如对swoole http server 的配置，举个例子，当上传文件大于easyswoole 默认上传文件总的大小的时候，easyswoole(包括swoole)的tcp 链接会主动断掉，但是swoole的服务器端会打印一个warning ,显示传输文件过大，但是easyswoole 不会，服务器端不报异常，只是客户端建立不了链接，这就很尴尬了，之前还以为是端口号或者自己代码哪里出了问题。（ps:php文件上传和两个参数有关，一个是php.ini 里面的upload size, 一个是post size, 如果是swoole 上传的话，还和swoole 的配置项有关，在easyswoole 中对http server 的配置和swoole 中对http server 配置一样，只是参数修改的位置不一样罢了）</p>
+</li>
+<li><p>再者是对easy swoole 的使用，之前习惯于查看文档或者手册去学习（比如laravel 和 php 手册），对其中的所有的方法都有详细的解释，我们应该学会通过查看源码去学习其中方法的使用，比如easy swoole 中对获取参数这些都没有doc 文档，我们可以在request 类下面查看有哪些可以调用的方法，或者是通过编辑器补全</p>
+</li>
+<li><p>说到编辑器补全，之前发现的一个问题就是比如上传类，当可能返回上传类或者null 的时候，通过链式调用，上传类的方法得不到补全，可是我们通过php7的返回结果限制，就能让编辑器自动补全了</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">class Request</span><br><span class="line">&#123;</span><br><span class="line">   public function uploadFile($name) :?UploadFile</span><br><span class="line">    &#123;</span><br><span class="line">  		if ($file[$name]) &#123;</span><br><span class="line">          return $file[$name]</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">         return null</span><br><span class="line">          &#125;</span><br><span class="line">  </span><br><span class="line">    &#125;</span><br><span class="line">  </span><br><span class="line">&#125;</span><br><span class="line">// ?代表可能是Null</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>当我们想知道这个结果有哪些可以调用的方法的时候，我们可以直接打印这个结果，查看属于哪个类，然后我们到这个类下面查找，比如我之前想知道反射的 getParamtes  方法返回结果的foreach 中的value 有哪些可以调用的方法的时候，查看这个value 的类，然后查看这个类有哪些方法，比如getClass()-&gt;name, 就是获取参数提示符（这个参数提示符还是蛮奇怪的，Bag 这种自定义的类可以提示， 但是 string int 这种类却不提示）</p>
+</li>
+<li><p>今天在查看easyswoole源码的时候,发现自己对public protected private 都忘记了,首先public 是最简单的，protected 本类和继承类中可以使用，private只有本类中可以使用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line"></span><br><span class="line"> class A &#123;</span><br><span class="line"></span><br><span class="line">    public function __construct()</span><br><span class="line">    &#123;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public function test1()</span><br><span class="line">    &#123;</span><br><span class="line">        echo 1;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    protected function test2()</span><br><span class="line">    &#123;</span><br><span class="line">        echo 2;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private function test3()</span><br><span class="line">    &#123;</span><br><span class="line">        echo 3;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class B extends A &#123;</span><br><span class="line">    public function test4()</span><br><span class="line">    &#123;</span><br><span class="line">        $this-&gt;test2();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$b = new B();</span><br><span class="line"></span><br><span class="line">$b-&gt;test1();</span><br><span class="line"></span><br><span class="line">$b-&gt;test4();</span><br><span class="line"></span><br><span class="line">$b-&gt;test2();</span><br><span class="line"></span><br><span class="line">//$b-&gt;test3();</span><br></pre></td></tr></table></figure>
+<p>​</p>
+</li>
+</ul>
+<p>下面<a href="http://www.dahouduan.com" target="_blank" rel="noopener">文章来源</a></p>
+<p>PHP 内置了一组反射类来实现类的反射，常用的有：</p>
+<ul>
+<li>ReflectionClass 解析类</li>
+<li>ReflectionProperty 类的属性的相关信息</li>
+<li>ReflectionMethod 类方法的有关信息</li>
+<li>ReflectionParameter 取回了函数或方法参数的相关信息</li>
+</ul>
+<p>想看全的就翻手册去。</p>
+<p>今天先通过一段演示代码简单看下php的反射到底是个什么东西。</p>
+<p>例子1：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line"></span><br><span class="line">class Hero &#123;</span><br><span class="line"></span><br><span class="line">    protected $name;</span><br><span class="line"></span><br><span class="line">    protected $skills = [];</span><br><span class="line"></span><br><span class="line">    public function __construct($name, $skills = []) &#123;</span><br><span class="line">        $this-&gt;name = $name;</span><br><span class="line">        $this-&gt;skills = $skills;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public function attack($hero) &#123;</span><br><span class="line">        echo &quot;Attack &#123;$hero-&gt;name&#125;&quot; . PHP_EOL;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public function execute($index) &#123;</span><br><span class="line">        echo &quot;Axecute &#123;$index&#125; skill&quot; . PHP_EOL;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$ref = new ReflectionClass(&apos;Hero&apos;); // 参数类名</span><br><span class="line"></span><br><span class="line">if ($ref-&gt;isInstantiable()) &#123;</span><br><span class="line">    echo &apos;可以实例化&apos; . PHP_EOL; // 判断是否可以实例化，比如单例或者静态类的存在</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 获取类的构造函数</span><br><span class="line">$constructor = $ref-&gt;getConstructor();</span><br><span class="line">print_r($constructor); //ReflectionMethod  E对象</span><br><span class="line"></span><br><span class="line">//获取属性</span><br><span class="line">if ($ref-&gt;hasProperty(&apos;name&apos;)) &#123;</span><br><span class="line">    $attr = $ref-&gt;getProperty(&apos;name&apos;);</span><br><span class="line">    print_r($attr); //ReflectionProperty  对象</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 获取属性列表</span><br><span class="line">$attributes = $ref-&gt;getProperties();</span><br><span class="line">foreach ($attributes as $row) &#123;</span><br><span class="line">    //row 为 ReflectionProperty 的实例</span><br><span class="line">    echo $row-&gt;getName() . &quot;\n&quot;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 获取方法</span><br><span class="line">if ($ref-&gt;hasMethod(&apos;attack&apos;)) &#123;</span><br><span class="line">    $method = $ref-&gt;getMethod(&apos;attack&apos;);</span><br><span class="line">    //$method 为 ReflectionMethod 的实例</span><br><span class="line">    print_r($method);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 获取方法列表</span><br><span class="line">$methods = $ref-&gt;getMethods();</span><br><span class="line">foreach ($methods as $row) &#123;</span><br><span class="line">    //这的row 是 ReflectionMethod 的实例</span><br><span class="line">    echo $row-&gt;getName() . PHP_EOL;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>想知道上面代码的用途，最好的办法就是执行一下，自己打印一遍(如果用xdebug 对这种脚本式的执行是再方便不过了)</p>
+<p>上面例子想表达的效果就是：仅仅通过类名，就能了解类的内部结构，进而去实例化类</p>
+<p>例子2：</p>
+<p>student</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line"></span><br><span class="line">class Bag&#123;</span><br><span class="line"></span><br><span class="line">    public function name()&#123;</span><br><span class="line">        return  &quot;学生包&quot;.PHP_EOL;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class Student</span><br><span class="line">&#123;</span><br><span class="line">    public $id;</span><br><span class="line"></span><br><span class="line">    public $name;</span><br><span class="line">    public function __construct($id,$name,Bag $bag)</span><br><span class="line">    &#123;</span><br><span class="line">        $this-&gt;id = $id;</span><br><span class="line">        $this-&gt;name = $name;</span><br><span class="line">    &#125;</span><br><span class="line">    public function study()</span><br><span class="line">    &#123;</span><br><span class="line">        echo $this-&gt;name.&apos; is learning.....&apos;.PHP_EOL;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public function showBag()&#123;</span><br><span class="line">        echo &quot;My bag have &quot;.$this-&gt;bag-&gt;all();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>run</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php </span><br><span class="line"></span><br><span class="line">require &apos;student.php&apos;;</span><br><span class="line">function make($class, $vars = []) &#123;</span><br><span class="line">    $ref = new ReflectionClass($class);</span><br><span class="line"></span><br><span class="line">    if(!$ref-&gt;isInstantiable()) &#123;</span><br><span class="line">        throw new Exception(&quot;类&#123;$class&#125; 不存在&quot;); // 感觉这块应该是累不可以实例化</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    $constructor = $ref-&gt;getConstructor();</span><br><span class="line">    if(is_null($constructor)) &#123;</span><br><span class="line">        return new $class;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    $params = $constructor-&gt;getParameters();</span><br><span class="line">    $resolveParams = [];</span><br><span class="line">    foreach ($params as $key=&gt;$value) &#123;</span><br><span class="line">        $name = $value-&gt;getName();</span><br><span class="line">        if(isset($vars[$name])) &#123;</span><br><span class="line">            $resolveParams[] = $vars[$name];</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            $default = $value-&gt;isDefaultValueAvailable() ? $value-&gt;getDefaultValue() : null;</span><br><span class="line">            if(is_null($default)) &#123;</span><br><span class="line">           </span><br><span class="line">                if($value-&gt;getClass()) &#123;</span><br><span class="line">                // 依赖注入的实现，以这个为例子</span><br><span class="line">                // 需要Bag $bag ，却没有传入 bag，自动实例化</span><br><span class="line">                // 如果需要参数，直接在vars 里面加，但感觉参数名称不能和原本的冲突</span><br><span class="line">                    $resolveParams[] = make($value-&gt;getClass()-&gt;getName(), $vars);</span><br><span class="line">                &#125; else &#123;</span><br><span class="line">                    throw new Exception(&quot;&#123;$name&#125; 没有传值且没有默认值。&quot;);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; else &#123;</span><br><span class="line">                $resolveParams[] = $default;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return $ref-&gt;newInstanceArgs($resolveParams);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 没有提供name 值</span><br><span class="line">try &#123;</span><br><span class="line">    $stu = make(&apos;Student&apos;, [&apos;id&apos; =&gt; 1]);</span><br><span class="line">    print_r($stu);</span><br><span class="line">    $stu-&gt;study();</span><br><span class="line">&#125; catch (Exception $e) &#123;</span><br><span class="line">    echo $e-&gt;getMessage();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 提供name 值</span><br><span class="line">try &#123;</span><br><span class="line">    $stu = make(&apos;Student&apos;, [&apos;id&apos; =&gt; 1, &apos;name&apos; =&gt; &apos;li&apos;]);</span><br><span class="line">    print_r($stu);</span><br><span class="line">    $stu-&gt;study();</span><br><span class="line">&#125; catch (Exception $e) &#123;</span><br><span class="line">    echo $e-&gt;getMessage();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 需要 Bag ，却没有传入</span><br><span class="line">try &#123;</span><br><span class="line">    $stu = make(&apos;Student&apos;, [&apos;id&apos; =&gt; 1, &apos;name&apos; =&gt; &apos;li&apos;]);</span><br><span class="line">    print_r($stu);</span><br><span class="line">    $stu-&gt;study();</span><br><span class="line">    $stu-&gt;showBag();</span><br><span class="line">&#125; catch (Exception $e) &#123;</span><br><span class="line">    echo $e-&gt;getMessage();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>可以看到构造函数的第三个参数 <code>$bag</code> ,被自动实例化了，然后传递给了 <code>Student</code> 类的构造函数，这个部分很关键，这个地方可以用来实现依赖注入，我们不必在手动实例化对象了，我们可以根据参数的对应的类来自动实例化对象，从而实现类之间的解耦。</p>
+<p>// 感觉这个解耦就是不用手动去传参数，避免类修改的时候自己大片代码需要修改</p>
+</blockquote>
+<p>例子3</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line"></span><br><span class="line">// 这个不能算是容器，容器是反射的一种高级应用，下面的只是反射的一种基础应用</span><br><span class="line">if (PHP_SAPI != &apos;cli&apos;) &#123;</span><br><span class="line">    exit(&apos;Please run it in terminal!&apos;);</span><br><span class="line">&#125;</span><br><span class="line">if ($argc &lt; 3) &#123;</span><br><span class="line">    exit(&apos;At least 2 arguments needed!&apos;);</span><br><span class="line">&#125;</span><br><span class="line">$controller = ucfirst($argv[1]) . &apos;Controller&apos;;</span><br><span class="line">$action = &apos;action&apos; . ucfirst($argv[2]);</span><br><span class="line">// 检查类是否存在</span><br><span class="line">if (!class_exists($controller)) &#123;</span><br><span class="line">    exit(&quot;Class $controller does not existed!&quot;);</span><br><span class="line">&#125;</span><br><span class="line">// 获取类的反射</span><br><span class="line">$reflector = new ReflectionClass($controller);</span><br><span class="line">// 检查方法是否存在</span><br><span class="line">if (!$reflector-&gt;hasMethod($action)) &#123;</span><br><span class="line">    exit(&quot;Method $action does not existed!&quot;);</span><br><span class="line">&#125;</span><br><span class="line">// 取类的构造函数</span><br><span class="line">$constructor = $reflector-&gt;getConstructor();</span><br><span class="line">// 取构造函数的参数</span><br><span class="line">$parameters = $constructor-&gt;getParameters();</span><br><span class="line">// 遍历参数</span><br><span class="line">foreach ($parameters as $key =&gt; $parameter) &#123;</span><br><span class="line">    // 获取参数声明的类</span><br><span class="line">    $injector = new ReflectionClass($parameter-&gt;getClass()-&gt;name);</span><br><span class="line">    // 实例化参数声明类并填入参数列表</span><br><span class="line">    $parameters[$key] = $injector-&gt;newInstance();</span><br><span class="line">&#125;</span><br><span class="line">// 使用参数列表实例 controller 类</span><br><span class="line">$instance = $reflector-&gt;newInstanceArgs($parameters);</span><br><span class="line">// 执行</span><br><span class="line">$instance-&gt;$action();</span><br><span class="line">class HelloController</span><br><span class="line">&#123;</span><br><span class="line">    private $model;</span><br><span class="line">    public function __construct(TestModel $model)</span><br><span class="line">    &#123;</span><br><span class="line">        $this-&gt;model = $model;</span><br><span class="line">    &#125;</span><br><span class="line">    public function actionWorld()</span><br><span class="line">    &#123;</span><br><span class="line">        echo $this-&gt;model-&gt;property, PHP_EOL;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">class TestModel</span><br><span class="line">&#123;</span><br><span class="line">    public $property = &apos;property&apos;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>（以上代码非原创）将以上代码保存为 <code>run.php</code></p>
+<p>（以上代码非原创）将以上代码保存为 <code>run.php</code><br>运行方式，在终端下执行<code>php run.php Hello World</code></p>
+<p>可以看到，我们要执行 <code>HelloController</code> 下的 <code>WorldAction</code>,</p>
+<p>可以看到，我们要执行 <code>HelloController</code> 下的 <code>WorldAction</code>,<br><code>HelloController</code> 的构造函数需要一个 <code>TestModel</code>类型的对象,</p>
+<p>通过php 反射，我们实现了, <code>TestModel</code> 对象的自动注入，</p>
+<p>上面的例子类似于一个请求分发的过程,是路由请求的分发的一部分，假如我们要接收一个请求 地址例如： <code>/Hello/World</code></p>
+<p>意思是要执行 <code>HelloController</code> 下的 <code>WorldAction</code> 方法。</p>
+</blockquote>
+<p>上面的例子有个最大的缺陷就是所有类写在一个文件中，导致没有使用bind 也不会出错 （注意container 中没有自动加载）</p>
+<p>发现：感觉依赖注入的类的参数都是空的，都是直接就能实例化的那种</p>
+<p>感觉上面那个发现并不多</p>
+<p>控制反转：就是通过一个container 容器去解决依赖关系，把类的实例化从类的内部改成从外部传入</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">class Person</span><br><span class="line">&#123;</span><br><span class="line">    public function buy($obj)</span><br><span class="line">    &#123;</span><br><span class="line">       // $obj = new Car(); 改成依赖注入的模式</span><br><span class="line">        $obj-&gt;pay();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>但是这个obj 我们不希望手动传入，希望可以帮我们自动生成，于是就出现了依赖注入（通过类的反射实例化类，但这个类我们要提前绑定到容器中，要不然可能找不到，我们的容器可没有自动加载机制，容器一般有两个方法bind 和 make, bind 一般是 一个类的标识 和一个匿名函数，make 实例化这个类的标识，执行之前绑定的匿名函数，这就是最简单的container）</p>
+<p>能解决的问题：</p>
+<p>当我们把依赖类通过注入的方式传入的时候，我们可以只是传入这个类的类型（接口），当我们使用的时候可以在这个容器中为这个类型不同的实体类，达到switch 切换的效果</p>
+
+        
+      </div>
+      
+      
+      
+    </div>
+    
+    
+    
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/my.png"
+                alt="chenye2017" />
+            
+              <p class="site-author-name" itemprop="name">chenye2017</p>
+              <p class="site-description motion-element" itemprop="description">想用善良改变世界</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">73</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">71</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/chenye2017" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:1967196626@qq.com" target="_blank" title="E-Mail">
+                    
+                      <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://weibo.com/3215254425" target="_blank" title="Weibo">
+                    
+                      <i class="fa fa-fw fa-globe"></i>Weibo</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-crosshairs"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.baidu.com/" title="百度" target="_blank">百度</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.google.com/" title="谷歌" target="_blank">谷歌</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">chenye2017</span>
+
+  
+</div>
+
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span> |
+</span>
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.3</div>
+
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count"> | 博客全站共112.7k字</span>
+</div>
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+  
+   <canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.2.0/anime.min.js"></script>
+   <script type="text/javascript" src="/js/src/fireworks.js"></script>
+
+
+
+</body>
+</html>

@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content=",," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="语法糖的博客" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="今天遇到一个问题，关于大文件的上传。其实不管是大文件的上传，还是普通的文件上传，一直都是迷迷糊糊的，今天对其进行整理下。">
+<meta name="keywords" content="PHP,文件上传">
+<meta property="og:type" content="website">
+<meta property="og:title" content="文件上传">
+<meta property="og:url" content="http://yoursite.com/bak/文件上传.html">
+<meta property="og:site_name" content="语法糖的博客">
+<meta property="og:description" content="今天遇到一个问题，关于大文件的上传。其实不管是大文件的上传，还是普通的文件上传，一直都是迷迷糊糊的，今天对其进行整理下。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-02-23T12:50:17.138Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="文件上传">
+<meta name="twitter:description" content="今天遇到一个问题，关于大文件的上传。其实不管是大文件的上传，还是普通的文件上传，一直都是迷迷糊糊的，今天对其进行整理下。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/bak/文件上传.html"/>
+
+
+
+
+
+  <title>文件上传 | 语法糖的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+
+    <script type="text/javascript" src="/live2d/script.js"></script>
+    <canvas id="live2dcanvas" width="150" height="300" class="live2d"></canvas>
+    <style>
+      #live2dcanvas {
+        position: fixed;
+        right: 0px;
+        z-index: 999;
+        pointer-events: none;
+        bottom: -40px;
+      }
+    </style>
+    <script>loadlive2d("live2dcanvas" ,"/live2d/assets/wanko/wanko.model.json",0.5)</script>
+  
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">语法糖的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">爱动漫，热爱LOL</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+    
+    
+    <div class="post-block page">
+      <header class="post-header">
+
+	<h1 class="post-title" itemprop="name headline">文件上传</h1>
+
+
+
+</header>
+
+      
+      
+      
+      <div class="post-body">
+        
+        
+          <p>今天遇到一个问题，关于大文件的上传。其实不管是大文件的上传，还是普通的文件上传，一直都是迷迷糊糊的，今天对其进行整理下。<br><a id="more"></a><br>首先，最基本的，文件大小单位</p>
+<blockquote>
+<p>1KB等于1024B，B是英文Byte(比特，字节)的缩写,KB即kilobyte,字面意思就是千比特。<br>byte是文件大小的一个计量单位，大家都知道在计算机里面，文件都是以二进制方式存储的，这样一个最小的存储单元（譬如10、11、01、00）叫做一个bit(位，位元)，八个位元等于一个比特。<br>转换关系：<br>8bit=1b<br>1024byte=1kb<br>1024kb=1mb<br>1024mb=1gb<br>1024gb=1tb<br>以上单位k指千、m指百万、g指10亿，t指万亿，大小写均可。<br>因为1024≈1000，所以1024b,也称为1k，以下类似。</p>
+</blockquote>
+<p>简单点说就是 1G =1024M  1M = 1024K  1K=1024B  B之后就是位了，8位是1B，一般都是B为计量单位。</p>
+<p><a href="http://www.runoob.com/php/php-file-upload.html" target="_blank" rel="noopener">菜鸟教程这里面有对最基本的php文件上传的demo</a></p>
+<p>html :<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">&lt;title&gt;&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line"></span><br><span class="line">&lt;form action=&quot;upload_file.php&quot; method=&quot;post&quot; enctype=&quot;multipart/form-data&quot;&gt;</span><br><span class="line">    &lt;label for=&quot;file&quot;&gt;文件名：&lt;/label&gt;</span><br><span class="line">    &lt;input type=&quot;file&quot; name=&quot;file&quot; id=&quot;file&quot;&gt;&lt;br&gt;</span><br><span class="line">    &lt;input type=&quot;submit&quot; name=&quot;submit&quot; value=&quot;提交&quot;&gt;</span><br><span class="line">&lt;/form&gt;</span><br><span class="line"></span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure></p>
+<p>这个是以最基本的表单提交方式，当点击提交的时候文件就直接飞到upload_file.php那边了，注意接受的变量以表单控件的name字段的内容为变量名（$_POST[]）数组里面（想了下，其实框架的路由都是从这些大数组里面获取变量的信息）。<br>这个 <strong>enctype</strong> 很重要</p>
+<blockquote>
+<p><form> 标签的 enctype 属性规定了在提交表单时要使用哪种内容类型。在表单需要二进制数据时，比如文件内容，请使用 “multipart/form-data”。</form></p>
+<p><input> 标签的 type=”file” 属性规定了应该把输入作为文件来处理。举例来说，当在浏览器中预览时，会看到输入框旁边有一个浏览按钮。</p>
+</blockquote>
+<p>不仅是这块，当用curl模拟文件上传的时候，也有相关的参数设置<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl_setopt($ch, CURLOPT_POSTFIELDS, $params);</span><br></pre></td></tr></table></figure></p>
+<p>这个param如果是普通的post数据提交，要拼接成&amp;这种string方式，如果是文件上传，直接是传输组参数就可以了。</p>
+<p>php</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">// 允许上传的图片后缀</span><br><span class="line">$allowedExts = array(&quot;gif&quot;, &quot;jpeg&quot;, &quot;jpg&quot;, &quot;png&quot;);</span><br><span class="line">$temp = explode(&quot;.&quot;, $_FILES[&quot;file&quot;][&quot;name&quot;]);</span><br><span class="line">echo $_FILES[&quot;file&quot;][&quot;size&quot;];</span><br><span class="line">$extension = end($temp);     // 获取文件后缀名</span><br><span class="line">if ((($_FILES[&quot;file&quot;][&quot;type&quot;] == &quot;image/gif&quot;)</span><br><span class="line">|| ($_FILES[&quot;file&quot;][&quot;type&quot;] == &quot;image/jpeg&quot;)</span><br><span class="line">|| ($_FILES[&quot;file&quot;][&quot;type&quot;] == &quot;image/jpg&quot;)</span><br><span class="line">|| ($_FILES[&quot;file&quot;][&quot;type&quot;] == &quot;image/pjpeg&quot;)</span><br><span class="line">|| ($_FILES[&quot;file&quot;][&quot;type&quot;] == &quot;image/x-png&quot;)</span><br><span class="line">|| ($_FILES[&quot;file&quot;][&quot;type&quot;] == &quot;image/png&quot;))</span><br><span class="line">&amp;&amp; ($_FILES[&quot;file&quot;][&quot;size&quot;] &lt; 204800)   // 小于 200 kb</span><br><span class="line">&amp;&amp; in_array($extension, $allowedExts))</span><br><span class="line">&#123;</span><br><span class="line">    if ($_FILES[&quot;file&quot;][&quot;error&quot;] &gt; 0)</span><br><span class="line">    &#123;</span><br><span class="line">        echo &quot;错误：: &quot; . $_FILES[&quot;file&quot;][&quot;error&quot;] . &quot;&lt;br&gt;&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">    else</span><br><span class="line">    &#123;</span><br><span class="line">        echo &quot;上传文件名: &quot; . $_FILES[&quot;file&quot;][&quot;name&quot;] . &quot;&lt;br&gt;&quot;;</span><br><span class="line">        echo &quot;文件类型: &quot; . $_FILES[&quot;file&quot;][&quot;type&quot;] . &quot;&lt;br&gt;&quot;;</span><br><span class="line">        echo &quot;文件大小: &quot; . ($_FILES[&quot;file&quot;][&quot;size&quot;] / 1024) . &quot; kB&lt;br&gt;&quot;;</span><br><span class="line">        echo &quot;文件临时存储的位置: &quot; . $_FILES[&quot;file&quot;][&quot;tmp_name&quot;] . &quot;&lt;br&gt;&quot;;</span><br><span class="line">        </span><br><span class="line">        // 判断当期目录下的 upload 目录是否存在该文件</span><br><span class="line">        // 如果没有 upload 目录，你需要创建它，upload 目录权限为 777</span><br><span class="line">        if (file_exists(&quot;upload/&quot; . $_FILES[&quot;file&quot;][&quot;name&quot;]))</span><br><span class="line">        &#123;</span><br><span class="line">            echo $_FILES[&quot;file&quot;][&quot;name&quot;] . &quot; 文件已经存在。 &quot;;</span><br><span class="line">        &#125;</span><br><span class="line">        else</span><br><span class="line">        &#123;</span><br><span class="line">            // 如果 upload 目录不存在该文件则将文件上传到 upload 目录下</span><br><span class="line">            move_uploaded_file($_FILES[&quot;file&quot;][&quot;tmp_name&quot;], &quot;upload/&quot; . $_FILES[&quot;file&quot;][&quot;name&quot;]);</span><br><span class="line">            echo &quot;文件存储在: &quot; . &quot;upload/&quot; . $_FILES[&quot;file&quot;][&quot;name&quot;];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">else</span><br><span class="line">&#123;</span><br><span class="line">    echo &quot;非法的文件格式&quot;;</span><br><span class="line">&#125;</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+<p>之前一直以为这是框架的内容，其实这是php自带的，框架可能只是对他的封装和安全性的校验。如果有时候实在上传出错，试试这个数组。</p>
+<p>几个要注意的点：</p>
+<ol>
+<li>临时上传文件的地址可以通过phpinfo() 查看，但如果你真到那个文件夹下是找不到的，通过move_uploaded_file 函数移动到你需要的位置。因为我们itbasic之前的上传都写好了，导致我以为上传直接上传到指定的文件夹。</li>
+<li>几个函数 is_dir  判断文件夹是否存在，file_exists,判断文件是否存在，<br>move_uploaded_file 移动文件。注意创建文件夹的时候给权限755.</li>
+<li>移动到新的地址直接返回新的地址给前端就可以了。</li>
+<li>注意一下我们平时比如itbasic上表单的提交都不是以form这种格式，都是直接通过按钮触发click事件，然后获取页面内容进行提交，这种方式是上传不了文件的，我们可以利用jq，<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">var writeData = new FormData();</span><br><span class="line">writeData.append(&apos;object&apos;, objid);</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>然后往里面添加属性，通过append</p>
+<ol>
+<li>之前还上传过base64格式的image图片，其实这个要比前面的文件上传简单很多，这个与其说是上传文件，不如说是保存数据内容。</li>
+</ol>
+<p>一个image的base64格式码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">data:image/png;base64,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</span><br></pre></td></tr></table></figure></p>
+<p>图片在使用的时候只用image src=”” 等于上面这串内容就可以了。像wangeditor里面，写的内容，两种保存图片的方式：1.base64， 直接把这个image src = base64格式保存在html中 2.把文件上传到服务器上，然后获取链接地址。</p>
+<p>base64 php处理代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">if (preg_match(&apos;/^(data:\s*image\/(\w+);base64,)/&apos;, $src, $result))&#123;</span><br><span class="line">                $type = $result[2];</span><br><span class="line">                $body = str_replace($result[1], &apos;&apos;, $src);</span><br><span class="line">                $filename = $path.date(&apos;YmdHis&apos;, time()).&apos;.&apos;.$type;</span><br><span class="line">                if (file_put_contents($filename, base64_decode($body)))&#123;</span><br><span class="line"></span><br><span class="line">                &#125;else&#123;</span><br><span class="line">                    return [&apos;code&apos;=&gt;CODE_ERROR, &apos;msg&apos;=&gt;&apos;文件保存失败&apos;];</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br></pre></td></tr></table></figure></p>
+<p>大致说下一下，type 获取的是正则 （\w+）里面内容，代表图片的格式，<br>body 获取的正则的内容，注意看表达式最外面的（）括号，result[0]代表的是完全匹配内容。</p>
+<p>php获取到图片base64加密后的内容，通过解密，file_put_contents 写入文件，返回文件地址。</p>
+<p>上面是通过前端 js + 后端php，实现的文件上传，其实完全可以通过 php + php 实现，下面分别介绍通过这两种方式实现的大文件上传。</p>
+<p>客户端php代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br></pre></td><td class="code"><pre><span class="line">#!/usr/bin/env php</span><br><span class="line">&lt;?php</span><br><span class="line"></span><br><span class="line">const DATRIX_URL = &quot;http://211.144.114.26:19980&quot;;</span><br><span class="line">//const DATRIX_URL = &quot;http://192.168.50.229&quot;;</span><br><span class="line">const DATRIX_UID = &quot;itbasic&quot;;</span><br><span class="line">const DATRIX_PUID = &quot;itbasic&quot;;</span><br><span class="line">//const DATRIX_DATA_DIR = &quot;9bbd816d16ff589aee0ffe0ce68323ba&quot;;</span><br><span class="line">//const DATRIX_DATA_OBJ = &quot;20180126/09/9bbd816d16ff589aee0ffe0ce68323ba&quot;;</span><br><span class="line">const DATRIX_DATA_DIR = &quot;4bb4db1235077fb2ba6ea2b9a0220693&quot;;</span><br><span class="line">const DATRIX_DATA_OBJ = &quot;20180125/16/4bb4db1235077fb2ba6ea2b9a0220693&quot;;</span><br><span class="line">const DATRIX_EXECUTE_ID = &quot;itbasic&quot;;</span><br><span class="line">const DATRIX_CREATE_URI = &quot;/api/sw/file/create&quot;;</span><br><span class="line">const DATRIX_WRITE_URI = &quot;/api/sw/file/write&quot;;</span><br><span class="line">const DATRIX_FINISH_URI = &quot;/api/sw/file/finish&quot;;</span><br><span class="line"></span><br><span class="line">$filename = substr(date(&apos;Ymd&apos;), 2).&apos;.sql.tar&apos;;</span><br><span class="line">$trueFileName = &apos;/var/dataitbasic/&apos;.$filename;</span><br><span class="line"></span><br><span class="line">function http_post_data($url, $params = array(), $string = 1)</span><br><span class="line">&#123;</span><br><span class="line">    if (is_array($params) &amp;&amp; $string)</span><br><span class="line">    &#123;</span><br><span class="line">        $params = http_build_query($params, null, &apos;&amp;&apos;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    $ch = curl_init();</span><br><span class="line">    curl_setopt($ch, CURLOPT_POST, 1);</span><br><span class="line">    curl_setopt($ch, CURLOPT_URL, $url);</span><br><span class="line">    curl_setopt($ch, CURLOPT_ENCODING, &quot;&quot;);</span><br><span class="line">    curl_setopt($ch, CURLOPT_POSTFIELDS, $params);</span><br><span class="line">    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);</span><br><span class="line">    $response = curl_exec($ch);</span><br><span class="line">    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);</span><br><span class="line">    curl_close($ch);</span><br><span class="line"></span><br><span class="line">    return [$httpCode, json_decode($response,true)];</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$param = [</span><br><span class="line">    &apos;filename&apos;=&gt;$filename,</span><br><span class="line">    &apos;filesize&apos;=&gt;filesize($trueFileName),</span><br><span class="line">    &apos;createuid&apos;=&gt;DATRIX_UID,</span><br><span class="line">    &apos;parentuid&apos;=&gt;DATRIX_PUID,</span><br><span class="line">    &apos;dirid&apos;=&gt;DATRIX_DATA_DIR,</span><br><span class="line">    &apos;parentobj&apos;=&gt;DATRIX_DATA_OBJ,</span><br><span class="line">    &apos;city&apos;=&gt;&apos;上海&apos;,</span><br><span class="line">    &apos;district&apos;=&gt;&apos;&apos;,</span><br><span class="line">    &apos;gps&apos;=&gt;&apos;121.48789949,31.24916171&apos;,</span><br><span class="line">    &apos;isperdir&apos;=&gt;&apos;true&apos;,</span><br><span class="line">    &apos;userid&apos;=&gt;DATRIX_EXECUTE_ID,</span><br><span class="line">    &apos;debug&apos;=&gt;true</span><br><span class="line">];</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">function uploadToDatrix($createParam, $trueFileName)</span><br><span class="line">&#123;</span><br><span class="line">    $block = 4*1024*1024;</span><br><span class="line"></span><br><span class="line">    $create = http_post_data(DATRIX_URL.DATRIX_CREATE_URI, $createParam, 1);</span><br><span class="line"></span><br><span class="line">    $objid = $create[1][&apos;result&apos;][&apos;objid&apos;];</span><br><span class="line"></span><br><span class="line">    if ($create[1][&apos;code&apos;] == 200) &#123;</span><br><span class="line"></span><br><span class="line">        if (filesize($trueFileName) &gt; $block) &#123;</span><br><span class="line">            </span><br><span class="line"></span><br><span class="line">            $dir = DIR.substr(date(&apos;Ymd&apos;), 2);</span><br><span class="line">            $handle = opendir($dir);</span><br><span class="line">            $fileArr = [];</span><br><span class="line">            while(($filename = readdir($handle)) !== false) &#123;</span><br><span class="line">                if (!is_dir($filename) &amp;&amp; $filename != &apos;.&apos; &amp;&amp; $filename != &apos;..&apos;) &#123;</span><br><span class="line">                    array_push($fileArr, $filename);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            closedir($handle);</span><br><span class="line">            $offset = 0;</span><br><span class="line">            foreach ($fileArr as $key=&gt;$value) &#123;</span><br><span class="line"></span><br><span class="line">                $writeParam = [</span><br><span class="line">                    &apos;object&apos;=&gt;$objid,</span><br><span class="line">                    &apos;bucket&apos;=&gt;DATRIX_EXECUTE_ID,</span><br><span class="line">                    &apos;length&apos;=&gt;filesize($dir.&apos;/&apos;.$value),</span><br><span class="line">                    &apos;debug&apos;=&gt;true,</span><br><span class="line">                    &apos;filedata&apos;=&gt;file_get_contents($dir.&apos;/&apos;.$value),</span><br><span class="line">                    &apos;offset&apos;=&gt;$offset</span><br><span class="line">                ];</span><br><span class="line">                $writeResult = http_post_data(DATRIX_URL.DATRIX_WRITE_URI, $writeParam, 0);</span><br><span class="line"></span><br><span class="line">                $offset += filesize($dir.&apos;/&apos;.$value);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            $finshData = [</span><br><span class="line">                &apos;objectid&apos;=&gt;$objid,</span><br><span class="line">                &apos;createuid&apos;=&gt;DATRIX_UID,</span><br><span class="line">                &apos;userid&apos;=&gt;DATRIX_EXECUTE_ID,</span><br><span class="line">                &apos;fileid&apos;=&gt;$create[1][&apos;result&apos;][&apos;fileid&apos;],</span><br><span class="line">                &apos;debug&apos;=&gt;true</span><br><span class="line">            ];</span><br><span class="line"></span><br><span class="line">            if ($writeResult[1][&apos;code&apos;] == 200) &#123;</span><br><span class="line">                $finish = http_post_data(DATRIX_URL.DATRIX_FINISH_URI, $finshData,1);</span><br><span class="line">            &#125;</span><br><span class="line">            if ($finish[1][&apos;code&apos;] != 200) &#123;</span><br><span class="line">                echo date(&apos;Ymd&apos;);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            //$file = fopen($trueFileName, &apos;rb&apos;);</span><br><span class="line">            //$content = fread($file, filesize($trueFileName));</span><br><span class="line"></span><br><span class="line">            //$content = fgets($file);</span><br><span class="line"></span><br><span class="line">            $content = file_get_contents($trueFileName);</span><br><span class="line"></span><br><span class="line">            //echo &quot;filesize:&quot;.filesize($trueFileName);</span><br><span class="line"></span><br><span class="line">            $writeParam = [</span><br><span class="line">                &apos;object&apos;=&gt;$objid,</span><br><span class="line">                &apos;bucket&apos;=&gt;DATRIX_EXECUTE_ID,</span><br><span class="line">                &apos;length&apos;=&gt;filesize($trueFileName),</span><br><span class="line">                &apos;debug&apos;=&gt;true,</span><br><span class="line">                &apos;filedata&apos;=&gt;$content,</span><br><span class="line">                &apos;offset&apos;=&gt;0</span><br><span class="line">            ];</span><br><span class="line"></span><br><span class="line">            $writeResult = http_post_data(DATRIX_URL.DATRIX_WRITE_URI, $writeParam, 0);</span><br><span class="line"></span><br><span class="line">            $finshData = [</span><br><span class="line">                &apos;objectid&apos;=&gt;$objid,</span><br><span class="line">                &apos;createuid&apos;=&gt;DATRIX_UID,</span><br><span class="line">                &apos;userid&apos;=&gt;DATRIX_EXECUTE_ID,</span><br><span class="line">                &apos;fileid&apos;=&gt;$create[1][&apos;result&apos;][&apos;fileid&apos;],</span><br><span class="line">                &apos;debug&apos;=&gt;true</span><br><span class="line">            ];</span><br><span class="line"></span><br><span class="line">            if ($writeResult[1][&apos;code&apos;] == 200) &#123;</span><br><span class="line">                $finish = http_post_data(DATRIX_URL.DATRIX_FINISH_URI, $finshData,1);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            if ($finish[1][&apos;code&apos;] != 200) &#123;</span><br><span class="line">                echo date(&apos;Ymd&apos;);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">uploadToDatrix($param, $trueFileName);</span><br></pre></td></tr></table></figure>
+<p>http_post_data 是通过curl封装的post方法，需要注意的点是，传的post参数不要组装成string（post三种传递数据方式，string， 表单还有一种），其实我们平时可以通过观察控制台，发现我们itbasic的每次提交都是post方式，但是数据组装方式，有string，表单两种类型。<br>还有注意我之前一直file以为传文件名就可以了，··坑爹啊··这样传服务端怎么获取内容，用file_get_contents()获取文件内容。<br>（今天偶然碰见，file_get_contents()不能获取itbasic.app这种本地定义的域名哦）。</p>
+<ul>
+<li style="list-style: none"><input type="checkbox"> php读取指定文件大小</li>
+<li style="list-style: none"><input type="checkbox"> 完整的php接受大文件上传</li>
+</ul>
+<p>上传大文件  js<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br></pre></td><td class="code"><pre><span class="line">var uploadToDatrix = function(fileObject, fileId, fileText, type, dirid, dirobj, pro, button) &#123; //参数是上传文件对象</span><br><span class="line">    if (button) &#123;</span><br><span class="line">        $(&apos;#&apos; + button).attr(&apos;disabled&apos;, &apos;disabled&apos;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    for (var i = 0; i&lt;fileObject.files.length; i++) &#123;</span><br><span class="line">        var file = fileObject.files[i]; //具体的文件</span><br><span class="line">        var filename = file.name;</span><br><span class="line">        var fileSize = file.size; console.log(file);</span><br><span class="line"></span><br><span class="line">        var data = &#123;</span><br><span class="line">            filename: filename,</span><br><span class="line">            filesize: fileSize,</span><br><span class="line">            createuid: DATRIX_UID,</span><br><span class="line">            parentuid: DATRIX_PUID,</span><br><span class="line">            dirid: dirid,</span><br><span class="line">            parentobj: dirobj,</span><br><span class="line">            city: &apos;上海市&apos;,</span><br><span class="line">            gps: &apos;121.48789949,31.24916171&apos;,</span><br><span class="line">            isperdir: true,</span><br><span class="line">            userid: DATRIX_EXECUTE_ID,</span><br><span class="line">            debug: &apos;true&apos;</span><br><span class="line">        &#125;;</span><br><span class="line"></span><br><span class="line">        $.ajax(&#123;</span><br><span class="line">            url: DATRIX_URL+DATRIX_CREATE_URI,</span><br><span class="line">            type: &quot;POST&quot;,</span><br><span class="line">            dataType: &quot;json&quot;,</span><br><span class="line">            data: data,</span><br><span class="line">            success: function (data) &#123;</span><br><span class="line">                var back = data.result;</span><br><span class="line">                console.log(back);</span><br><span class="line">                /* var writeData = &#123;</span><br><span class="line">                 object: back.objid,</span><br><span class="line">                 bucket: &quot;itbasic&quot;,</span><br><span class="line">                 length: fileSize,</span><br><span class="line">                 offset: 0,</span><br><span class="line">                 debug: true</span><br><span class="line">                 &#125;*/</span><br><span class="line">                fileWrite (fileSize, back.objid, fileSize, file, 0, back, fileId, fileText, type, button);</span><br><span class="line"></span><br><span class="line">            &#125;,</span><br><span class="line">            error : function(error) &#123;</span><br><span class="line">                showAlert(&apos;上传失败&apos;, &apos;danger&apos;);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">var fileWrite = function(uploadSize, objid, trueSize, file, start, back, fileId, fileText, type, button) &#123;</span><br><span class="line">    var writeData = new FormData();</span><br><span class="line"></span><br><span class="line">    if(uploadSize &lt;= 2 * 1024 * 1024) &#123;</span><br><span class="line">        var fileSize = uploadSize;</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        var fileSize = 2 * 1024 * 1024;</span><br><span class="line">    &#125;</span><br><span class="line">    var end = start * 1 + fileSize * 1;</span><br><span class="line">    var func = (file.mozSlice ? &apos;mozSlice&apos; : (file.webkitSlice ? &apos;webkitSlice&apos; : &apos;slice&apos;));</span><br><span class="line">    var uploadFile = file[func](start, end);</span><br><span class="line"></span><br><span class="line">    writeData.append(&apos;object&apos;, objid); //var writeData = new FormData();</span><br><span class="line">    writeData.append(&apos;bucket&apos;, &apos;itbasic&apos;);  //上传文件用户id</span><br><span class="line">    writeData.append(&apos;length&apos;, fileSize); //filesize,上传文件内容</span><br><span class="line">    writeData.append(&apos;offset&apos;,start); //文件开始点</span><br><span class="line">    writeData.append(&apos;debug&apos;, true);</span><br><span class="line">    writeData.append(&apos;file&apos;, uploadFile); //文件内容</span><br><span class="line"></span><br><span class="line">    console.log(start, fileSize, uploadSize);</span><br><span class="line"></span><br><span class="line">    $.ajax(&#123;</span><br><span class="line">        url: DATRIX_URL+DATRIX_WRITE_URI,</span><br><span class="line">        type: &quot;POST&quot;,</span><br><span class="line">        dataType: &quot;json&quot;,</span><br><span class="line">        data: writeData,</span><br><span class="line">        processData: false,</span><br><span class="line">        contentType: false,</span><br><span class="line">        async : false,</span><br><span class="line">        success : function(data) &#123;</span><br><span class="line">            //console.log(data);</span><br><span class="line">            uploadSize = uploadSize - fileSize;</span><br><span class="line">            console.log(uploadSize);</span><br><span class="line">            if (uploadSize*1 &gt; 0) &#123;</span><br><span class="line">                fileWrite(uploadSize, objid, trueSize, file, end, back, fileId, fileText, type, button);</span><br><span class="line">                return ;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            var finishData = &#123;</span><br><span class="line">                objectid:back.objid,</span><br><span class="line">                createuid:DATRIX_UID,</span><br><span class="line">                userid:DATRIX_EXECUTE_ID,</span><br><span class="line">                fileid:back.fileid,</span><br><span class="line">                debug:true</span><br><span class="line">            &#125;</span><br><span class="line">            $.ajax(&#123;</span><br><span class="line">                url: DATRIX_URL+DATRIX_FINISH_URI,</span><br><span class="line">                type: &quot;POST&quot;,</span><br><span class="line">                dataType: &quot;json&quot;,</span><br><span class="line">                data: finishData,</span><br><span class="line">                async : false,</span><br><span class="line">                success : function() &#123;</span><br><span class="line">                    $(&apos;#&apos;+button).removeAttr(&apos;disabled&apos;);</span><br><span class="line">                    if (pro == 1) &#123;</span><br><span class="line">                        var f = &#123;&apos;fname&apos;:back.filename,&apos;fid&apos;:back.fileid, &apos;objectid&apos;:back.objid&#125;;</span><br><span class="line">                        uploadContractFile.push(f); console.log(uploadContractFile);</span><br><span class="line"></span><br><span class="line">                    &#125; else &#123;</span><br><span class="line"></span><br><span class="line">                        if (fileId) &#123;</span><br><span class="line">                            var file_id = $(&apos;#&apos; + fileId).val();</span><br><span class="line">                            var upload_text = $(&apos;#&apos; + fileText).val() || &apos;&apos;;</span><br><span class="line">                            if (!file_id) &#123;</span><br><span class="line">                                file_id = back.fileid + &apos;,&apos; + back.filename;</span><br><span class="line">                                $(&apos;#&apos; + fileId).val(file_id);</span><br><span class="line">                            &#125; else &#123;</span><br><span class="line">                                file_id = file_id + &apos;,&apos; + back.fileid + &apos;,&apos; + back.filename;</span><br><span class="line">                                $(&apos;#&apos; + fileId).val(file_id);</span><br><span class="line">                            &#125;</span><br><span class="line"></span><br><span class="line">                            if (!upload_text) &#123;</span><br><span class="line">                                upload_text = back.filename;</span><br><span class="line">                                $(&apos;#&apos; + fileText).val(upload_text);</span><br><span class="line">                            &#125; else &#123;</span><br><span class="line">                                upload_text = upload_text + &apos; , &apos; + back.filename;</span><br><span class="line">                                $(&apos;#&apos; + fileText).val(upload_text);</span><br><span class="line">                            &#125;</span><br><span class="line">                        &#125; else &#123;</span><br><span class="line">                            var upload_text = $(fileText).find(&apos;.upload_text&apos;).val() || &apos;&apos;;</span><br><span class="line">                            var html = &apos;&lt;a href=&quot;javascript:;&quot; class=&quot;primary-link preview&quot; data-filename=&quot;&apos;+back.filename+&apos;&quot; data-fileid=&quot;&apos;+back.fileid+&apos;&quot; data-objid=&quot;&apos;+back.objid+&apos;&quot;&gt; &apos;+ back.filename +&apos; &lt;/a&gt;&apos;;</span><br><span class="line">                            $(fileText).find(&apos;.file_preview&apos;).append(html);</span><br><span class="line">                            if (!upload_text) &#123;</span><br><span class="line">                                upload_text = back.filename;</span><br><span class="line">                                $(fileText).find(&apos;.upload_text&apos;).val(upload_text);</span><br><span class="line">                            &#125; else &#123;</span><br><span class="line">                                upload_text = upload_text + &apos; , &apos; + back.filename;</span><br><span class="line">                                $(fileText).find(&apos;.upload_text&apos;).val(upload_text);</span><br><span class="line">                            &#125;</span><br><span class="line">                        &#125;</span><br><span class="line"></span><br><span class="line">                        Model.addupload(&#123;</span><br><span class="line">                            fileid: back.fileid,</span><br><span class="line">                            filename: back.filename,</span><br><span class="line">                            type: type,</span><br><span class="line">                            objectid: back.objid</span><br><span class="line">                        &#125;, function (res) &#123;</span><br><span class="line">                            if (res.code === CODE_SUCCESS) &#123;</span><br><span class="line"></span><br><span class="line">                            &#125; else if (res.code === CODE_ERROR) &#123;</span><br><span class="line">                                showAlert(res.msg, &apos;danger&apos;);</span><br><span class="line">                            &#125;</span><br><span class="line">                        &#125;)</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;,</span><br><span class="line">                error: function() &#123;</span><br><span class="line">                    showAlert(&apos;上传失败&apos;, &apos;danger&apos;);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;)</span><br><span class="line">        &#125;,</span><br><span class="line">        error : function() &#123;</span><br><span class="line">            showAlert(&apos;上传失败&apos;, &apos;danger&apos;);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>没维护了，以后接着看吧。</p>
+<p>php 文件处理，主要包括文件的分割和合并</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">function file_split($file,$block_size=  2 * 1024 * 1024)&#123;</span><br><span class="line">        $block_info=[];</span><br><span class="line">        $size=filesize($file);</span><br><span class="line">        $i=0;</span><br><span class="line">        while($size&gt;0)&#123;</span><br><span class="line">            $block_info[]= [</span><br><span class="line">                &apos;size&apos;=&gt;($size&gt;=$block_size?$block_size:$size),</span><br><span class="line">                &apos;file&apos;=&gt;$file.&apos;.&apos;.$i++</span><br><span class="line">            ];</span><br><span class="line">            $size-=$block_size;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        $fp = fopen($file,&quot;rb&quot;);</span><br><span class="line">        foreach ($block_info as $bi) &#123;</span><br><span class="line">            $handle = fopen($bi[&apos;file&apos;],&quot;wb&quot;);</span><br><span class="line">            fwrite($handle,fread($fp,$bi[&apos;size&apos;]));</span><br><span class="line">            fclose($handle);</span><br><span class="line">            unset($handle);</span><br><span class="line">        &#125;</span><br><span class="line">        fclose ($fp);</span><br><span class="line">        unset($fp);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function file_combine($file,$save_file=&apos;&apos;)&#123;</span><br><span class="line">        $filename=basename($file);</span><br><span class="line">        $filepath=dirname($file).&apos;/&apos;;</span><br><span class="line">        $block_info=array();</span><br><span class="line">        for($i=0;;$i++)&#123;</span><br><span class="line">            if(file_exists($file.&apos;.&apos;.$i) &amp;&amp; filesize($file.&apos;.&apos;.$i)&gt;0)&#123;</span><br><span class="line">                $block_info[]=$file.&apos;.&apos;.$i;</span><br><span class="line">            &#125;else&#123;</span><br><span class="line">                break;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        if($save_file)&#123;</span><br><span class="line">            $fp   = fopen($save_file,&quot;wb&quot;);</span><br><span class="line">        &#125;else&#123;</span><br><span class="line">            $fp   = fopen($file,&quot;wb&quot;);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        foreach ($block_info as $block_file) &#123;</span><br><span class="line">            $handle = fopen($block_file,&quot;rb&quot;);</span><br><span class="line">            fwrite($fp,fread($handle,filesize($block_file)));</span><br><span class="line">            fclose($handle);</span><br><span class="line">            unset($handle);</span><br><span class="line">        &#125;</span><br><span class="line">        fclose ($fp);</span><br><span class="line">        unset($fp);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>php上传大文件有种就是先用php进行文件分割成小文件，然后小文件上传，然后上传到服务器上进行大文件合并。但有个问题就是php读取文件的fopen就8192字节，也就是8192B，一般上传文件都是4mb的上传，所以用的linux split分割文件后，放入文件夹里面，然后遍历文件夹，读取内容，写入操作的时候传入同一个objectid，往同一个文件里面写入</p>
+
+        
+      </div>
+      
+      
+      
+    </div>
+    
+    
+    
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/my.png"
+                alt="chenye2017" />
+            
+              <p class="site-author-name" itemprop="name">chenye2017</p>
+              <p class="site-description motion-element" itemprop="description">想用善良改变世界</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">73</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">71</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/chenye2017" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:1967196626@qq.com" target="_blank" title="E-Mail">
+                    
+                      <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://weibo.com/3215254425" target="_blank" title="Weibo">
+                    
+                      <i class="fa fa-fw fa-globe"></i>Weibo</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-crosshairs"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.baidu.com/" title="百度" target="_blank">百度</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.google.com/" title="谷歌" target="_blank">谷歌</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">chenye2017</span>
+
+  
+</div>
+
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span> |
+</span>
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.3</div>
+
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count"> | 博客全站共112.7k字</span>
+</div>
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+  
+   <canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.2.0/anime.min.js"></script>
+   <script type="text/javascript" src="/js/src/fireworks.js"></script>
+
+
+
+</body>
+</html>
