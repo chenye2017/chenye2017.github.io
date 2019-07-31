@@ -89,10 +89,10 @@
 <meta property="og:description" content="升级https的原因：老大把公司人事管理系统升级到了https,面试的时候可能经常问到https,自己之前了解过https,但是没有去实践过，现在太多网站都是https····还有升级过程并不是十分复杂，那就去做呗。">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/5525740-442e10f7747a4d2f.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/1564555558.png">
-<meta property="og:image" content="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/1564555559.png">
-<meta property="og:image" content="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/1564555559.png">
-<meta property="og:updated_time" content="2019-07-31T06:46:03.680Z">
+<meta property="og:image" content="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/3923915645624827681.png">
+<meta property="og:image" content="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/5535015645624829909.png">
+<meta property="og:image" content="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/9207815645624833023.png">
+<meta property="og:updated_time" content="2019-07-31T08:41:23.535Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="网站升级https">
 <meta name="twitter:description" content="升级https的原因：老大把公司人事管理系统升级到了https,面试的时候可能经常问到https,自己之前了解过https,但是没有去实践过，现在太多网站都是https····还有升级过程并不是十分复杂，那就去做呗。">
@@ -382,14 +382,14 @@
 <p>https和http的区别</p>
 <p>简单看就是 https = http + SSL</p>
 <p>SSL的运行机制，可以参考<a href="http://www.ruanyifeng.com/blog/2014/02/ssl_tls.html" target="_blank" rel="noopener">阮一峰老师的文章</a>，我对上面的一些内容做了些自己理解的笔记</p>
-<p><img src="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/1564555558.png" alt="image.png"></p>
+<p><img src="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/3923915645624827681.png" alt="image.png"></p>
 <ol>
 <li>其中加密传播是因为我们的传播内容都是通过生成一个第三方不知道的公钥，这个公钥是怎么来的呢，首先通过ca证书，因为系统内容ca的公钥，ca用私钥加密文件内容（私钥加密，公钥解密，不被篡改），我们获取服务器的公钥，这个公钥是干什么的呢，并不是用来进行数据的加密的，而是用来加密传递的数据给服务器（公钥加密，私钥解密，不被获取），服务器接收到客户端的数据进行生成公共密钥，这个密钥是我们以后加密数据用来传递的<br>(感觉只要记住证书里面的内容都是能保证绝对正确就好了)</li>
 <li>具有校验机制，是因为我们的证书具有这个作用，比如我上次把我从www.chenye2017.cn 上获取的证书放到虚拟站点blog.chenye2017.cn就直接报错</li>
 <li>配备身份证书，估计也是这个意思</li>
 </ol>
-<p><img src="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/1564555559.png" alt="image.png"><br>所以ssl 和 tsl 是一样的意思嘛</p>
-<p><img src="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/1564555559.png" alt="image.png"><br>感觉这个握手不是tcp的那个三次握手，这个开始的时候tcp那个三次握手应该都搭建好了，而且这个也是4次握手</p>
+<p><img src="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/5535015645624829909.png" alt="image.png"><br>所以ssl 和 tsl 是一样的意思嘛</p>
+<p><img src="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/9207815645624833023.png" alt="image.png"><br>感觉这个握手不是tcp的那个三次握手，这个开始的时候tcp那个三次握手应该都搭建好了，而且这个也是4次握手</p>
 <p>剩下的内容就是4次握手的详细内容了，为什么要4次握手，写的都很详细，就不再补充了，总之这个生成传输加密内容的秘钥也是通过非对称加密，再后面就是http了。</p>
 <p>总结一下：</p>
 <ol>

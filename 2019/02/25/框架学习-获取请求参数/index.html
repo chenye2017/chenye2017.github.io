@@ -89,19 +89,19 @@
 <meta property="og:site_name" content="语法糖的博客">
 <meta property="og:description" content="PHP属于一门高级语言，感觉就是那种语言里面偏向于应用层的语言，再加上lnmp架构还有框架的存在，对于http请求过程中的细节封装了太多层，导致我们实际在使用过程中得到的参数已经是面目全非的样子，记录下对其探索的历程">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/1564555543.png">
-<meta property="og:image" content="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/1564555543.png">
-<meta property="og:image" content="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/1564555544.png">
-<meta property="og:image" content="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/1564555545.png">
-<meta property="og:image" content="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/1564555546.png">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5525740-aaef0e7ec0c6f314.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/1564555556.png">
-<meta property="og:image" content="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/1564555557.png">
-<meta property="og:updated_time" content="2019-07-31T06:46:01.583Z">
+<meta property="og:image" content="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/6376115645624808334.png">
+<meta property="og:image" content="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/585115645624810549.png">
+<meta property="og:image" content="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/8569915645624812587.png">
+<meta property="og:image" content="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/7545215645624814697.png">
+<meta property="og:image" content="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/4666915645624818122.png">
+<meta property="og:image" content="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/7052815645624820177.png">
+<meta property="og:image" content="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/8406415645624822588.png">
+<meta property="og:image" content="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/4356115645624825068.png">
+<meta property="og:updated_time" content="2019-07-31T08:41:22.755Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="框架学习-获取请求参数">
 <meta name="twitter:description" content="PHP属于一门高级语言，感觉就是那种语言里面偏向于应用层的语言，再加上lnmp架构还有框架的存在，对于http请求过程中的细节封装了太多层，导致我们实际在使用过程中得到的参数已经是面目全非的样子，记录下对其探索的历程">
-<meta name="twitter:image" content="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/1564555543.png">
+<meta name="twitter:image" content="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/6376115645624808334.png">
 
 
 
@@ -411,17 +411,17 @@
 <p>然后服务器端就可以用</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$name = $_POST[&apos;name&apos;];</span><br><span class="line">$key = $_POST[&apos;key&apos;]</span><br></pre></td></tr></table></figure>
 <p>实际接收到的内容（通过swoole rowContent 打印出来，获取原始的<code>POST</code>包体，用于非<code>application/x-www-form-urlencoded</code>格式的<code>Http POST</code>请求，返回原始<code>POST</code>数据，此函数等同于PHP的<code>fopen(&#39;php://input&#39;)</code>）</p>
-<p><img src="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/1564555543.png" alt="image.png"></p>
+<p><img src="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/6376115645624808334.png" alt="image.png"></p>
 <p>所以其实$_POST 就是对上述dept_name 进行 &amp; explode, 然后urldecode 一下</p>
 <h3 id="multipart-form-data"><a href="#multipart-form-data" class="headerlink" title="multipart/form-data"></a>multipart/form-data</h3><p>最先接触这个东西的时候是文件上传的时候</p>
 <blockquote>
 <p><form> 标签的 enctype 属性规定了在提交表单时要使用哪种内容类型。在表单需要二进制数据时，比如文件内容，请使用 “multipart/form-data”。</form></p>
 </blockquote>
 <p>postman 中发送请求</p>
-<p><img src="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/1564555543.png" alt="image.png"></p>
+<p><img src="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/585115645624810549.png" alt="image.png"></p>
 <p>平时我测试接口的时候经常用的是form-data, 服务端实际接受到的数据如下(swoole)</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">multipart/form-data，将表单的数据处理为一条消息，以标签为单元，用分隔符分开。既可以上传键值对，也可以上传文件</span><br><span class="line">这种方式不会对中文进行编码</span><br></pre></td></tr></table></figure>
-<p><img src="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/1564555544.png" alt="image.png"></p>
+<p><img src="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/8569915645624812587.png" alt="image.png"></p>
 <blockquote>
 <p>既可以上传文件等二进制数据，也可以上传表单键值对，</p>
 </blockquote>
@@ -431,7 +431,7 @@
 <p>raw 原始类型，可以上传任意格式的文本，比如 text、json、xml、html（中文不进行编码）</p>
 </blockquote>
 <p>其中 json,text,html 都是通过这种方式，然后添加content-type</p>
-<p><img src="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/1564555545.png" alt="image.png"></p>
+<p><img src="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/7545215645624814697.png" alt="image.png"></p>
 <h3 id="text-xml"><a href="#text-xml" class="headerlink" title="text/xml"></a>text/xml</h3><p>微信中经常用这种方式，之前在开发企业号的时候经常遇到</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">POST http://www.homeway.me HTTP/1.1 </span><br><span class="line">Content-Type: text/xml</span><br><span class="line"></span><br><span class="line">&lt;?xml version=&quot;1.0&quot;?&gt;</span><br><span class="line">&lt;resource&gt;</span><br><span class="line">    &lt;id&gt;123&lt;/id&gt;</span><br><span class="line">    &lt;params&gt;</span><br><span class="line">        &lt;name&gt;</span><br><span class="line">            &lt;value&gt;homeway&lt;/value&gt;</span><br><span class="line">        &lt;/name&gt;</span><br><span class="line">        &lt;age&gt;</span><br><span class="line">            &lt;value&gt;22&lt;/value&gt;</span><br><span class="line">        &lt;/age&gt;</span><br><span class="line">    &lt;/params&gt;</span><br><span class="line">&lt;/resource&gt;</span><br></pre></td></tr></table></figure>
 <blockquote>
@@ -448,17 +448,17 @@
 <p>千万要注意：不能上来没有判断是json 就对rawContent 取到的内容进行切割，因为只有json 的时候切割才会符合我们预期，别的时候不会</p>
 <p>上面就是post方式提交数据的几种情况，接下来我们说get方式（现在的restful api 还有delete put 等方式，我在各个文章上都没找到关于上面内容的解释，猜测一下，是不是delete put 本质上还是属于put 方式）</p>
 <p>起因：之所以注意到get请求的这种方式，是因为再一次偶然的过程中发现get 请求的content-type 不存在，想了下确实合乎道理，get的参数都是拼接在url 上面 （file_get_contents(‘php://input’) 只能获取post请求中的输入）</p>
-<p><img src="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/1564555546.png" alt="image.png"></p>
+<p><img src="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/4666915645624818122.png" alt="image.png"></p>
 <p>注意就算是urlencode 加密，他们都是有字符编码的限制的，如果字符编码不一致，那么加密出来的结果将会不一样</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/5525740-aaef0e7ec0c6f314.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p><img src="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/7052815645624820177.png" alt="image.png"></p>
 <p>同理可以联想之前做的aes-128-ecb 加密，为什么有那么多可选项，也是这个原因</p>
-<p><img src="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/1564555556.png" alt="image.png"></p>
+<p><img src="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/8406415645624822588.png" alt="image.png"></p>
 <p><a href="https://blog.csdn.net/andyzhaojianhui/article/details/5181902" target="_blank" rel="noopener">这篇文章对于编码的解释很透彻</a></p>
 <p><a href="https://segmentfault.com/a/1190000015800019" target="_blank" rel="noopener">这篇文章和上面那篇文章都有简单描述urlencode是怎么实现的</a></p>
 <p>(这篇文章中的很多坑我们写的时候没有碰到是因为很多默认配置的原因，比如php 字符集默认配置utf8,页面配置字符集 utf-8)</p>
 <p>所以呢在通过get 方式传递参数的时候，我们一定要注意那些中文字符 urlencode 的时候（或者别的编码方式的时候设置的字符集是什么，是gbk 还是utf8,我们忽略这个问题是因为我们经常就默认都设置成utf8 导致很多时候这些细节会被忽略）</p>
 <p>同理联想php中也有urlencode 函数，他的字符集是怎么设置的</p>
-<p><img src="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/1564555557.png" alt="image.png"></p>
+<p><img src="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/4356115645624825068.png" alt="image.png"></p>
 <p>所以呢，当我们出现乱码的时候我们还可以这样考虑下：</p>
 <ol>
 <li>客户端传递过来的数据进行了怎么样的加密（字符集），get方式，post方式中的www-formedate-urlencode</li>

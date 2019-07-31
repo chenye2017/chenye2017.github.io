@@ -88,12 +88,12 @@
 <meta property="og:site_name" content="语法糖的博客">
 <meta property="og:description" content="日志很重要  日志可以进行数据挖掘，分析用户的喜好，比如什么资源被用户频繁访问（对应面试题：取出访问量前20的网址）  –来自百度某朋友 你线上要是有错误怎么办，你们平时是不是都不看日志，只有错误了才解决，··balabal （一顿嘲讽）  –来自平安好房某专家表哥 为啥本地开发的时候，错误信息能输出在页面，线上环境直接就是个500页面，好奇怪，好奇怪     –来自17年的me">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/1564555541.png">
-<meta property="og:updated_time" content="2019-07-31T06:45:46.278Z">
+<meta property="og:image" content="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/5401815645624805999.png">
+<meta property="og:updated_time" content="2019-07-31T08:41:20.830Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="日志 awk sed">
 <meta name="twitter:description" content="日志很重要  日志可以进行数据挖掘，分析用户的喜好，比如什么资源被用户频繁访问（对应面试题：取出访问量前20的网址）  –来自百度某朋友 你线上要是有错误怎么办，你们平时是不是都不看日志，只有错误了才解决，··balabal （一顿嘲讽）  –来自平安好房某专家表哥 为啥本地开发的时候，错误信息能输出在页面，线上环境直接就是个500页面，好奇怪，好奇怪     –来自17年的me">
-<meta name="twitter:image" content="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/1564555541.png">
+<meta name="twitter:image" content="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/5401815645624805999.png">
 
 
 
@@ -369,7 +369,7 @@
 </blockquote>
 <a id="more"></a>
 <p>###了解日志<br>我们itbasic用的其实是lamp, 通过apache的模块处理php, php的错误日志可以在虚拟域名里面进行配置<br>lnmp,nginx 起到静态文件处理的作用，php 转给php-fpm 进行处理，虽然网上说nginx 记录不了错误日志，但其实当我在虚拟站点里面配置error-log的时候，也是有记录的，和php-fpm中是一样的。<br>php-fpm 中开启日志需要修改php.fpm 的配置文件（还可以添加慢查询日志，<a href="https://juejin.im/post/5b9394a0e51d450e686747e3" target="_blank" rel="noopener">据说很重要</a>，有空的话可以把itbasic改成lnmp,有空的话看看php-fpm 中各个参数的作用，）</p>
-<p><img src="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/1564555541.png" alt="image.png"><br>特别是这块，php_flag和php_value 的作用是一致的，不知道为什么要搞两个一样的，还有就是他们的使用是这样<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">php_flag[error_reporting] = 0</span><br></pre></td></tr></table></figure></p>
+<p><img src="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/5401815645624805999.png" alt="image.png"><br>特别是这块，php_flag和php_value 的作用是一致的，不知道为什么要搞两个一样的，还有就是他们的使用是这样<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">php_flag[error_reporting] = 0</span><br></pre></td></tr></table></figure></p>
 <p>来覆盖代码中的error_reporting ,····原先以为还有什么作用呢</p>
 <p>###分析日志</p>
 <p>我不会告诉你最开始接触sed和awk 是因为面试题，很多时候，当我们分析一个大日志文件的时候，我们甚至都打不开这个文件，因为太大了， 但是我们可以通过这些文本处理工具对数据加以筛选。</p>
