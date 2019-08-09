@@ -84,15 +84,15 @@
 <meta name="description" content="之前写过一篇文章是关于composer 的基本用法，这篇文章是composer源码的简单阅读和thinkphp5.1的自动加载。">
 <meta name="keywords" content="PHP,composer">
 <meta property="og:type" content="article">
-<meta property="og:title" content="composer 源码分析">
-<meta property="og:url" content="http://yoursite.com/2019/08/03/composer-源码分析/index.html">
+<meta property="og:title" content="tp源码分析-composer加载">
+<meta property="og:url" content="http://yoursite.com/2019/08/03/tp源码分析-composer加载/index.html">
 <meta property="og:site_name" content="语法糖的博客">
 <meta property="og:description" content="之前写过一篇文章是关于composer 的基本用法，这篇文章是composer源码的简单阅读和thinkphp5.1的自动加载。">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/20190803232124.png">
-<meta property="og:updated_time" content="2019-08-03T16:14:30.309Z">
+<meta property="og:updated_time" content="2019-08-09T02:21:51.474Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="composer 源码分析">
+<meta name="twitter:title" content="tp源码分析-composer加载">
 <meta name="twitter:description" content="之前写过一篇文章是关于composer 的基本用法，这篇文章是composer源码的简单阅读和thinkphp5.1的自动加载。">
 <meta name="twitter:image" content="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/20190803232124.png">
 
@@ -124,13 +124,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/08/03/composer-源码分析/"/>
+  <link rel="canonical" href="http://yoursite.com/2019/08/03/tp源码分析-composer加载/"/>
 
 
 
 
 
-  <title>composer 源码分析 | 语法糖的博客</title>
+  <title>tp源码分析-composer加载 | 语法糖的博客</title>
   
 
 
@@ -295,7 +295,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/03/composer-源码分析/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/03/tp源码分析-composer加载/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="chenye2017">
@@ -312,7 +312,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">composer 源码分析</h1>
+          <h1 class="post-title" itemprop="name headline">tp源码分析-composer加载</h1>
         
 
         <div class="post-meta">
@@ -408,6 +408,8 @@
 <p>好了，大致就这么多了，所以我们可以猜测一波（没有仔细看啦）</p>
 <p>composer dump-autoload,主要是因为我们修改了composer.json文件中的autoload.psr4选项，没有及时修改autload_static 文件，</p>
 <p>composer require 1. git clone 2.修改autoload_static 文件</p>
+<h3 id="实战：如何用命令行的方式运行tp，测试tp中的函数"><a href="#实战：如何用命令行的方式运行tp，测试tp中的函数" class="headerlink" title="实战：如何用命令行的方式运行tp，测试tp中的函数"></a>实战：如何用命令行的方式运行tp，测试tp中的函数</h3><p> 首先因为tp重写了composer 的加载方式（但没有修改composer 的文件, 为了方便composer update, install )， 所以我们用不了vendor 中的_autoload.php, tp起到相同作用的是 Loader::register 方法，这个方法中 对app 文件夹，和 think\composer 进行了psr4 加载，同时把thinkphp 核心文件夹library 下的think 和traits 也进行psr4 进行加载，这样我们就能访问app , think\composer, thinkphp\libraray\think和thinkphp\libraray\traits 下的所有文件了。同时他还通过loader 的addAutoLoadDir 把extend 文件夹做成classmap 进行加载，所以为了测试我建立了cy文件夹，也需要Load::addAutoLoadDir(realpath(‘cy’))。 当然如果我们还可能为了方便使用系统的一些类，需要class_alias。 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">/**</span><br><span class="line"> * Created by PhpStorm.</span><br><span class="line"> * User: cy</span><br><span class="line"> * Date: 2019/8/4</span><br><span class="line"> * Time: 13:08</span><br><span class="line"> */</span><br><span class="line"></span><br><span class="line">//require_once &apos;../vendor/autoload.php&apos;;</span><br><span class="line">require_once &apos;../thinkphp/library/think/Loader.php&apos;; // 为了使用Load中的方法</span><br><span class="line">require_once &apos;../thinkphp/helper.php&apos;; // 为了使用助手函数</span><br><span class="line"></span><br><span class="line">$nowDir = realpath(__DIR__); //获取当前文件夹的绝对位置，方便函数调用</span><br><span class="line"></span><br><span class="line">//var_dump($nowDir);</span><br><span class="line"></span><br><span class="line">\think\Loader::register(); // 把composer 的自动加载接管过来;</span><br><span class="line">\think\Loader::addAutoLoadDir(realpath(__DIR__)); // 加载当前脚本下的类进入psr4</span><br><span class="line"></span><br><span class="line">// 注册类库别名，方便直接调用，比如 \Config</span><br><span class="line">\think\Loader::addClassAlias([  </span><br><span class="line">    &apos;Config&apos;      =&gt; \think\facade\Config::class, </span><br><span class="line">    &apos;Env&apos; =&gt; \think\facade\Env::class</span><br><span class="line"></span><br><span class="line">]);</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -490,6 +492,10 @@
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/2019/08/09/tp源码分析-Config/" rel="prev" title="tp源码分析-Config">
+                tp源码分析-Config <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -566,8 +572,17 @@ var jiathis_config={
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -586,7 +601,7 @@ var jiathis_config={
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">74</span>
+                  <span class="site-state-item-count">77</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -608,7 +623,7 @@ var jiathis_config={
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">72</span>
+                  <span class="site-state-item-count">79</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -679,6 +694,22 @@ var jiathis_config={
       </section>
 
       
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#实战：如何用命令行的方式运行tp，测试tp中的函数"><span class="nav-number">1.</span> <span class="nav-text">实战：如何用命令行的方式运行tp，测试tp中的函数</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
 
       
 
@@ -727,7 +758,7 @@ var jiathis_config={
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count"> | 博客全站共118.0k字</span>
+  <span class="post-count"> | 博客全站共122.0k字</span>
 </div>
 
 
