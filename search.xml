@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[云南]]></title>
+    <url>%2F2019%2F08%2F26%2F%E4%BA%91%E5%8D%97%2F</url>
+    <content type="text"><![CDATA[女朋友想让我陪她去洱海，因为上海直达大理的机票太贵啦┭┮﹏┭┮(后来算上住宿, 中间的火车,花的钱差不多)，我决定带着她从昆明，丽江再到大理，最后从大理再回昆明坐飞机会上海。 购买机票 我是买的早上7点45的飞机票，这个时间段和晚上9 10点的飞机都比较便宜，但不好的就是这么早很难赶到飞机场，再加上如果路途遥远，堵车等元素，很容易误车，然后我惊奇的发现美团上在机场旁边有那种精品酒店，其实就是机场周边的农村盖得房子，提供接送机！！！而且不贵，大概就100来块（当然也有贵的，O(∩_∩)O哈哈~），挺干净，噪音也不大，正常人完全能睡着，酒店阿姨会为你登机送机时间，提前半小时给你打电话，很暖心。 起飞前的那晚 这是破蛋25年来第一次带女生出去玩，再加上第一次住这种地方，还有见到女朋友的激动，最最重要的是我每次坐火车或者飞机起码检票前1个小时到目的地，那晚很紧张，没有睡着。后面因为从昆明到丽江，再从丽江到大理，从大理到昆明，这样来回折腾，其实都习惯，哪有那么多的特殊情况，安心睡吧，提前半小时到就好了。 下飞机 女票比我先到机场，然后因为天生自带shy属性，我在下飞机之后又在厕所呆了半小时，差点把她气疯了，还好她出门没化妆，在机场打发了一点时间。我们在美团上定的民宿在昆明的南屏区，离翠湖公园还有南屏街，云南大学很近，因为担心媳妇嫌弃转车麻烦，我们直接打车过去，相比较重庆50元南山区和渝北区随便跑，80元的车票还是蛮贵的，司机师傅确认了2遍我们是否要开发票被我们说不用后，可能在想这两个瓜娃子是不是钱多了。 昆明初印象 昆明这座城市还是满破的，可能因为我们在市区的原因，还有时间是8月20日，没有书本中的花城的样子，周围都是破破的，相比较重庆没有那么繁华，现代化]]></content>
+      <categories>
+        <category>旅游</category>
+      </categories>
+      <tags>
+        <tag>旅游</tag>
+        <tag>云南</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[tp源码分析-middleware和hook]]></title>
     <url>%2F2019%2F08%2F09%2Ftp%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90-middleware%E5%92%8Chook%2F</url>
     <content type="text"><![CDATA[这块的中间件主要值的是route 中间件，对于请求发送到controller之前进行一系列的判断，是否缺胳膊少腿不符合要求，如果不符合，返回false, 符合 next($response) 钩子就是流程执行到某个点，触发用户绑定的方法，之所以这么做是为了用户可以在框架的层面做某些修改，而不用修改框架源码。 Hook12345678910111213141516171819202122echo &apos;start&apos;.&quot;&lt;br&gt;&quot;; // 在触发钩子之前，绑定行为到指定钩子 Hook::add(&apos;test_1&apos;,&apos;app\\test\\behavior\\BehaviorTest&apos;); // 添加钩子处理 Hook::add(&apos;test_2&apos;,&apos;app\\test\\behavior\\BehaviorTest&apos;); // 调用设置了钩子的函数来触发钩子，进行测试 Hook::listen(&apos;test_1&apos;,[&apos;name&apos;=&gt;&apos;cy&apos;]); // 设置钩子，并执行钩子绑定的函数方法，第二个变量是数组方式传入钩子函数需要的变量 Hook::listen(&apos;test_2&apos;,[&apos;name&apos;=&gt;&apos;cy&apos;]); class BehaviorTest &#123; public function test_1($param) &#123; var_dump($param[&apos;name&apos;]) &#125; public function test_2($param) &#123; var_dump($param[&apos;name&apos;]) &#125; &#125; php 因为是同步的，所以他这个钩子函数和别的语言理解起来还不一样，比如这个listen， 在监听的同时并且执行了后面类中绑定的方法，而不像一些异步语言，listen之后等待着事件的触发。 还有就是我们绑定的是类，一个类中会有多个方法，默认的初始方法是run ,这个类中还可以有多个方法，多个方法对应多个钩子，方法名和钩子名一样 分析一下Hook tags 核心属性，不同的钩子对应不同的类（可以是多个类组成的数组） bind 别名，也是给类绑定别名 portal 入口方法名称，默认run app 应用对象，App的实例，也是单例模式 __construct 构造方法，注入App 实例 $app portal 设置入口函数名称 alias 修改bind 属性，给行为（对应某个类中特定方法，也是唯一一个方法，所以这个behavior 方法就是是class）绑定别名 add 添加点对应的行为，行为可以是关联数组，key _overlay 会让添加的value 覆盖之前的value, key first 会让添加的value 排在第一位 import 批量导入 点对应的行为，可以是让import 和之前的tags 标签合并，也可以是让之前的tags 覆盖import 导入的内容 get 获取tags 属性 listen 其实就是执行某个点中绑定的类中的方法 exec 执行某个类中方法（方法名确定，就是portal） execTag 执行绑定的类中的方法，先去执行listen 的点对应的method是否存在，如果能执行，执行默认方法 middleware中间件用的设计模式是装饰器模式，每个装饰器类中只有一个方法，handle，第一个参数是Request请求，第二个参数是匿名函数 next， 还可以接受额外的参数，他这块也用的是反射，所以你如果没有添加第三个参数，在方法内部用func_get_args() 是获取不到额外的参数的，即使你在路由上middleware 传入了这个参数。因为反射没有获取到第三个参数的存在，所以执行的时候就不会传入。 123456789101112131415&lt;?phpnamespace app\http\middleware;class Check&#123; public function handle($request, \Closure $next, $pa1 = 1, $pa2 = 2) // 难道只能装一个参数吗 &#123; var_dump($pa1,&apos;|&apos;, $pa2);exit; $request-&gt;name = &apos;cy&apos;; return $next($request); &#125;&#125;Route::get(&apos;/testhook&apos;, &apos;index/testhook&apos;)-&gt;middleware([&apos;Check:name&apos;]); 如果我们在application下面的middleware.php 中写入，那么全局所有的route都会经过这个中间件]]></content>
