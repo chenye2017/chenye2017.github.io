@@ -2,9 +2,23 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yoursite.com/2019/08/30/tp%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90-%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86/</loc>
+    
+    <lastmod>2019-08-30T06:20:51.963Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2018/03/26/PHP%E5%87%BD%E6%95%B0/</loc>
+    
+    <lastmod>2019-08-30T04:46:49.154Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/2019/08/26/%E4%BA%91%E5%8D%97/</loc>
     
-    <lastmod>2019-08-27T02:44:37.823Z</lastmod>
+    <lastmod>2019-08-27T02:55:25.154Z</lastmod>
     
   </url>
   
@@ -331,23 +345,9 @@
   </url>
   
   <url>
-    <loc>http://yoursite.com/2019/07/13/PHP%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0/</loc>
-    
-    <lastmod>2019-07-31T08:41:10.526Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://yoursite.com/2018/01/18/php%E5%AE%89%E8%A3%85%E6%89%A9%E5%B1%95/</loc>
     
     <lastmod>2019-07-31T08:41:10.522Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2018/03/26/PHP%E5%87%BD%E6%95%B0/</loc>
-    
-    <lastmod>2019-07-31T08:41:10.519Z</lastmod>
     
   </url>
   

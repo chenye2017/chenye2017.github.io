@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="PHP," />
+  <meta name="keywords" content="PHP,异常处理," />
 
 
 
@@ -81,18 +81,20 @@
 
 
 
-<meta name="description" content="看别人代码的时候会发现一些自己用的很少但很实用的函数，还有一些自己经常遗忘的函数，记录下来方便查找">
-<meta name="keywords" content="PHP">
+<meta name="description" content="参考文章 上面这篇文章写得很好，让我对异常处理除了 try catch 之外有了更深的认识，大致记录一下对php 异常处理的理解以及结合tp框架的源码分析">
+<meta name="keywords" content="PHP,异常处理">
 <meta property="og:type" content="article">
-<meta property="og:title" content="PHP常用函数">
-<meta property="og:url" content="http://yoursite.com/2019/07/13/PHP常用函数/index.html">
+<meta property="og:title" content="tp源码分析-异常处理">
+<meta property="og:url" content="http://yoursite.com/2019/08/30/tp源码分析-异常处理/index.html">
 <meta property="og:site_name" content="语法糖的博客">
-<meta property="og:description" content="看别人代码的时候会发现一些自己用的很少但很实用的函数，还有一些自己经常遗忘的函数，记录下来方便查找">
+<meta property="og:description" content="参考文章 上面这篇文章写得很好，让我对异常处理除了 try catch 之外有了更深的认识，大致记录一下对php 异常处理的理解以及结合tp框架的源码分析">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-07-31T08:41:10.526Z">
+<meta property="og:image" content="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/20190830133738.png">
+<meta property="og:updated_time" content="2019-08-30T06:20:51.963Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="PHP常用函数">
-<meta name="twitter:description" content="看别人代码的时候会发现一些自己用的很少但很实用的函数，还有一些自己经常遗忘的函数，记录下来方便查找">
+<meta name="twitter:title" content="tp源码分析-异常处理">
+<meta name="twitter:description" content="参考文章 上面这篇文章写得很好，让我对异常处理除了 try catch 之外有了更深的认识，大致记录一下对php 异常处理的理解以及结合tp框架的源码分析">
+<meta name="twitter:image" content="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/20190830133738.png">
 
 
 
@@ -122,13 +124,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/07/13/PHP常用函数/"/>
+  <link rel="canonical" href="http://yoursite.com/2019/08/30/tp源码分析-异常处理/"/>
 
 
 
 
 
-  <title>PHP常用函数 | 语法糖的博客</title>
+  <title>tp源码分析-异常处理 | 语法糖的博客</title>
   
 
 
@@ -293,7 +295,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/13/PHP常用函数/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/30/tp源码分析-异常处理/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="chenye2017">
@@ -310,7 +312,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">PHP常用函数</h1>
+          <h1 class="post-title" itemprop="name headline">tp源码分析-异常处理</h1>
         
 
         <div class="post-meta">
@@ -322,8 +324,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-13T00:07:33+08:00">
-                2019-07-13
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-30T13:05:13+08:00">
+                2019-08-30
               </time>
             
 
@@ -382,8 +384,68 @@
       
 
       
-        <p>看别人代码的时候会发现一些自己用的很少但很实用的函数，还有一些自己经常遗忘的函数，记录下来方便查找</p>
+        <p><a href="https://segmentfault.com/a/1190000014977430" target="_blank" rel="noopener">参考文章</a></p>
+<p>上面这篇文章写得很好，让我对异常处理除了 try catch 之外有了更深的认识，大致记录一下对php 异常处理的理解以及结合tp框架的源码分析</p>
 <a id="more"></a>
+<h3 id="PHP-处理错误的两大类方式"><a href="#PHP-处理错误的两大类方式" class="headerlink" title="PHP 处理错误的两大类方式"></a>PHP 处理错误的两大类方式</h3><p>首先我们要明白php 的异常处理分成两个独立的大块，一个是php自身的标准处理，就是我们经常error_reporting ， display_error 的设置（呈现形式就是界面上的php warning 信息， php fatal error 这种）；另一个是我们通过try catch 捕获异常进行处理（我们可能在catch 中 记录 $e-&gt;getMessage()） . 我们要清楚的是这两块对错误的处理级别是相互独立的，互不影响。比如error_reporting(0), 不对任何异常进行处理（ps: -1 ,类似 E_ALL ）,try catch 还是能捕捉到我们的exception。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">error_reporting(0); // 0 的时候没有任何错误信息， -1 的时候会打印出 //fatal_error</span><br><span class="line">test();</span><br><span class="line"></span><br><span class="line">try &#123;</span><br><span class="line">  throw new Exception()</span><br><span class="line">&#125; catch (Exception $e) &#123;</span><br><span class="line">  var_dump($e-&gt;getMessage())</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="PHP-标准错误处理-error-reporting-参数的意义"><a href="#PHP-标准错误处理-error-reporting-参数的意义" class="headerlink" title="PHP 标准错误处理 error_reporting() 参数的意义"></a>PHP 标准错误处理 error_reporting() 参数的意义</h3><p>error_reporting(), 不带任何参数，返回的是错误处理级别，带参数意思是设置错误处理级别</p>
+<p>error_reporting(E_ALL | E_NOTICE) , | 是异或，代表除了E_NOTICE 都进行处理， 或者</p>
+<p>error_reporting(E_ALL &amp; ~E_NOTICE), &amp; 是同或， ~代表取反，和上面是同一个意思，E_ALL是一个常量，数值是 E_NOTICE 那些的结合体</p>
+<h3 id="PHP的错误等级"><a href="#PHP的错误等级" class="headerlink" title="PHP的错误等级"></a>PHP的错误等级</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"># 系统级用户代码的一些错误类型 可由 try ... catch ... 捕获</span><br><span class="line">E_PARSE          解析时错误 语法解析错误 少个分号 多个逗号一类的 致命错误</span><br><span class="line">E_ERROR          运行时错误 比如调用了未定义的函数或方法 致命错误</span><br><span class="line"></span><br><span class="line"># 系统级用户代码的一些错误类型 可由 set_error_handler 捕获处理</span><br><span class="line">E_WARNING        运行时警告 调用了未定义的变量</span><br><span class="line">E_NOTICE         运行时提醒                  </span><br><span class="line">E_DEPRECATED     运行时已废弃的函数或方法</span><br><span class="line"></span><br><span class="line"># 用户级自定义错误 可由 trigger_error 触发 可由 set_error_handler 捕获处理</span><br><span class="line">E_USER_ERROR      用户自定义错误 致命错误 未处理也会导致程序退出</span><br><span class="line">E_USER_WARNING</span><br><span class="line">E_USER_NOTICE</span><br><span class="line">E_USER_DEPRECATED</span><br><span class="line"></span><br><span class="line">==========================开发中常遇到/不常遇到分割线=======================</span><br><span class="line"></span><br><span class="line"># Zend Engine 内部的一些错误 应该也能通过 try ... catch ... 捕获 略难测试</span><br><span class="line">E_CORE_ERROR</span><br><span class="line">E_CORE_WARNING</span><br><span class="line">E_COMPILE_ERROR</span><br><span class="line">E_COMPILE_WARNING</span><br><span class="line"></span><br><span class="line">#编码标准化警告(建议如何修改以向前兼容)</span><br><span class="line">E_STRICT          部分 try ... catch ... 部分 set_error_handler</span><br><span class="line">E_RECOVERABLE_ERROR</span><br></pre></td></tr></table></figure>
+<p>这个地方需要我们注意的是结合PHP7 的 error 和 exception 来看，php7 的error 和 exception 都来自throwable， 所以我们在 catch  throwable都能捕获到，他和上述php 标准错误级别的关系如下</p>
+<p><img src="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/20190830133738.png" alt=""> </p>
+<p>也就是说我们平时throw 的都是实际的error， 需要注意的是上面的 E_USER_NOTICE,并不指的是我们用户写的代码触发的notice， 或者throw 的 notice (用户throw的都是error)， 这个实际上我也没见过，但我们可以通过trigger_error 函数模拟出来</p>
+<h3 id="PHP-各种错误的触发"><a href="#PHP-各种错误的触发" class="headerlink" title="PHP 各种错误的触发"></a>PHP 各种错误的触发</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">error_repoting(0)</span><br><span class="line">aa</span><br></pre></td></tr></table></figure>
+<p>为什么上述代码还是会抛出parse error， 因为我们在当前脚本中存在着错误，还没有执行error_reporting 就会报错，但有个方法可以让上述代码不报错，就是把 aa 写在另一个文件中，然后require 这个文件 。我们php-fpm 模式的本质，其实就是 php index.php, 所以我们在 index.php 中可以写上很少的代码，至少保证这个index.php 的正确性。</p>
+<p>（可能是因为php是解释性的代码，只会检测require 的文件是否存在，不会检查被包含的该文件正确性，但是会对require 的文件中 require 语句正确性检测，蛮奇怪的,而且require 的文件不存在会抛出两个错误，一个是warning ，一个是fatal error， 这个warning 会被set_error_handle 处理，这个fatal error 不能被捕获， 而且竟然能通过error_reporting 屏蔽，感觉就是严重性介于 文件本身 parse error 和 try catch 捕获的 error 之间）</p>
+<h3 id="关于PHP-异常处理的几个函数"><a href="#关于PHP-异常处理的几个函数" class="headerlink" title="关于PHP 异常处理的几个函数"></a>关于PHP 异常处理的几个函数</h3><ul>
+<li>try catch , 不用做过多的介绍了，老朋友，可以捕获 throw 的所有内容，相当于 php 标准错误的fatal_error, 但不是fatal_error 就等于他，比如 require 的文件错误不存在，就不能被捕获</li>
+</ul>
+<ul>
+<li><p>set_error_handle, 和上面的try catch 互补，try catch 捕获的都是 E_ERROR 级别，对于那些warning ,notice 就靠这个东西来处理了，他有个返回值，当返回false 的时候，错误还是会提交个php 标准错误处理的 （也就是处理错误的流程是先php代码处理，然后php 自身处理， php 自身处理也就意味着程序崩溃了）</p>
+</li>
+<li><p>set_exception_hanle, 对于没有用try catch 捕获的错误（注意是没有用！！，而不是不能捕获的，捕获的内容等同于try catch）, 会走到这个里面进行处理，但是这个里面处理后程序就停止了，而try catch 处理之后程序还能接着往下走（ps:其实就我们平常而言，很多时候我们捕获了异常，除非在foreach 中，如果在平时逻辑中，也就直接return 给客户端，停止后面逻辑了）</p>
+</li>
+<li><p>register_shutdown_function， 注册一个程序结束的时候执行的函数，就是无论是崩溃啊，还是正常结束，都在最末尾执行的方法</p>
+</li>
+<li><p>error_get_last, 如果一个错误走到了php标准处理那块，就能通过这个获取错误内容，如果一个错误提前被捕获处理了，那这块就是空的</p>
+</li>
+<li><p>throw new Exception , throw new Error, 通过throw 异常，测试try catch 和 set_exception_handle</p>
+</li>
+<li><p>trigger_error, 对于 warning ，notice 那些错误的触发，测试set_error_handle(当然也可以通过 var_dump 一个不存在的变量来触发)</p>
+<p>​</p>
+</li>
+</ul>
+<h3 id="TP-框架中的异常处理"><a href="#TP-框架中的异常处理" class="headerlink" title="TP 框架中的异常处理"></a>TP 框架中的异常处理</h3><p>我们对于异常的处理最好写在代码的最前面，否则error 触发之后，该错误之后的代码都不会生效。</p>
+<p>tp 在base.php 中 Error::register();  ，注册了代码的错误处理。(核心文件 Error.php)</p>
+<p>我们大致测试一下cli 模式下的异常处理</p>
+<ul>
+<li>register</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">error_reporting(E_ALL); // php 标准错误处理级别</span><br><span class="line">      set_error_handler([__CLASS__, &apos;appError&apos;]); // 对于warning 级别的处理</span><br><span class="line">      set_exception_handler([__CLASS__, &apos;appException&apos;]); // 用户自定义的try catch , 会在执行完之后停止，但是不会交给php 标准错误处理</span><br><span class="line">      register_shutdown_function([__CLASS__, &apos;appShutdown&apos;]); // 感觉就是只要注册了，不管怎样都会执行</span><br></pre></td></tr></table></figure>
+<ul>
+<li>appError </li>
+</ul>
+<p>接受php 传递过来的参数，生成ErrorException 交给 appException 处理</p>
+<ul>
+<li>appException</li>
+</ul>
+<p>首先判断捕获的异常是error 还是exception， 如果是error ，统一转换成 errorException 处理</p>
+<p>然后获取异常处理类，官方是Handle.php, 因为tp 允许用户重写这个类，如果重写了，需要继承官方的Handle 类，重写的方法是render， 框架会自动调用（为什么要重写这个类呢，因为比如记日志这种统一的方法就不需要重写了，框架会自动调用原先自己的方法）。如果没有重写，单单的给了匿名函数，会把这个匿名函数保存到 handle 的render 属性中，后期执行。如果匿名函数都没有，那就执行官方自己的render 方法</p>
+<ul>
+<li>appShutDown</li>
+</ul>
+<p>如果这个错误没有被处理直接交给了php标准错误，会抛出一个ErrorException, 交给自定义的异常处理，否则就记录下日志就好了</p>
+<ul>
+<li>isFatal</li>
+</ul>
+<p>需要抛出的错误级别</p>
+<ul>
+<li>setExceptionHandle</li>
+</ul>
+<p>设置自定义异常处理级别</p>
+
       
     </div>
     
@@ -442,6 +504,8 @@
           
             <a href="/tags/PHP/" rel="tag"><i class="fa fa-tag"></i> PHP</a>
           
+            <a href="/tags/异常处理/" rel="tag"><i class="fa fa-tag"></i> 异常处理</a>
+          
         </div>
       
 
@@ -453,8 +517,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/07/06/docker/" rel="next" title="docker">
-                <i class="fa fa-chevron-left"></i> docker
+              <a href="/2019/08/26/云南/" rel="next" title="云南">
+                <i class="fa fa-chevron-left"></i> 云南
               </a>
             
           </div>
@@ -462,10 +526,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/07/20/同步-异步-阻塞-非阻塞/" rel="prev" title="同步 异步 阻塞 非阻塞">
-                同步 异步 阻塞 非阻塞 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -543,8 +603,17 @@ var jiathis_config={
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -656,6 +725,22 @@ var jiathis_config={
       </section>
 
       
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#PHP-处理错误的两大类方式"><span class="nav-number">1.</span> <span class="nav-text">PHP 处理错误的两大类方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PHP-标准错误处理-error-reporting-参数的意义"><span class="nav-number">2.</span> <span class="nav-text">PHP 标准错误处理 error_reporting() 参数的意义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PHP的错误等级"><span class="nav-number">3.</span> <span class="nav-text">PHP的错误等级</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PHP-各种错误的触发"><span class="nav-number">4.</span> <span class="nav-text">PHP 各种错误的触发</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#关于PHP-异常处理的几个函数"><span class="nav-number">5.</span> <span class="nav-text">关于PHP 异常处理的几个函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TP-框架中的异常处理"><span class="nav-number">6.</span> <span class="nav-text">TP 框架中的异常处理</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
 
       
 
@@ -704,7 +789,7 @@ var jiathis_config={
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count"> | 博客全站共125.3k字</span>
+  <span class="post-count"> | 博客全站共127.5k字</span>
 </div>
 
 

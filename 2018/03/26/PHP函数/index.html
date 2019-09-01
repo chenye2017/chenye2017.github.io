@@ -89,7 +89,7 @@
 <meta property="og:site_name" content="语法糖的博客">
 <meta property="og:description" content="工作的久了，反而基本功没有原先好了，也许要记得东西很多，内存中不够放置那些无规律的参数位置，但至少不要混淆哪些是框架自带的，哪些是PHP原生的。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-07-31T08:41:10.519Z">
+<meta property="og:updated_time" content="2019-08-30T04:46:49.154Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="PHP函数">
 <meta name="twitter:description" content="工作的久了，反而基本功没有原先好了，也许要记得东西很多，内存中不够放置那些无规律的参数位置，但至少不要混淆哪些是框架自带的，哪些是PHP原生的。">
@@ -384,19 +384,55 @@
       
         <p>工作的久了，反而基本功没有原先好了，也许要记得东西很多，内存中不够放置那些无规律的参数位置，但至少不要混淆哪些是框架自带的，哪些是PHP原生的。</p>
 <a id="more"></a>
-<p>一年多了，重复相同的工作可能让之前很多学会的但没用到的PHP函数忘记了，但这些在modern PHP 中，在新的环境中可能都是很重要的，记录下来。<br><!--more--></p>
-<ol>
-<li>string</li>
-</ol>
-<ul>
+<h3 id="String"><a href="#String" class="headerlink" title="String"></a>String</h3><ul>
 <li>str_repeat（’cy’, 10） //把cy这个字符串重复10次</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">var_dump(str_repeat（&apos;cy&apos;, 10）)   //注意一定要打印，这个函数的作用只是构成一个字符串</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">var_dump(str_repeat（&apos;cy&apos;, 10）)   //注意一定要打印，这个函数的作用只是构成一个字符串</span><br><span class="line">string(20) &quot;cycycycycycycycycycy&quot;</span><br></pre></td></tr></table></figure>
 <ul>
-<li>var_dump 和 var_export<br>先来说下以后的使用都是使用var_dump,而不要使用var_export,因为第一个已经很强大了。<br>var_dump 可以输出数据类型，但是var_export不可以。<br>var_export 第二个参数给true, 他会把这个变量的值存储起来，可以用于赋值，但是当变量是resource的时候，返回的总是null,但是此时var_dump 虽然也不能打印出来，但是能<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">resource(2) of type (stream) </span><br><span class="line">NULL</span><br><span class="line">$a = var_export([2,3], true);</span><br></pre></td></tr></table></figure>
+<li><p>var_dump 和 var_export<br>var_dump 经常用在我们调试的时候，可以打印出参数类型<br>var_export 不能输出参数类型，比如 [‘a’ =&gt; 1], 只能输出这个数组，不能支出 1 是 int<br>var_export 第二个参数给true, 他会把这个变量的值存储起来，可以用于赋值，相当于 printf 和 sprintf ， sprintf 会把变量格式化之后保存起来，而不会输出</p>
+<p>但是当变量是resource的时候，返回的总是null,但是此时var_dump 虽然也不能打印出来，但是能</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">resource(2) of type (stream) </span><br><span class="line">NULL</span><br><span class="line">$a = var_export([2,3], true);</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
-<p>综上，用var_dump</p>
+<ul>
+<li><p>strtr  经常用在简单替换 (两种用法，是真的很方便)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">var_dump(strtr(&apos;&#123;userna&#123;me&#125;&apos;, &apos;&#123;&apos;, &apos;A&apos;));</span><br><span class="line"></span><br><span class="line">string(11) &quot;AusernaAme&#125;&quot;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">var_dump(strtr(&apos;&#123;username&#125; age&apos;, [&apos;username&apos; =&gt; &apos;cy&apos;, &apos;age&apos; =&gt; 18]));</span><br><span class="line"></span><br><span class="line">string(7) &quot;&#123;cy&#125; 18&quot;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>compact (把两个变量组装成数组)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$a = 5;</span><br><span class="line">$b = 6;</span><br><span class="line">var_dump(compact(&apos;a&apos;, &apos;b));</span><br><span class="line"></span><br><span class="line">array(2) &#123;</span><br><span class="line">  [&quot;a&quot;]=&gt;</span><br><span class="line">  int(5)</span><br><span class="line">  [&quot;b&quot;]=&gt;</span><br><span class="line">  int(6)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>​</p>
+</li>
+</ul>
+<ul>
+<li><p>func_get_args ( 调用这个方法传入的参数)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">// 这个获取的是你实际传入的参数，和函数定义时候的参数没有什么关系</span><br><span class="line">test(&apos;www&apos;, &apos;ww&apos;);</span><br><span class="line"></span><br><span class="line">function test()</span><br><span class="line">&#123;</span><br><span class="line">  var_dump(func_get_args()); // www ww</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>​</p>
+</li>
+</ul>
+<ul>
+<li><p>floor</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">echo floor(4.3);   // 4</span><br><span class="line">echo floor(9.999); // 9</span><br><span class="line">echo floor(-3.14); // -4</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>glob (返回一个包含有匹配文件／目录的数组。如果出错返回 <strong>FALSE</strong>。)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">foreach (glob(&quot;*.txt&quot;) as $filename) &#123;</span><br><span class="line">    echo &quot;$filename size &quot; . filesize($filename) . &quot;\n&quot;;</span><br><span class="line">&#125;</span><br><span class="line">funclist.txt size 44686</span><br><span class="line">funcsummary.txt size 267625</span><br><span class="line">quickref.txt size 137820</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>DIRECTORY_SEPARATOR, 经常用在代码中分隔符的获取</p>
+</li>
+<li><p>rename （重命名文件）</p>
+</li>
+<li><p>basename （文件自身的名称）</p>
+</li>
+<li><p>dirname (上一层文件夹的名称)</p>
+</li>
+</ul>
+<p>  ​</p>
+<h3 id="Array"><a href="#Array" class="headerlink" title="Array"></a>Array</h3><ul>
+<li><p>array_fill (生成某种类型数组)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">var_dump(array_fill(0, 4, &apos;ss&apos;));</span><br><span class="line"></span><br><span class="line">array(4) &#123;</span><br><span class="line">  [0]=&gt;</span><br><span class="line">  string(2) &quot;ss&quot;</span><br><span class="line">  [1]=&gt;</span><br><span class="line">  string(2) &quot;ss&quot;</span><br><span class="line">  [2]=&gt;</span><br><span class="line">  string(2) &quot;ss&quot;</span><br><span class="line">  [3]=&gt;</span><br><span class="line">  string(2) &quot;ss&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>​</p>
+</li>
+</ul>
 <ol>
 <li>面向对象</li>
 </ol>
@@ -563,8 +599,17 @@ var jiathis_config={
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -676,6 +721,22 @@ var jiathis_config={
       </section>
 
       
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#String"><span class="nav-number">1.</span> <span class="nav-text">String</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Array"><span class="nav-number">2.</span> <span class="nav-text">Array</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
 
       
 
@@ -724,7 +785,7 @@ var jiathis_config={
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count"> | 博客全站共125.3k字</span>
+  <span class="post-count"> | 博客全站共127.5k字</span>
 </div>
 
 
