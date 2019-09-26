@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="git," />
 
 
 
@@ -81,17 +81,18 @@
 
 
 
-<meta name="description" content="故事的发生背景：项目前端走了，前端界面没有人修改，只能先做后端，但是没有测试环境，而且这个bbs项目还被包含在itbasic里面，一旦代码提交到svn上，当我想更新服务器上的itbasic代码的时候，我一般直接在根目录下进行svn up来更新代码，这样会把bbs提交到svn上的代码也拉下来，所以本地的代码没法提交。以前我和前端镜像代码对接的时候，一般我都是先更新到svn上，然后前端进行下拉代码测试">
+<meta name="description" content="！！！ linux 搭建git 仓库最方便的就是gitlab了，因为以前不知道，所以自己搭建了linux git 仓库，也没个图形化界面，是真的难用，但对git 的理解更加深刻了。（强烈推荐还是直接用gitlab 吧） 故事的发生背景：项目前端走了，前端界面没有人修改，只能先做后端，但是没有测试环境，而且这个bbs项目还被包含在itbasic里面，一旦代码提交到svn上，当我想更新服务器上的itb">
+<meta name="keywords" content="git">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Linux搭建git仓库">
 <meta property="og:url" content="http://yoursite.com/2018/07/24/Linux搭建git仓库/index.html">
 <meta property="og:site_name" content="语法糖的博客">
-<meta property="og:description" content="故事的发生背景：项目前端走了，前端界面没有人修改，只能先做后端，但是没有测试环境，而且这个bbs项目还被包含在itbasic里面，一旦代码提交到svn上，当我想更新服务器上的itbasic代码的时候，我一般直接在根目录下进行svn up来更新代码，这样会把bbs提交到svn上的代码也拉下来，所以本地的代码没法提交。以前我和前端镜像代码对接的时候，一般我都是先更新到svn上，然后前端进行下拉代码测试">
+<meta property="og:description" content="！！！ linux 搭建git 仓库最方便的就是gitlab了，因为以前不知道，所以自己搭建了linux git 仓库，也没个图形化界面，是真的难用，但对git 的理解更加深刻了。（强烈推荐还是直接用gitlab 吧） 故事的发生背景：项目前端走了，前端界面没有人修改，只能先做后端，但是没有测试环境，而且这个bbs项目还被包含在itbasic里面，一旦代码提交到svn上，当我想更新服务器上的itb">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-07-31T08:41:08.024Z">
+<meta property="og:updated_time" content="2019-09-26T13:02:05.966Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linux搭建git仓库">
-<meta name="twitter:description" content="故事的发生背景：项目前端走了，前端界面没有人修改，只能先做后端，但是没有测试环境，而且这个bbs项目还被包含在itbasic里面，一旦代码提交到svn上，当我想更新服务器上的itbasic代码的时候，我一般直接在根目录下进行svn up来更新代码，这样会把bbs提交到svn上的代码也拉下来，所以本地的代码没法提交。以前我和前端镜像代码对接的时候，一般我都是先更新到svn上，然后前端进行下拉代码测试">
+<meta name="twitter:description" content="！！！ linux 搭建git 仓库最方便的就是gitlab了，因为以前不知道，所以自己搭建了linux git 仓库，也没个图形化界面，是真的难用，但对git 的理解更加深刻了。（强烈推荐还是直接用gitlab 吧） 故事的发生背景：项目前端走了，前端界面没有人修改，只能先做后端，但是没有测试环境，而且这个bbs项目还被包含在itbasic里面，一旦代码提交到svn上，当我想更新服务器上的itb">
 
 
 
@@ -332,6 +333,28 @@
           </span>
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/git/" itemprop="url" rel="index">
+                    <span itemprop="name">git</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -359,7 +382,8 @@
       
 
       
-        <p>故事的发生背景：项目前端走了，前端界面没有人修改，只能先做后端，但是没有测试环境，而且这个bbs项目还被包含在itbasic里面，一旦代码提交到svn上，当我想更新服务器上的itbasic代码的时候，我一般直接在根目录下进行svn up来更新代码，这样会把bbs提交到svn上的代码也拉下来，所以本地的代码没法提交。以前我和前端镜像代码对接的时候，一般我都是先更新到svn上，然后前端进行下拉代码测试，当没问题的时候再去服务器上拉取svn的代码。但现在前端寻找不到，如若我更新bbs上代码，必然论坛会崩溃。<br><a id="more"></a><br>后来老大希望测试下我写的代码，看看需要哪些参数，给了另一台服务器。<br>刚开始想到直接把修改好的代码打个包放上去，后来想了下不是长久之计，因为我的水平肯定要经常修改代码，不能每次修改下就打包一下，太麻烦了。<br>又想到可以通过配置itbasic服务器上的svn，当svn up 的时候忽略掉特定文件夹的更新，百度了下集中方法，大部分是一下集中情况：windows下忽略文件夹，提交代码的时候忽略掉文件夹，很少有更新代码的时候忽略掉文件夹的解决办法。（有，但自己试验失败）。<br>后来想到不如利用git吧，首先大部分都是我一个人操作，我经常向github提交代码，操作已经很熟悉了，再者毕竟用git也能跟上时代的潮流嘛。</p>
+        <p>！！！ linux 搭建git 仓库最方便的就是gitlab了，因为以前不知道，所以自己搭建了linux git 仓库，也没个图形化界面，是真的难用，但对git 的理解更加深刻了。（强烈推荐还是直接用gitlab 吧）</p>
+<p>故事的发生背景：项目前端走了，前端界面没有人修改，只能先做后端，但是没有测试环境，而且这个bbs项目还被包含在itbasic里面，一旦代码提交到svn上，当我想更新服务器上的itbasic代码的时候，我一般直接在根目录下进行svn up来更新代码，这样会把bbs提交到svn上的代码也拉下来，所以本地的代码没法提交。以前我和前端镜像代码对接的时候，一般我都是先更新到svn上，然后前端进行下拉代码测试，当没问题的时候再去服务器上拉取svn的代码。但现在前端寻找不到，如若我更新bbs上代码，必然论坛会崩溃。<br><a id="more"></a><br>后来老大希望测试下我写的代码，看看需要哪些参数，给了另一台服务器。<br>刚开始想到直接把修改好的代码打个包放上去，后来想了下不是长久之计，因为我的水平肯定要经常修改代码，不能每次修改下就打包一下，太麻烦了。<br>又想到可以通过配置itbasic服务器上的svn，当svn up 的时候忽略掉特定文件夹的更新，百度了下方法，大部分以下几种情况：windows下忽略文件夹，提交代码的时候忽略掉文件夹，很少有更新代码的时候忽略掉文件夹的解决办法。（有，但自己试验失败）。<br>后来想到不如利用git吧，首先大部分都是我一个人操作，我经常向github提交代码，操作已经很熟悉了，再者毕竟用git也能跟上时代的潮流嘛。</p>
 <p>先来介绍一点基础知识：<br>当我们想下载github上的代码（或者说远程仓库的代码），我们可以通过<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">git clone git@ip地址：git远程仓库的地址</span><br><span class="line">//例如</span><br><span class="line">git clone git@github.com:chenye2017/zerg.git</span><br><span class="line">//当需要下载github上的仓库的时候，直接去这个项目首页，会有个clone or download的选项，注意不要选择use https，因为选了那个每次提交代码额时候都要输入密码</span><br><span class="line">//winodows用户可以直接下载zip</span><br><span class="line">git clone git@192.168.56.10:/home/resposity/bbs.git</span><br></pre></td></tr></table></figure></p>
 <p>新建一个目录，自定义名称<br>进入到这个目录内，执行上述操作，就能把项目目录中的代码下载下来。</p>
 <p>但上面仅仅只是下载项目，我们为了和远程仓库进行联动，我们需要在本地的这个文件夹建造一个git仓库，然后和远程仓库的某个分支比如master进行绑定，当我们修改完成的时候进行代码推送到远程的时候，别人下次再次clone或者pull就能收到我们提交的修改。<br>下面就是创建本地仓库的实例代码</p>
@@ -430,6 +454,12 @@
     
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/git/" rel="tag"><i class="fa fa-tag"></i> git</a>
+          
+        </div>
       
 
       
@@ -550,7 +580,7 @@ var jiathis_config={
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">78</span>
+                  <span class="site-state-item-count">77</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -572,7 +602,7 @@ var jiathis_config={
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">80</span>
+                  <span class="site-state-item-count">79</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -691,7 +721,7 @@ var jiathis_config={
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count"> | 博客全站共127.5k字</span>
+  <span class="post-count"> | 博客全站共126.2k字</span>
 </div>
 
 

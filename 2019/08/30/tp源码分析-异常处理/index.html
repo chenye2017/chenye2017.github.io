@@ -90,7 +90,7 @@
 <meta property="og:description" content="参考文章 上面这篇文章写得很好，让我对异常处理除了 try catch 之外有了更深的认识，大致记录一下对php 异常处理的理解以及结合tp框架的源码分析">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/20190830133738.png">
-<meta property="og:updated_time" content="2019-08-30T06:20:51.963Z">
+<meta property="og:updated_time" content="2019-09-01T13:42:11.207Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="tp源码分析-异常处理">
 <meta name="twitter:description" content="参考文章 上面这篇文章写得很好，让我对异常处理除了 try catch 之外有了更深的认识，大致记录一下对php 异常处理的理解以及结合tp框架的源码分析">
@@ -390,8 +390,9 @@
 <h3 id="PHP-处理错误的两大类方式"><a href="#PHP-处理错误的两大类方式" class="headerlink" title="PHP 处理错误的两大类方式"></a>PHP 处理错误的两大类方式</h3><p>首先我们要明白php 的异常处理分成两个独立的大块，一个是php自身的标准处理，就是我们经常error_reporting ， display_error 的设置（呈现形式就是界面上的php warning 信息， php fatal error 这种）；另一个是我们通过try catch 捕获异常进行处理（我们可能在catch 中 记录 $e-&gt;getMessage()） . 我们要清楚的是这两块对错误的处理级别是相互独立的，互不影响。比如error_reporting(0), 不对任何异常进行处理（ps: -1 ,类似 E_ALL ）,try catch 还是能捕捉到我们的exception。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">error_reporting(0); // 0 的时候没有任何错误信息， -1 的时候会打印出 //fatal_error</span><br><span class="line">test();</span><br><span class="line"></span><br><span class="line">try &#123;</span><br><span class="line">  throw new Exception()</span><br><span class="line">&#125; catch (Exception $e) &#123;</span><br><span class="line">  var_dump($e-&gt;getMessage())</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h3 id="PHP-标准错误处理-error-reporting-参数的意义"><a href="#PHP-标准错误处理-error-reporting-参数的意义" class="headerlink" title="PHP 标准错误处理 error_reporting() 参数的意义"></a>PHP 标准错误处理 error_reporting() 参数的意义</h3><p>error_reporting(), 不带任何参数，返回的是错误处理级别，带参数意思是设置错误处理级别</p>
-<p>error_reporting(E_ALL | E_NOTICE) , | 是异或，代表除了E_NOTICE 都进行处理， 或者</p>
+<p>error_reporting(E_ALL ^ E_NOTICE) , ^ 是异或，代表除了E_NOTICE 都进行处理， 或者</p>
 <p>error_reporting(E_ALL &amp; ~E_NOTICE), &amp; 是同或， ~代表取反，和上面是同一个意思，E_ALL是一个常量，数值是 E_NOTICE 那些的结合体</p>
+<p>error_reporting(E_NOTICE | E_WARNING), 包括notice 和 warning 错误  </p>
 <h3 id="PHP的错误等级"><a href="#PHP的错误等级" class="headerlink" title="PHP的错误等级"></a>PHP的错误等级</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"># 系统级用户代码的一些错误类型 可由 try ... catch ... 捕获</span><br><span class="line">E_PARSE          解析时错误 语法解析错误 少个分号 多个逗号一类的 致命错误</span><br><span class="line">E_ERROR          运行时错误 比如调用了未定义的函数或方法 致命错误</span><br><span class="line"></span><br><span class="line"># 系统级用户代码的一些错误类型 可由 set_error_handler 捕获处理</span><br><span class="line">E_WARNING        运行时警告 调用了未定义的变量</span><br><span class="line">E_NOTICE         运行时提醒                  </span><br><span class="line">E_DEPRECATED     运行时已废弃的函数或方法</span><br><span class="line"></span><br><span class="line"># 用户级自定义错误 可由 trigger_error 触发 可由 set_error_handler 捕获处理</span><br><span class="line">E_USER_ERROR      用户自定义错误 致命错误 未处理也会导致程序退出</span><br><span class="line">E_USER_WARNING</span><br><span class="line">E_USER_NOTICE</span><br><span class="line">E_USER_DEPRECATED</span><br><span class="line"></span><br><span class="line">==========================开发中常遇到/不常遇到分割线=======================</span><br><span class="line"></span><br><span class="line"># Zend Engine 内部的一些错误 应该也能通过 try ... catch ... 捕获 略难测试</span><br><span class="line">E_CORE_ERROR</span><br><span class="line">E_CORE_WARNING</span><br><span class="line">E_COMPILE_ERROR</span><br><span class="line">E_COMPILE_WARNING</span><br><span class="line"></span><br><span class="line">#编码标准化警告(建议如何修改以向前兼容)</span><br><span class="line">E_STRICT          部分 try ... catch ... 部分 set_error_handler</span><br><span class="line">E_RECOVERABLE_ERROR</span><br></pre></td></tr></table></figure>
 <p>这个地方需要我们注意的是结合PHP7 的 error 和 exception 来看，php7 的error 和 exception 都来自throwable， 所以我们在 catch  throwable都能捕获到，他和上述php 标准错误级别的关系如下</p>
 <p><img src="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/20190830133738.png" alt=""> </p>
@@ -632,7 +633,7 @@ var jiathis_config={
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">78</span>
+                  <span class="site-state-item-count">77</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -654,7 +655,7 @@ var jiathis_config={
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">80</span>
+                  <span class="site-state-item-count">79</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -789,7 +790,7 @@ var jiathis_config={
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count"> | 博客全站共127.5k字</span>
+  <span class="post-count"> | 博客全站共126.2k字</span>
 </div>
 
 

@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="svn,git,版本控制," />
+  <meta name="keywords" content="git,svn,版本控制," />
 
 
 
@@ -81,20 +81,20 @@
 
 
 
-<meta name="description" content="···今天碰到一个问题，其实这个问题好久之前就没碰到了，只是之前可以通过别的方式化解，然后今天没法通过别的方式解决了，只能通过正确的方式解决。 问题描述：在线上修改了代码，怎么更新到本地。">
-<meta name="keywords" content="svn,git,版本控制">
+<meta name="description" content="很老的文章了~~总结一下我们的代码发布流程，本地svn commit 到svn 服务器，线上linux 安装一个svn， svn update 代码到线上服务器。 ···今天碰到一个问题，其实这个问题好久之前就没碰到了，只是之前可以通过别的方式化解，然后今天没法通过别的方式解决了，只能通过正确的方式解决。 问题描述：在线上修改了代码，怎么更新到本地。">
+<meta name="keywords" content="git,svn,版本控制">
 <meta property="og:type" content="article">
 <meta property="og:title" content="svn Git 思考">
 <meta property="og:url" content="http://yoursite.com/2017/12/20/svn-Git-思考/index.html">
 <meta property="og:site_name" content="语法糖的博客">
-<meta property="og:description" content="···今天碰到一个问题，其实这个问题好久之前就没碰到了，只是之前可以通过别的方式化解，然后今天没法通过别的方式解决了，只能通过正确的方式解决。 问题描述：在线上修改了代码，怎么更新到本地。">
+<meta property="og:description" content="很老的文章了~~总结一下我们的代码发布流程，本地svn commit 到svn 服务器，线上linux 安装一个svn， svn update 代码到线上服务器。 ···今天碰到一个问题，其实这个问题好久之前就没碰到了，只是之前可以通过别的方式化解，然后今天没法通过别的方式解决了，只能通过正确的方式解决。 问题描述：在线上修改了代码，怎么更新到本地。">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://ozys8fka7.bkt.clouddn.com/svn%E6%B5%81%E7%A8%8B%EF%BC%88%E9%94%99%E8%AF%AF%EF%BC%89.png">
 <meta property="og:image" content="http://ozys8fka7.bkt.clouddn.com/svnl%E6%B5%81%E7%A8%8B%EF%BC%88%E6%96%B0%EF%BC%89.png">
-<meta property="og:updated_time" content="2019-07-31T08:41:10.559Z">
+<meta property="og:updated_time" content="2019-09-26T13:08:17.165Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="svn Git 思考">
-<meta name="twitter:description" content="···今天碰到一个问题，其实这个问题好久之前就没碰到了，只是之前可以通过别的方式化解，然后今天没法通过别的方式解决了，只能通过正确的方式解决。 问题描述：在线上修改了代码，怎么更新到本地。">
+<meta name="twitter:description" content="很老的文章了~~总结一下我们的代码发布流程，本地svn commit 到svn 服务器，线上linux 安装一个svn， svn update 代码到线上服务器。 ···今天碰到一个问题，其实这个问题好久之前就没碰到了，只是之前可以通过别的方式化解，然后今天没法通过别的方式解决了，只能通过正确的方式解决。 问题描述：在线上修改了代码，怎么更新到本地。">
 <meta name="twitter:image" content="http://ozys8fka7.bkt.clouddn.com/svn%E6%B5%81%E7%A8%8B%EF%BC%88%E9%94%99%E8%AF%AF%EF%BC%89.png">
 
 
@@ -385,7 +385,8 @@
       
 
       
-        <p>···今天碰到一个问题，其实这个问题好久之前就没碰到了，只是之前可以通过别的方式化解，然后今天没法通过别的方式解决了，只能通过正确的方式解决。</p>
+        <p>很老的文章了~~总结一下我们的代码发布流程，本地svn commit 到svn 服务器，线上linux 安装一个svn， svn update 代码到线上服务器。</p>
+<p>···今天碰到一个问题，其实这个问题好久之前就没碰到了，只是之前可以通过别的方式化解，然后今天没法通过别的方式解决了，只能通过正确的方式解决。</p>
 <p>问题描述：在线上修改了代码，怎么更新到本地。</p>
 <a id="more"></a>
 <p>直接通过小乌龟update，肯定不行。因为小乌龟是直接从svn服务器上更新内容，然而我是线上的代码修改了，而不是svn服务器上的文件修改了。</p>
@@ -456,9 +457,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/svn/" rel="tag"><i class="fa fa-tag"></i> svn</a>
-          
             <a href="/tags/git/" rel="tag"><i class="fa fa-tag"></i> git</a>
+          
+            <a href="/tags/svn/" rel="tag"><i class="fa fa-tag"></i> svn</a>
           
             <a href="/tags/版本控制/" rel="tag"><i class="fa fa-tag"></i> 版本控制</a>
           
@@ -473,8 +474,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/12/15/Git使用教程/" rel="next" title="git使用教程">
-                <i class="fa fa-chevron-left"></i> git使用教程
+              <a href="/2017/12/13/vagrant使用/" rel="next" title="vagrant使用">
+                <i class="fa fa-chevron-left"></i> vagrant使用
               </a>
             
           </div>
@@ -583,7 +584,7 @@ var jiathis_config={
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">78</span>
+                  <span class="site-state-item-count">77</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -605,7 +606,7 @@ var jiathis_config={
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">80</span>
+                  <span class="site-state-item-count">79</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -724,7 +725,7 @@ var jiathis_config={
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count"> | 博客全站共127.5k字</span>
+  <span class="post-count"> | 博客全站共126.2k字</span>
 </div>
 
 
