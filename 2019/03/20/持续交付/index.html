@@ -81,25 +81,26 @@
 
 
 
-<meta name="description" content="上面要求代码从svn改成git,需要一个私有化的代码管理工具，于是想到了gitlab, 其实我们人这么少，一般一个前端，一个后端，流程简单，svn和git 用起来没啥区别，可是呢上面说了，那就改吧">
+<meta name="description" content="上面要求代码从svn改成git,需要一个私有化的代码管理工具，于是想到了gitlab, 其实我们人这么少，一般一个前端，一个后端，流程简单，svn和git 用起来没啥区别，可是呢上面说了，那就改吧 ！！！上面的是以前的想法，现在的话就是git 无敌~~~">
 <meta name="keywords" content="git">
 <meta property="og:type" content="article">
 <meta property="og:title" content="持续交付">
 <meta property="og:url" content="http://yoursite.com/2019/03/20/持续交付/index.html">
 <meta property="og:site_name" content="语法糖的博客">
-<meta property="og:description" content="上面要求代码从svn改成git,需要一个私有化的代码管理工具，于是想到了gitlab, 其实我们人这么少，一般一个前端，一个后端，流程简单，svn和git 用起来没啥区别，可是呢上面说了，那就改吧">
+<meta property="og:description" content="上面要求代码从svn改成git,需要一个私有化的代码管理工具，于是想到了gitlab, 其实我们人这么少，一般一个前端，一个后端，流程简单，svn和git 用起来没啥区别，可是呢上面说了，那就改吧 ！！！上面的是以前的想法，现在的话就是git 无敌~~~">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/20190930173319.png">
 <meta property="og:image" content="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/800415645624780513.png">
 <meta property="og:image" content="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/748391564562478477.png">
 <meta property="og:image" content="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/6845315645624787314.png">
 <meta property="og:image" content="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/5573915645624793171.png">
 <meta property="og:image" content="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/9647115645624801071.png">
 <meta property="og:image" content="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/9805515645624803533.png">
-<meta property="og:updated_time" content="2019-07-31T08:41:20.590Z">
+<meta property="og:updated_time" content="2019-09-30T09:35:21.518Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="持续交付">
-<meta name="twitter:description" content="上面要求代码从svn改成git,需要一个私有化的代码管理工具，于是想到了gitlab, 其实我们人这么少，一般一个前端，一个后端，流程简单，svn和git 用起来没啥区别，可是呢上面说了，那就改吧">
-<meta name="twitter:image" content="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/800415645624780513.png">
+<meta name="twitter:description" content="上面要求代码从svn改成git,需要一个私有化的代码管理工具，于是想到了gitlab, 其实我们人这么少，一般一个前端，一个后端，流程简单，svn和git 用起来没啥区别，可是呢上面说了，那就改吧 ！！！上面的是以前的想法，现在的话就是git 无敌~~~">
+<meta name="twitter:image" content="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/20190930173319.png">
 
 
 
@@ -389,7 +390,15 @@
       
 
       
-        <p>上面要求代码从svn改成git,需要一个私有化的代码管理工具，于是想到了gitlab, 其实我们人这么少，一般一个前端，一个后端，流程简单，svn和git 用起来没啥区别，可是呢上面说了，那就改吧<br><a id="more"></a></p>
+        <p>上面要求代码从svn改成git,需要一个私有化的代码管理工具，于是想到了gitlab, 其实我们人这么少，一般一个前端，一个后端，流程简单，svn和git 用起来没啥区别，可是呢上面说了，那就改吧</p>
+<p>！！！上面的是以前的想法，现在的话就是git 无敌~~~<br><a id="more"></a></p>
+<p>对于持续交付我现在的理解还不是十分深刻，目前就理解成每个程序员代码的上传到发布整个流程吧。</p>
+<p>最开始我们是svn，我不知道svn 有没有分支这个说法。当我们在没有分支的情况下，本地代码只有一份，如果我们想放下手头的工作，去新开一个bug 或者feature ，这都是不允许的，都是要在之前工作的基础上，或者你换一个文件夹。鉴于上面的问题，我们引入了git。</p>
+<p>最开始引入git，我是想一个文件夹即用git 管理也用svn 管理，svn 管理的我用来上线，git 管理的用来feature开发，每次上传文件的时候，我都不处理git 管理的那个文件夹，这样既保证了我的线上服务器代码没有改变，也能保证新的代码通过git传输到了另一个地方，于是我在我们阿里云上又安装了一个git仓库。</p>
+<p>直到后面到了老东家，我才 意识到我搭建的git 仓库功能其实就是gitlab，而且gitlab相比较会容易安装的多，但是经过手动搭建git仓库，让我更加理解git 了。</p>
+<p>上面说的都是代码的上传，共享，那怎么发布呢？像我们之前,就是在对外服务器上装一个git，然后把git服务器上的代码拉下来，完成更新，php这样就好了，对于前端项目，还需要npm run 和 npm install, 然后把dist 目录对外暴露就好了。</p>
+<p><img src="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/20190930173319.png" alt=""></p>
+<p>上面就是itbasic 的对外访问路径，因为只有一个域名，所以通过文件夹的形式提供类似不同的虚拟站点</p>
 <ul>
 <li>gitlab 搭建<br><a href="https://blog.csdn.net/Abysscarry/article/details/79402695" target="_blank" rel="noopener">https://blog.csdn.net/Abysscarry/article/details/79402695</a><br>慕课网教程上那么复杂是因为配置了本地https<br>唯一一点没有提到的就是自定义域名的文件位置，如果用yum安装的话<br>在 /etc/gitlab/gitlab.rb下面。</li>
 <li>gitlab使用<br>默认有个root账户，自己设置密码，<br><img src="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/800415645624780513.png" alt="image.png"></li>
@@ -590,7 +599,7 @@ var jiathis_config={
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">77</span>
+                  <span class="site-state-item-count">79</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -731,7 +740,7 @@ var jiathis_config={
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count"> | 博客全站共126.2k字</span>
+  <span class="post-count"> | 博客全站共129.0k字</span>
 </div>
 
 
