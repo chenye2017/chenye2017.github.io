@@ -90,7 +90,7 @@
 <meta property="og:description" content="框架可能让你对PHP 怎么给webserver 返回内容产生了误解 ！！！">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/20190930193953.png">
-<meta property="og:updated_time" content="2019-09-30T11:40:04.419Z">
+<meta property="og:updated_time" content="2019-10-01T13:32:06.709Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="tp源码分析-Response">
 <meta name="twitter:description" content="框架可能让你对PHP 怎么给webserver 返回内容产生了误解 ！！！">
@@ -398,43 +398,108 @@
 <p>所以呢，通过上面的代码可以看出来在tp 中路由中间件和控制器其实是同一个层面的，他们的核心就是返回一个response， 比如中间件过滤失败 ，我们也需要返回一个response，万万不可以在路由中间件里面返回false， 因为后面的send() 方法需要response 类来调用，控制器中之所以可以直接返回数据是上面那个回调函数写的好，\$dispatch-&gt;run() 中有对控制器返回内容的自适应，如果控制器返回的是一个response，那就直接让他调用send 方法，否则会根据配置文件包装一个response 方法返回。 </p>
 <p>但凡我们想停止路由中间件的执行，我们可以不执行 $next() 方法，直接返回response， 这就他就会直接调用 send 方法，而不去处理控制器中内容。tp这块的原理和 laravel 还是不同的，laravel 中是通过array_reduce 不断的去执行绑定匿名函数，tp 中是通过对middleware的queue属性数组中的匿名函数不断shift， 每一个匿名都依赖下一个匿名，但要是当前匿名不需要比如执行下一个匿名 \$next() 的执行，那只会传入一个function， 而没有实际执行。这在我思考为什么 控制器执行的时候 ，明明queue 数组中没有办法shift 匿名函数了，却没有报错时候产生了极大的困惑</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">call_user_func(&apos;test&apos;, [$callback])  // 不执行，除非test方法中 $callback() 主动调用</span><br><span class="line">call_user_func($callback, [$parama]) // 执行</span><br></pre></td></tr></table></figure>
-<p>接下来我们分析一下 Respouse 类，</p>
-<p>首先是最重要的方法，send</p>
+<p>接下来我们分析一下 Response 类，</p>
+<p>首先是最重要的方法，</p>
+<ul>
+<li>send</li>
+</ul>
 <p>hook 当中的listen_send ,属于常规操作，在我们response 解析之前</p>
-<p>然后是getContent 方法， 对于我们的控制器返回进行处理，生成最后要echo 的内容。其中的output方法就是我们response 文件夹下所有继承response 类要实现的方法，比如json 类，会json_encode, 要是普通的类， response的data 属性就直接赋值给content 属性了，默认content-type 是html.</p>
+<p>然后是</p>
+<ul>
+<li>getContent </li>
+</ul>
+<p>对于我们的控制器返回进行处理，生成最后要echo 的内容。其中的output方法就是我们response 文件夹下所有继承response 类要实现的方法，比如json 类，会json_encode, 要是普通的类， response的data 属性就直接赋值给content 属性了，默认content-type 是html.</p>
 <p>思考一下为什么我们在控制器中返回arr 有时候会出错？因为我们最后的数据都要echo ,然后都必须要转换成string， 当我们使用默认的配置文件的时候，如果我们直接返回一个数组，默认生成的类是response 类，他的output 方法就是直接data 给content， 这样就导致我们echo 了一个arr ，能不出错嘛</p>
-<p>后面一段是开启trace 调式，trace 调试我感觉方便的一点就是能看到执行的sql 语句，这在开发中是很必要的。</p>
-<p>再后面就是头信息的处理，调用php 原生header</p>
-<p>再后面就是 echo data</p>
-<p>在后面就是 fastcgi_finish_request(); 执行这个方法，这个方法的好处就是在我们尽快把客户端要的内容返回后，php 脚本还能继续执行， <a href="http://www.laruence.com/2011/04/13/1991.html" target="_blank" rel="noopener">参考鸟哥这篇文章</a></p>
+<p>后面一段是开启</p>
+<ul>
+<li>trace 调式</li>
+</ul>
+<p>trace 调试我感觉方便的一点就是能看到执行的sql 语句，这在开发中是很必要的。</p>
+<p>再后面就是头信息的处理，</p>
+<ul>
+<li>调用php 原生header</li>
+</ul>
+<p>再后面就是</p>
+<ul>
+<li>echo data</li>
+</ul>
+<p>在后面就是</p>
+<ul>
+<li>fastcgi_finish_request(); </li>
+</ul>
+<p>执行这个方法，这个方法的好处就是在我们尽快把客户端要的内容返回后，php 脚本还能继续执行， <a href="http://www.laruence.com/2011/04/13/1991.html" target="_blank" rel="noopener">参考鸟哥这篇文章</a></p>
 <p>再后面就是客户端输出完成后服务端自己的一些收尾工作</p>
 <p>再来整体分析下response 这个类</p>
-<p>__construct 初始化</p>
+<ul>
+<li>__construct 初始化</li>
+</ul>
 <p>其中content-type charset 拼接很重要，标准的就是拼在一起，有时候当你没有识别json的，想想客户端传过来的content-type 是否多了 charset  utf8 信息</p>
-<p>create 生成一个response </p>
+<ul>
+<li>create 生成一个response </li>
+</ul>
 <p>这个就相当于一个factory， 根据type的不同，生成不同的response， 注意我们控制器中返回的response 或者官方对于控制器中 string 这种的返回包装的response ，都是new 的，而不是从app 容器中取得</p>
-<p>send  解析response对象，给webserver 返回数据</p>
-<p>output 对于data 依据content-type 进行处理，转成对应的string, 比如 json 转string</p>
-<p>sendData  就是最后一步，echo 数据</p>
-<p>options  一些额外的参数配置，比如tp 中，可以对于json_encode 添加参数 ，json_encode 之后汉字我们仍旧能识别</p>
+<ul>
+<li>send  解析response对象，给webserver 返回数据</li>
+</ul>
+<ul>
+<li>output 对于data 依据content-type 进行处理，转成对应的string, 比如 json 转string</li>
+</ul>
+<ul>
+<li>sendData  就是最后一步，echo 数据</li>
+</ul>
+<ul>
+<li>options  一些额外的参数配置，比如tp 中，可以对于json_encode 添加参数 ，json_encode 之后汉字我们仍旧能识别</li>
+</ul>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">options([</span><br><span class="line">        &apos;var_jsonp_handler&apos;     =&gt; &apos;callback&apos;,</span><br><span class="line">        &apos;default_jsonp_handler&apos; =&gt; &apos;jsonpReturn&apos;,</span><br><span class="line">        &apos;json_encode_param&apos;     =&gt; JSON_PRETTY_PRINT,</span><br><span class="line">    ]);</span><br></pre></td></tr></table></figure>
 <p><img src="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/20190930193953.png" alt=""></p>
-<p>data 设置data 属性</p>
-<p>allowCache  设置是否允许缓存request 内容，如果允许的话，会配置header头信息</p>
-<p>header 配置header 头信息</p>
-<p>content 把content 的内容转换成 string</p>
-<p>code 设置http 状态码</p>
-<p>lastModified 设置上次修改时间</p>
-<p>expires  设置过期时间</p>
-<p>etag  设置etag</p>
-<p>cacheControl  设置cacheControl</p>
-<p>nocache 设置不缓存</p>
-<p>contentType 设置contentType</p>
-<p>getHeader  设置请求头</p>
-<p>getData  获取 data属性</p>
-<p>getContent 类似上面的content 方法</p>
-<p>getCode 获取http 状态码</p>
-<p>debugInfo</p>
+<ul>
+<li>data 设置data 属性</li>
+</ul>
+<ul>
+<li>allowCache  设置是否允许缓存request 内容，如果允许的话，会配置header头信息</li>
+</ul>
+<ul>
+<li>header 配置header 头信息</li>
+</ul>
+<ul>
+<li>content 把content 的内容转换成 string</li>
+</ul>
+<ul>
+<li>code 设置http 状态码</li>
+</ul>
+<ul>
+<li>lastModified 设置上次修改时间</li>
+</ul>
+<ul>
+<li>expires  设置过期时间</li>
+</ul>
+<ul>
+<li>etag  设置etag</li>
+</ul>
+<ul>
+<li>cacheControl  设置cacheControl</li>
+</ul>
+<ul>
+<li>nocache 设置不缓存</li>
+</ul>
+<ul>
+<li>contentType 设置contentType</li>
+</ul>
+<ul>
+<li>getHeader  设置请求头</li>
+</ul>
+<ul>
+<li>getData  获取 data属性</li>
+</ul>
+<ul>
+<li>getContent 类似上面的content 方法</li>
+</ul>
+<ul>
+<li>getCode 获取http 状态码</li>
+</ul>
+<ul>
+<li>debugInfo</li>
+</ul>
 <p>补充：</p>
 <p>因为今天在看response类，他对很多header头部信息处理过，比如allowCache, 大致了解几个新的header 头 <a href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Caching_FAQ" target="_blank" rel="noopener">https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Caching_FAQ</a></p>
 <p>cache-control  这个我们经常看到，no-cache,但这个其实并不是不缓存的意思（强制确认缓存的意思），no-store 才是不缓存的意思。其中还有max-age 属性，代表这个缓存最大活多久，must-revalidate, 代表使用之前要检验是否过期了。</p>
@@ -621,7 +686,7 @@ var jiathis_config={
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">79</span>
+                  <span class="site-state-item-count">80</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -643,7 +708,7 @@ var jiathis_config={
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">79</span>
+                  <span class="site-state-item-count">80</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -762,7 +827,7 @@ var jiathis_config={
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count"> | 博客全站共129.0k字</span>
+  <span class="post-count"> | 博客全站共132.6k字</span>
 </div>
 
 
