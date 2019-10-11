@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="PHP," />
 
 
 
@@ -81,17 +81,18 @@
 
 
 
-<meta name="description" content="yield，生成器，自己感觉还是挺重要的，因为php在读取大文件的时候经常会有内存溢出的错误，其实yield还会涉及spl，这部分内容自己目前了解的还不是十分清楚，所以，暂时就把yield的作用归类于放置变量过大在内存中占用本大空间，导致内存溢出吧。">
+<meta name="description" content="yield，生成器(generator)，蛮重要的，各种语言中都有，比如js, 实际工作中用的比较少~~">
+<meta name="keywords" content="PHP">
 <meta property="og:type" content="article">
 <meta property="og:title" content="PHP yield">
 <meta property="og:url" content="http://yoursite.com/2018/05/25/PHP-yield/index.html">
 <meta property="og:site_name" content="语法糖的博客">
-<meta property="og:description" content="yield，生成器，自己感觉还是挺重要的，因为php在读取大文件的时候经常会有内存溢出的错误，其实yield还会涉及spl，这部分内容自己目前了解的还不是十分清楚，所以，暂时就把yield的作用归类于放置变量过大在内存中占用本大空间，导致内存溢出吧。">
+<meta property="og:description" content="yield，生成器(generator)，蛮重要的，各种语言中都有，比如js, 实际工作中用的比较少~~">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-07-31T08:41:08.047Z">
+<meta property="og:updated_time" content="2019-10-11T13:51:19.732Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="PHP yield">
-<meta name="twitter:description" content="yield，生成器，自己感觉还是挺重要的，因为php在读取大文件的时候经常会有内存溢出的错误，其实yield还会涉及spl，这部分内容自己目前了解的还不是十分清楚，所以，暂时就把yield的作用归类于放置变量过大在内存中占用本大空间，导致内存溢出吧。">
+<meta name="twitter:description" content="yield，生成器(generator)，蛮重要的，各种语言中都有，比如js, 实际工作中用的比较少~~">
 
 
 
@@ -332,6 +333,28 @@
           </span>
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/PHP/" itemprop="url" rel="index">
+                    <span itemprop="name">PHP</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -359,21 +382,31 @@
       
 
       
-        <p>yield，生成器，自己感觉还是挺重要的，因为php在读取大文件的时候经常会有内存溢出的错误，其实yield还会涉及spl，这部分内容自己目前了解的还不是十分清楚，所以，暂时就把yield的作用归类于放置变量过大在内存中占用本大空间，导致内存溢出吧。</p>
+        <p>yield，生成器(generator)，蛮重要的，各种语言中都有，比如js, 实际工作中用的比较少~~</p>
 <a id="more"></a>
 <p>关于yield这种数据类型，还有迭代器，还有collection，都是能用foreach进行循环遍历的。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">function productNum($length)</span><br><span class="line">&#123;</span><br><span class="line"> $data = [];</span><br><span class="line">  for ($i=0; $i&lt; $length; $i++)&#123;</span><br><span class="line">     $data[] = $i;</span><br><span class="line">	&#125;</span><br><span class="line"> return $data;	</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$data = productNum($100000000);</span><br><span class="line">foreach ($data as $key=&gt;$value) &#123;</span><br><span class="line">  var_dump($value);</span><br><span class="line">  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">function productNum($length)</span><br><span class="line">&#123;</span><br><span class="line"> $data = [];</span><br><span class="line">  for ($i=0; $i&lt; $length; $i++)&#123;</span><br><span class="line">     $data[] = $i;</span><br><span class="line">	&#125;</span><br><span class="line"> return $data;	</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$data = productNum(100000000);</span><br><span class="line">foreach ($data as $key=&gt;$value) &#123;</span><br><span class="line">  var_dump($value);</span><br><span class="line">  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>用php执行上端代码会报出超出分配给php的内存错误</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">function productNum($length)</span><br><span class="line">&#123;</span><br><span class="line"> //$data = [];</span><br><span class="line">  for ($i=0; $i&lt; $length; $i++)&#123;</span><br><span class="line">     //$data[] = $i;</span><br><span class="line">     yield $i;</span><br><span class="line">	&#125;</span><br><span class="line"> //return $data;	</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$data = productNum($100000000);</span><br><span class="line">foreach ($data as $key=&gt;$value) &#123;</span><br><span class="line">  var_dump($value);</span><br><span class="line">  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>能执行成功，其实这个时候打印$data变量，可以看出来他是一个类。</p>
 <p>每次foreach 去$data中取数据，上面的那个for循环就会执行一次，再次输出一个变量\$i。</p>
-<p>so，如果使用yield的内容，每次也得循环使用吗？</p>
+<p>so，如果使用yield的内容，每次也得循环使用吗 （对的，核心就是生产的时候要循环生产，消费的时候也要循环）</p>
 <p>yield定义的内容不能有返回。</p>
 <p>下面写一个读取文件，再往另一个文件中写入内容的例子，其实这个例子不具有实际价值，其实就是一个copy文件，用shell_exec执行linux命令就可以，或者file_get_contents,file_put_contents这样就好了，使用yield分多次，唯一可以想到的好处就是控制对内存占用的大小。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">function getContent($file)</span><br><span class="line">&#123;</span><br><span class="line">  $res = fopen($file);</span><br><span class="line">  while (feof($resource) === false ) &#123;</span><br><span class="line">         yield fgets($resource);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$res = fopen(&apos;/home/itbasic/3.pdf&apos;, &apos;a&apos;);</span><br><span class="line">foreach ($content as $c_key=&gt;$c_value) &#123;</span><br><span class="line">    fwrite($res, $c_value);</span><br><span class="line">&#125;</span><br><span class="line">fclose($res);</span><br><span class="line">echo &quot;使用: &quot;.memory_get_usage().&quot;B\n&quot;;  //使用: 362640B</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">function getContent($file)</span><br><span class="line">&#123;</span><br><span class="line">  $resource = fopen($file);</span><br><span class="line">  while (feof($resource) === false ) &#123;</span><br><span class="line">         yield fgets($resource);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$content = getContent($file);</span><br><span class="line">$res = fopen(&apos;/home/itbasic/3.pdf&apos;, &apos;a&apos;);</span><br><span class="line">foreach ($content as $c_key=&gt;$c_value) &#123;</span><br><span class="line">    fwrite($res, $c_value);</span><br><span class="line">&#125;</span><br><span class="line">fclose($res);</span><br><span class="line">echo &quot;使用: &quot;.memory_get_usage().&quot;B\n&quot;;  //使用: 362640B</span><br></pre></td></tr></table></figure>
 <p>用传统方式</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$res = file_get_contents($file);</span><br><span class="line">file_put_contents(&apos;/home/itbasic/1.pdf&apos;, $res);</span><br><span class="line">echo &quot;使用: &quot;.memory_get_usage().&quot;B\n&quot;; //使用: 39875608B</span><br></pre></td></tr></table></figure>
 <p>显然超过一个数量级，yield就是把一个结果集分批的给你，你什么时候问他要下一个结果集，他什么时候给你。</p>
+<p>js 版的yield 使用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">// 产生一个连续的 id</span><br><span class="line"></span><br><span class="line">x= 1;</span><br><span class="line">function* nextId()</span><br><span class="line">&#123;</span><br><span class="line">   while(true) &#123;</span><br><span class="line">      yield x;</span><br><span class="line">      x++;</span><br><span class="line">   &#125;		</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">var f = nextId()</span><br><span class="line">while (true)&#123;</span><br><span class="line">  console.log(f.next().value)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>需要注意的点蛮多的</p>
+<p>1.function的命名</p>
+<p>2.函数本身执行一次</p>
+<p>3.next() 多次循环执行</p>
+<p>PHP 版本类似代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">function pr()</span><br><span class="line">&#123;</span><br><span class="line">    $x = 1;</span><br><span class="line">    while(true) &#123;</span><br><span class="line">        yield $x;</span><br><span class="line">        $x++;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$a = pr();</span><br><span class="line"></span><br><span class="line">for ($i=1; $i &lt; 3; $i++) &#123;</span><br><span class="line">    var_dump($a-&gt;current());</span><br><span class="line">    $a-&gt;next(); // php 的生成器的这个方法返回值是空，所以不能链式调用</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">exit;</span><br></pre></td></tr></table></figure>
+<p>PHP 的 yield 本身产生的就是一个生成器，而这个生成器自身也是可以循环的,所以上面的代码还可以改造成</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">function pr()</span><br><span class="line">&#123;</span><br><span class="line">    $x = 1;</span><br><span class="line">    while(true) &#123;</span><br><span class="line">        yield $x;</span><br><span class="line">        $x++;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$a = pr();</span><br><span class="line"></span><br><span class="line">foreach ($a as $value) &#123;</span><br><span class="line">  var_dump($value); // 注意这个直接就是值，不是generator， 本身也不需要通过 next() 接口主动循环</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">exit;</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -428,6 +461,12 @@
     
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/PHP/" rel="tag"><i class="fa fa-tag"></i> PHP</a>
+          
+        </div>
       
 
       
@@ -689,7 +728,7 @@ var jiathis_config={
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count"> | 博客全站共132.6k字</span>
+  <span class="post-count"> | 博客全站共133.0k字</span>
 </div>
 
 

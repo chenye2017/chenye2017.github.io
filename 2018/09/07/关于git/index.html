@@ -90,7 +90,7 @@
 <meta property="og:description" content="公司一直用svn, 怕git 的相关内容以后用到，所以学习了，只是简单记录git 使用过程中自己的问题，不是教程，欢迎一起探讨">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/4524515645624759596.png">
-<meta property="og:updated_time" content="2019-09-26T13:02:12.541Z">
+<meta property="og:updated_time" content="2019-10-11T14:23:19.434Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="关于git">
 <meta name="twitter:description" content="公司一直用svn, 怕git 的相关内容以后用到，所以学习了，只是简单记录git 使用过程中自己的问题，不是教程，欢迎一起探讨">
@@ -459,6 +459,20 @@
 <li>git  只能记录纯文本的修改，不能记录word 这些二进制文件的修改，对于这些二进制文件的修改，只能知道他大小的具体变化，不能知道具体修改的内容，所以我们平时的文档都用md格式？</li>
 <li>git 除了支持 ssh 协议，还支持 https协议 （但是https 协议下载的时候总要输入用户名和密码，所以一般还是走ssh吧）</li>
 </ul>
+<p>虎扑代码发布 提交流程</p>
+<ul>
+<li>自己本地新建分支用于开发，基于远程master 分支, 写完了，推送到远程分支，和develop 分支合并（自己有合并权限）</li>
+</ul>
+<p>git checkout -b  cheney/test  origin:master  通过远程master 分支新建分支 （因为我本地master分支有些没用的东西， 所以本地master 分支不要做任何的事情吧）</p>
+<p>git  push origin chenye/test:chenye/test 推送分支</p>
+<ul>
+<li>测试完develop 分支，再把自己的分支和realease分支提交合并请求，此时并不用拉取 master分支</li>
+</ul>
+<ul>
+<li>realease 分支测试完，给master分支提交，一定要提前和远程master分支合并，也是给master提交 pr</li>
+</ul>
+<p>git pull origin master: chenye/test   拉取远程master 分支和本地分支合并 （git fetch 更安全点，和 pull 的区别 ？）</p>
+<p>所有的代码拉取都是 可以跨分支，分支合并都是通过pr 方式</p>
 
       
     </div>
@@ -780,7 +794,7 @@ var jiathis_config={
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count"> | 博客全站共132.6k字</span>
+  <span class="post-count"> | 博客全站共133.0k字</span>
 </div>
 
 
