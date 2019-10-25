@@ -90,7 +90,11 @@
 <meta property="og:description" content="公司一直用svn, 怕git 的相关内容以后用到，所以学习了，只是简单记录git 使用过程中自己的问题，不是教程，欢迎一起探讨">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/4524515645624759596.png">
-<meta property="og:updated_time" content="2019-10-11T14:23:19.434Z">
+<meta property="og:image" content="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/20191012121216.png">
+<meta property="og:image" content="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/20191012121521.png">
+<meta property="og:image" content="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/20191017100223.png">
+<meta property="og:image" content="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/20191017100319.png">
+<meta property="og:updated_time" content="2019-10-17T02:06:35.664Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="关于git">
 <meta name="twitter:description" content="公司一直用svn, 怕git 的相关内容以后用到，所以学习了，只是简单记录git 使用过程中自己的问题，不是教程，欢迎一起探讨">
@@ -463,16 +467,50 @@
 <ul>
 <li>自己本地新建分支用于开发，基于远程master 分支, 写完了，推送到远程分支，和develop 分支合并（自己有合并权限）</li>
 </ul>
-<p>git checkout -b  cheney/test  origin:master  通过远程master 分支新建分支 （因为我本地master分支有些没用的东西， 所以本地master 分支不要做任何的事情吧）</p>
-<p>git  push origin chenye/test:chenye/test 推送分支</p>
+<p>// git checkout -b  cheney/test  origin:master  通过远程master 分支新建分支 （因为我本地master分支有些没用的东西， 所以本地master 分支不要做任何的事情吧）</p>
+<ul>
+<li>还是不要用上面的新建分支的命令吧，容易出错。用git fetch origin chenye/test:chenye/test, 新建本地的分支</li>
+</ul>
+<ul>
+<li>对于分支切换的时候的错误，是在不行就 git add . git commit -m  。但这样以后千万不要随便提交，比如我本地的master分支</li>
+</ul>
+<p>对于我熟悉的分支切换时候的错误，就git stash ,git stash pop 恢复吧</p>
+<ul>
+<li>给master 分支提交的时候一定要记得merge， git pull origin master:chenye/test, 我曾经收到一个这样的提示</li>
+</ul>
+<p><img src="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/20191012121216.png" alt=""></p>
+<p>这个原因是master 和 我本地分支完全一样，没必要merge (而且本地有提交， 如果本地也没有提交，如下)</p>
+<p><img src="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/20191012121521.png" alt=""></p>
+<ul>
+<li>git  push origin chenye/test:chenye/test 推送本地分支到远程分支</li>
+</ul>
 <ul>
 <li>测试完develop 分支，再把自己的分支和realease分支提交合并请求，此时并不用拉取 master分支</li>
 </ul>
 <ul>
-<li>realease 分支测试完，给master分支提交，一定要提前和远程master分支合并，也是给master提交 pr</li>
+<li>realease 分支测试完，给master分支提交，一定要提前和远程master分支合并，也是给master提交 pr （并不用和release 还有 develop 合并，因为我们只需要把我们的分支提交给master就好了，release 还有 develop 上面可能有很多别人尚不稳定的内容）</li>
 </ul>
 <p>git pull origin master: chenye/test   拉取远程master 分支和本地分支合并 （git fetch 更安全点，和 pull 的区别 ？）</p>
-<p>所有的代码拉取都是 可以跨分支，分支合并都是通过pr 方式</p>
+<ul>
+<li>！！！注意，我们在用sftp 连接远程代码的时候，本地分支的切换并不能保证远程代码的切换，所以为了不出错，需要我们自己手动切换分支</li>
+<li>本地某个分支写了很多，但没有提交，所以切换的时候就容易出错，首先如果可以的话，我们git stash 暂存，如果是untracked ，可以通过 git add. ,再git stash，按理说前面两种就能解决所有问题了，实在不行最后只能git add ., 然后 git commit ，但这样以后千万不能在这个分支是 git pull</li>
+</ul>
+<p>所有的代码拉取都是 可以跨分支，分支的推送都不跨分支，所以合并都是通过pr 方式，</p>
+<p>git 撤销操作</p>
+<p>对于已经add 的内容 （一般显示绿色）</p>
+<p>通过 git reset 撤销，撤销完了之后还需要通过 git checkout (因为上面的操作只是撤销暂存区内容，所有内容都返回工作区，所以还得对工作区内容进行处理)</p>
+<p>对于 没有add 的内容（一般显示红色），但是 tracked 的 文件，通过</p>
+<p>git checkout . 撤销  git checkout  文件名，可以撤销具体的文件</p>
+<p>对于没有add, 也没有 tracked 的 文件，通过</p>
+<p>git clean ， git clean -n  先预览删除哪些文件，防止误删除， git clean -f  删除具体的文件</p>
+<p>git 文件在checkout 或者提交的时候，如果是跨平台，可能遇到 \r\n (win) 和 \n(linux) 的问题，一般情况下 git bash 都配置好了，只有那些比如我远程代码linux 下，sftp 到本地 win 下，才会出现这种问题 （git 自身的兼容只有在 checkout 或者 pull的时候，如果是通过别的方式比如sftp，好像不行），目前尚未解决 </p>
+<p>原先我调试代码的方式是虚拟机里面clone， 然后phpstorm 远程连接上去，本地代码拉取一份，这样本地代码修改，远程可以直接自动修改，唯一缺点就是上面的crlf 不能实现兼容（本地拉完代码，git status 就会发现大量代码的modifyed），如果是mac 的话，应该蛮好处理上面的问题, 因为他们的换行符是一致的</p>
+<p>后面我是本地clone代码，然后sftp 到远程，这样就能避免上述换行符问题。唯一需要注意的就是本地分支切换和远程分支都得手动切换</p>
+<p>关于phpstorm 切换分支，远程目录也切换分支，如下</p>
+<p><img src="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/20191017100223.png" alt=""></p>
+<p>所以我们就把 sftp 和 ftp 当做一种远程同步代码的方式就好了</p>
+<p><img src="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/20191017100319.png" alt=""></p>
+<p>还有要注意的点就是我们配置了Configuration（远程文件夹位置的配置） ，也要注意一下options， options 对我们的保存操作（是否改动就上传），哪些文件需要被同步会有配置（.git 文件一定要上传，方便我们切换分支）</p>
 
       
     </div>
@@ -653,7 +691,7 @@ var jiathis_config={
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">80</span>
+                  <span class="site-state-item-count">81</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -675,7 +713,7 @@ var jiathis_config={
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">80</span>
+                  <span class="site-state-item-count">81</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -794,7 +832,7 @@ var jiathis_config={
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count"> | 博客全站共133.0k字</span>
+  <span class="post-count"> | 博客全站共136.1k字</span>
 </div>
 
 

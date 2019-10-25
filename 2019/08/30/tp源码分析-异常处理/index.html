@@ -90,7 +90,7 @@
 <meta property="og:description" content="参考文章 上面这篇文章写得很好，让我对异常处理除了 try catch 之外有了更深的认识，大致记录一下对php 异常处理的理解以及结合tp框架的源码分析">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/20190830133738.png">
-<meta property="og:updated_time" content="2019-09-01T13:42:11.207Z">
+<meta property="og:updated_time" content="2019-10-25T06:58:20.433Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="tp源码分析-异常处理">
 <meta name="twitter:description" content="参考文章 上面这篇文章写得很好，让我对异常处理除了 try catch 之外有了更深的认识，大致记录一下对php 异常处理的理解以及结合tp框架的源码分析">
@@ -404,9 +404,11 @@
 <li>try catch , 不用做过多的介绍了，老朋友，可以捕获 throw 的所有内容，相当于 php 标准错误的fatal_error, 但不是fatal_error 就等于他，比如 require 的文件错误不存在，就不能被捕获</li>
 </ul>
 <ul>
-<li><p>set_error_handle, 和上面的try catch 互补，try catch 捕获的都是 E_ERROR 级别，对于那些warning ,notice 就靠这个东西来处理了，他有个返回值，当返回false 的时候，错误还是会提交个php 标准错误处理的 （也就是处理错误的流程是先php代码处理，然后php 自身处理， php 自身处理也就意味着程序崩溃了）</p>
+<li><p>set_error_handle, 和上面的try catch 互补，try catch 捕获的都是 E_ERROR 级别，对于那些warning ,notice 就靠这个东西来处理了，他有个返回值，当返回false 的时候，错误还是会提交个php 标准错误处理的 （也就是处理错误的流程是先php代码处理，然后php 自身处理， 我觉得php自身处理应该就是日志记录，还有display error 。 php 的错误日志一定要注意位置，很多时候不是php.ini 里面配置的位置，而是虚拟主机 apache  或者 nginx 里面配置的日志位置）</p>
 </li>
-<li><p>set_exception_hanle, 对于没有用try catch 捕获的错误（注意是没有用！！，而不是不能捕获的，捕获的内容等同于try catch）, 会走到这个里面进行处理，但是这个里面处理后程序就停止了，而try catch 处理之后程序还能接着往下走（ps:其实就我们平常而言，很多时候我们捕获了异常，除非在foreach 中，如果在平时逻辑中，也就直接return 给客户端，停止后面逻辑了）</p>
+<li><p>set_error_handle要比想象中的强大多了，我们可以在这之中接受 erroNo, erroStr, 封装成 exception 抛出去，那么就会在当时被set_error_handle 捕获的地方抛出 （注意几个常用的 error的数字 ，比如 e_error 1, e_warning, e_notice.  -1 代表 e_all,  0 代表关闭所有的错误报告）（adodb即使开启了错误处理，也只能触发 e_user 级别错误，所以只能被set_error_handle 处理，set_error_handle 再抛出异常，才能被捕获）</p>
+</li>
+<li><p>set_exception_handle, 对于没有用try catch 捕获的错误（注意是没有用！！，而不是不能捕获的，捕获的内容等同于try catch）, 会走到这个里面进行处理，但是这个里面处理后程序就停止了，而try catch 处理之后程序还能接着往下走（ps:其实就我们平常而言，很多时候我们捕获了异常，除非在foreach 中，如果在平时逻辑中，也就直接return 给客户端，停止后面逻辑了）</p>
 </li>
 <li><p>register_shutdown_function， 注册一个程序结束的时候执行的函数，就是无论是崩溃啊，还是正常结束，都在最末尾执行的方法</p>
 </li>
@@ -416,6 +418,12 @@
 </li>
 <li><p>trigger_error, 对于 warning ，notice 那些错误的触发，测试set_error_handle(当然也可以通过 var_dump 一个不存在的变量来触发)</p>
 <p>​</p>
+<p>tp 所有的异常处理都会走到Error 的 appException 方法中,最后给到 getExceptionHandler方法</p>
+<ol>
+<li>首先最基本的提点try catch 的，会被 set_exception_handle 捕获，包括 \Exception 和 \Throwable, 交给 appException</li>
+<li>warning 和user 级别，会被当做 errorException 抛出，转而到 appExcepiton 当中</li>
+<li>register_shutdown_function , 那些没有被捕获到的错误，通过error_get_last 捕获，然后判断是否要塞入 appException 中</li>
+</ol>
 </li>
 </ul>
 <h3 id="TP-框架中的异常处理"><a href="#TP-框架中的异常处理" class="headerlink" title="TP 框架中的异常处理"></a>TP 框架中的异常处理</h3><p>我们对于异常的处理最好写在代码的最前面，否则error 触发之后，该错误之后的代码都不会生效。</p>
@@ -637,7 +645,7 @@ var jiathis_config={
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">80</span>
+                  <span class="site-state-item-count">81</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -659,7 +667,7 @@ var jiathis_config={
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">80</span>
+                  <span class="site-state-item-count">81</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -794,7 +802,7 @@ var jiathis_config={
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count"> | 博客全站共133.0k字</span>
+  <span class="post-count"> | 博客全站共136.1k字</span>
 </div>
 
 
