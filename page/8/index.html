@@ -292,6 +292,925 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/29/PHP文件操作/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="chenye2017">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/my.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="语法糖的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/01/29/PHP文件操作/" itemprop="url">PHP文件操作</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-29T16:04:01+08:00">
+                2018-01-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/PHP/" itemprop="url" rel="index">
+                    <span itemprop="name">PHP</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>上篇文章里面写了关于文件上传。其实在做文件上传的功能的时候遇到很多php关于文件的处理，记录下来。其实文件处理在我们刚开始学习php的时候肯定学习过，可后来因为项目当中，做网站的时候关于文件的操作很少，所以很容易忘记这部分的内容，毕竟其实也挺枯燥的。<br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/01/29/PHP文件操作/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+  <div>
+  
+  </div>
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+
+
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/26/文件上传/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="chenye2017">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/my.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="语法糖的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/01/26/文件上传/" itemprop="url">文件上传</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-26T18:26:03+08:00">
+                2018-01-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/PHP/" itemprop="url" rel="index">
+                    <span itemprop="name">PHP</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>今天遇到一个问题，关于大文件的上传。其实不管是大文件的上传，还是普通的文件上传，一直都是迷迷糊糊的，今天对其进行整理下。<br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/01/26/文件上传/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+  <div>
+  
+  </div>
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+
+
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/22/PHPStorm开启断点调试/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="chenye2017">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/my.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="语法糖的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/01/22/PHPStorm开启断点调试/" itemprop="url">PHPStorm开启断点调试</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-22T13:05:02+08:00">
+                2018-01-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/PHP/" itemprop="url" rel="index">
+                    <span itemprop="name">PHP</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>关于xdebug。作为一个phper，相信大家平时的调试用的都是var_dump,echo之类的，像我之前不知道var_dump可以打印出多个变量，在写代码的时候，经常为了打印多个变量，要写很多var_dump,后来无意间解除了xdebug，虽然现在还是经常用var_dump,但我感觉这类的辅助工具都是为了更好的，更高效率的完成工作，得变通，什么方便，什么自己用的舒服就用什么。平时的我感觉xdebug对于框架的学习，和自己平时不熟悉的代码的时候用的方便，var_dump,我一般用来进行简单的调试。<br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/01/22/PHPStorm开启断点调试/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+  <div>
+  
+  </div>
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+
+
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/19/lamp-源码编译/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="chenye2017">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/my.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="语法糖的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/01/19/lamp-源码编译/" itemprop="url">lamp 和 lnmp 源码编译</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-19T15:21:41+08:00">
+                2018-01-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>lamp的源码编译安装。！！！注意哦，这里面是lamp，不是lnmp。之前的lamp中，apache和php的交流主要是apache把php作为自身的一个模块，而ngixn是通过cgi，php-fpm进行管理进程（这段话有待考证，因为apache也能使用php-fpm进行管理，并不是php-fpm和apache绑定的。我们那个lamp环境搭建的时候安装好apache,编译php 的时候要指定apxs的位置，–with-apxs2=/app/httpd24/bin/apxs ,这之间的交互过程还不是特别清楚）。</p>
+<p>所以lamp的编译安装是有顺序的，因为php在编译的过程中需要指定apache的apxs模块位置。<br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/01/19/lamp-源码编译/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+  <div>
+  
+  </div>
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+
+
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/19/lnmp-yum安装/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="chenye2017">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/my.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="语法糖的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/01/19/lnmp-yum安装/" itemprop="url">lnmp 环境搭建</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-19T15:21:24+08:00">
+                2018-01-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>关于lnmp环境的yum安装。作为一个phper，肯定得熟悉。之前写过关于在windows下php环境的搭建··咳咳咳，其实那根本算是搭建，像xampp都是把环境搭配好了，自己只是做了配置虚拟主机，然后运行框架。<br>框架在我的理解中本身除了yaf之类的安装，主流的框架tp，yii，laravel更像是一个文件夹，代码的集合体，这个文件夹中各个子文件夹联系紧密，成为一个整体。当外来请求通过lamp进入到入口文件，路由进入到控制器，模型层，数据库，变成一个有用的数据返回出来，再通过lamp返回给浏览器，上面的流程就很容易发现，简单的像apache,nginx里面的配置文件定义，只是让外来请求找到这个入口文件，进入到入口文件里面之后就靠框架的路由寻找具体的控制器了。<br>lamp环境方便的让外来请求比如对于index.php的请求，如果是直接在linux中，我么需要php (编译器) 可能还需要 -c指定配置文件的位置 文件.php,这样。但是如果是lamp，我们可以通过浏览器直接访问这个php文件。<br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/01/19/lnmp-yum安装/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+  <div>
+  
+  </div>
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+
+
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/18/php安装扩展/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="chenye2017">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/my.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="语法糖的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/01/18/php安装扩展/" itemprop="url">php安装扩展</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-18T18:35:02+08:00">
+                2018-01-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/PHP/" itemprop="url" rel="index">
+                    <span itemprop="name">PHP</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>好久没有写文章了，今天来说一下关于php的扩展，虽然自己理解的不是很深，也没有仔细去研究，只是把平时工作中遇到的情况，解决途径写下来，还有很多不足的地方，以后去补充<br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/01/18/php安装扩展/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+  <div>
+  
+  </div>
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+
+
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/09/Linux常见问题/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -901,996 +1820,6 @@
 
 
     
-      
-
-
-
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/29/工具分享/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="chenye2017">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/my.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="语法糖的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/11/29/工具分享/" itemprop="url">工具分享</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-29T23:06:18+08:00">
-                2017-11-29
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/工具/" itemprop="url" rel="index">
-                    <span itemprop="name">工具</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>这篇博客的目的就是把自己平时用的比较顺手，方便能提升效率的工具分享给大家，互相交流，提升工作效率</p>
-<ol>
-<li><p>Evernote 一款记笔记的工具，之所以用这个，是因为刚开始编程的时候，有一次记笔记，当时用的还是word，然后没保存，然后····大家都懂得，记得那时写了挺久的关于php的笔记，不知道你们有没有相同的感觉，即使再看一遍书，很容易把笔记都能写回来，但是心里还是很难受，于是就开始用这款印象笔记了，不知道没网能不能用，···因为我一直在有网的情况下使用，然后他可以最多三个终端上使用（免费版），还有就是会有冲突的，记得冲突的时候及时查看，然后修改就好了，不要像我一样攒着很多（听说有道云也挺不错，但是没有用过）</p>
-</li>
-<li><p>简书  我用他主要是因为他上面写文章（编辑器可以调整成md）可以一边写，一遍预览</p>
-</li>
-<li><p>七牛云 主要用来做图床（写md的时候用的啦）</p>
-</li>
-<li><p>phpstorm  真的好好用（下面的terminal，还有新建文件能自动git添加等等）</p>
-<p>可以快速打开文件，不用在项目中找（ctrl+alt+n）</p>
-<p>本文搜索 ctrl + f</p>
-<p>全局搜索 ctrl + shift +f </p>
-<p>回退 ctrl + alt + 左方向键</p>
-<p>大段注释 ctrl +shift + /</p>
-<p>alt + 上下键  上下方法切换</p>
-<p>alt + 左右键 左右tab页切换</p>
-<p>本行注释  不太记得了</p>
-<p>应该还有很多，但不太记得了（创建文件自动添加命名空间）</p>
-<p>面板上的类的结构</p>
-</li>
-<li><p>百度云，现在的百度云下载速度受限制了，只有开通会员才会下载速度贼猛，百度干净云帮你解决疑难杂症， 链接: <a href="https://pan.baidu.com/s/1dFzqZK1" target="_blank" rel="noopener">https://pan.baidu.com/s/1dFzqZK1</a> 密码: cjrr，直接下载是个安装好的文件包，点击baiduyunguanjia.exe,，然后就当做普通的百度云用就好了，速度能到4 5m，··当然这和你本身的网速也有关（记得点击召唤大神提速）</p>
-</li>
-<li><p>git bash 命令行，有很多linux命令都可以使用，比如ll这种（直接在git官网下载git.exe,然后安装后就直接会撞上这个）windows有个很有用的命令,explorer .,这是打开当前文件夹，图形化界面的形式（记得xampp也有这个按钮）</p>
-</li>
-</ol>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-  <div>
-  
-  </div>
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-
-
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/28/Linux常用命令总结/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="chenye2017">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/my.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="语法糖的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/11/28/Linux常用命令总结/" itemprop="url">Linux常用命令总结</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-28T01:20:28+08:00">
-                2017-11-28
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Linux/" itemprop="url" rel="index">
-                    <span itemprop="name">Linux</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <ol>
-<li>netstat -an  查看网络连接，-a 表示包括tcp和utp，-n表示不用域名代替ip地址 </li>
-<li>ps -ef | grep httpd  查看httpd进程是否在 (注意这个筛选是没有端口号的，你想啊，如果一个脚本就监听一个端口还好，要是类似 nginx apache ,listen 那么多端口，你怎么显示呢)</li>
-<li>ll -a ls-la  展示该目录下所有文件包括隐藏文件</li>
-<li>cd  进入目录，~ 普通用户的家目录 /home/vagrant, root用户 /home</li>
-<li>pwd 展示路径</li>
-<li>mkdir  创建目录</li>
-<li>chmod -R (文件夹)  755 修改权限</li>
-<li>chown root:root 文件名 修改文件所有者和组</li>
-<li>chgrp  修改组</li>
-<li>useradd  添加用户</li>
-<li>passwd 修改密码  （切换到当前用户下就可以修改了哦，不知道怎么修改别的用户的）</li>
-<li>groupadd 添加组 </li>
-<li>touch 新建文件</li>
-<li>echo 11 &gt;&gt; 文件名 把这个内容输出到文件中</li>
-<li>vim  i 修改模式 ：wq 保存  ：q 退出不保存 ：q！强制退出  /  查找  ：num 多少行  ：$末尾  </li>
-<li>cat  查看</li>
-<li>echo 输出，比如输出当前进程号 echo  $$ (PID的值代表的就是进程号)</li>
-<li>export 设置环境变量 export FOO = foo ,让当前环境变量立即生效，source ~/.bash_profile 执行这个脚本文件（source在当前进程中直接执行而不是复制子进程执行）感觉直接在命令行这样export FOO = foo 好像就直接生效了，但是如果修改bash_profile 文件的话，要执行source才能生效</li>
-<li>env 查看环境变量，比如查看刚刚的环境变量是否生效 env | grep FOO </li>
-<li>cp 复制文件  cp 源文件 目标文件 ，如果是文件夹 记得带上 -r 参数</li>
-<li>mv 剪贴文件</li>
-<li>rm -rf 删除文件</li>
-<li>lsof -i|grep 3306 查看端口号</li>
-<li>tar -xjvf  解压</li>
-<li>wc -l 查看行数</li>
-<li>awk   cat /etc/passwd | awk -F ‘:’ ‘{print %1}’  筛选内容</li>
-<li>cut  切割, cut -d ‘:’ -f 1,2   -d 按照什么进行切割，-f 要获取哪些行数，一般这两个搭配着用</li>
-<li>sed  sed -n ‘2p’ /etc/passwd  修改内容，类似程序用的vim</li>
-<li>sort 排序</li>
-<li>unique  经常结合sort 使用，因为unique 只能合并连续的两行</li>
-<li>find  / -name ‘php.ini’  查找文件</li>
-<li>locate  查找文件之前 updatedb</li>
-<li>ln -s  创造软链接</li>
-<li>tail -f </li>
-<li>top 查看cpu啊内存啊之类的占用情况</li>
-<li>df -h 查看服务器硬盘占用，itbasic 服务器就经常磁盘被写满了</li>
-<li>wget 下载</li>
-<li>curl 下载</li>
-</ol>
-<p>常用端口号 ：</p>
-<p>http 80</p>
-<p> https 443</p>
-<p>mysql  3306</p>
-<p>redis 6379</p>
-<p>ssh 22</p>
-<p>~代表家目录，root用户 /root,普通用户/home/用户名</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-  <div>
-  
-  </div>
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-
-
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/28/Linux网络管理/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="chenye2017">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/my.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="语法糖的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/11/28/Linux网络管理/" itemprop="url">关于tcp连接的一些思考</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-28T01:17:16+08:00">
-                2017-11-28
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Linux/" itemprop="url" rel="index">
-                    <span itemprop="name">Linux</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>事情是这样的：今天在看一个课程的时候，说redis 是非阻塞的，但redis 是单进程的，而且之前我给redis备份数据的时候，确实客户端的响应会比较慢, 感觉这应该属于阻塞，于是查了一下php 的非阻塞模式</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/11/28/Linux网络管理/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-  <div>
-  
-  </div>
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-
-
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/25/window下运行各种框架总结/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="chenye2017">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/my.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="语法糖的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/11/25/window下运行各种框架总结/" itemprop="url">window下运行各种框架总结</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-25T17:53:43+08:00">
-                2017-11-25
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/PHP/" itemprop="url" rel="index">
-                    <span itemprop="name">PHP</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>这篇文章主要是<strong>对于php运行环境的搭建中运行起来框架的总结，其实运行框架，不管是yii，还是tp，还是laravel，还是我们那个项目框架，与其说是运行起来，不如</strong>说是找到框架的入口文件<strong>，然后剩下的就直接交给了框架进行处理（route.php的处理，restful api等等，通过解析模块，控制器，方法），绝大部分时候就这这么简单，至少上面三个都不用对apache</strong>进行特殊的配置（目前的这篇文章只是单纯的针对Apache）。</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/11/25/window下运行各种框架总结/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-  <div>
-  
-  </div>
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-
-
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/25/hexo常用/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="chenye2017">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/my.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="语法糖的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/11/25/hexo常用/" itemprop="url">hexo常用</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-25T17:47:21+08:00">
-                2017-11-25
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/工具/" itemprop="url" rel="index">
-                    <span itemprop="name">工具</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>感觉七牛云和我们公司的产品datrix做的东西是一样的，都是用来做存储的，还有树洞外链（GitHub上一个php star很高的项目）</p>
-<p>hexo server -port 4000 启动服务器，因为我改了端口，导致得换端口</p>
-<p><code>hexo new “文章名称”</code>产生新的文章，注意这个地方一定要是双引号，单引号会出错</p>
-<p>hexo  g 产生静态文件</p>
-<p>hexo c  清理缓存</p>
-<p>hexo d 部署到github上 （这个其实就是代码提交，以前很傻比，每次提交代码都用git，其实这个就是把一些静态文件代码git到GitHub上，只是封装了一些操作而已）</p>
-<p>注意经常写好了，命名没问题，但是本地测试显示不出来，其实有时候是type那个save快捷键的问题，手动点击保存</p>
-<p>还有经常显示不出来都是语法啊什么问题（md语法），不要总怀疑缓存，服务器，注意下md语法和是否保存好了，刷新就可以了</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-  <div>
-  
-  </div>
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-
-
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/16/markdown语法使用记录/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="chenye2017">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/my.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="语法糖的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/11/16/markdown语法使用记录/" itemprop="url">markdown语法使用记录</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-16T00:07:55+08:00">
-                2017-11-16
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/工具/" itemprop="url" rel="index">
-                    <span itemprop="name">工具</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <ol>
-<li>关于段落，不用使用 <code>&lt;p&gt;</code> 直接使用换行</li>
-<li>关于首行缩进中文两字符 <code>&amp;emsp</code> 后面加上 ; 代表缩进一个，因为这个; 如果直接写在&amp;emsp 后面会直接不显示，所以我分开来写</li>
-<li>如果是英文字符，肯定就是 <code>&amp;nbsp</code> 啦</li>
-<li><code>*** ***</code> 两个星号之间的内容是加粗, <code>** **</code> 代表泄题</li>
-<li>`` 两个点好之间代表标记，比如我这上面想显示的md标记都是放在标签里面显示出来</li>
-<li>有序列表的话 <code>1.</code> 空格后会自动生成列表，以后想生成下一个列表，自动换行就可以了，不用一个个手敲（这个markdown语法都是空格后好像才能生效）</li>
-<li><code>``` </code> 代表下面的内容是代码块，结束也是 ```</li>
-<li><code>[]()</code> 插入超链接，中括号里面是要显示的文本内容， <code>！[]()</code>插入图片，[]也是文本内容</li>
-<li><code>&lt;!--more--&gt;</code>nexo 产生阅读全文的按钮</li>
-<li><code>*</code>代表无序列表，（小圆点图标）</li>
-</ol>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-  <div>
-  
-  </div>
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1945,7 +1874,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">81</span>
+                  <span class="site-state-item-count">87</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1967,7 +1896,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">81</span>
+                  <span class="site-state-item-count">82</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -2086,7 +2015,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count"> | 博客全站共136.1k字</span>
+  <span class="post-count"> | 博客全站共138.8k字</span>
 </div>
 
 

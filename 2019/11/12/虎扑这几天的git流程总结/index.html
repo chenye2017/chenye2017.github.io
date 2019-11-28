@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="git," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="语法糖的博客" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="首先说一下虎扑的代码开发流程（包括提交，发布流程不太明白，对金啃死了解太少）。公司给每个人分了台虚拟机(类似云主机)， 我原先的想法是通过在虚拟机上clone 代码，然后通过phpstorm 的远程连接主机的功能，实现在本地开发，然后映射到虚拟机上代码改变。可是这样有一个问题就是虚拟机linux上clone的代码的换行和我本地win上的换行不一样，虽然开发的时候没有影响，但是要是在win上提交代码">
+<meta name="keywords" content="git">
+<meta property="og:type" content="article">
+<meta property="og:title" content="虎扑这几天的git流程总结">
+<meta property="og:url" content="http://yoursite.com/2019/11/12/虎扑这几天的git流程总结/index.html">
+<meta property="og:site_name" content="语法糖的博客">
+<meta property="og:description" content="首先说一下虎扑的代码开发流程（包括提交，发布流程不太明白，对金啃死了解太少）。公司给每个人分了台虚拟机(类似云主机)， 我原先的想法是通过在虚拟机上clone 代码，然后通过phpstorm 的远程连接主机的功能，实现在本地开发，然后映射到虚拟机上代码改变。可是这样有一个问题就是虚拟机linux上clone的代码的换行和我本地win上的换行不一样，虽然开发的时候没有影响，但是要是在win上提交代码">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/20191112232234.png">
+<meta property="og:image" content="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/20191112232326.png">
+<meta property="og:updated_time" content="2019-11-14T13:02:26.462Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="虎扑这几天的git流程总结">
+<meta name="twitter:description" content="首先说一下虎扑的代码开发流程（包括提交，发布流程不太明白，对金啃死了解太少）。公司给每个人分了台虚拟机(类似云主机)， 我原先的想法是通过在虚拟机上clone 代码，然后通过phpstorm 的远程连接主机的功能，实现在本地开发，然后映射到虚拟机上代码改变。可是这样有一个问题就是虚拟机linux上clone的代码的换行和我本地win上的换行不一样，虽然开发的时候没有影响，但是要是在win上提交代码">
+<meta name="twitter:image" content="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/20191112232234.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/11/12/虎扑这几天的git流程总结/"/>
+
+
+
+
+
+  <title>虎扑这几天的git流程总结 | 语法糖的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+
+    <script type="text/javascript" src="/live2d/script.js"></script>
+    <canvas id="live2dcanvas" width="150" height="300" class="live2d"></canvas>
+    <style>
+      #live2dcanvas {
+        position: fixed;
+        right: 0px;
+        z-index: 999;
+        pointer-events: none;
+        bottom: -40px;
+      }
+    </style>
+    <script>loadlive2d("live2dcanvas" ,"/live2d/assets/wanko/wanko.model.json",0.5)</script>
+  
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">语法糖的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">爱动漫，热爱LOL</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+
+
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/12/虎扑这几天的git流程总结/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="chenye2017">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/my.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="语法糖的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">虎扑这几天的git流程总结</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-11-12T16:04:56+08:00">
+                2019-11-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/git/" itemprop="url" rel="index">
+                    <span itemprop="name">git</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>首先说一下虎扑的代码开发流程（包括提交，发布流程不太明白，对金啃死了解太少）。公司给每个人分了台虚拟机(类似云主机)，</p>
+<p>我原先的想法是通过在虚拟机上clone 代码，然后通过phpstorm 的远程连接主机的功能，实现在本地开发，然后映射到虚拟机上代码改变。可是这样有一个问题就是虚拟机linux上clone的代码的换行和我本地win上的换行不一样，虽然开发的时候没有影响，但是要是在win上提交代码就会出现很多没有修改的代码也会有modifyed（其实git 本身做了兼容，在clone的时候，但主要是我现在把linux代码拉取到本地，所以才会这样）。而且我也不可能在linux上提交，毕竟提交的时候需要通过一些工具观察文件的改变，所以改成了第二种方式</p>
+<p>通过在本地和远程都clone 代码，然后通过sftp实现两个文件夹的关联，本地代码的修改也能直接映射到虚拟机，而且可以在windows上提交代码，因为是在win上clone迁出远程仓库的代码，所以提交的时候不会出现换行(crlf)的问题。</p>
+<a id="more"></a>
+<p>首先是开发分支的命名。 </p>
+<p>姓名/feature(bugfix) 特征/ 自定义名称 （这样切割之后，在一些git 工具上可以发现是以文件夹方式显示的）</p>
+<p>开发完了，推送到远程</p>
+<p> git push origin chenye/feature/dgtag(本地分支):chenye/feature/dgtag(远程分支)</p>
+<p>然后给develop 提交一个pr，再合并（最好不要直接给develop提交，就算提交也是通过git fetch origin develop(远程分支):deve1 去提交, 千万不要把自己的分支推到远程的develop分支上了，防止覆盖）</p>
+<p>当我们提交的时候出现conflect 的时候，我们可以 git fetch origin develop:dev1, 然后在dev 上merge 我们的分支 chenye/feature/dgtag, 合并完了，再推送到远程新建分支，再把这个分支和dev分支合并。</p>
+<p>当我们merge本地分支的时候肯定会出冲突，这个冲突的来源有两种可能，一种自己的，这个很好办，把head 到 ==== 中间删除，替换成自己最新的。</p>
+<p>还有种可能是别人的，要是别人的呢，也好办，最暴力的方法就是用dev替换自己分支上最新的，这样自己的分支和dev合并就没有冲突了，但这个只适用于dev哈，如果是release 和 master ，一定要问一下出现conflect文件的那个人！！！</p>
+<p>远程仓库更新完了，我们需要更新服务器上的代码，这和itbasic 一样，直接去28机器上git clone 就好了</p>
+<p>唯一有区别的就是release， 我们这边release 的发布类似以前，每次发布之后都会在服务器上产生一个新的文件夹，通过改变软链接指向的文件夹，保证每次发布成新的代码（而不是通过代码覆盖，感觉这样是不是发布更快速，如果是clone的话，有时候需要很久才能全部完成）</p>
+<p>进入release 环境，我们第一个选2， 第二个选项是不同的php， 7.1 和 7.2，7.2的count() 真的很坑呀，要注意，其中3环境我们每次执行完脚本要及时删除 文件夹下的cache， 否则脚本执行不了 （很奇怪~~）。</p>
+<p>有时候我们在release 环境修改文件会发现没生效，这可能是因为有人发布代码了，所以你后面再次进入修改的文件，可能对应的文件夹已经不是之前你修改的那个了。</p>
+<p>这几天git常用的几个命令</p>
+<p>git pull origin master:master1 </p>
+<p>注意这个和 git pull origin master 不一样，后者会下拉master 并和 当前分支合并，前者即使当前在master1 分支上，也是用master 强制覆盖master1 ，类似push 。</p>
+<p>git fetch origin master:master1 </p>
+<p>下拉远程master 在本地新建master 1</p>
+<p>git reset   commitId  回退本地 commit 的内容到工作区（并不是删除）</p>
+<p>git checkout  .  删除工作区的内容</p>
+<p>git clean  删除添加的文件，或者直接 rm  删除文件</p>
+<p>git branch –delete  分支名 删除本地分支</p>
+<p>git  push origin  –delete 分支名 删除远程分支</p>
+<p>git merge  ing 的时候如果想放弃，也可以通过删除merge的文件，这样是不是能少记一个命令呢，哈哈哈</p>
+<p>我们在解决冲突的时候，千万不要把develop，或者release 上面的代码合并到自己的开发分支上， 因为自己的开发分支最终是要合并到master上的，所以我们对这两个分支解决冲突只能通过新拉分支来解决，解决完也不要推送到自己的开发分支上，可以推送到远程的临时分支上，与dev和release合并</p>
+<p>今天在给一个新项目做远程sftp配置的时候（本地clone，远程也是clone）,始终配置不上server， </p>
+<p><img src="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/20191112232234.png" alt=""></p>
+<p>options 这块总是显示mapping 不对，打开 configuration</p>
+<p><img src="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/20191112232326.png" alt=""></p>
+<p>注意那个地方一定要有个 / !!!!</p>
+<p>今天用sftp 发现，为了删除文件，只能在phpstorm上面删除，如果自己打开文件夹删除，是更新不到服务器上的</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wp.png" alt="chenye2017 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/zp1.png" alt="chenye2017 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+  <div>
+  
+    <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+
+  
+  </div>
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/git/" rel="tag"><i class="fa fa-tag"></i> git</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/10/25/tp源码分析-数据库和模型/" rel="next" title="tp源码分析-数据库和模型">
+                <i class="fa fa-chevron-left"></i> tp源码分析-数据库和模型
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/11/17/node-学习笔记/" rel="prev" title="node 学习笔记">
+                node 学习笔记 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+<span class="jiathis_txt">分享到：</span>
+<a class="jiathis_button_fav">收藏夹</a>
+<a class="jiathis_button_copy">复制网址</a>
+<a class="jiathis_button_email">邮件</a>
+<a class="jiathis_button_weixin">微信</a>
+<a class="jiathis_button_qzone">QQ空间</a>
+<a class="jiathis_button_tqq">腾讯微博</a>
+<a class="jiathis_button_douban">豆瓣</a>
+<a class="jiathis_button_share">一键分享</a>
+
+<a href="http://www.jiathis.com/share?uid=2140465" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+var jiathis_config={
+  data_track_clickback:true,
+  summary:"",
+  shortUrl:false,
+  hideMore:false
+}
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/my.png"
+                alt="chenye2017" />
+            
+              <p class="site-author-name" itemprop="name">chenye2017</p>
+              <p class="site-description motion-element" itemprop="description">想用善良改变世界</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">87</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">82</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/chenye2017" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:1967196626@qq.com" target="_blank" title="E-Mail">
+                    
+                      <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://weibo.com/3215254425" target="_blank" title="Weibo">
+                    
+                      <i class="fa fa-fw fa-globe"></i>Weibo</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-crosshairs"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.baidu.com/" title="百度" target="_blank">百度</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.google.com/" title="谷歌" target="_blank">谷歌</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">chenye2017</span>
+
+  
+</div>
+
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span> |
+</span>
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.3</div>
+
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count"> | 博客全站共138.8k字</span>
+</div>
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+  
+   <canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.2.0/anime.min.js"></script>
+   <script type="text/javascript" src="/js/src/fireworks.js"></script>
+
+
+
+</body>
+</html>
