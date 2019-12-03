@@ -91,7 +91,7 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/20191128160209.png">
 <meta property="og:image" content="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/20191128160245.png">
-<meta property="og:updated_time" content="2019-11-28T08:04:07.060Z">
+<meta property="og:updated_time" content="2019-11-28T10:36:20.370Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="复盘一下代码的提交流程">
 <meta name="twitter:description" content="昨天某位仁兄把远程的release合并到master ！！！虽然每个人都会犯错，但是我还想抽他，当然我自己能力不够也是一方面原因，记录一下虎扑最最最最正确的提交流程。">
@@ -391,7 +391,7 @@
 <ol>
 <li><p>注意是远程的master，本地的master没啥屌用，因为一般为了提交方便和方便记忆，本地分支和远程分支保持同名，如果你用master 的话，总不能推送到远程master上吧，似乎没人有这个权限。</p>
 </li>
-<li><p>提交代码前是否要合并master ？ 血的例子，别吧。如果你往master上面提交代码没冲突，那就别合并了，对吧，为啥要合并呢 ？只要你的代码正常上线，dont care anything ，因为要是你真的在这个时候合并了远程master，然后远程master 0.01%的可能是个脏master，这时候你的开发分支也就脏了，意味着你合并master 之后改的东西，在领导发现master 脏了之后，都是要被回滚的，回滚的终结点不一定，凭他们的感觉吧，其实感觉就是那个人把release 合并到master 上的点。那问题来了，如果，万一你真的合并了脏master，咋办，其实也好办，你git reset 到合并master之前的那个commit，重新提交给master，看是否能合并，不能合并，再去解决冲突（后面会介绍冲突解决办法），所以感觉在merge 别的分支的时候一定要做好commit message， 有时候真的会帮大忙，方便你的开发分支剔除掉别的合并的内容</p>
+<li><p>提交代码前是否要合并master ？ 血的例子，别吧。如果你往master上面提交代码没冲突，那就别合并了，对吧，为啥要合并呢 ？只要你的代码正常上线，dont care anything ，因为要是你真的在这个时候合并了远程master，然后远程master 0.01%的可能是个脏master，这时候你的开发分支也就脏了，意味着你合并master 之后改的东西，在领导发现master 脏了之后，都是要被回滚的，回滚的终结点不一定，凭他们的感觉吧，其实感觉就是那个人把release 合并到master 上的点。那问题来了，如果，万一你真的合并了脏master，咋办，其实也好办，你git reset 到合并master之前的那个commit，重新提交给master，看是否能合并，不能合并，再去解决冲突（后面会介绍冲突解决办法），所以感觉在merge 别的分支的时候一定要做好commit message （最好不要改merge 的info，比如当时我修改改成conflict resolve 我都不知道我要回退到哪个版本，其实只要回退到merge 之前的版本就好了）， 有时候真的会帮大忙，方便你的开发分支剔除掉别的合并的内容</p>
 </li>
 <li><p>开发feature中是否要合并master ？ 还是血的例子，别吧。万一你开发分支合并了错误的master，万一你不知道，接着在错误分支上开发，当开发很多的时候，当master 需要回滚的时候会很艰难，毕竟开发了那么多。这时候只能继续相信master， 不断的合并master，其实没啥屌用，你的开发分支已经领先master了，如果你没回滚，你合并的时候只会在人家前面，你会多提交很多内容，这些内容在你给领导要求pr merge 的时候被看到肯定会打回来，~~~不知道咋解决</p>
 </li>
@@ -491,6 +491,10 @@
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/2019/12/03/持久化/" rel="prev" title="持久化">
+                持久化 <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -587,7 +591,7 @@ var jiathis_config={
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">87</span>
+                  <span class="site-state-item-count">88</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -609,7 +613,7 @@ var jiathis_config={
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">82</span>
+                  <span class="site-state-item-count">83</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -728,7 +732,7 @@ var jiathis_config={
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count"> | 博客全站共138.8k字</span>
+  <span class="post-count"> | 博客全站共140.1k字</span>
 </div>
 
 

@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2019-11-28T08:04:07.060Z</updated>
+  <updated>2019-12-03T13:07:28.045Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -17,13 +17,37 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>持久化</title>
+    <link href="http://yoursite.com/2019/12/03/%E6%8C%81%E4%B9%85%E5%8C%96/"/>
+    <id>http://yoursite.com/2019/12/03/持久化/</id>
+    <published>2019-12-03T11:59:55.000Z</published>
+    <updated>2019-12-03T13:07:28.045Z</updated>
+    
+    <content type="html"><![CDATA[<p>我们在php-fpm 模式下编写的代码一般是同步阻塞的，很少能实现像redis 或者 node 那种等待监听固定端口的形式（通过daemon 或者 nohup参数让其在后台执行），一般php 想实现同样的方式，都是通过加一个死循环，while (true),  但这种方式有一个缺点就是程序挂掉了不能重写启动，不像php-fpm 或者 swoole 的http server  在对子进程进行管理的时候，当工作进程挂掉之后，会重新拉起一个新进程，怎么办呢？可以通过两个工具 pm2 或者 supervisor 。supervisor 的工作原理就是把管理的进程当做自己的子进程，pm2 原理没有了解过。</p><a id="more"></a><p>举个例子吧，之前接手的一个任务毒和nike关联出价，当前台下发撤单任务的时候，因为牵扯到很多curl 请求，不能同步实现，1.感觉可以通过把请求内容放到mq当中，然后利用daemon 化的task始终监听这个mq，如果有内容，则触发任务，往后执行，否则停歇1min 继续监听。2.那个前作者是通过把内容放到redis中，通过daemon化的task监听这个redis，如果检测到这个redis这个key，就执行相应任务。</p><p>总结一下吧，其实上面两个方式php的daemon话都是通过while true，那么supervisor 的作用是啥呢，当php的这个脚本挂掉了，supervisor可以重新拉起这个脚本。同理pm2也可以，而且不一定是脚本挂掉，脚本执行完了，也可以重新拉起，比如</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">echo date(&apos;Y-m-d H:i:s&apos;)</span><br><span class="line">echo &apos;end&apos;;</span><br><span class="line">// 利用上面两个进程管理工具之后，可以一直输出</span><br></pre></td></tr></table></figure><p>上面的例子还有个很重要的技术点就是定时触发。相比较crontab 的task，上面的task 触发任务时间不一致，触发时间靠前台控制，所以我们这时候就通过始终运行一个后台任务，然后靠前台触发一个开关，后端始终运行的task始终监测这个开关，如果是开就运行，虽然可能存在一定时间的误差，但大体上还是能完成任务的。</p><p>再比如之前接手的一个安卓灰度更新的任务，当某个渠道开启灰度之后，我们需要每隔30min发送一条钉钉消息，我们同样可以检测表中渠道是否有开启灰度的状态，如果有，则发一条消息，并记录通知时间，下次的循环任务检测是否灰度还在开启，如果还在开启，检测时间通知是否超过30min，如果超过了，再发送消息，并更新通知时间。</p><p>上面的任务看似已经解决，但还是会涉及一个多进程问题，再举个例子，比如erp系统，需要爬取商户的店铺信息，这个task 要一直执行，如果我们有100个商户，就得运行100个task，启动100个脚本。我们上面灰度通知的好解决，一种办法就是检测运行的渠道，循环运行的渠道列表，然后发送消息通知，另一种就是一次性检测，把渠道更新信息包含在一条短消息中发出去，之所以这么做是因为后续的任务（发送钉钉通知）可以在很短时间内完成，如果像erp的那种爬虫任务，只能通过启动多个脚本了。</p><p>关于php的多进程扩展pnctl 这里暂时不做讨论，说一下pm2 和 supervisor 的简单使用。</p><h2 id="PM2"><a href="#PM2" class="headerlink" title="PM2"></a>PM2</h2><p><a href="https://juejin.im/post/5b823506e51d4538d517662f" target="_blank" rel="noopener">这篇文章关于pm2讲解的很好</a></p><p>我比较常用的命令</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">pm2 list</span><br><span class="line">pm2 app.js --name wx_spider --watch   // name 名称，方便理解， watch 文件变动，方便重启，类似nodemon</span><br><span class="line">pm2 delete all</span><br><span class="line">pm2 delete (:id)</span><br><span class="line">pm2 restart app</span><br><span class="line">pm2 logs (:name)</span><br></pre></td></tr></table></figure><p>pm2 配置简单，非常好用，echo 的内容之间在log中能看到，除了node， php也是能管理的</p><p>（PM2 的安装需要通过node 和 npm， node 的安装很简单，但我们一定要注意npm 安装的module 位置，如果是linux 下，一定要配置好node_path ,否则 npm -g 安装的内容可能不能使用， npm config  get prefix  可以查看node -g 包安装的位置 。同理node的安装位置最好也是/usr/local/ 下面，方便直接访问）</p><h2 id="supervisor"><a href="#supervisor" class="headerlink" title="supervisor"></a>supervisor</h2><p><a href="https://learnku.com/laravel/t/2126/supervisor-installation-configuration-use" target="_blank" rel="noopener">使用和安装可以大致看看这个文章，但这篇文章的配置文件有问题</a></p><p>配置文件里面一定要有[supervisord]和[supervisorctl] 部分，否则会报错。<a href="https://juejin.im/post/5c66be44f265da2de52d784d" target="_blank" rel="noopener">这篇文章应该还可以</a> 需要注意的就是监听端口从 127.0.0.1:9001 改成 0.0.0.0:9001 ,方便外网访问，贴个图</p><p><img src="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/20191203210626.png" alt=""></p><p>基本就能用啦 （比如我那几百万的任务task就能通过这两个处理，不用我一直看着了，跑完了看看 log就好了）</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;我们在php-fpm 模式下编写的代码一般是同步阻塞的，很少能实现像redis 或者 node 那种等待监听固定端口的形式（通过daemon 或者 nohup参数让其在后台执行），一般php 想实现同样的方式，都是通过加一个死循环，while (true),  但这种方式有一个缺点就是程序挂掉了不能重写启动，不像php-fpm 或者 swoole 的http server  在对子进程进行管理的时候，当工作进程挂掉之后，会重新拉起一个新进程，怎么办呢？可以通过两个工具 pm2 或者 supervisor 。supervisor 的工作原理就是把管理的进程当做自己的子进程，pm2 原理没有了解过。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="PHP" scheme="http://yoursite.com/categories/PHP/"/>
+    
+    
+      <category term="PHP" scheme="http://yoursite.com/tags/PHP/"/>
+    
+      <category term="daemon" scheme="http://yoursite.com/tags/daemon/"/>
+    
+  </entry>
+  
+  <entry>
     <title>复盘一下代码的提交流程</title>
     <link href="http://yoursite.com/2019/11/28/%E5%A4%8D%E7%9B%98%E4%B8%80%E4%B8%8B%E4%BB%A3%E7%A0%81%E7%9A%84%E6%8F%90%E4%BA%A4%E6%B5%81%E7%A8%8B/"/>
     <id>http://yoursite.com/2019/11/28/复盘一下代码的提交流程/</id>
     <published>2019-11-28T06:20:02.000Z</published>
-    <updated>2019-11-28T08:04:07.060Z</updated>
+    <updated>2019-11-28T10:36:20.370Z</updated>
     
-    <content type="html"><![CDATA[<p>昨天某位仁兄把远程的release合并到master ！！！虽然每个人都会犯错，但是我还想抽他，当然我自己能力不够也是一方面原因，记录一下虎扑最最最最正确的提交流程。</p><a id="more"></a><p>首先我们开发一个功能需要从master上面下拉代码</p><ol><li><p>注意是远程的master，本地的master没啥屌用，因为一般为了提交方便和方便记忆，本地分支和远程分支保持同名，如果你用master 的话，总不能推送到远程master上吧，似乎没人有这个权限。</p></li><li><p>提交代码前是否要合并master ？ 血的例子，别吧。如果你往master上面提交代码没冲突，那就别合并了，对吧，为啥要合并呢 ？只要你的代码正常上线，dont care anything ，因为要是你真的在这个时候合并了远程master，然后远程master 0.01%的可能是个脏master，这时候你的开发分支也就脏了，意味着你合并master 之后改的东西，在领导发现master 脏了之后，都是要被回滚的，回滚的终结点不一定，凭他们的感觉吧，其实感觉就是那个人把release 合并到master 上的点。那问题来了，如果，万一你真的合并了脏master，咋办，其实也好办，你git reset 到合并master之前的那个commit，重新提交给master，看是否能合并，不能合并，再去解决冲突（后面会介绍冲突解决办法），所以感觉在merge 别的分支的时候一定要做好commit message， 有时候真的会帮大忙，方便你的开发分支剔除掉别的合并的内容</p></li><li><p>开发feature中是否要合并master ？ 还是血的例子，别吧。万一你开发分支合并了错误的master，万一你不知道，接着在错误分支上开发，当开发很多的时候，当master 需要回滚的时候会很艰难，毕竟开发了那么多。这时候只能继续相信master， 不断的合并master，其实没啥屌用，你的开发分支已经领先master了，如果你没回滚，你合并的时候只会在人家前面，你会多提交很多内容，这些内容在你给领导要求pr merge 的时候被看到肯定会打回来，~~~不知道咋解决</p></li><li><p>我的流程总结。开发的时候下拉master成为一个开发分支，比如chenye/feature/gray_test, 开发完了，提交dev。万一和dev冲突，下来dev到本地，merge gray_test,看冲突是啥，万一是自己的文件，直接解决。解决完了，推送到远程，给dev提交pr，合并之后，自己的gray_test 就能合并到dev了。注意，在解决冲突的时候一定不要修改自己的开发分支，也就是gray_test, 万一在release 或者 master合并的时候修改了自己的开发分支，一定要dev， release ，master 按顺序重新提交一遍！！！！！否则，别人拉代码的时候一定会冲突。</p></li><li><p>当发现别人的代码冲突的时候咋办，最好的办法就是告诉别人，因为你不知道以哪个为标准。</p><p>你觉得是以master为标准，毕竟线上跑着呢，万一人家当初并不想把代码提交到master上，被另一个同学误操作了，也就是你clone的master是错误代码，这时候以master会覆盖调用dev的正确代码。</p><p>你说以dev标准，毕竟dev是最新的代码 ？还是不对，可能别人着急，直接提交了master，也就是说master代码比dev新，这样dev就会覆盖掉master上的新代码。</p><p>所以遇到这种情况，直接告知吧，任何一种自己修改别人冲突的方法都是不负责任的行为。</p></li></ol><p>顺带提一下最近遇到的win 和 linux 下空格遇到的问题，我们都知道代码是跑在linux下的，所以我们的换行一定要</p><p><img src="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/20191128160209.png" alt=""></p><p>用这个LF, win下是</p><p><img src="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/20191128160245.png" alt=""></p><p>我们既然改变不了win，可以通过phpstorm自带的功能，去编辑文件，模拟在linux下的编辑。</p><p>（ps:我是怎么发现这个问题的，在用php的heredoc 换行的时候就能发现）</p>]]></content>
+    <content type="html"><![CDATA[<p>昨天某位仁兄把远程的release合并到master ！！！虽然每个人都会犯错，但是我还想抽他，当然我自己能力不够也是一方面原因，记录一下虎扑最最最最正确的提交流程。</p><a id="more"></a><p>首先我们开发一个功能需要从master上面下拉代码</p><ol><li><p>注意是远程的master，本地的master没啥屌用，因为一般为了提交方便和方便记忆，本地分支和远程分支保持同名，如果你用master 的话，总不能推送到远程master上吧，似乎没人有这个权限。</p></li><li><p>提交代码前是否要合并master ？ 血的例子，别吧。如果你往master上面提交代码没冲突，那就别合并了，对吧，为啥要合并呢 ？只要你的代码正常上线，dont care anything ，因为要是你真的在这个时候合并了远程master，然后远程master 0.01%的可能是个脏master，这时候你的开发分支也就脏了，意味着你合并master 之后改的东西，在领导发现master 脏了之后，都是要被回滚的，回滚的终结点不一定，凭他们的感觉吧，其实感觉就是那个人把release 合并到master 上的点。那问题来了，如果，万一你真的合并了脏master，咋办，其实也好办，你git reset 到合并master之前的那个commit，重新提交给master，看是否能合并，不能合并，再去解决冲突（后面会介绍冲突解决办法），所以感觉在merge 别的分支的时候一定要做好commit message （最好不要改merge 的info，比如当时我修改改成conflict resolve 我都不知道我要回退到哪个版本，其实只要回退到merge 之前的版本就好了）， 有时候真的会帮大忙，方便你的开发分支剔除掉别的合并的内容</p></li><li><p>开发feature中是否要合并master ？ 还是血的例子，别吧。万一你开发分支合并了错误的master，万一你不知道，接着在错误分支上开发，当开发很多的时候，当master 需要回滚的时候会很艰难，毕竟开发了那么多。这时候只能继续相信master， 不断的合并master，其实没啥屌用，你的开发分支已经领先master了，如果你没回滚，你合并的时候只会在人家前面，你会多提交很多内容，这些内容在你给领导要求pr merge 的时候被看到肯定会打回来，~~~不知道咋解决</p></li><li><p>我的流程总结。开发的时候下拉master成为一个开发分支，比如chenye/feature/gray_test, 开发完了，提交dev。万一和dev冲突，下来dev到本地，merge gray_test,看冲突是啥，万一是自己的文件，直接解决。解决完了，推送到远程，给dev提交pr，合并之后，自己的gray_test 就能合并到dev了。注意，在解决冲突的时候一定不要修改自己的开发分支，也就是gray_test, 万一在release 或者 master合并的时候修改了自己的开发分支，一定要dev， release ，master 按顺序重新提交一遍！！！！！否则，别人拉代码的时候一定会冲突。</p></li><li><p>当发现别人的代码冲突的时候咋办，最好的办法就是告诉别人，因为你不知道以哪个为标准。</p><p>你觉得是以master为标准，毕竟线上跑着呢，万一人家当初并不想把代码提交到master上，被另一个同学误操作了，也就是你clone的master是错误代码，这时候以master会覆盖调用dev的正确代码。</p><p>你说以dev标准，毕竟dev是最新的代码 ？还是不对，可能别人着急，直接提交了master，也就是说master代码比dev新，这样dev就会覆盖掉master上的新代码。</p><p>所以遇到这种情况，直接告知吧，任何一种自己修改别人冲突的方法都是不负责任的行为。</p></li></ol><p>顺带提一下最近遇到的win 和 linux 下空格遇到的问题，我们都知道代码是跑在linux下的，所以我们的换行一定要</p><p><img src="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/20191128160209.png" alt=""></p><p>用这个LF, win下是</p><p><img src="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/20191128160245.png" alt=""></p><p>我们既然改变不了win，可以通过phpstorm自带的功能，去编辑文件，模拟在linux下的编辑。</p><p>（ps:我是怎么发现这个问题的，在用php的heredoc 换行的时候就能发现）</p>]]></content>
     
     <summary type="html">
     
@@ -470,29 +494,6 @@
       <category term="旅游" scheme="http://yoursite.com/tags/%E6%97%85%E6%B8%B8/"/>
     
       <category term="重庆" scheme="http://yoursite.com/tags/%E9%87%8D%E5%BA%86/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>持续交付</title>
-    <link href="http://yoursite.com/2019/03/20/%E6%8C%81%E7%BB%AD%E4%BA%A4%E4%BB%98/"/>
-    <id>http://yoursite.com/2019/03/20/持续交付/</id>
-    <published>2019-03-20T06:28:18.000Z</published>
-    <updated>2019-09-30T09:35:21.518Z</updated>
-    
-    <content type="html"><![CDATA[<p>上面要求代码从svn改成git,需要一个私有化的代码管理工具，于是想到了gitlab, 其实我们人这么少，一般一个前端，一个后端，流程简单，svn和git 用起来没啥区别，可是呢上面说了，那就改吧</p><p>！！！上面的是以前的想法，现在的话就是git 无敌~~~<br><a id="more"></a></p><p>对于持续交付我现在的理解还不是十分深刻，目前就理解成每个程序员代码的上传到发布整个流程吧。</p><p>最开始我们是svn，我不知道svn 有没有分支这个说法。当我们在没有分支的情况下，本地代码只有一份，如果我们想放下手头的工作，去新开一个bug 或者feature ，这都是不允许的，都是要在之前工作的基础上，或者你换一个文件夹。鉴于上面的问题，我们引入了git。</p><p>最开始引入git，我是想一个文件夹即用git 管理也用svn 管理，svn 管理的我用来上线，git 管理的用来feature开发，每次上传文件的时候，我都不处理git 管理的那个文件夹，这样既保证了我的线上服务器代码没有改变，也能保证新的代码通过git传输到了另一个地方，于是我在我们阿里云上又安装了一个git仓库。</p><p>直到后面到了老东家，我才 意识到我搭建的git 仓库功能其实就是gitlab，而且gitlab相比较会容易安装的多，但是经过手动搭建git仓库，让我更加理解git 了。</p><p>上面说的都是代码的上传，共享，那怎么发布呢？像我们之前,就是在对外服务器上装一个git，然后把git服务器上的代码拉下来，完成更新，php这样就好了，对于前端项目，还需要npm run 和 npm install, 然后把dist 目录对外暴露就好了。</p><p><img src="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/20190930173319.png" alt=""></p><p>上面就是itbasic 的对外访问路径，因为只有一个域名，所以通过文件夹的形式提供类似不同的虚拟站点</p><ul><li>gitlab 搭建<br><a href="https://blog.csdn.net/Abysscarry/article/details/79402695" target="_blank" rel="noopener">https://blog.csdn.net/Abysscarry/article/details/79402695</a><br>慕课网教程上那么复杂是因为配置了本地https<br>唯一一点没有提到的就是自定义域名的文件位置，如果用yum安装的话<br>在 /etc/gitlab/gitlab.rb下面。</li><li>gitlab使用<br>默认有个root账户，自己设置密码，<br><img src="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/800415645624780513.png" alt="image.png"></li></ul><ol><li><p>可以创建用户和项目<br>创建项目类似github 上创建项目，后面项目的提交就是git 的使用<br><img src="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/748391564562478477.png" alt="image.png"><br>创建用户的话如上，主要是那个reqular和admin, 这块不是项目权限，应该是类似整个gitlab 的权限， 新建的用户可以给个初始密码，然后用户登陆的时候可以修改，用户提交代码需要把ssh 公钥粘贴到gitlab 上，一切和github类似</p></li><li><p>配置项目权限 （管理员才有这些权限，比如root）<br><img src="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/6845315645624787314.png" alt="image.png"></p></li></ol><p>点击项目，给项目配置人员信息</p><p><img src="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/5573915645624793171.png" alt="image.png"></p><p><img src="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/9647115645624801071.png" alt="image.png"></p><p>目前只配置了develop和 master ,develop 是开发者，开发者不能向master 分支提交代码。只能自己开个feature分支，提交之后再gitlab 上面提交merge 申请，这个项目的master 可以merge , 这个项目的master 可以直接向master 分支提交代码</p><p>上面的administrator / test , administrator  是用户名， test 是项目名</p><ol><li>监控系统信息(感觉这个可以放在一般的管理系统中，掌握服务器情况)</li></ol><p><img src="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/9805515645624803533.png" alt="image.png"></p><p>今天新建一个项目的时候总是显示密码错误，主要原因可能是项目建成了private ， 没有解决问题，但发现了另一个问题，我下载项目的时候总是显示password ,那他是怎么识别我的name呢，答案是gitlab 上贴的ssh key，我们的每一个gitlab 用户或者 github 用户都要至少绑定一个ssh key,就是通过这个ssh key 识别我们用户名称的,我们在用gitlab 提交代码时候总是显示要配置用户名和密码，可以全局配置也可以在单个项目中配置，所以这个并不是我们登陆github 或者gitlab 的用户名，这个只是我们提交时候日志上面显示的内容。</p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;上面要求代码从svn改成git,需要一个私有化的代码管理工具，于是想到了gitlab, 其实我们人这么少，一般一个前端，一个后端，流程简单，svn和git 用起来没啥区别，可是呢上面说了，那就改吧&lt;/p&gt;
-&lt;p&gt;！！！上面的是以前的想法，现在的话就是git 无敌~~~&lt;br&gt;
-    
-    </summary>
-    
-      <category term="git" scheme="http://yoursite.com/categories/git/"/>
-    
-    
-      <category term="git" scheme="http://yoursite.com/tags/git/"/>
     
   </entry>
   
