@@ -92,9 +92,10 @@
 <meta property="og:image" content="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/4524515645624759596.png">
 <meta property="og:image" content="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/20191012121216.png">
 <meta property="og:image" content="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/20191012121521.png">
+<meta property="og:image" content="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/20191206111607.png">
 <meta property="og:image" content="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/20191017100223.png">
 <meta property="og:image" content="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/20191017100319.png">
-<meta property="og:updated_time" content="2019-10-17T02:06:35.664Z">
+<meta property="og:updated_time" content="2019-12-06T03:19:29.242Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="关于git">
 <meta name="twitter:description" content="公司一直用svn, 怕git 的相关内容以后用到，所以学习了，只是简单记录git 使用过程中自己的问题，不是教程，欢迎一起探讨">
@@ -502,7 +503,8 @@
 <p>对于 没有add 的内容（一般显示红色），但是 tracked 的 文件，通过</p>
 <p>git checkout . 撤销  git checkout  文件名，可以撤销具体的文件</p>
 <p>对于没有add, 也没有 tracked 的 文件，通过</p>
-<p>git clean ， git clean -n  先预览删除哪些文件，防止误删除， git clean -f  删除具体的文件</p>
+<p>git clean ， git clean -n  先预览删除哪些文件，防止误删除， git clean -f  删除具体的文件。（clean 的话下面这些蛮好用的，注意加上n, 查看会删除哪些文件，对于编辑器产生的内容，不想删除，可以直接添加到.gitignore, 提交之后看看有什么变化，其实编辑器产生的内容没啥影响，直接删除就好了，下次又会自动产生）</p>
+<p><img src="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/20191206111607.png" alt=""></p>
 <p>git 文件在checkout 或者提交的时候，如果是跨平台，可能遇到 \r\n (win) 和 \n(linux) 的问题，一般情况下 git bash 都配置好了，只有那些比如我远程代码linux 下，sftp 到本地 win 下，才会出现这种问题 （git 自身的兼容只有在 checkout 或者 pull的时候，如果是通过别的方式比如sftp，好像不行），目前尚未解决 </p>
 <p>原先我调试代码的方式是虚拟机里面clone， 然后phpstorm 远程连接上去，本地代码拉取一份，这样本地代码修改，远程可以直接自动修改，唯一缺点就是上面的crlf 不能实现兼容（本地拉完代码，git status 就会发现大量代码的modifyed），如果是mac 的话，应该蛮好处理上面的问题, 因为他们的换行符是一致的</p>
 <p>后面我是本地clone代码，然后sftp 到远程，这样就能避免上述换行符问题。唯一需要注意的就是本地分支切换和远程分支都得手动切换</p>
@@ -832,7 +834,7 @@ var jiathis_config={
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count"> | 博客全站共140.1k字</span>
+  <span class="post-count"> | 博客全站共141.1k字</span>
 </div>
 
 

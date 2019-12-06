@@ -90,7 +90,7 @@
 <meta property="og:description" content="我们在php-fpm 模式下编写的代码一般是同步阻塞的，很少能实现像redis 或者 node 那种等待监听固定端口的形式（通过daemon 或者 nohup参数让其在后台执行），一般php 想实现同样的方式，都是通过加一个死循环，while (true),  但这种方式有一个缺点就是程序挂掉了不能重写启动，不像php-fpm 或者 swoole 的http server  在对子进程进行管理的时">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/20191203210626.png">
-<meta property="og:updated_time" content="2019-12-03T13:07:28.045Z">
+<meta property="og:updated_time" content="2019-12-06T14:17:20.110Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="持久化">
 <meta name="twitter:description" content="我们在php-fpm 模式下编写的代码一般是同步阻塞的，很少能实现像redis 或者 node 那种等待监听固定端口的形式（通过daemon 或者 nohup参数让其在后台执行），一般php 想实现同样的方式，都是通过加一个死循环，while (true),  但这种方式有一个缺点就是程序挂掉了不能重写启动，不像php-fpm 或者 swoole 的http server  在对子进程进行管理的时">
@@ -398,6 +398,16 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">pm2 list</span><br><span class="line">pm2 app.js --name wx_spider --watch   // name 名称，方便理解， watch 文件变动，方便重启，类似nodemon</span><br><span class="line">pm2 delete all</span><br><span class="line">pm2 delete (:id)</span><br><span class="line">pm2 restart app</span><br><span class="line">pm2 logs (:name)</span><br></pre></td></tr></table></figure>
 <p>pm2 配置简单，非常好用，echo 的内容之间在log中能看到，除了node， php也是能管理的</p>
 <p>（PM2 的安装需要通过node 和 npm， node 的安装很简单，但我们一定要注意npm 安装的module 位置，如果是linux 下，一定要配置好node_path ,否则 npm -g 安装的内容可能不能使用， npm config  get prefix  可以查看node -g 包安装的位置 。同理node的安装位置最好也是/usr/local/ 下面，方便直接访问）</p>
+<p>今天在使用pm2 管理我的一个task的时候遇到一个问题，就是普通的脚本pm2 start app.js 或者 pm2 start test.php, 但是我现在的命令是这样的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">php symfony trade:UpdateCommentDgTags updateUserPublishment  --split=4</span><br></pre></td></tr></table></figure>
+<p>之前的那个命令是肯定不可以的，需要使用配置文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#123; //统计报表更新</span><br><span class="line">  &quot;name&quot;: &quot;up4&quot;, // 随便取</span><br><span class="line">  &quot;args&quot;: &quot;trade:UpdateCommentDgTags updateUserPublishment  --split=4&quot;, // 这些都属于参数</span><br><span class="line">  &quot;script&quot;: &quot;symfony&quot;, // 这个地方一定要注意，symfony 其实是脚本，只是没有 .php 的后缀</span><br><span class="line">  &quot;exec_interpreter&quot;: &quot;php&quot;,</span><br><span class="line">  // &quot;exec_mode&quot;: &quot;Cluster&quot;,</span><br><span class="line">  // &quot;exec_mode&quot;: &quot;fork&quot;,</span><br><span class="line">  &quot;max_memory_restart&quot;: &quot;100M&quot;,</span><br><span class="line">  &quot;cwd&quot;： &quot;../&quot;  // 上一级目录</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>一定要注意，这个地方symonfy 是脚本，怪不得之前我在执行task 命令的时候忘记输入symfony ,他说找不到脚本。 后面的那一长串都会统一看成参数，只是参数解析的形式不一样，比如 trade:UpdateCommentDgTags, 解析成方法名称，–split = 4 解析成参数。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">ps:   php test.php --goods_id=12 uo22</span><br><span class="line"></span><br><span class="line">test.php</span><br><span class="line">&lt;?php</span><br><span class="line">var_dump($argv)</span><br><span class="line"></span><br><span class="line">输出内容：</span><br><span class="line">Array</span><br><span class="line">(</span><br><span class="line">    [0] =&gt; test.php</span><br><span class="line">    [1] =&gt; uo22</span><br><span class="line">    [2] =&gt; --goods_id=12</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<p>pm2 log日志的位置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">error log path    │ /home/username/.pm2/logs/app-error-0.log</span><br><span class="line">out log path      │ /home/username/.pm2/logs/app-out-0.log</span><br></pre></td></tr></table></figure>
+<p>需要注意的是这个error 应该是pm2 自身的error, 一般我们程序抛出的都是在out 日志里面</p>
+<p>！！~notice: pm2 虽然香，但也不能乱用，比如之前我在预发布机器上跑的一个task 脚本，因为跑完了，脚本 die， 不断的被pm2重启，导致cpu 很快被耗尽，所以很多脚本停止的时候 都会有个sleep 操作，过一段时间再重启。当然如果你是那种常驻内存，比如node 做的webserver 肯定不用，因为一般不会崩溃，唯一一种就是你的代码有问题，不断的报错，导致服务不断的被唤醒。</p>
 <h2 id="supervisor"><a href="#supervisor" class="headerlink" title="supervisor"></a>supervisor</h2><p><a href="https://learnku.com/laravel/t/2126/supervisor-installation-configuration-use" target="_blank" rel="noopener">使用和安装可以大致看看这个文章，但这篇文章的配置文件有问题</a></p>
 <p>配置文件里面一定要有[supervisord]和[supervisorctl] 部分，否则会报错。<a href="https://juejin.im/post/5c66be44f265da2de52d784d" target="_blank" rel="noopener">这篇文章应该还可以</a> 需要注意的就是监听端口从 127.0.0.1:9001 改成 0.0.0.0:9001 ,方便外网访问，贴个图</p>
 <p><img src="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/20191203210626.png" alt=""></p>
@@ -746,7 +756,7 @@ var jiathis_config={
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count"> | 博客全站共140.1k字</span>
+  <span class="post-count"> | 博客全站共141.1k字</span>
 </div>
 
 
