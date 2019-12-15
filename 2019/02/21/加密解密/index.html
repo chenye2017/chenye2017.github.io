@@ -89,18 +89,22 @@
 <meta property="og:site_name" content="语法糖的博客">
 <meta property="og:description" content="作为一个底层码农，其实加密解密平时是用不到的，毕竟平时写的就是cms 的curd, 但随着API的流行以及老大对代码质量的重视，还有和别的部门的交互，于是需要加解密啦。原文">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/20191213143223.png">
+<meta property="og:image" content="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/20191213143253.png">
+<meta property="og:image" content="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/20191213143602.png">
 <meta property="og:image" content="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/20190712143357.png">
+<meta property="og:image" content="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/20191213161048.png">
 <meta property="og:image" content="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/20190712150709.png">
 <meta property="og:image" content="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/20190712235429.png">
 <meta property="og:image" content="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/20190712235458.png">
 <meta property="og:image" content="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/20190712235511.png">
 <meta property="og:image" content="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/20190712225542.png">
 <meta property="og:image" content="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/20190712234533.png">
-<meta property="og:updated_time" content="2019-07-31T08:41:16.578Z">
+<meta property="og:updated_time" content="2019-12-13T08:27:34.468Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="加密解密">
 <meta name="twitter:description" content="作为一个底层码农，其实加密解密平时是用不到的，毕竟平时写的就是cms 的curd, 但随着API的流行以及老大对代码质量的重视，还有和别的部门的交互，于是需要加解密啦。原文">
-<meta name="twitter:image" content="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/20190712143357.png">
+<meta name="twitter:image" content="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/20191213143223.png">
 
 
 
@@ -392,24 +396,20 @@
       
         <p>作为一个底层码农，其实加密解密平时是用不到的，毕竟平时写的就是cms 的curd, 但随着API的流行以及老大对代码质量的重视，还有和别的部门的交互，于是需要加解密啦。<a href="https://t.ti-node.com/thread/6497068236977209344" target="_blank" rel="noopener">原文</a></p>
 <a id="more"></a>
-<p>hash 和 加解密 </p>
-<p>hash :  md5, sha1, hamc</p>
+<h3 id="hash-hamc-和-加解密"><a href="#hash-hamc-和-加解密" class="headerlink" title="hash( hamc ) 和 加解密"></a>hash( hamc ) 和 加解密</h3><p>hash(hamc) 可以用的算法： md5, sha1, sha256, sha512</p>
 <p>加解密：base64, aes</p>
 <p>用途：</p>
-<p>hash ： 因为不能解密，所以一般用在签名过程中，怎么验证是否数据被用户修改了呢，用相同的密钥对于传递过来的数据重新加密一遍，和sign 比对，如果相等，那就没有人修改签名(注意这个密钥一定不能被知道，因为一旦被知道，劫持者可以根据密钥帮修改后的数据生成对应sign, 起不到保护的作用)</p>
-<p><a href="https://blog.csdn.net/dengjiexian123/article/details/53313913" target="_blank" rel="noopener">这篇文章是关于上面3种hash的解释</a></p>
+<p>hash 和 hamc ： 因为不能解密，所以一般用在签名过程中，怎么验证是否数据被用户修改了呢，用相同的密钥对于传递过来的数据重新加密一遍，和sign 比对，如果相等，那就没有人修改签名(注意这个密钥一定不能被知道，因为一旦被知道，劫持者可以根据密钥帮修改后的数据生成对应sign, 起不到保护的作用)</p>
+<p><a href="https://blog.csdn.net/dengjiexian123/article/details/53313913" target="_blank" rel="noopener">这篇文章是关于hamc ，hash 和md5 sha1 关系的讲解</a></p>
 <p>md5: 经常用到，有时候我们需要固定长度的字符串，就可以用md5加密一下,md5 可以生成32位或者64位，依据不同的算法，js 好像经常出64位的，和php对接的时候要注意一下</p>
 <p>sha1: 感觉和上面的md5类似（感觉就是两种不同的加密算法）</p>
 <blockquote>
+<p>老李文章中对sha1 的描述：</p>
 <p>其实跟前面的MD5同期的还有一个SHA1加密方式的，不过也是算法比较简单，所以这里就一笔带过吧。而这里即将要说到的<code>SHA256</code> 和 <code>SHA512</code>都是来自于SHA2家族的加密函数，看名字可能你就猜的出来了。</p>
 </blockquote>
 <p>hmac: hmac 其实就是用上面两种算法（hmac-sha256, hmac-md5），再加上一个密钥进行加密（这个密钥感觉又类似salt 的存在）</p>
-<p>bcrypt : <a href="https://www.jianshu.com/p/2b131bfc2f10" target="_blank" rel="noopener">关于bcrypt 这里有个解释很清楚</a>， 感觉上其实就是另一种算法的hash</p>
-<p><img src="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/20190712143357.png" alt=""></p>
-<p>我之前很好奇这种hash, 怎么验证，也不能解密呀，当看到上面这张图片的时候，完全明白了，他的salt 存在了他加密后的字符串中，有了salt 就和以前的md5加解密一样了(注意上面各个字段的意思，10代表hash 10次)，php现在经常用的一种加密密码的方式也很好用</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">md5(‘123456’) e10adc3949ba59abbe56e057f20f883e </span><br><span class="line">md5(‘123456’ . ($salt = ‘salt’)) 207acd61a3c1bd506d7e9a4535359f8a </span><br><span class="line">sha1(‘123456’) 40位密文 </span><br><span class="line">hash(‘sha256’, ‘123456’) 64位密文  // sha2</span><br><span class="line">hash(‘sha512’, ‘123456’) 128位密文 // sha2</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$str = password_hash(123, PASSWORD_DEFAULT);  //默认 bcrypt， PASSWORD_DEFAULT 也代表了 PASSWORD_BCRYPT.二者都是1</span><br><span class="line">password_verify(123, $str); // 验证</span><br><span class="line"></span><br><span class="line">password_hash() – 对密码加密.</span><br><span class="line">password_verify() – 验证已经加密的密码，检验其hash字串是否一致. </span><br><span class="line">password_needs_rehash() – 给密码重新加密. // 其实感觉没啥必要，主要是因为感觉algo或者cost hash次数改变就会改变</span><br><span class="line">password_get_info() – 返回加密算法的名称和一些相关信息.</span><br></pre></td></tr></table></figure>
-<p><a href="https://www.codecasts.com/blog/post/php-password-hash-in-the-right-way" target="_blank" rel="noopener">这篇文章php的password api说的挺好的</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">php中md5, sha1 都有直接内置的方法， md5(), sha1(), 用的都是hash 方式，可以如下验证</span><br><span class="line">md5(&apos;cy&apos;) === hash(&apos;md5&apos;, &apos;cy&apos;)  // true</span><br><span class="line">sha1(&apos;cy&apos;) === hash(&apos;sha1&apos;, &apos;cy&apos;) // true</span><br><span class="line"></span><br><span class="line">sha256, sha512 php 没有内置的方法，需要借助函数 hash(&apos;sha256&apos;, data) 。</span><br><span class="line">可以通过hash_algos 查看hash() 支持哪些算法。</span><br><span class="line"></span><br><span class="line">hash_hmac 是另一种类似 hash 的函数，也支持 md5, sha256, https://www.php.net/manual/zh/function.hash-hmac.php, 常用函数，同样也可以通过 hash_hmac_algos 查看支持哪些算法</span><br></pre></td></tr></table></figure>
+<p>hmac 比较官方的描述</p>
 <blockquote>
 <h2 id="散列消息身份验证码-Hashed-Message-Authentication-Code-。它不是散列函数，而是采用了将MD5或SHA1散列函数与共享机密秘钥（与公钥-秘钥对不同）一起使用的消息身份验证机制。消息与秘钥组合并运行散列函数（md5或sha1），然后运行结果与秘钥组合并再次运行散列函数。"><a href="#散列消息身份验证码-Hashed-Message-Authentication-Code-。它不是散列函数，而是采用了将MD5或SHA1散列函数与共享机密秘钥（与公钥-秘钥对不同）一起使用的消息身份验证机制。消息与秘钥组合并运行散列函数（md5或sha1），然后运行结果与秘钥组合并再次运行散列函数。" class="headerlink" title="散列消息身份验证码 Hashed Message Authentication Code 。它不是散列函数，而是采用了将MD5或SHA1散列函数与共享机密秘钥（与公钥/秘钥对不同）一起使用的消息身份验证机制。消息与秘钥组合并运行散列函数（md5或sha1），然后运行结果与秘钥组合并再次运行散列函数。"></a>散列消息身份验证码 Hashed Message Authentication Code 。它不是散列函数，而是采用了将MD5或SHA1散列函数与共享机密秘钥（与公钥/秘钥对不同）一起使用的消息身份验证机制。消息与秘钥组合并运行散列函数（md5或sha1），然后运行结果与秘钥组合并再次运行散列函数。</h2><p>HMAC-SHA1简要来说，就是采用sha1算法，与HMAC机制相结合，制造出更加难以破解的加密串。</p>
 <p>hash_hmac</p>
@@ -420,11 +420,30 @@
 <p>key：使用HMAC生成信息摘要是所使用的密钥。</p>
 <p>raw_output：该参数为可选参数，默认为false，如果设为true，则返回原始二进制数据表示的信息摘要，否则返回16进制小写字符串格式表示的信息摘要（注意是16进制数，而非简单的字母加数字）。</p>
 </blockquote>
+<p><img src="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/20191213143223.png" alt=""></p>
+<p><img src="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/20191213143253.png" alt=""></p>
+<p>php 中我们常用的还有下面的密码散列算法，四个方法</p>
+<p><img src="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/20191213143602.png" alt=""></p>
+<p>其中password_hash 默认算法是bcrypt (也不知道这个密码散列和上面的hash 有啥区别，从目前的bcrypt 上来看，就是把hash次数和salt 的内容都放在加密字符串中)</p>
+<h3 id="bcrypt"><a href="#bcrypt" class="headerlink" title="bcrypt"></a>bcrypt</h3><p>bcrypt : <a href="https://www.jianshu.com/p/2b131bfc2f10" target="_blank" rel="noopener">关于bcrypt 这里有个解释很清楚</a>， 感觉上其实就是另一种算法的hash</p>
+<p><img src="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/20190712143357.png" alt=""></p>
+<p>我之前很好奇这种hash, 怎么验证，也不能解密呀，当看到上面这张图片的时候，完全明白了，他的salt 存在了他加密后的字符串中，有了salt 就和以前的md5加解密一样了(注意上面各个字段的意思，10代表hash 10次)，php现在经常用的一种加密密码的方式也很好用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">md5(‘123456’) e10adc3949ba59abbe56e057f20f883e </span><br><span class="line">md5(‘123456’ . ($salt = ‘salt’)) 207acd61a3c1bd506d7e9a4535359f8a </span><br><span class="line">sha1(‘123456’) 40位密文 </span><br><span class="line">hash(‘sha256’, ‘123456’) 64位密文  // sha2</span><br><span class="line">hash(‘sha512’, ‘123456’) 128位密文 // sha2</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$str = password_hash(123, PASSWORD_DEFAULT);  //默认 bcrypt， PASSWORD_DEFAULT 也代表了 PASSWORD_BCRYPT.二者都是1</span><br><span class="line">password_verify(123, $str); // 验证</span><br><span class="line"></span><br><span class="line">password_hash() – 对密码加密.</span><br><span class="line">password_verify() – 验证已经加密的密码，检验其hash字串是否一致. </span><br><span class="line">password_needs_rehash() – 给密码重新加密. // 其实感觉没啥必要，主要是因为感觉algo或者cost hash次数改变就会改变</span><br><span class="line">password_get_info() – 返回加密算法的名称和一些相关信息.</span><br></pre></td></tr></table></figure>
+<p><a href="https://www.codecasts.com/blog/post/php-password-hash-in-the-right-way" target="_blank" rel="noopener">这篇文章php的password api说的挺好的</a></p>
+<h3 id="urlencode"><a href="#urlencode" class="headerlink" title="urlencode"></a>urlencode</h3><p>关于urlencode ，<a href="https://www.codenong.com/75980/" target="_blank" rel="noopener">这篇文章说到的蛮好的，但是太长了</a> <a href="http://www.ruanyifeng.com/blog/2010/02/url_encoding.html" target="_blank" rel="noopener">看看阮一峰老师的文章</a> , 我大致理解了下，首先php只有一个urlencode ,  但是js 有两种，分别是 encodeUri  和 encodeUriComponent, php 的 相当于js 的后者，后者在加密url的时候会破坏url自身的完整性，他只适用于对url中的参数进行加密，因为会对:// 都进行转义，这样就不能当做url请求了</p>
+<p>(ps: urlencode 啥作用，比如我发送了一个请求 <a href="http://www.baidu.com?url=http://chenye.com&amp;name=11" target="_blank" rel="noopener">http://www.baidu.com?url=http://chenye.com&amp;name=11</a>, 我希望的是url参数 中携带着后面的name ，而不是name 和 url 同级别的关系，这时候只能用urlencode 加密特定的参数啦， 记得在express 中好像默认会帮助我们decodeUriComponent 关于http url部分)</p>
 <p>加解密：数据</p>
-<p>base64:</p>
+<h3 id="base64"><a href="#base64" class="headerlink" title="base64:"></a>base64:</h3><p>感觉我平时用到最多的地方就是不能识别的二进制（乱码）转换成base64 或者 16进制 hex。</p>
+<p>比如之前itbasic 上面图片转换成base64然后传给后端，后端php 再把base64解析成二进制，写入文件，保存成图片。</p>
+<p>如果不用base64 上传图片我们还可以通过post 提交，http 协议是纯文本协议，我们怎么上传二进制的图片呢， http 有自己的机制，http 头部的mime 头也设定了该文件是图片，可以百度下怎么用node stream实现一个静态web 服务器。</p>
+<p>php中很多加解密都是先生成二进制，然后转换成 base64 或者 16进制 （或者默认生成的就是 base64 ）</p>
+<p>（因为二进制可能含有不可见字符，复制粘贴都不方便）</p>
+<p><img src="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/20191213161048.png" alt=""></p>
+<p>这个评论更加深了纯文本协议的理解</p>
 <p>base64_encode</p>
 <p>base64_decode</p>
-<p>(感觉url_encode 也不能算是加密，只能算是字符转换，因为那个转换之后得到的内容基本都能分辨出来)</p>
+<p>base64 会让传输内容变大， <a href="https://www.zhihu.com/question/36306744" target="_blank" rel="noopener">https://www.zhihu.com/question/36306744</a>， base64 出现原理和使用，这篇文章讲解的比较全面 （这个我就在图片处理的时候用到过，一些算法，比如aes， js 有 hex 或者 base64 的方式，感觉就是为了让过滤掉二进制中的特殊字符）</p>
 <p>这种最原始的方式，因为不需要密钥，感觉不能算上加解密，确实在各个网站上也是这么感觉的</p>
 <p><img src="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/20190712150709.png" alt=""></p>
 <p>首先的区分下加解密和hash 的不同，对于md5() 这样加密之后理论上就不能解密的方式，我们一般称之为hash,在我们以往的网站编程中，对于用户的密码保存一般都是通过hash这种方式，通过把用户的密码拼接一个字符串，然后md5下生成的值保存到数据库中，下次用户登陆的时候，再次把用户输入的密码做上次同样的操作，对比和数据库中值是否一致，如果一致说明密码正确，否则密码错误。</p>
@@ -708,7 +727,7 @@ var jiathis_config={
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">88</span>
+                  <span class="site-state-item-count">89</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -730,7 +749,7 @@ var jiathis_config={
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">83</span>
+                  <span class="site-state-item-count">85</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -810,7 +829,7 @@ var jiathis_config={
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#散列消息身份验证码-Hashed-Message-Authentication-Code-。它不是散列函数，而是采用了将MD5或SHA1散列函数与共享机密秘钥（与公钥-秘钥对不同）一起使用的消息身份验证机制。消息与秘钥组合并运行散列函数（md5或sha1），然后运行结果与秘钥组合并再次运行散列函数。"><span class="nav-number">1.</span> <span class="nav-text">散列消息身份验证码 Hashed Message Authentication Code 。它不是散列函数，而是采用了将MD5或SHA1散列函数与共享机密秘钥（与公钥/秘钥对不同）一起使用的消息身份验证机制。消息与秘钥组合并运行散列函数（md5或sha1），然后运行结果与秘钥组合并再次运行散列函数。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#初始化向量-IV"><span class="nav-number">2.</span> <span class="nav-text">初始化向量(IV)</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#hash-hamc-和-加解密"><span class="nav-number">1.</span> <span class="nav-text">hash( hamc ) 和 加解密</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#散列消息身份验证码-Hashed-Message-Authentication-Code-。它不是散列函数，而是采用了将MD5或SHA1散列函数与共享机密秘钥（与公钥-秘钥对不同）一起使用的消息身份验证机制。消息与秘钥组合并运行散列函数（md5或sha1），然后运行结果与秘钥组合并再次运行散列函数。"><span class="nav-number"></span> <span class="nav-text">散列消息身份验证码 Hashed Message Authentication Code 。它不是散列函数，而是采用了将MD5或SHA1散列函数与共享机密秘钥（与公钥/秘钥对不同）一起使用的消息身份验证机制。消息与秘钥组合并运行散列函数（md5或sha1），然后运行结果与秘钥组合并再次运行散列函数。</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#bcrypt"><span class="nav-number">1.</span> <span class="nav-text">bcrypt</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#urlencode"><span class="nav-number">2.</span> <span class="nav-text">urlencode</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#base64"><span class="nav-number">3.</span> <span class="nav-text">base64:</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#初始化向量-IV"><span class="nav-number"></span> <span class="nav-text">初始化向量(IV)</span></a></div>
             
 
           </div>
@@ -865,7 +884,7 @@ var jiathis_config={
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count"> | 博客全站共141.1k字</span>
+  <span class="post-count"> | 博客全站共143.1k字</span>
 </div>
 
 

@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="PHP,ThinkPhP,validate," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="语法糖的博客" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="我们在写接口的时候经常要对传入的参数进行验证，平时供客户端调用的接口还好，一般他们不会乱传什么内容，但也保不准他们的参数是从某个地方获取的，然后误传了，所以我们还是需要做好我们自己的防线，防止后端服务崩溃。还有种情况就是我们开发的后端管理模块，是给运营他们使用的，他们有时候可能配置出错了，这很容易导致我们配置的app比如界面崩溃，所以这块我们的代码一定要严谨。 曾想着看laravel 的验证器咋写">
+<meta name="keywords" content="PHP,ThinkPhP,validate">
+<meta property="og:type" content="article">
+<meta property="og:title" content="tp源码分析-validate验证器">
+<meta property="og:url" content="http://yoursite.com/2019/12/16/tp源码分析-validate验证器/index.html">
+<meta property="og:site_name" content="语法糖的博客">
+<meta property="og:description" content="我们在写接口的时候经常要对传入的参数进行验证，平时供客户端调用的接口还好，一般他们不会乱传什么内容，但也保不准他们的参数是从某个地方获取的，然后误传了，所以我们还是需要做好我们自己的防线，防止后端服务崩溃。还有种情况就是我们开发的后端管理模块，是给运营他们使用的，他们有时候可能配置出错了，这很容易导致我们配置的app比如界面崩溃，所以这块我们的代码一定要严谨。 曾想着看laravel 的验证器咋写">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/20191216005751.png">
+<meta property="og:updated_time" content="2019-12-15T17:06:37.418Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="tp源码分析-validate验证器">
+<meta name="twitter:description" content="我们在写接口的时候经常要对传入的参数进行验证，平时供客户端调用的接口还好，一般他们不会乱传什么内容，但也保不准他们的参数是从某个地方获取的，然后误传了，所以我们还是需要做好我们自己的防线，防止后端服务崩溃。还有种情况就是我们开发的后端管理模块，是给运营他们使用的，他们有时候可能配置出错了，这很容易导致我们配置的app比如界面崩溃，所以这块我们的代码一定要严谨。 曾想着看laravel 的验证器咋写">
+<meta name="twitter:image" content="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/20191216005751.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/12/16/tp源码分析-validate验证器/"/>
+
+
+
+
+
+  <title>tp源码分析-validate验证器 | 语法糖的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+
+    <script type="text/javascript" src="/live2d/script.js"></script>
+    <canvas id="live2dcanvas" width="150" height="300" class="live2d"></canvas>
+    <style>
+      #live2dcanvas {
+        position: fixed;
+        right: 0px;
+        z-index: 999;
+        pointer-events: none;
+        bottom: -40px;
+      }
+    </style>
+    <script>loadlive2d("live2dcanvas" ,"/live2d/assets/wanko/wanko.model.json",0.5)</script>
+  
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">语法糖的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">爱动漫，热爱LOL</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+
+
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/12/16/tp源码分析-validate验证器/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="chenye2017">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/my.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="语法糖的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">tp源码分析-validate验证器</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-12-16T00:12:26+08:00">
+                2019-12-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/PHP/" itemprop="url" rel="index">
+                    <span itemprop="name">PHP</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>我们在写接口的时候经常要对传入的参数进行验证，平时供客户端调用的接口还好，一般他们不会乱传什么内容，但也保不准他们的参数是从某个地方获取的，然后误传了，所以我们还是需要做好我们自己的防线，防止后端服务崩溃。还有种情况就是我们开发的后端管理模块，是给运营他们使用的，他们有时候可能配置出错了，这很容易导致我们配置的app比如界面崩溃，所以这块我们的代码一定要严谨。</p>
+<p>曾想着看laravel 的验证器咋写的，！！！但真的类封装的太多了，头疼，算了还是看tp的吧，简简单单两个类搞定。</p>
+<a id="more"></a>
+<p>首先说下php 的验证库可以做哪些事吧，还是蛮丰富的。</p>
+<ol>
+<li>首先是验证器，在我看来验证器就是单独抽象了一个层出来，我们在controller里面只需要调用，让controller更加简洁，而且也能复用，验证器类都继承于think\validate。</li>
+<li>其次controller 里面的validate 方法可以直接调用，本质上和前面一样都是调用tp的验证器库。</li>
+<li>最后我们如果想单独使用验证器，就当做普通方法那样也是可以的，毕竟有时候我们除了对于传入参数的验证，业务代码中也有一些内容需要验证的。</li>
+</ol>
+<h3 id="Validate"><a href="#Validate" class="headerlink" title="Validate"></a>Validate</h3><p>属性：</p>
+<p>static type : 这个主要是我们第三种方法独立验证器用到的。rule 规则都存在这里面，当我们使用独立验证器的时候，想扩展验证规则，extend 方法修改的就是这个属性，因为是static， 所以在本次请求的下次使用中，也能调用上次extend 的验证规则</p>
+<p>alias： 就是我们rule 中可以用  &gt;: 5, 当做 gt: 5 来使用</p>
+<p>rule: 验证规则，我们在写验证器的时候，重写的就是这个属性</p>
+<p>message: 提示信息的重写。包含5个占位符，:attribute, :rule, :1, :2, :3</p>
+<p>field: 字段的描述，主要作用用在message中message 中的占位符 :attribute 会被这个内容替代</p>
+<p>typeMsg: 提示信息呗，这块是英文的，最终会通过 lang\zh-cn.php 转换成中文</p>
+<p>currentScene: 当前验证的场景，这个感觉就是为了验证器准备的（场景），其实也蛮实用的，方便验证器中规则的自由组合。</p>
+<p>filter: 主要是利用php filter_var函数的验证</p>
+<p>regex: 主要是用到正则的验证, ctype 也是php 很好用的一个扩展，方便一些特殊字符的验证</p>
+<p>scene: 场景</p>
+<p>error: 错误信息，只有控制器中错误才能抛出异常</p>
+<p>batch: 当前参数验证错误，还能轮到下一个参数</p>
+<p>only: 场景中哪些参数被验证</p>
+<p>remove: 场景中移除</p>
+<p>append: 场景中添加 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">看源码写的一点总结</span><br><span class="line">// remove 不可能移除所有，除非append 中是空</span><br><span class="line">// remove 连续移除是通过 |</span><br><span class="line">// remove append 的最佳实践是二者不要存在顺序关系，因为程序不会鉴别</span><br></pre></td></tr></table></figure>
+<p>方法：</p>
+<p>__construct:  </p>
+<p>rule 验证规则， message 提醒， field 字段描述 :attribute 占位符实际内容</p>
+<p>make:</p>
+<p>new self 生成一个验证器</p>
+<p>rule:</p>
+<p>独立验证修改rule 和 field 属性，供后面check 使用。方便直接传入 rule 和 message </p>
+<p>extend:</p>
+<p>独立验证器中的方法扩展</p>
+<p>setTypeMsg:</p>
+<p>独立验证器中使用</p>
+<p>message:</p>
+<p>提示信息</p>
+<p>scene:</p>
+<p>修改当前验证场景</p>
+<p>hasScene:</p>
+<p>scene 优先考虑 sceneEdit 方法，再考虑 scene -&gt; [‘edit’ =&gt; []] 属性</p>
+<p>batch:</p>
+<p>批量验证</p>
+<p>only:</p>
+<p>场景的使用验证哪些字段</p>
+<p>remove:</p>
+<p>场景移除验证规则</p>
+<p>append:</p>
+<p>场景添加沿正规则: 上线 remove 和 append的调用的时候没有先后顺序 ！！！</p>
+<p>check:</p>
+<p>验证器核心，这时候传入的内容会覆盖掉初始化的内容。</p>
+<p>getScene:</p>
+<p>根据传入的scene 和 current scene 修改 only  remove add 内容</p>
+<p>getDataValue: </p>
+<p>根据传入的data 数组和 可以， 获取对应的内容</p>
+<p>checkItem:</p>
+<p>实际的验证，通过 call_user_func 去调用对应的验证内容</p>
+<p>checkRule:</p>
+<p>官网上这么说，</p>
+<p><img src="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/20191216005751.png" alt=""></p>
+<p>感觉意义不大，毕竟静态方法make 创造的更好用点</p>
+<p>getRuleMsg: </p>
+<p>获取错误信息，可以好好看看，挺好的，调用了lang 类。因为自定义的closure ，如果 不是 === true， 就当做error， 结果就当做errorMsg，和调用类方法还是有点区别的。</p>
+<p>getValidateType:</p>
+<p>像一些 is，比如 isEmail, isIp 都走的is 方法</p>
+<p>后面就是一些验证方法了，以后写代码都可以借鉴下</p>
+<h3 id="ValidateRule"><a href="#ValidateRule" class="headerlink" title="ValidateRule"></a>ValidateRule</h3><p>这个类的主要用途就是通过rule 类的形式去调用对应的验证规则</p>
+<p>属性：</p>
+<p>title  :attribute</p>
+<p>rule 规则</p>
+<p>message 提示信息</p>
+<p>方法：</p>
+<p>addItem ：</p>
+<p>为 is 方法统一添加rule，message 属性</p>
+<p>getRule  getTile  getMesage 获取对应属性</p>
+<p>title 设定title</p>
+<p>——call  </p>
+<p>——callStatic </p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wp.png" alt="chenye2017 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/zp1.png" alt="chenye2017 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+  <div>
+  
+    <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+
+  
+  </div>
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/PHP/" rel="tag"><i class="fa fa-tag"></i> PHP</a>
+          
+            <a href="/tags/ThinkPhP/" rel="tag"><i class="fa fa-tag"></i> ThinkPhP</a>
+          
+            <a href="/tags/validate/" rel="tag"><i class="fa fa-tag"></i> validate</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/12/03/持久化/" rel="next" title="持久化">
+                <i class="fa fa-chevron-left"></i> 持久化
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+<span class="jiathis_txt">分享到：</span>
+<a class="jiathis_button_fav">收藏夹</a>
+<a class="jiathis_button_copy">复制网址</a>
+<a class="jiathis_button_email">邮件</a>
+<a class="jiathis_button_weixin">微信</a>
+<a class="jiathis_button_qzone">QQ空间</a>
+<a class="jiathis_button_tqq">腾讯微博</a>
+<a class="jiathis_button_douban">豆瓣</a>
+<a class="jiathis_button_share">一键分享</a>
+
+<a href="http://www.jiathis.com/share?uid=2140465" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+var jiathis_config={
+  data_track_clickback:true,
+  summary:"",
+  shortUrl:false,
+  hideMore:false
+}
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/my.png"
+                alt="chenye2017" />
+            
+              <p class="site-author-name" itemprop="name">chenye2017</p>
+              <p class="site-description motion-element" itemprop="description">想用善良改变世界</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">89</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">85</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/chenye2017" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:1967196626@qq.com" target="_blank" title="E-Mail">
+                    
+                      <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://weibo.com/3215254425" target="_blank" title="Weibo">
+                    
+                      <i class="fa fa-fw fa-globe"></i>Weibo</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-crosshairs"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.baidu.com/" title="百度" target="_blank">百度</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.google.com/" title="谷歌" target="_blank">谷歌</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Validate"><span class="nav-number">1.</span> <span class="nav-text">Validate</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ValidateRule"><span class="nav-number">2.</span> <span class="nav-text">ValidateRule</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">chenye2017</span>
+
+  
+</div>
+
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span> |
+</span>
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.3</div>
+
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count"> | 博客全站共143.1k字</span>
+</div>
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+  
+   <canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.2.0/anime.min.js"></script>
+   <script type="text/javascript" src="/js/src/fireworks.js"></script>
+
+
+
+</body>
+</html>
