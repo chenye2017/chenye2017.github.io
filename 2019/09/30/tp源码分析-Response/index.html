@@ -90,7 +90,7 @@
 <meta property="og:description" content="框架可能让你对PHP 怎么给webserver 返回内容产生了误解 ！！！">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/20190930193953.png">
-<meta property="og:updated_time" content="2019-10-01T13:32:06.709Z">
+<meta property="og:updated_time" content="2019-12-29T14:52:57.237Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="tp源码分析-Response">
 <meta name="twitter:description" content="框架可能让你对PHP 怎么给webserver 返回内容产生了误解 ！！！">
@@ -504,6 +504,12 @@
 <p>因为今天在看response类，他对很多header头部信息处理过，比如allowCache, 大致了解几个新的header 头 <a href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Caching_FAQ" target="_blank" rel="noopener">https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Caching_FAQ</a></p>
 <p>cache-control  这个我们经常看到，no-cache,但这个其实并不是不缓存的意思（强制确认缓存的意思），no-store 才是不缓存的意思。其中还有max-age 属性，代表这个缓存最大活多久，must-revalidate, 代表使用之前要检验是否过期了。</p>
 <p>expires 代表缓存过期的时间</p>
+<p>今天在控制器中设置header 头发现不生效，原因有两个，</p>
+<ol>
+<li>php的header 蛮反人类的，这样用 header(“Content-Type:application/json”),竟然是字符串。</li>
+<li>后面response send 中header 会覆盖掉控制器中的header</li>
+<li>那为啥文件结尾header 没生效呢，因为response send 方法调用了 fastcgi_finish_request(), 结束了相应</li>
+</ol>
 
       
     </div>
@@ -686,7 +692,7 @@ var jiathis_config={
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">89</span>
+                  <span class="site-state-item-count">90</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -697,7 +703,7 @@ var jiathis_config={
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-count">18</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -708,7 +714,7 @@ var jiathis_config={
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">85</span>
+                  <span class="site-state-item-count">87</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -793,7 +799,7 @@ var jiathis_config={
     <footer id="footer" class="footer">
       <div class="footer-inner">
         <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-<div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
@@ -827,7 +833,7 @@ var jiathis_config={
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count"> | 博客全站共143.1k字</span>
+  <span class="post-count"> | 博客全站共145.9k字</span>
 </div>
 
 
