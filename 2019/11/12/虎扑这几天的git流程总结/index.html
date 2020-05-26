@@ -93,7 +93,7 @@
 <meta property="og:image" content="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/20191112232326.png">
 <meta property="og:image" content="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/20191205161629.png">
 <meta property="og:image" content="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/20191206114054.png">
-<meta property="og:updated_time" content="2019-12-06T14:21:16.049Z">
+<meta property="og:updated_time" content="2020-05-02T06:34:58.446Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="虎扑这几天的git流程总结">
 <meta name="twitter:description" content="首先说一下虎扑的代码开发流程（包括提交，发布流程不太明白，对金啃死了解太少）。公司给每个人分了台虚拟机(类似云主机)， 我原先的想法是通过在虚拟机上clone 代码，然后通过phpstorm 的远程连接主机的功能，实现在本地开发，然后映射到虚拟机上代码改变。可是这样有一个问题就是虚拟机linux上clone的代码的换行和我本地win上的换行不一样，虽然开发的时候没有影响，但是要是在win上提交代码">
@@ -444,6 +444,12 @@
 <ul>
 <li>git reset 的后遗症蛮严重的，特别是自己开发分支修复不当，所以我们每次提交一定要严格执行合并dev， release，master 流程，一旦开发分支修改过，都要重走一遍。今天有人合并分支出现冲突，强推了merge，导致我的代码被覆盖，但归根结底都是之前提交代码不规范，~一定要引以为戒</li>
 </ul>
+<p>最近虎扑多了个新的git tag的功能，主要是为了发布代码的稳定性，方便回滚。</p>
+<p>git tag  <a href="https://www.zhihu.com/question/28784805" target="_blank" rel="noopener">https://www.zhihu.com/question/28784805</a>  这篇文章讲的蛮好。</p>
+<p>需要注意的就是我们要在自己想要的branch 上打tag （就是对于自己想要的commit 取一个别名）</p>
+<ul>
+<li>重温了git 小册，看打了git rebase ，其实这个功能大家不常用很正常，因为我们现在往往提交代码都是通过pr的方式，合并代码都是在gitlab 上手动执行就好了，很少关注git merge 这些事情，本地也很少merge 代码 （我一般开发一个功能就是fetch 一个 master as other branch，然后去开发）</li>
+</ul>
 
       
     </div>
@@ -624,7 +630,7 @@ var jiathis_config={
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">90</span>
+                  <span class="site-state-item-count">92</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -635,7 +641,7 @@ var jiathis_config={
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-count">19</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -646,7 +652,7 @@ var jiathis_config={
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">87</span>
+                  <span class="site-state-item-count">89</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -765,7 +771,7 @@ var jiathis_config={
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count"> | 博客全站共145.9k字</span>
+  <span class="post-count"> | 博客全站共147.7k字</span>
 </div>
 
 
