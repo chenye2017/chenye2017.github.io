@@ -89,10 +89,13 @@
 <meta property="og:site_name" content="语法糖的博客">
 <meta property="og:description" content="rabbitmq是一款实现amqp 协议的软件，我们在通过php 使用rabbitmq 的时候有两种方式（类似php 使用redis，一种是通过c扩展的方式，一种是纯php实现的lib 包。其实还有异步引擎，swoole是通过c扩展的方式，workman 是通过php 实现的lib包），一种是安装php 的amqp扩展 http://docs.php.net/manual/da/book.amqp">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-05-26T09:01:14.151Z">
+<meta property="og:image" content="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/20200526162641.png">
+<meta property="og:image" content="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/20200526162949.png">
+<meta property="og:updated_time" content="2020-05-26T09:57:58.796Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="rabbitmq记录">
 <meta name="twitter:description" content="rabbitmq是一款实现amqp 协议的软件，我们在通过php 使用rabbitmq 的时候有两种方式（类似php 使用redis，一种是通过c扩展的方式，一种是纯php实现的lib 包。其实还有异步引擎，swoole是通过c扩展的方式，workman 是通过php 实现的lib包），一种是安装php 的amqp扩展 http://docs.php.net/manual/da/book.amqp">
+<meta name="twitter:image" content="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/20200526162641.png">
 
 
 
@@ -384,10 +387,7 @@
       
         <p>rabbitmq是一款实现amqp 协议的软件，我们在通过php 使用rabbitmq 的时候有两种方式（类似php 使用redis，一种是通过c扩展的方式，一种是纯php实现的lib 包。其实还有异步引擎，swoole是通过c扩展的方式，workman 是通过php 实现的lib包），一种是安装php 的amqp扩展 <a href="http://docs.php.net/manual/da/book.amqp.php" target="_blank" rel="noopener">http://docs.php.net/manual/da/book.amqp.php</a>，一种是市面上比较流行的库<a href="https://github.com/php-amqplib/php-amqplib" target="_blank" rel="noopener">https://github.com/php-amqplib/php-amqplib</a>， 识货内部就是通过简单使用这个库来进行和rabbitmq的交互。</p>
 <a id="more"></a>
-<ul>
-<li>不同的角色</li>
-</ul>
-<p>关于rabbitmq 的理论知识，<a href="https://www.cnblogs.com/wutianqi/p/10043011.html" target="_blank" rel="noopener">https://www.cnblogs.com/wutianqi/p/10043011.html</a>， 这篇文章讲解的很清楚。</p>
+<h3 id="不同的角色"><a href="#不同的角色" class="headerlink" title="不同的角色"></a>不同的角色</h3><p>关于rabbitmq 的理论知识，<a href="https://www.cnblogs.com/wutianqi/p/10043011.html" target="_blank" rel="noopener">https://www.cnblogs.com/wutianqi/p/10043011.html</a>， 这篇文章讲解的很清楚。</p>
 <p>生产者 : 也是通过channel， 去 declare 一个 队列 ，然后发送消息（为什么要使用channel， 因为tcp 连接断开重建很浪费资源）。如果中间没走exchange 的 话，就不需要 routing key 了 。很多人经常把routing key 和  队列名称写一样，因为可能这个消息当初考虑的时候就是专门给这个队列queue 使用的。但其实 routing key  和 queue 可以不一样的，消费者在定义自己的队列便于接受 exchange 投递过来的消息，routing key 就相当于一把钥匙，可以打开这个队列的门。</p>
 <p>说到这里，就需要注意一下我之前的一个误区，开了生产者，然后启动消费者，消费者拿不到消息，消息为啥丢失了吗？我的理解中，不应该消息积存了，后来消费者启动了，开始消费吗？其实主要是exchange 不能存消息的，当我们启动消费者的时候，经常会启动一个队列，如果这个队列以前不存在，exchange拿着routing key 匹配不到 队列，就会把这个消息丢失。</p>
 <p>消费者：和上面的生产者对应</p>
@@ -399,15 +399,9 @@
 <p>连接： connection</p>
 <p>通道： channel</p>
 <p>消费者： consumer</p>
-<ul>
-<li>不同的工作模式 （其实还可以没有exchange 的，但感觉用这种的应该比较少）</li>
-</ul>
-<p>exchange 又分多种工作模式，比如topic, direct, fanout.</p>
+<h3 id="不同的工作模式-（其实还可以没有exchange-的，但感觉用这种的应该比较少）"><a href="#不同的工作模式-（其实还可以没有exchange-的，但感觉用这种的应该比较少）" class="headerlink" title="不同的工作模式 （其实还可以没有exchange 的，但感觉用这种的应该比较少）"></a>不同的工作模式 （其实还可以没有exchange 的，但感觉用这种的应该比较少）</h3><p>exchange 又分多种工作模式，比如topic, direct, fanout.</p>
 <p>识货用的都是direct ，就是通过routing key 把消息都推送到绑定的queue上。这种有个坏处就是某个queue 需要另一个routing key的数据，这就是 topic 模式，模糊匹配。那什么是fanout呢，fanout就是不要routing key 的 direct， 直接推所有绑定到 exchange的 queue。</p>
-<ul>
-<li>写代码的时候应该注意的几个属性</li>
-</ul>
-<p>交换机的属性：（识货就用一个交换机 amp.topic 所以这些都没用用过）</p>
+<h3 id="写代码的时候应该注意的几个属性"><a href="#写代码的时候应该注意的几个属性" class="headerlink" title="写代码的时候应该注意的几个属性"></a>写代码的时候应该注意的几个属性</h3><p>交换机的属性：（识货就用一个交换机 amp.topic 所以这些都没用用过）</p>
 <p>name:</p>
 <p>durable: 持久化，消息代理重启后，交换机是否还存在。交换机有两个状态，持久（durable）、暂存（transient）。持久化的交换机会在消息代理重启后依旧存在，而暂存的交换机则不会。</p>
 <p>auto-delete: 当所有与之绑定的消息队列都完成了对此交换机的使用后，删掉它。</p>
@@ -440,15 +434,13 @@
 <p>消息确认：</p>
 <p>消息确认开启后，如果我们没有确认消息，消息会是 unack 状态，当消费者挂掉后，几秒中unack的消息会重置成total 未消费状态 (一定要注意)</p>
 <p>未确认的东西。识货的消息从来没有设置持久化状态，但是mq 挂掉了之后消息还能找回来。</p>
-<p>(　消息能够以持久化的方式发布，AMQP代理会将此消息存储在磁盘上。如果服务器重启，系统会确认收到的持久化消息未丢失。简单地将消息发送给一个持久化的交换机或者路由给一个持久化的队列，并不会使得此消息具有持久化性质：它完全取决与消息本身的持久模式（persistence mode）。将消息以持久化方式发布时，会对性能造成一定的影响（就像数据库操作一样，健壮性的存在必定造成一些性能牺牲）。)</p>
-<p><a href="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/20200526162641.png" target="_blank" rel="noopener">https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/20200526162641.png</a></p>
+<p>(消息能够以持久化的方式发布，AMQP代理会将此消息存储在磁盘上。如果服务器重启，系统会确认收到的持久化消息未丢失。简单地将消息发送给一个持久化的交换机或者路由给一个持久化的队列，并不会使得此消息具有持久化性质：它完全取决与消息本身的持久模式（persistence mode）。将消息以持久化方式发布时，会对性能造成一定的影响（就像数据库操作一样，健壮性的存在必定造成一些性能牺牲）。)</p>
+<p><img src="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/20200526162641.png" alt=""></p>
 <p>要善于利用rabbitmq 的管理界面，注意detail 那块，这是我们使用死信队列造成延迟队列。</p>
-<p><a href="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/20200526162949.png" target="_blank" rel="noopener">https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/20200526162949.png</a></p>
+<p><img src="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/20200526162949.png" alt=""></p>
 <p>下面的consumer 可以知道绑定的消费者</p>
 <p>下面的binding 就是通过routingkey 绑定的信息</p>
-<ul>
-<li><p>延迟队列</p>
-<p>延迟队列的应用场景：比如订单三十分钟内付款有效。</p>
+<h3 id="延迟队列"><a href="#延迟队列" class="headerlink" title="延迟队列"></a>延迟队列</h3><p>延迟队列的应用场景：比如订单三十分钟内付款有效。</p>
 <p>实现方式：<a href="https://www.cnblogs.com/-mrl/p/11113989.html" target="_blank" rel="noopener">https://www.cnblogs.com/-mrl/p/11113989.html</a></p>
 <p>rabbitmq 延迟队列的实现方式：通过消息过期，转发到死信交换机中。消息过期有两种方式，一种是消息自己的存活时间到达还没有消费，一种是队列的时间到达但其中的消息没有被消费，这两种情况消息都会被投递到死信队列中。</p>
 <p>区别：第一种我们可以单独对每个消息设置存活时间，不需要为了每个不同的时间建立不同的队列，比如a消息三十分钟过期，b消息40分钟过期，我们都投递到一个没有消费者的队列中，消息到期了自动转发到死信队列中。</p>
@@ -456,8 +448,6 @@
 <p><a href="https://jaskey.github.io/blog/2018/08/15/rabbitmq-delay-queue/" target="_blank" rel="noopener">https://jaskey.github.io/blog/2018/08/15/rabbitmq-delay-queue/</a></p>
 <p>上面的做法好像缺点更大，容易造成队列堵塞，所以还是弄成不同时间级别的队列吧。</p>
 <p>​</p>
-</li>
-</ul>
 
       
     </div>
@@ -616,8 +606,17 @@ var jiathis_config={
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -728,6 +727,22 @@ var jiathis_config={
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#不同的角色"><span class="nav-number">1.</span> <span class="nav-text">不同的角色</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#不同的工作模式-（其实还可以没有exchange-的，但感觉用这种的应该比较少）"><span class="nav-number">2.</span> <span class="nav-text">不同的工作模式 （其实还可以没有exchange 的，但感觉用这种的应该比较少）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#写代码的时候应该注意的几个属性"><span class="nav-number">3.</span> <span class="nav-text">写代码的时候应该注意的几个属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#延迟队列"><span class="nav-number">4.</span> <span class="nav-text">延迟队列</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
