@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2020-05-26T09:57:58.796Z</updated>
+  <updated>2020-06-06T08:51:03.191Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,30 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>go 环境搭建</title>
+    <link href="http://yoursite.com/2020/06/06/go-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/"/>
+    <id>http://yoursite.com/2020/06/06/go-环境搭建/</id>
+    <published>2020-06-06T08:24:09.000Z</published>
+    <updated>2020-06-06T08:51:03.191Z</updated>
+    
+    <content type="html"><![CDATA[<p>go越来越流行了，加上公司的业务需求，迫使我必须得开始学习go了</p><a id="more"></a><p>学习任何一门语言，刚开始面对的第一个问题就是环境的搭建吧，相较于php的编译安装，go的环境搭建更加简单。</p><p>首先要明确的一点是go 是交叉编译，所以我们无论在win 还是 mac 还是 linux 下开发都是一样的。php 有很多扩展比如redis ，在win下版本比较少，所以我们不得不需要一个linux 环境， 我们平时开发php ，是把远程服务器的代码sftp 到本地，然后本地代码的修改实时上传到服务器上，在服务器上跑。go不需要 （goland 甚至连着个功能都没有，需要装插件）。</p><ol><li><p>下载go的安装包，因为墙的原因，我们可以去 studygolang 上面下载，win和 mac 都是那种点击下一步傻瓜般的安装，linux 下安装也很简单，下载解压完之后就是一个编译好的二进制包（就像php 编译完成那样）。我们只需要把 我们环境变量的 path ，添加上 go下载包中的bin，就能直接使用go的命令了。linux 下可以直接编译 /etc/profile, source /etc/profile 生效。保存好后 echo  $PATH，查看path 。</p></li><li><p>go 安装需要注意的几个路基</p><p>goroot  就是我们（linux 下解压完go 安装包的地址，win 和 mac 下是我们自己制定的go 安装路基）</p><p>gopath 是我们自己制定的一个文件夹，需要在这下面手动建立 bin， pkg， src 三个目录，其中bin 是我们日后编译生成二进制文件的地方，pkg 很重要，里面的mod 文件就是我们安装的第三方库所在的目录，src 就是在 go mod 没出现前，我们存放我们项目代码的地方(之前就觉得我们的代码只能存放在一个地方，很不方便，go mod 的出现就不需要管这个文件夹了）</p><p>go env 我们可以查看和 go 相关的 环境变量，必要重要的有  GO111MODULE, 怎么设置  go env -w </p><p> GO111MODULE=”on”,  还有 GOPROXY=<a href="https://goproxy.cn,direct，" target="_blank" rel="noopener">https://goproxy.cn,direct，</a> goproxy.cn 就是 七牛云搞的golang 下载包中国镜像，后面的direct 代表如果找不到，就直接按照网址下载。go 的第三方包的命名很好玩，基本就是这个仓库所在的可以访问的url 路径，比如 code.shihuo.cn/xxx/xxx, 不需要像composer 那样中间走一层代理，那层代理还要给你开访问权限，才能下载。</p></li></ol><p>3.在用goland 编辑的时候，会遇到包找不到的请款，我们需要手动 seting 去配置 goroot  gopath ，还要开启vgo（就是gomod）</p><p><img src="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/20200606164735.png" alt=""></p><p>这个地方要选空，否则还是会出现包找不到的问题。</p><p>4.go mod 的使用，go mod init xxx 初始化项目，生成 go mod 文件，类似composer init 生成 composer.json，go run main.go 开始跑项目啦。会自动下载需要的安装包，这个相比于composer install 更加的方便。</p><p>以上就是总结的 go 环境安装，完结~~</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;go越来越流行了，加上公司的业务需求，迫使我必须得开始学习go了&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="go" scheme="http://yoursite.com/categories/go/"/>
+    
+    
+      <category term="go" scheme="http://yoursite.com/tags/go/"/>
+    
+      <category term="环境搭建" scheme="http://yoursite.com/tags/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/"/>
+    
+  </entry>
   
   <entry>
     <title>rabbitmq记录</title>
@@ -118,7 +142,7 @@
     <link href="http://yoursite.com/2019/12/03/%E6%8C%81%E4%B9%85%E5%8C%96/"/>
     <id>http://yoursite.com/2019/12/03/持久化/</id>
     <published>2019-12-03T11:59:55.000Z</published>
-    <updated>2019-12-06T14:17:20.110Z</updated>
+    <updated>2020-05-28T13:59:32.128Z</updated>
     
     <content type="html"><![CDATA[<p>我们在php-fpm 模式下编写的代码一般是同步阻塞的，很少能实现像redis 或者 node 那种等待监听固定端口的形式（通过daemon 或者 nohup参数让其在后台执行），一般php 想实现同样的方式，都是通过加一个死循环，while (true),  但这种方式有一个缺点就是程序挂掉了不能重写启动，不像php-fpm 或者 swoole 的http server  在对子进程进行管理的时候，当工作进程挂掉之后，会重新拉起一个新进程，怎么办呢？可以通过两个工具 pm2 或者 supervisor 。supervisor 的工作原理就是把管理的进程当做自己的子进程，pm2 原理没有了解过。</p><a id="more"></a><p>举个例子吧，之前接手的一个任务毒和nike关联出价，当前台下发撤单任务的时候，因为牵扯到很多curl 请求，不能同步实现，1.感觉可以通过把请求内容放到mq当中，然后利用daemon 化的task始终监听这个mq，如果有内容，则触发任务，往后执行，否则停歇1min 继续监听。2.那个前作者是通过把内容放到redis中，通过daemon化的task监听这个redis，如果检测到这个redis这个key，就执行相应任务。</p><p>总结一下吧，其实上面两个方式php的daemon话都是通过while true，那么supervisor 的作用是啥呢，当php的这个脚本挂掉了，supervisor可以重新拉起这个脚本。同理pm2也可以，而且不一定是脚本挂掉，脚本执行完了，也可以重新拉起，比如</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">echo date(&apos;Y-m-d H:i:s&apos;)</span><br><span class="line">echo &apos;end&apos;;</span><br><span class="line">// 利用上面两个进程管理工具之后，可以一直输出</span><br></pre></td></tr></table></figure><p>上面的例子还有个很重要的技术点就是定时触发。相比较crontab 的task，上面的task 触发任务时间不一致，触发时间靠前台控制，所以我们这时候就通过始终运行一个后台任务，然后靠前台触发一个开关，后端始终运行的task始终监测这个开关，如果是开就运行，虽然可能存在一定时间的误差，但大体上还是能完成任务的。</p><p>再比如之前接手的一个安卓灰度更新的任务，当某个渠道开启灰度之后，我们需要每隔30min发送一条钉钉消息，我们同样可以检测表中渠道是否有开启灰度的状态，如果有，则发一条消息，并记录通知时间，下次的循环任务检测是否灰度还在开启，如果还在开启，检测时间通知是否超过30min，如果超过了，再发送消息，并更新通知时间。</p><p>上面的任务看似已经解决，但还是会涉及一个多进程问题，再举个例子，比如erp系统，需要爬取商户的店铺信息，这个task 要一直执行，如果我们有100个商户，就得运行100个task，启动100个脚本。我们上面灰度通知的好解决，一种办法就是检测运行的渠道，循环运行的渠道列表，然后发送消息通知，另一种就是一次性检测，把渠道更新信息包含在一条短消息中发出去，之所以这么做是因为后续的任务（发送钉钉通知）可以在很短时间内完成，如果像erp的那种爬虫任务，只能通过启动多个脚本了。</p><p>关于php的多进程扩展pnctl 这里暂时不做讨论，说一下pm2 和 supervisor 的简单使用。</p><h2 id="PM2"><a href="#PM2" class="headerlink" title="PM2"></a>PM2</h2><p><a href="https://juejin.im/post/5b823506e51d4538d517662f" target="_blank" rel="noopener">这篇文章关于pm2讲解的很好</a></p><p>我比较常用的命令</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">pm2 list</span><br><span class="line">pm2 app.js --name wx_spider --watch   // name 名称，方便理解， watch 文件变动，方便重启，类似nodemon</span><br><span class="line">pm2 delete all</span><br><span class="line">pm2 delete (:id)</span><br><span class="line">pm2 restart app</span><br><span class="line">pm2 logs (:name)</span><br></pre></td></tr></table></figure><p>pm2 配置简单，非常好用，echo 的内容之间在log中能看到，除了node， php也是能管理的</p><p>（PM2 的安装需要通过node 和 npm， node 的安装很简单，但我们一定要注意npm 安装的module 位置，如果是linux 下，一定要配置好node_path ,否则 npm -g 安装的内容可能不能使用， npm config  get prefix  可以查看node -g 包安装的位置 。同理node的安装位置最好也是/usr/local/ 下面，方便直接访问）</p><p>今天在使用pm2 管理我的一个task的时候遇到一个问题，就是普通的脚本pm2 start app.js 或者 pm2 start test.php, 但是我现在的命令是这样的</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">php symfony trade:UpdateCommentDgTags updateUserPublishment  --split=4</span><br></pre></td></tr></table></figure><p>之前的那个命令是肯定不可以的，需要使用配置文件</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#123; //统计报表更新</span><br><span class="line">  &quot;name&quot;: &quot;up4&quot;, // 随便取</span><br><span class="line">  &quot;args&quot;: &quot;trade:UpdateCommentDgTags updateUserPublishment  --split=4&quot;, // 这些都属于参数</span><br><span class="line">  &quot;script&quot;: &quot;symfony&quot;, // 这个地方一定要注意，symfony 其实是脚本，只是没有 .php 的后缀</span><br><span class="line">  &quot;exec_interpreter&quot;: &quot;php&quot;,</span><br><span class="line">  // &quot;exec_mode&quot;: &quot;Cluster&quot;,</span><br><span class="line">  // &quot;exec_mode&quot;: &quot;fork&quot;,</span><br><span class="line">  &quot;max_memory_restart&quot;: &quot;100M&quot;,</span><br><span class="line">  &quot;cwd&quot;： &quot;../&quot;  // 上一级目录</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>一定要注意，这个地方symonfy 是脚本，怪不得之前我在执行task 命令的时候忘记输入symfony ,他说找不到脚本。 后面的那一长串都会统一看成参数，只是参数解析的形式不一样，比如 trade:UpdateCommentDgTags, 解析成方法名称，–split = 4 解析成参数。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">ps:   php test.php --goods_id=12 uo22</span><br><span class="line"></span><br><span class="line">test.php</span><br><span class="line">&lt;?php</span><br><span class="line">var_dump($argv)</span><br><span class="line"></span><br><span class="line">输出内容：</span><br><span class="line">Array</span><br><span class="line">(</span><br><span class="line">    [0] =&gt; test.php</span><br><span class="line">    [1] =&gt; uo22</span><br><span class="line">    [2] =&gt; --goods_id=12</span><br><span class="line">)</span><br></pre></td></tr></table></figure><p>pm2 log日志的位置</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">error log path    │ /home/username/.pm2/logs/app-error-0.log</span><br><span class="line">out log path      │ /home/username/.pm2/logs/app-out-0.log</span><br></pre></td></tr></table></figure><p>需要注意的是这个error 应该是pm2 自身的error, 一般我们程序抛出的都是在out 日志里面</p><p>！！~notice: pm2 虽然香，但也不能乱用，比如之前我在预发布机器上跑的一个task 脚本，因为跑完了，脚本 die， 不断的被pm2重启，导致cpu 很快被耗尽，所以很多脚本停止的时候 都会有个sleep 操作，过一段时间再重启。当然如果你是那种常驻内存，比如node 做的webserver 肯定不用，因为一般不会崩溃，唯一一种就是你的代码有问题，不断的报错，导致服务不断的被唤醒。</p><h2 id="supervisor"><a href="#supervisor" class="headerlink" title="supervisor"></a>supervisor</h2><p><a href="https://learnku.com/laravel/t/2126/supervisor-installation-configuration-use" target="_blank" rel="noopener">使用和安装可以大致看看这个文章，但这篇文章的配置文件有问题</a></p><p>配置文件里面一定要有[supervisord]和[supervisorctl] 部分，否则会报错。<a href="https://juejin.im/post/5c66be44f265da2de52d784d" target="_blank" rel="noopener">这篇文章应该还可以</a> 需要注意的就是监听端口从 127.0.0.1:9001 改成 0.0.0.0:9001 ,方便外网访问，贴个图</p><p><img src="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/20191203210626.png" alt=""></p><p>基本就能用啦 （比如我那几百万的任务task就能通过这两个处理，不用我一直看着了，跑完了看看 log就好了）</p>]]></content>
     
@@ -483,32 +507,6 @@
       <category term="ioc" scheme="http://yoursite.com/tags/ioc/"/>
     
       <category term="依赖注入" scheme="http://yoursite.com/tags/%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>tp源码分析-Config</title>
-    <link href="http://yoursite.com/2019/08/09/tp%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90-Config/"/>
-    <id>http://yoursite.com/2019/08/09/tp源码分析-Config/</id>
-    <published>2019-08-09T01:47:22.000Z</published>
-    <updated>2019-08-09T03:49:27.107Z</updated>
-    
-    <content type="html"><![CDATA[<p>thinkphp config 源码阅读，为了更好的使用~</p><a id="more"></a><p>首先 config  implements ArrayAccess, 所以我们可以这样</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$z = new \think\Config();</span><br><span class="line">$z-&gt;load(__DIR__.&apos;test.ini&apos;,&apos;test&apos;);  // test 作为前缀，用来分割不同文件的配置项，如果不加，会放在一级目录，不太合适</span><br><span class="line">// test 内容</span><br><span class="line">[boy]</span><br><span class="line">name=cy</span><br><span class="line">sex=1</span><br><span class="line"></span><br><span class="line">var_dump($z[&apos;test&apos;][&apos;boy&apos;][name]); // cy</span><br></pre></td></tr></table></figure><p>分析Config的几个属性</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">config . 核心，配置文件内容加载进来的存放</span><br><span class="line">prefix   默认前缀，set的时候，如果key 是个string , 默认前缀， 注意set 的内容如果是个数组，那就直接合并</span><br><span class="line">path 初始化构造函数，配置文件的位置</span><br><span class="line">ext  初始化构造函数，配置文件的类型</span><br><span class="line">yaconf 布尔值或者字符串，用来支持yaconf</span><br></pre></td></tr></table></figure><p>__construct </p><p> 配置一些基本的参数，比如path 配置文件路径，ext 配置文件后缀，yaconf 判断是否安装了yaconf扩展</p><p>__make </p><p>获取注入类app 中config文件路径和ext 文件后缀，初始化一个config类</p><p>setYaconf</p><p>注意这个一定要在属性yaconf true 的时候才能设置</p><p>getYaconf </p><p>获取</p><p>setDeafultPrefix</p><p> 设置前缀，比如app</p><p>parse  </p><p>把一个配置文件（config driver 下面支持的类型，默认ini, json, xml）加载到 \$this-&gt;config 属性中</p><p>load </p><p>加载文件(先判断该文件是否存在，不存在添加上文件夹前缀和文件后缀)解析放到config中，调用parse，并添加支持php,yaml.</p><p>getYaconfName  </p><p>Yconf::get(key), 获取的就是这个key</p><p>yaconf </p><p> 获取yaconf 中内容，感觉比如直接调用yaconf 的get</p><p>loadfile</p><p>load = loadfile + yaconf</p><p>has </p><p>判断是否有某个key , 如果没有添加前缀，会添加默认前缀. (默认所有的config 都得挂在某个 一级key 下面，比如app(默认)， 比如 log)</p><p>pull</p><p>获取所有的config 中一级配置，或者yaconf 中的某个属性 + config 中的一级配置</p><p>get</p><p>获取配置，key 中没有 . ,默认添加app 前缀，支持获取多层嵌套</p><p>set</p><p>只能支持两级key ,不包括文件名，如果传入数组，合并原先 config属性（只有在key 是string 的时候才会添加默认prefix ）</p><p>remove </p><p>移除key</p><p>reset</p><p>重置某个key</p><p>剩下arrayAccess 需要实现的方法，方便数组方式调用</p><h3 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h3><p>config 文件中支持 yaconf 和 \$this-&gt;config, 可有的方法是从二者中某个取值(一般都是yaconf优先)， 有的是yaconf 和 config 合并。</p><p>yaconf 的key中，第一个肯定是文件名</p><p>config key 中，如果没有. 默认都会拼上prefix , 想获取一个文件中所有内容，key 可以这样 app. , 感觉没有yaconf 直观，规范</p><h3 id="关于yaconf-具体可以参考鸟哥博客"><a href="#关于yaconf-具体可以参考鸟哥博客" class="headerlink" title="关于yaconf(具体可以参考鸟哥博客)"></a>关于yaconf(具体可以参考鸟哥博客)</h3><p>yaconf 是鸟哥写的一个常驻内存的配置文件扩展，（windows下使用有些问题）</p><p>很简单，默认两个配置项，一个是dir (把该文件夹下的所有的ini文件都加载进内存，不支持文件夹是为了简单，不支持别的类型文件是为了简单),一个是check 更新时间(每隔比如2s检测一下文件是否改动, 只能用mv, 不能用cp, 可能是根据文件修改时间来进行判断是否改动)</p><p>api 也只有两个，</p><p>// test 是文件名，name是属性</p><p>get(‘test.name’)  // 获取内容</p><p>has(‘test.name’) //  判断是否有内容</p><p>我们来想想yaconf 解决的问题：我们在开发itbasic 的时候经常被这样的问题困扰，对于配置项，线上环境和本地环境不一样，所以导致我们每次提交代码都很麻烦，但凡用到配置参数的文件都会和线上文件冲突。后来我们把配置项都写到一个文件中，通过config 去获取，并且不把config文件纳入版本库，其实yaconf的本质也是这样，只是他分的更彻底，把config 完全移除项目代码，和项目代码分离，放到一个单独的文件夹中，可以让运维人员或者任何人员去修改。</p><h3 id="关于配置文件格式"><a href="#关于配置文件格式" class="headerlink" title="关于配置文件格式"></a>关于配置文件格式</h3><p>tp 中有ini, json, xml, yaml, php 文件</p><p>对于ini 文件（.env文件也是ini ）可以直接调用方法解析</p><p>json ,我们直接读取文件内容，然后json_decode </p><p>xml ,我们直接调用方法解析</p><p>yaml ,我们需要安装yaml 扩展（centos7 中安装yaml 工具）</p><p>php, 我们直接include , 文件中的return 内容会被include 返回</p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;thinkphp config 源码阅读，为了更好的使用~&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="PHP" scheme="http://yoursite.com/categories/PHP/"/>
-    
-    
-      <category term="PHP" scheme="http://yoursite.com/tags/PHP/"/>
-    
-      <category term="ThinkPHP" scheme="http://yoursite.com/tags/ThinkPHP/"/>
-    
-      <category term="Config" scheme="http://yoursite.com/tags/Config/"/>
     
   </entry>
   
