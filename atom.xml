@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2020-06-06T08:51:03.191Z</updated>
+  <updated>2020-06-09T12:52:51.286Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,54 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>go 数据库原生操作</title>
+    <link href="http://yoursite.com/2020/06/09/go-%E6%95%B0%E6%8D%AE%E5%BA%93%E5%8E%9F%E7%94%9F%E6%93%8D%E4%BD%9C/"/>
+    <id>http://yoursite.com/2020/06/09/go-数据库原生操作/</id>
+    <published>2020-06-09T12:28:16.000Z</published>
+    <updated>2020-06-09T12:52:51.286Z</updated>
+    
+    <content type="html"><![CDATA[<p>go web 开发，操作mysql 是基础啦</p><a id="more"></a><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">import (</span><br><span class="line">   &quot;database/sql&quot;</span><br><span class="line">   _ &quot;github.com/go-sql-driver/mysql&quot;</span><br><span class="line">)</span><br><span class="line">首先是包的引入，很常见吧，下面那个驱动引入，却未使用可能是只希望使用这个包的 init()方法</span><br></pre></td></tr></table></figure><blockquote><p>通常来说, 不应该直接使用驱动所提供的方法, 而是应该使用 sql.DB, 因此在导入 mysql 驱动时, 这里使用了匿名导入的方式(在包路径前添加 _), 当导入了一个数据库驱动后, 此驱动会自行初始化并注册自己到Golang的database/sql上下文中, 因此我们就可以通过 database/sql 包提供的方法访问数据库了.</p><p>可能这就是interface 的作用吧</p></blockquote><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">type DbWorker struct &#123;</span><br><span class="line">    //mysql data source name</span><br><span class="line">    Dsn string </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func main() &#123;</span><br><span class="line">    dbw := DbWorker&#123;</span><br><span class="line">        Dsn: &quot;user:password@tcp(127.0.0.1:3306)/test&quot;,</span><br><span class="line">    &#125;</span><br><span class="line">    db, err := sql.Open(&quot;mysql&quot;,</span><br><span class="line">        dbw.Dsn) // 返回一个sql.DB 的指针</span><br><span class="line">    if err != nil &#123;</span><br><span class="line">        panic(err)</span><br><span class="line">        return</span><br><span class="line">    &#125;</span><br><span class="line">    defer db.Close()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><blockquote><ol><li>sql.Open并不会立即建立一个数据库的网络连接, 也不会对数据库链接参数的合法性做检验, 它仅仅是初始化一个sql.DB对象. 当真正进行第一次数据库查询操作时, 此时才会真正建立网络连接;</li><li>sql.DB表示操作数据库的抽象接口的对象，但不是所谓的数据库连接对象，sql.DB对象只有当需要使用时才会创建连接，如果想立即验证连接，需要用Ping()方法;</li><li>sql.Open返回的sql.DB对象是协程并发安全的.</li><li>sql.DB的设计就是用来作为长连接使用的。不要频繁Open, Close。比较好的做法是，为每个不同的datastore建一个DB对象，保持这些对象Open。如果需要短连接，那么把DB作为参数传入function，而不要在function中Open, Close。</li></ol><p>所以我们平时用的都是长连接，在池子里面可以复用的啦。平时我们在 prepare ，query(查询)， exec(插入，修改) 之后都要及时 close</p><p>MySQL 5.5 之前， UTF8 编码只支持1-3个字节,从MYSQL5.5开始，可支持4个字节UTF编码utf8mb4，一个字符最多能有4字节，utf8mb4兼容utf8，所以能支持更多的字符集;关于emoji表情的话mysql的utf8是不支持，需要修改设置为utf8mb4，才能支持。</p><p>(4 字节的utf8 我们应该一直在用啦)</p></blockquote><p>插入代码</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">stmt, err := db.Prepare(&quot;insert tasks (content, user, create_at, update_at, deleted) values (?, ?, ?, ?, ?)&quot;)</span><br><span class="line"></span><br><span class="line">if err != nil &#123;</span><br><span class="line">log.Println(err)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">defer stmt.Close()</span><br><span class="line"></span><br><span class="line">now, _ := time.Parse(&quot;2006-01-02 15:04:05&quot;, &quot;2016-01-02 15:04:05&quot;)</span><br><span class="line"></span><br><span class="line">update := time.Now().Format(&quot;2006-01-02 15:04:05&quot;)</span><br><span class="line"></span><br><span class="line">result, err := stmt.Exec(&quot;测试&quot;, &quot;cy&quot;, now, update, 0)</span><br><span class="line">if err != nil &#123;</span><br><span class="line">log.Println(err)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">fmt.Println(result.LastInsertId())</span><br></pre></td></tr></table></figure><p>修改代码</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">stmt, err := db.Prepare(&quot;update tasks set content = ? where id = ?&quot;)</span><br><span class="line"></span><br><span class="line">if err != nil &#123;</span><br><span class="line">log.Println(err)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">defer stmt.Close()</span><br><span class="line"></span><br><span class="line">stmt.Exec(&quot;ceshi11111&quot;, 2)</span><br></pre></td></tr></table></figure><p>查询代码</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">db, err := sql.Open(&quot;mysql&quot;, &quot;root:wyqnkxk2012_CY@tcp(118.184.219.156)/cy&quot;)</span><br><span class="line">if err != nil &#123;</span><br><span class="line">log.Println(err)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">err = db.Ping()</span><br><span class="line">if err != nil &#123;</span><br><span class="line">log.Println(err)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//update(db)</span><br><span class="line">//return</span><br><span class="line"></span><br><span class="line">stmt, err := db.Prepare(&quot;select * from tasks where id = ?&quot;)</span><br><span class="line">if err != nil &#123;</span><br><span class="line">log.Println(stmt)</span><br><span class="line">&#125;</span><br><span class="line">defer stmt.Close()</span><br><span class="line"></span><br><span class="line">rows, err := stmt.Query(3)</span><br><span class="line"></span><br><span class="line">defer rows.Close()</span><br><span class="line"></span><br><span class="line">if err != nil &#123;</span><br><span class="line">log.Println(rows)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">arr := []*task&#123;&#125;</span><br><span class="line"></span><br><span class="line">for rows.Next() &#123;</span><br><span class="line">tmp := &amp;task&#123;&#125;</span><br><span class="line">rows.Scan(&amp;tmp.id, &amp;tmp.content, &amp;tmp.user, &amp;tmp.create_at, &amp;tmp.update_at, &amp;tmp.deleted)</span><br><span class="line">arr = append(arr, tmp)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;go web 开发，操作mysql 是基础啦&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="go" scheme="http://yoursite.com/categories/go/"/>
+    
+    
+      <category term="go" scheme="http://yoursite.com/tags/go/"/>
+    
+      <category term="mysql" scheme="http://yoursite.com/tags/mysql/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>go time 包</title>
+    <link href="http://yoursite.com/2020/06/09/go-time-%E5%8C%85/"/>
+    <id>http://yoursite.com/2020/06/09/go-time-包/</id>
+    <published>2020-06-09T11:47:50.000Z</published>
+    <updated>2020-06-09T12:39:13.881Z</updated>
+    
+    <content type="html"><![CDATA[<p>go 中时间包的使用</p><a id="more"></a><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">time.Now() // time 包的 Time 类型</span><br><span class="line"></span><br><span class="line">// Time</span><br><span class="line">// 2018-05-31 09:22:19 +0800 CST Time 类型打印出来长这样</span><br><span class="line">time.Now() // 获取当前时间的Time 类型</span><br><span class="line">time.Now().Unix()  Time 类型装 int64</span><br><span class="line">time.Now().Unix()Formate(&quot;2006-01-02 15:04:05&quot;) // 格式化</span><br><span class="line">time.Now().in(a)  // 使用某个时区，返回的是Time 类型，所以可以用</span><br><span class="line"></span><br><span class="line">// location</span><br><span class="line">time.Location() // 返回时区信息</span><br><span class="line">a,_ := time.LoadLocation(&quot;UTC&quot;)  // time 包的 location,如果想用时区，就得用这个</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">// 数字转Time</span><br><span class="line">time.Unix(11111)</span><br><span class="line"></span><br><span class="line">// 字符串转Time</span><br><span class="line">time.Parse() 和 Time.Format() 是互逆的两个函数</span><br><span class="line">time.Parse() 解析字符串成Time 的时候需要时区信息，我们可以用Loadlocation获取时区信息，然后作为第三个参数传进去</span><br><span class="line"></span><br><span class="line">// Duration </span><br><span class="line">这个在sleep 的时候经常用到</span><br><span class="line">const (</span><br><span class="line">    Nanosecond  Duration = 1</span><br><span class="line">    Microsecond          = 1000 * Nanosecond</span><br><span class="line">    Millisecond          = 1000 * Microsecond</span><br><span class="line">    Second               = 1000 * Millisecond</span><br><span class="line">    Minute               = 60 * Second</span><br><span class="line">    Hour                 = 60 * Minute</span><br><span class="line">)</span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;go 中时间包的使用&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="go" scheme="http://yoursite.com/categories/go/"/>
+    
+    
+      <category term="go" scheme="http://yoursite.com/tags/go/"/>
+    
+      <category term="time" scheme="http://yoursite.com/tags/time/"/>
+    
+  </entry>
   
   <entry>
     <title>go 环境搭建</title>
@@ -446,67 +494,6 @@
       <category term="旅游" scheme="http://yoursite.com/tags/%E6%97%85%E6%B8%B8/"/>
     
       <category term="云南" scheme="http://yoursite.com/tags/%E4%BA%91%E5%8D%97/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>tp源码分析-middleware和hook</title>
-    <link href="http://yoursite.com/2019/08/09/tp%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90-middleware%E5%92%8Chook/"/>
-    <id>http://yoursite.com/2019/08/09/tp源码分析-middleware和hook/</id>
-    <published>2019-08-09T01:48:42.000Z</published>
-    <updated>2019-08-09T06:29:32.503Z</updated>
-    
-    <content type="html"><![CDATA[<p>这块的中间件主要值的是route 中间件，对于请求发送到controller之前进行一系列的判断，是否缺胳膊少腿不符合要求，如果不符合，返回false, 符合 next($response)</p><p>钩子就是流程执行到某个点，触发用户绑定的方法，之所以这么做是为了用户可以在框架的层面做某些修改，而不用修改框架源码。</p><a id="more"></a><h3 id="Hook"><a href="#Hook" class="headerlink" title="Hook"></a>Hook</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">echo &apos;start&apos;.&quot;&lt;br&gt;&quot;;</span><br><span class="line"> </span><br><span class="line">        // 在触发钩子之前，绑定行为到指定钩子</span><br><span class="line">        Hook::add(&apos;test_1&apos;,&apos;app\\test\\behavior\\BehaviorTest&apos;); // 添加钩子处理</span><br><span class="line">        Hook::add(&apos;test_2&apos;,&apos;app\\test\\behavior\\BehaviorTest&apos;);</span><br><span class="line"> </span><br><span class="line">        // 调用设置了钩子的函数来触发钩子，进行测试</span><br><span class="line">        Hook::listen(&apos;test_1&apos;,[&apos;name&apos;=&gt;&apos;cy&apos;]); // 设置钩子，并执行钩子绑定的函数方法，第二个变量是数组方式传入钩子函数需要的变量</span><br><span class="line">         Hook::listen(&apos;test_2&apos;,[&apos;name&apos;=&gt;&apos;cy&apos;]);</span><br><span class="line">    </span><br><span class="line"> class BehaviorTest &#123;</span><br><span class="line">    public function test_1($param) &#123;</span><br><span class="line"> </span><br><span class="line">        var_dump($param[&apos;name&apos;])</span><br><span class="line">       </span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    public function  test_2($param) &#123;</span><br><span class="line">   var_dump($param[&apos;name&apos;])</span><br><span class="line">        </span><br><span class="line">        &#125;</span><br><span class="line">     &#125;</span><br></pre></td></tr></table></figure><p>php 因为是同步的，所以他这个钩子函数和别的语言理解起来还不一样，比如这个listen， 在监听的同时并且执行了后面类中绑定的方法，而不像一些异步语言，listen之后等待着事件的触发。</p><p>还有就是我们绑定的是类，一个类中会有多个方法，默认的初始方法是run ,这个类中还可以有多个方法，多个方法对应多个钩子，方法名和钩子名一样</p><p>分析一下Hook</p><p>tags   核心属性，不同的钩子对应不同的类（可以是多个类组成的数组）</p><p>bind   别名，也是给类绑定别名</p><p>portal  入口方法名称，默认run</p><p>app 应用对象，App的实例，也是单例模式</p><p>__construct</p><p>构造方法，注入App 实例 $app</p><p>portal</p><p>设置入口函数名称</p><p>alias</p><p>修改bind 属性，给行为（对应某个类中特定方法，也是唯一一个方法，所以这个behavior 方法就是是class）绑定别名</p><p>add</p><p>添加点对应的行为，行为可以是关联数组，key _overlay 会让添加的value 覆盖之前的value, key  first 会让添加的value 排在第一位</p><p>import</p><p>批量导入 点对应的行为，可以是让import 和之前的tags 标签合并，也可以是让之前的tags 覆盖import 导入的内容</p><p>get</p><p>获取tags 属性</p><p>listen </p><p>其实就是执行某个点中绑定的类中的方法</p><p>exec</p><p>执行某个类中方法（方法名确定，就是portal）</p><p>execTag</p><p>执行绑定的类中的方法，先去执行listen 的点对应的method是否存在，如果能执行，执行默认方法 </p><h3 id="middleware"><a href="#middleware" class="headerlink" title="middleware"></a>middleware</h3><p>中间件用的设计模式是装饰器模式，每个装饰器类中只有一个方法，handle，第一个参数是Request请求，第二个参数是匿名函数 next， 还可以接受额外的参数，他这块也用的是反射，所以你如果没有添加第三个参数，在方法内部用func_get_args() 是获取不到额外的参数的，即使你在路由上middleware 传入了这个参数。因为反射没有获取到第三个参数的存在，所以执行的时候就不会传入。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line"></span><br><span class="line">namespace app\http\middleware;</span><br><span class="line"></span><br><span class="line">class Check</span><br><span class="line">&#123;</span><br><span class="line">    public function handle($request, \Closure $next, $pa1 = 1, $pa2 = 2) // 难道只能装一个参数吗</span><br><span class="line">    &#123;</span><br><span class="line">        var_dump($pa1,&apos;|&apos;, $pa2);exit;</span><br><span class="line">        $request-&gt;name = &apos;cy&apos;;</span><br><span class="line">        return $next($request);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Route::get(&apos;/testhook&apos;, &apos;index/testhook&apos;)-&gt;middleware([&apos;Check:name&apos;]);</span><br></pre></td></tr></table></figure><p>如果我们在application下面的middleware.php 中写入，那么全局所有的route都会经过这个中间件</p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;这块的中间件主要值的是route 中间件，对于请求发送到controller之前进行一系列的判断，是否缺胳膊少腿不符合要求，如果不符合，返回false, 符合 next($response)&lt;/p&gt;
-&lt;p&gt;钩子就是流程执行到某个点，触发用户绑定的方法，之所以这么做是为了用户可以在框架的层面做某些修改，而不用修改框架源码。&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="PHP" scheme="http://yoursite.com/categories/PHP/"/>
-    
-    
-      <category term="PHP" scheme="http://yoursite.com/tags/PHP/"/>
-    
-      <category term="TinkPHP" scheme="http://yoursite.com/tags/TinkPHP/"/>
-    
-      <category term="中间件" scheme="http://yoursite.com/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/"/>
-    
-      <category term="钩子" scheme="http://yoursite.com/tags/%E9%92%A9%E5%AD%90/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>tp源码分析-facecde和ioc</title>
-    <link href="http://yoursite.com/2019/08/09/tp%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90-facecde%E5%92%8Cioc/"/>
-    <id>http://yoursite.com/2019/08/09/tp源码分析-facecde和ioc/</id>
-    <published>2019-08-09T01:47:55.000Z</published>
-    <updated>2019-08-09T05:32:05.269Z</updated>
-    
-    <content type="html"><![CDATA[<p>首先我们梳理一下关系，ioc 作为一个容器，是个单例的存在，它存在于自身container的instance 属性中，他还有个instances 属性，作为一个关联数组，key的内容是类名，value 内容是某个类的实例(这个类并不一定要是单例)， 当我们下次再去容器中取这个类实例的时候，还是之前的实例 (!!!千万注意一定是容器中取，才能保证是上次的类实例), 我们从容器中获取类实例，并不一定要提前bindto, bind 本质只是绑定一个别名，通过别名最终还是找到实际的类名，所以没有绑定直接传类名也是可以的。 那什么是facade 呢， 通过返回容器中的类别名或者类实际的名称，去容器中找类实例，然后调用该实际类的方法</p><a id="more"></a><h3 id="Container"><a href="#Container" class="headerlink" title="Container"></a>Container</h3><p>Container 实现了arrayAccess (方便数组调用)， iteratorAggregate (方便foreach循环) , countable(方便 count()) 调用</p><p>instance    container 的单例</p><p>instances  []    装的类的实例</p><p>bind  类标识，通过标识寻找实际类</p><p>name  别名，感觉和前面bind差不太多</p><p>getInstance </p><p>获取container 的单例</p><p>setInstance</p><p>设置container 的单例</p><p>get</p><p>从container 的单例instance 的属性 instances 中获取类的实例，对于container 的单例调用 make 方法</p><p>set</p><p>container 实例 绑定一个类、闭包、实例、接口实现到容器，注意可能并没有生成类的实例，也就是instances属性中可能并没有</p><p>remove </p><p>container 实例中instances 属性删除某个类实例</p><p>clear</p><p>bindTo</p><p>修改bind属性，包括关联数组（merge）, 闭包直接赋值，string 修改bind, 对象，修改bind ,并把 instances中绑定这个实例</p><p>instance </p><p>绑定一个实例到容器中，感觉作用相当于bindTo的一部分</p><p>bound</p><p>判断容器中是否存在类标识或者实例</p><p>exists</p><p>判断容器中是否有该类实例</p><p><img src="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/20190809123749.png" alt=""></p><p>从这个方法很容易判断，instances 中key 是实际的类名</p><p>has</p><p>调用的上面bound 方法</p><p>make</p><p>创建类的实例， 第三个参数newInstance 类似我之前写的那个token 文件的第三个参数 force，强制刷新实例。</p><p>make 会先去查看是否有别名，然后换算成实际类的名称，去instances属性中查找。如果没有只能生成啦。如果是匿名函数，通过反射获取参数，然后绑定参数，如果有依赖注入，首先查看是否有传入这个实例，没有的话生成。如果是类的话，会先判断是否有__make 方法，没有的话调用constructor 构造函数，执行函数的过程类似上面执行匿名函数</p><p>delete</p><p>删除instances中的实例</p><p>all</p><p>输出instances内容，也就是生成的所有实例</p><p>flush</p><p>置空 instances ， bind， name 属性</p><p>invokeFunction</p><p>从一个方法中获取反射，然后执行这个方法</p><p>invokeMethod</p><p>从一个类的方法中获取反射，然后执行这个方法</p><p>invokeReflectMethod</p><p>这个方式要求传入实例还有反射，还有参数，（所有的参数都给备齐了）就相当于上面方法的子方法，上面方法也是调用这个方法去实际执行反射类中的方法</p><p>invoke</p><p>实现方法</p><p>invokeClass</p><p>实现类</p><p>bindParams </p><p>生成类或者方法需要的参数，支持依赖注入</p><p>getObjectParam</p><p>bindParams 对于依赖注入的处理需要用到这个方法</p><p>后面的方法都是为了上面那几个接口中方法的实现，操作的都是instance 实例中的instances属性</p><h3 id="Facade"><a href="#Facade" class="headerlink" title="Facade"></a>Facade</h3><p>bind 别名，类似container 中的bind</p><p>alwaysNewInstance ，因为facade 本质上也是从container 中取实例，所以也需要这个强制刷新属性</p><p>bind</p><p>绑定别名</p><p>createFacade</p><p>先根据继承了facade 的类中getFacadeClass 返回的内容中确定类，如果没有，去bind属性中查找（注意这里是self）,都没有的话就用传入的类名。确定了类名去container 中找实例，没有的话自动生成</p><p>getFacadeClass </p><p>返回容器中类的别名或者直接返回类的名称</p><p>instance</p><p>make</p><p>和createFacade 差不多</p><p>__callStatic</p><p>facade 的核心，通过createFacade 实例化实际类，然后用这个实例去调用method方法 （一定要注意我们在调用类中的方法的时候除了static都是在一个类实例上调用的方法，我们的方法中可能会用到\$this ,这个\$this就是对象）</p><h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>以Config 举例，\Config 通过class_alias 实际找到的是 \think\facade\config,然后这个类中没有我们想要的方法，调用的是父类 facade中的__callStatic, 这个方法先通过createFacade 生成实例，实例是先从container 中查找别名换成真的类名，然后去instance中查找实例，有就返回，没有再生成。实例获取到后，再去执行方法</p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;首先我们梳理一下关系，ioc 作为一个容器，是个单例的存在，它存在于自身container的instance 属性中，他还有个instances 属性，作为一个关联数组，key的内容是类名，value 内容是某个类的实例(这个类并不一定要是单例)， 当我们下次再去容器中取这个类实例的时候，还是之前的实例 (!!!千万注意一定是容器中取，才能保证是上次的类实例), 我们从容器中获取类实例，并不一定要提前bindto, bind 本质只是绑定一个别名，通过别名最终还是找到实际的类名，所以没有绑定直接传类名也是可以的。 那什么是facade 呢， 通过返回容器中的类别名或者类实际的名称，去容器中找类实例，然后调用该实际类的方法&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="PHP" scheme="http://yoursite.com/categories/PHP/"/>
-    
-    
-      <category term="PHP" scheme="http://yoursite.com/tags/PHP/"/>
-    
-      <category term="ThinkPHP" scheme="http://yoursite.com/tags/ThinkPHP/"/>
-    
-      <category term="设计模式" scheme="http://yoursite.com/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
-    
-      <category term="facecde" scheme="http://yoursite.com/tags/facecde/"/>
-    
-      <category term="ioc" scheme="http://yoursite.com/tags/ioc/"/>
-    
-      <category term="依赖注入" scheme="http://yoursite.com/tags/%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5/"/>
     
   </entry>
   
