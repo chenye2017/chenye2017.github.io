@@ -90,7 +90,7 @@
 <meta property="og:description" content="go越来越流行了，加上公司的业务需求，迫使我必须得开始学习go了">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/20200606164735.png">
-<meta property="og:updated_time" content="2020-06-06T08:51:03.191Z">
+<meta property="og:updated_time" content="2020-07-01T13:02:18.471Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="go 环境搭建">
 <meta name="twitter:description" content="go越来越流行了，加上公司的业务需求，迫使我必须得开始学习go了">
@@ -395,13 +395,14 @@
 <p>goroot  就是我们（linux 下解压完go 安装包的地址，win 和 mac 下是我们自己制定的go 安装路基）</p>
 <p>gopath 是我们自己制定的一个文件夹，需要在这下面手动建立 bin， pkg， src 三个目录，其中bin 是我们日后编译生成二进制文件的地方，pkg 很重要，里面的mod 文件就是我们安装的第三方库所在的目录，src 就是在 go mod 没出现前，我们存放我们项目代码的地方(之前就觉得我们的代码只能存放在一个地方，很不方便，go mod 的出现就不需要管这个文件夹了）</p>
 <p>go env 我们可以查看和 go 相关的 环境变量，必要重要的有  GO111MODULE, 怎么设置  go env -w </p>
-<p> GO111MODULE=”on”,  还有 GOPROXY=<a href="https://goproxy.cn,direct，" target="_blank" rel="noopener">https://goproxy.cn,direct，</a> goproxy.cn 就是 七牛云搞的golang 下载包中国镜像，后面的direct 代表如果找不到，就直接按照网址下载。go 的第三方包的命名很好玩，基本就是这个仓库所在的可以访问的url 路径，比如 code.shihuo.cn/xxx/xxx, 不需要像composer 那样中间走一层代理，那层代理还要给你开访问权限，才能下载。</p>
+<p> GO111MODULE=”on”,  还有 GOPROXY=<a href="https://goproxy.cn,direct，" target="_blank" rel="noopener">https://goproxy.cn,direct，</a> goproxy.cn 就是 七牛云搞的golang 下载包中国镜像，后面的direct 代表如果找不到，就直接按照网址下载。go 的第三方包的命名很好玩，基本就是这个仓库所在的可以访问的url 路径，比如 code.chenye2017.cn/xxx/xxx, 不需要像composer 那样中间走一层代理，那层代理还要给你开访问权限，才能下载。</p>
 </li>
 </ol>
 <p>3.在用goland 编辑的时候，会遇到包找不到的请款，我们需要手动 seting 去配置 goroot  gopath ，还要开启vgo（就是gomod）</p>
 <p><img src="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/20200606164735.png" alt=""></p>
 <p>这个地方要选空，否则还是会出现包找不到的问题。</p>
 <p>4.go mod 的使用，go mod init xxx 初始化项目，生成 go mod 文件，类似composer init 生成 composer.json，go run main.go 开始跑项目啦。会自动下载需要的安装包，这个相比于composer install 更加的方便。</p>
+<p>今天在初始化别人项目的时候发现goland 的 go vgo 已经设置好了，但是还是找不到go module 的位置，仔细一看发现是自定义的package name 找不到。当我们想用go module 的时候，我们一定要 go init 起一个默认的命名空间，然后当我们使用自己定义的包名的时候，都会用到这个这个命名空间做前缀。</p>
 <p>以上就是总结的 go 环境安装，完结~~</p>
 
       
@@ -585,7 +586,7 @@ var jiathis_config={
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">95</span>
+                  <span class="site-state-item-count">96</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -596,7 +597,7 @@ var jiathis_config={
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-count">20</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -607,7 +608,7 @@ var jiathis_config={
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">92</span>
+                  <span class="site-state-item-count">94</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -726,7 +727,7 @@ var jiathis_config={
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count"> | 博客全站共150.6k字</span>
+  <span class="post-count"> | 博客全站共150.9k字</span>
 </div>
 
 
