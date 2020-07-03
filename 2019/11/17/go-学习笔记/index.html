@@ -84,14 +84,14 @@
 <meta name="description" content="php 活不下去了，┭┮﹏┭┮，开始学习go了，其实还好，多一门语言，多一个视角，~希望2020年识货给我的礼物就是go 和 node 的编写技能">
 <meta name="keywords" content="go,php">
 <meta property="og:type" content="article">
-<meta property="og:title" content="go 学习笔记">
+<meta property="og:title" content="go 基础变量">
 <meta property="og:url" content="http://yoursite.com/2019/11/17/go-学习笔记/index.html">
 <meta property="og:site_name" content="语法糖的博客">
 <meta property="og:description" content="php 活不下去了，┭┮﹏┭┮，开始学习go了，其实还好，多一门语言，多一个视角，~希望2020年识货给我的礼物就是go 和 node 的编写技能">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-01-17T13:42:35.926Z">
+<meta property="og:updated_time" content="2020-07-02T08:12:30.665Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="go 学习笔记">
+<meta name="twitter:title" content="go 基础变量">
 <meta name="twitter:description" content="php 活不下去了，┭┮﹏┭┮，开始学习go了，其实还好，多一门语言，多一个视角，~希望2020年识货给我的礼物就是go 和 node 的编写技能">
 
 
@@ -128,7 +128,7 @@
 
 
 
-  <title>go 学习笔记 | 语法糖的博客</title>
+  <title>go 基础变量 | 语法糖的博客</title>
   
 
 
@@ -310,7 +310,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">go 学习笔记</h1>
+          <h1 class="post-title" itemprop="name headline">go 基础变量</h1>
         
 
         <div class="post-meta">
@@ -384,13 +384,11 @@
       
         <p>php 活不下去了，┭┮﹏┭┮，开始学习go了，其实还好，多一门语言，多一个视角，~希望2020年识货给我的礼物就是go 和 node 的编写技能</p>
 <a id="more"></a>
-<h3 id="环境安装"><a href="#环境安装" class="headerlink" title="环境安装"></a>环境安装</h3><p>和php 的安装基本没啥区别，找篇文章就能解决。需要注意的是</p>
-<ol>
-<li>go 1.13 以上加了 goproxy 的功能，我的理解就是类似composer 中国镜像， github 上有个goproxy-cn, 修改一下就好了。</li>
-<li>然后go 运行脚本是 go run  xxx.go, 需要这个脚本 package 是main, 执行的当前方法是 main (go build 那些以后用到再补充)</li>
-<li>gopath 那些概念在1.13以上好像都淡化了，以后用到再补充</li>
-</ol>
-<h3 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h3><h4 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h4><p>变量申明多种方式</p>
+<h4 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h4><p>slice 切片的申明</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">slice  底层是指向数组的指针,所以如果我们用 var 去声明的话，默认得到的是一个nil</span><br><span class="line">相比较map 的nil， slice 的 nil 我们是可以append，map的nil 之后我们是没法属性或者给属性赋值的。</span><br><span class="line"></span><br><span class="line">一般 arr := make(a, 0, 10)</span><br><span class="line">arr := []int&#123;1,2&#125;  // 这种方式也用的多，容易被忽略</span><br><span class="line"></span><br><span class="line">ps: 在go中经常有 type cy int, 这种别名</span><br><span class="line">[]cy&#123;&#125;, 这样给切片值其实很正常，类似 []int&#123;&#125;</span><br></pre></td></tr></table></figure>
+<p>map 的申明</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">map</span><br><span class="line">map[string]string&#123;&quot;namme&quot;: &quot;ccc&quot;&#125;</span><br></pre></td></tr></table></figure>
+<p>变量申明多种方式</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">var num int  // 没给初始值，默认 0</span><br><span class="line">num := 1  // 这样更简洁更方便， 函数外不给使用</span><br><span class="line"></span><br><span class="line">int, float64, bool 这都是和别的语言一样的，array , slice, map</span><br><span class="line"></span><br><span class="line">arr1 := [...]int&#123;1,2&#125;  // 因为不能扩展，用的比较少</span><br><span class="line">slice1 := []int&#123;1,2&#125;  // 关联数组</span><br><span class="line">map1 := map1[string]string&#123;&#125; // 索引数组</span><br><span class="line"></span><br><span class="line">// 换一种看法看go， 下面两种都代表数组，只是填充的对象是byte 或者是rune</span><br><span class="line">[]byte&#123;&#125;</span><br><span class="line">[]rune&#123;&#125;</span><br><span class="line">(不管是byte 还是 rune，对应的字符序列都是 十进制，要想转换成 十六进制需要通过 hex.encodetostring ,或者 printf , 第一个只能对 slice 处理，第二个可以对数组)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">// 结构体，类似</span><br><span class="line">type cy struct &#123;</span><br><span class="line">		name string `json:Name` // json 的时候生成key 的名称</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">cy1 := new(cy)</span><br><span class="line">cy1.name = &quot;haha&quot;</span><br><span class="line"></span><br><span class="line">fmt.Println(cy1.name)</span><br><span class="line">//cy 类似类名，所以我们还需要变量名</span><br><span class="line"></span><br><span class="line">// 别名</span><br><span class="line">type</span><br><span class="line"></span><br><span class="line">// map value 定义成某个字段太局限了，可以 map[string]interface&#123;&#125; 这样，更灵活</span><br><span class="line">// :=  map[string]interface&#123;&#125;&#123;&#125; ,一定要给初始值</span><br><span class="line"></span><br><span class="line">// go 中 printf %v  struct 这种不够，因为 名称打印不出来，需要 %+v 打印</span><br></pre></td></tr></table></figure>
 <p>一次性给多个值</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">arr1, arr2 := []int&#123;1,2&#125;, []int&#123;2,3&#125;</span><br></pre></td></tr></table></figure>
@@ -590,7 +588,7 @@ var jiathis_config={
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">96</span>
+                  <span class="site-state-item-count">99</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -612,7 +610,7 @@ var jiathis_config={
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">94</span>
+                  <span class="site-state-item-count">95</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -692,7 +690,7 @@ var jiathis_config={
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#环境安装"><span class="nav-number">1.</span> <span class="nav-text">环境安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#语法"><span class="nav-number">2.</span> <span class="nav-text">语法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#变量"><span class="nav-number">2.1.</span> <span class="nav-text">变量</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#循环"><span class="nav-number">2.2.</span> <span class="nav-text">循环</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#变量"><span class="nav-number">1.</span> <span class="nav-text">变量</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#循环"><span class="nav-number">2.</span> <span class="nav-text">循环</span></a></li></ol></div>
             
 
           </div>
@@ -747,7 +745,7 @@ var jiathis_config={
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count"> | 博客全站共150.9k字</span>
+  <span class="post-count"> | 博客全站共152.9k字</span>
 </div>
 
 
