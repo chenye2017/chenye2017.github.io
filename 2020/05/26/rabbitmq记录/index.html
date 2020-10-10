@@ -91,7 +91,7 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/20200526162641.png">
 <meta property="og:image" content="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/20200526162949.png">
-<meta property="og:updated_time" content="2020-06-07T10:55:50.893Z">
+<meta property="og:updated_time" content="2020-10-10T07:21:06.465Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="rabbitmq记录">
 <meta name="twitter:description" content="rabbitmq是一款实现amqp 协议的软件，我们在通过php 使用rabbitmq 的时候有两种方式（类似php 使用redis，一种是通过c扩展的方式，一种是纯php实现的lib 包。其实还有异步引擎，swoole是通过c扩展的方式，workman 是通过php 实现的lib包），一种是安装php 的amqp扩展 http://docs.php.net/manual/da/book.amqp">
@@ -461,6 +461,11 @@
 <p>识货从来没有nack 这种操作，只有ack。</p>
 <p>nack 不等同于超时，超时是还没有应答，属于 unack，nack 是应答错误 ，是程序执行完了。（nack 如果需要重回队列，需要设置 repeat  true，消息回到队列头部重新开始消费，我们需要注意消费消息的幂等性， 还要小心造成死循环。如果没有设置repeat true ，消息会被丢弃）</p>
 <p>unack 的消息在这个消费者挂掉重启的时候会重新被消费 （或者可以被自己的兄弟消费者消费掉）</p>
+<p>好久没用rabbitmq ，认知又有点生疏，以识货代码为例</p>
+<p>produce</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">$routingKey = $queName = &apos;apps_kb_other&apos;;</span><br><span class="line">$connection = sfContext::getInstance()-&gt;getDatabaseConnection(&apos;rabbitmqHeartbeat&apos;);</span><br><span class="line">            $arguments = array(</span><br><span class="line">                &quot;x-dead-letter-exchange&quot; =&gt; array(&quot;S&quot;, &quot;amq.topic&quot;),</span><br><span class="line">                &quot;x-message-ttl&quot; =&gt; array(&quot;I&quot;, 2000),</span><br><span class="line">                &quot;x-dead-letter-routing-key&quot; =&gt; array(&quot;S&quot;, $routingKey)</span><br><span class="line">            );</span><br><span class="line">            $channel = $connection-&gt;channel();</span><br><span class="line"></span><br><span class="line">            //var_dump(get_class($channel));exit;</span><br><span class="line">            $channel-&gt;queue_declare($queName, false, true, false, false, false, $arguments);</span><br><span class="line">      </span><br><span class="line">     // 声明了一个队列，但在识货这个队列是没啥用的，一般就是等待这个队列的message ttl 到期，然后给到交换机 amq.topic, 利用routing key 绑定一个新的队列，消费者消费这个队列。</span><br></pre></td></tr></table></figure>
+<p>consumer</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">$routingKey = &apos;apps_kb_other&apos;;</span><br><span class="line">           $quename = &apos;apps_kb_other_queue&apos;;</span><br><span class="line"></span><br><span class="line">       //    $this-&gt;callback(&apos;&apos;);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">           // mq consume</span><br><span class="line">           $channel = $connection-&gt;channel();</span><br><span class="line">           $channel-&gt;queue_declare($quename, false, true, false, false, false);</span><br><span class="line">	// 这个地方声明的是一个新的queue，跟着routingkey 绑定</span><br><span class="line"></span><br><span class="line">           $channel-&gt;basic_qos(null, 10, null);</span><br><span class="line">         // 一次性不要取出来过多，导致unack 过多  </span><br><span class="line">           $channel-&gt;queue_bind($quename, &quot;amq.topic&quot;, $routingKey);</span><br><span class="line">	// 这个新的队列和routingkey 绑定，一定不要和之前那个ttl message 的队列名称一样，虽然不会报错</span><br><span class="line">	.</span><br><span class="line"></span><br><span class="line">           $channel-&gt;basic_consume($quename, &apos;&apos;, false, false, false, false, [$this, &apos;callback&apos;]);</span><br><span class="line">          // 这个地方quename 也不要写成routingkey 虽然也不会报错吧</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -652,7 +657,7 @@ var jiathis_config={
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">99</span>
+                  <span class="site-state-item-count">102</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -674,7 +679,7 @@ var jiathis_config={
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">95</span>
+                  <span class="site-state-item-count">96</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -809,7 +814,7 @@ var jiathis_config={
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count"> | 博客全站共152.9k字</span>
+  <span class="post-count"> | 博客全站共154.0k字</span>
 </div>
 
 

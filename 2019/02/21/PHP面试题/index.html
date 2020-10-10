@@ -91,7 +91,7 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/20190901201717.png">
 <meta property="og:image" content="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/20190718195208.png">
-<meta property="og:updated_time" content="2019-09-26T13:19:16.673Z">
+<meta property="og:updated_time" content="2020-07-10T03:24:15.155Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="PHP面试题">
 <meta name="twitter:description" content="收集一些总是考的面试题">
@@ -401,7 +401,7 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">字符串比较</span><br><span class="line">&apos;111aa&apos; == 111  // true</span><br></pre></td></tr></table></figure>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">setcookie(xxx);</span><br><span class="line">var_dump($_COOKIE);  // 空值，本次还没有携带cookie</span><br></pre></td></tr></table></figure>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">常用string ,arr 函数</span><br><span class="line">array:</span><br><span class="line">array_merge</span><br><span class="line">array_slice</span><br><span class="line">array_values</span><br><span class="line">array_keys</span><br><span class="line">array_columns</span><br><span class="line">is_array</span><br><span class="line">array_key_exists</span><br><span class="line">array_change_key_case</span><br><span class="line">array_diff</span><br><span class="line">array_intersect</span><br><span class="line">array_fill</span><br><span class="line">array_sum</span><br><span class="line">array_map</span><br><span class="line">array_reduce</span><br><span class="line">array_reverse</span><br><span class="line">key</span><br><span class="line">current</span><br><span class="line">next</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">string:</span><br><span class="line">explode</span><br><span class="line">substr</span><br><span class="line">strpos</span><br><span class="line">preg_split</span><br><span class="line">preg_match</span><br><span class="line">strstr</span><br><span class="line">sort</span><br><span class="line">rsort</span><br><span class="line">asort</span><br><span class="line">arsort</span><br><span class="line">ksort</span><br><span class="line">krsort</span><br><span class="line">usrot</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">array_merge 和 +  的区别</span><br><span class="line">+ 同key, 前面覆盖后面 （index 或者 关联）</span><br><span class="line">merge 关联后面覆盖前面，数字索引直接扩展开了 // $a = [1 =&gt;2]; $v = [1 =&gt; 3]; array_merge($a,$v); 输出 [2, 3]; 重新排序</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">array_merge 和 +  的区别</span><br><span class="line">+ 同key, 前面覆盖后面 （index 或者 关联）</span><br><span class="line">merge 关联后面覆盖前面，数字索引直接扩展开了 // $a = [1 =&gt;2]; $v = [1 =&gt; 3]; array_merge($a,$v); 输出 [2, 3]; 重新排序</span><br><span class="line"></span><br><span class="line">在写代码的时候，如果我们确定key 不一样，可以考虑下 +， 因为merge 会把数字索引重新排序，这个可能是我们不想看到的</span><br></pre></td></tr></table></figure>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">php7新特性</span><br><span class="line"></span><br><span class="line">1.throwable 分成 error 和 exception，都可以被捕获</span><br><span class="line">2.太空舱运算符， 一般usort 里面排序</span><br><span class="line">3.三目运算符的缩写， ??</span><br><span class="line">4.define可以定义常量数组 (以前好像只有const 可以，const) //  const 和 define 的区别，但感觉实际还是define 用的比较多 https://www.jianshu.com/p/a38b81433183</span><br><span class="line">5.返回值也能严格要求返回类型</span><br><span class="line">6.传入参数类型声明的扩展，比如int</span><br><span class="line">7.命名空间合并</span><br><span class="line">8.closure call 替代bindTo 更加的方便</span><br></pre></td></tr></table></figure>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">php7为什么相较于php5性能有很大提升？</span><br><span class="line">减少内存分配次数，优化底层zval 数据结构(64 位减少到24 位)，字符串解析的优化，缓存hash</span><br></pre></td></tr></table></figure>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">php垃圾回收机制</span><br><span class="line">1、以php的引用计数机制为基础（php5.3以前只有该机制）（refcount 是1 的时候就删除， is_ref 是否是引用类型）</span><br><span class="line">2、同时使用根缓冲区机制，当php发现有存在循环引用的zval时，就会把其投入到根缓冲区，当根缓冲区达到配置文件中的指定数量后，就会进行垃圾回收，以此解决循环引用导致的内存泄漏问题（php5.3开始引入该机制）（为了防止子变量中引用父变量，父变量unset 之后refcount 到不了0 一直得不到回收）</span><br><span class="line">其实最简单的防止那种慢性内存溢出的方式就是php-fpm 的连接重启(当然你要是一次性消耗了太多内存，还是会内存溢出的)</span><br></pre></td></tr></table></figure>
@@ -657,7 +657,7 @@ var jiathis_config={
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">99</span>
+                  <span class="site-state-item-count">102</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -679,7 +679,7 @@ var jiathis_config={
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">95</span>
+                  <span class="site-state-item-count">96</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -814,7 +814,7 @@ var jiathis_config={
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count"> | 博客全站共152.9k字</span>
+  <span class="post-count"> | 博客全站共154.0k字</span>
 </div>
 
 
