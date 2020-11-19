@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yoursite.com/2019/10/01/%E4%B8%89%E4%B8%AA%E6%98%9F%E6%9C%9F%E7%9A%84PHP%E9%9D%A2%E8%AF%95/</loc>
+    
+    <lastmod>2020-11-19T14:25:28.850Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/2020/07/14/go-%E5%B0%8F%E7%9F%A5%E8%AF%86%E7%82%B9/</loc>
     
     <lastmod>2020-11-19T13:06:37.743Z</lastmod>
@@ -194,13 +201,6 @@
     <loc>http://yoursite.com/2018/05/25/PHP-yield/</loc>
     
     <lastmod>2019-10-11T13:51:19.732Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2019/10/01/%E4%B8%89%E4%B8%AA%E6%98%9F%E6%9C%9F%E7%9A%84PHP%E9%9D%A2%E8%AF%95/</loc>
-    
-    <lastmod>2019-10-01T15:51:38.926Z</lastmod>
     
   </url>
   
