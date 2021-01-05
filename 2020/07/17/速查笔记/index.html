@@ -89,7 +89,10 @@
 <meta property="og:description" content="工作中有些小东西总容易忘，主要本身也不用去深究，只需要记住怎么使用就行了，记录下，方便平时的快速查找，临时搜索可能造成的问题就是需要提炼出对自己有效的信息。">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/20201123170141.png">
-<meta property="og:updated_time" content="2020-11-23T09:02:22.392Z">
+<meta property="og:image" content="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/20210105104642.png">
+<meta property="og:image" content="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/20210105104714.png">
+<meta property="og:image" content="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/20210105104854.png">
+<meta property="og:updated_time" content="2021-01-05T02:57:32.160Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="速查笔记">
 <meta name="twitter:description" content="工作中有些小东西总容易忘，主要本身也不用去深究，只需要记住怎么使用就行了，记录下，方便平时的快速查找，临时搜索可能造成的问题就是需要提炼出对自己有效的信息。">
@@ -393,6 +396,17 @@
 <p><a href="https://www.jianshu.com/p/94a145564254" target="_blank" rel="noopener">https://www.jianshu.com/p/94a145564254</a></p>
 <p><img src="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/20201123170141.png" alt=""></p>
 <p>我们不能修改默认的搜索引擎，比如谷歌，想修改的话只能新建，然后添加默认，下面那些乱七八糟的都能删除了</p>
+<h1 id="Charles"><a href="#Charles" class="headerlink" title="Charles"></a>Charles</h1><p>其实一直有个痛点，我们用charles 抓的包之前我不知道咋修改参数，导致我每次想改变请求的时候，我都是copy 到 postman上修改成我想要的请求，这样又有一个痛点就是返回的结果没有直接在手机上展示，不够直观，···可是还能忍</p>
+<p>直到我们现在go 本地开发，客户端的请求是 <a href="http://sh-gateway.xxx.xxx/xxxxx" target="_blank" rel="noopener">http://sh-gateway.xxx.xxx/xxxxx</a>, 而我本地接口是 <a href="http://127.0.0.1:4040/xxxx" target="_blank" rel="noopener">http://127.0.0.1:4040/xxxx</a>, 这个其实前端经常遇到，他们的解决办法是用proxy， 之前我做vue 的时候还不知道这个插件的作用，猜测一下，其实就是类似这个proxy 接收到以后该上线的请求，构造一个新的curl ，发送到新的地址（所以这个proxy 是node 写的~~）</p>
+<p>其实charles 也自带这个功能，我们可以用他的rewrite功能</p>
+<p>tools —&gt; rewrite </p>
+<p><img src="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/20210105104642.png" alt=""></p>
+<p>上面那个是要匹配的原始url， 如下</p>
+<p><img src="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/20210105104714.png" alt=""></p>
+<p>下面那个是要修改的请求</p>
+<p><img src="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/20210105104854.png" alt=""></p>
+<p>可以修改 path url， body 等，</p>
+<p>服务端对于客户端请求的ip怎么获取 ？ 还记得以前 看tp源码时候吗，通过x-word-for 之类的header 参数，所以这里我们只要添加对应header 参数就可以了</p>
 
       
     </div>
@@ -547,8 +561,17 @@ var jiathis_config={
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -660,6 +683,22 @@ var jiathis_config={
       </section>
 
       
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Charles"><span class="nav-number">1.</span> <span class="nav-text">Charles</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
 
       
 
@@ -674,7 +713,7 @@ var jiathis_config={
     <footer id="footer" class="footer">
       <div class="footer-inner">
         <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-<div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
@@ -708,7 +747,7 @@ var jiathis_config={
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count"> | 博客全站共162.1k字</span>
+  <span class="post-count"> | 博客全站共163.4k字</span>
 </div>
 
 
