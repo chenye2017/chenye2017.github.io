@@ -1,0 +1,972 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="面试,golang," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="语法糖的博客" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="不知道还能在虎扑呆多久, 又要开始漂泊的生活">
+<meta name="keywords" content="面试,golang">
+<meta property="og:type" content="article">
+<meta property="og:title" content="新的起点">
+<meta property="og:url" content="http://yoursite.com/2021/02/06/新的起点/index.html">
+<meta property="og:site_name" content="语法糖的博客">
+<meta property="og:description" content="不知道还能在虎扑呆多久, 又要开始漂泊的生活">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/20210206122055.png">
+<meta property="og:updated_time" content="2021-02-06T07:24:52.598Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="新的起点">
+<meta name="twitter:description" content="不知道还能在虎扑呆多久, 又要开始漂泊的生活">
+<meta name="twitter:image" content="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/20210206122055.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2021/02/06/新的起点/"/>
+
+
+
+
+
+  <title>新的起点 | 语法糖的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+
+    <script type="text/javascript" src="/live2d/script.js"></script>
+    <canvas id="live2dcanvas" width="150" height="300" class="live2d"></canvas>
+    <style>
+      #live2dcanvas {
+        position: fixed;
+        right: 0px;
+        z-index: 999;
+        pointer-events: none;
+        bottom: -40px;
+      }
+    </style>
+    <script>loadlive2d("live2dcanvas" ,"/live2d/assets/wanko/wanko.model.json",0.5)</script>
+  
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">语法糖的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">爱动漫，热爱LOL</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+
+
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/02/06/新的起点/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="chenye2017">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/my.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="语法糖的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">新的起点</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-02-06T10:41:06+08:00">
+                2021-02-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/面试/" itemprop="url" rel="index">
+                    <span itemprop="name">面试</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>不知道还能在虎扑呆多久, 又要开始漂泊的生活</p>
+<a id="more"></a>
+<h3 id="Redis"><a href="#Redis" class="headerlink" title="Redis"></a>Redis</h3><ul>
+<li>常用的数据结构</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">string : 配置项，json 之后的存储</span><br><span class="line"></span><br><span class="line">hash  :对于对象的存储，比如设备，不需要一次性取出所有的字段内容</span><br><span class="line"></span><br><span class="line">set : 去重</span><br><span class="line"></span><br><span class="line">sortSet :  排行榜</span><br><span class="line"></span><br><span class="line">list  : 队列任务</span><br></pre></td></tr></table></figure>
+<ul>
+<li>lua 的使用</li>
+</ul>
+<ul>
+<li>分布式锁</li>
+</ul>
+<ul>
+<li><p>数据持久化</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">RDB 和 aof</span><br><span class="line"></span><br><span class="line">简单说rdb 就是备份数据，aof 是备份指令。</span><br><span class="line"></span><br><span class="line">RDB（Redis DataBase）详解：</span><br><span class="line">RDB 是 Redis 默认的持久化方案。在指定的时间间隔内，执行指定次数的写操作，则会将内存中的数据写入到磁盘中。即在指定目录下生成一个 dump.rdb 文件。Redis 重启会通过加载 dump.rdb 文件恢复数据。</span><br><span class="line"></span><br><span class="line">Redis 提供了 SAVE 和 BGSAVE 两个命令来生成 RDB 文件，区别是前者是阻塞的，后者是后台 fork 子进程进行，不会阻塞主进程处理命令请求。载入 RDB 文件不需要手工运行，而是 server 端自动进行，只要启动时检测到 RDB 文件存在 server 端便会载入 RDB 文件重建数据集。当然上面简介中已经提到，如果同时存在 AOF 的话会优先使用 AOF 重建数据集，因为其保存的数据更完整。</span><br><span class="line"></span><br><span class="line">优点：</span><br><span class="line">适合大规模的数据恢复，如果业务对数据完整性和一致性要求不高，RDB 的启动速度更快，是很好的选择。</span><br><span class="line">RDB 文件简洁，它保存了某个时间点的 Redis 数据集，适合用于做备份。你可以设定一个时间点对 RDB 文件进行归档，如果 1s 间隔保存一次快照，这样就能在需要的时候很轻易地把数据恢复到不同的版本。</span><br><span class="line">考虑到磁盘硬件故障问题，RDB 文件很适合用于灾备，因为单文件可以很方便地传输到另外的数据中心。</span><br><span class="line">RDB 的性能很好，需要进行持久化时，主进程会 fork 一个子进程出来，然后把持久化的工作交给子进程，自己不会有相关的 I/O 操作。</span><br><span class="line">缺点：</span><br><span class="line">1、数据的完整性和一致性不高，因为 SAVE 命令执行是有时间间隔的，比如 5min 备份一次，RDB 可能在最后一次备份时宕机，这 5min 的时间窗数据可能丢失。</span><br><span class="line"></span><br><span class="line">2、备份时占用内存，因为 Redis 在备份时会独立创建一个子进程，将数据写入到一个临时文件（此时内存中的数据是原来的两倍），最后再将临时文件替换之前的备份文件。所以 Redis 的持久化和数据的恢复要选择在夜深人静的时候执行是比较合理的。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">AOF（Append Only File），Redis 默认不开启。它的出现是为了弥补 RDB 的不足（RDB 可能丢失一个时间窗口的数据），所以它采用日志的形式来记录每个写操作，生成一个 appendonly.aof 文件，并将日志追加到文件末尾。Redis 重启的会根据日志文件的内容将写指令从前到后执行一次以完成数据的恢复工作。有点类似 Mysql 的 binlog。</span><br><span class="line"></span><br><span class="line">优点：</span><br><span class="line">AOF 策略最大限度地保证数据不丢失，数据的完整性和一致性更高。</span><br><span class="line"></span><br><span class="line">缺点：</span><br><span class="line">AOF 备份产生的 appendonly.aof 文件较大，数据恢复的时候，也会比较慢，Redis 针对 AOF 文件大的问题，提供重写的瘦身机制。</span><br><span class="line"></span><br><span class="line">面试官：OK（这不是简单概括了，至于具体配置参数就不问了，这一块用的不多。）</span><br></pre></td></tr></table></figure>
+<p>​</p>
+</li>
+</ul>
+<ul>
+<li><p>redis 为什么快</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1.单线程不代表一定就慢，单线程有一个最大好处就是节省线程切换的开销，更不用考虑并发读写带来的复杂操作场景，这就大大节省了线程间切换的时间了。</span><br><span class="line"></span><br><span class="line">2.Reids 是基于内存的读写操作，内存肯定比传统磁盘IO数据库快</span><br><span class="line"></span><br><span class="line">3.Reids 核心是基于非阻塞的IO多路复用机制</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>redis 底层数据结构</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">string 还是蛮简单的</span><br><span class="line">/*  </span><br><span class="line"> * 保存字符串对象的结构  </span><br><span class="line"> */  </span><br><span class="line">struct sdshdr &#123;  </span><br><span class="line">      </span><br><span class="line">    // buf 中已占用空间的长度  </span><br><span class="line">    int len;  </span><br><span class="line">  </span><br><span class="line">    // buf 中剩余可用空间的长度  </span><br><span class="line">    int free;  </span><br><span class="line">  </span><br><span class="line">    // 数据空间  </span><br><span class="line">    char buf[];  </span><br><span class="line">&#125;;</span><br><span class="line">len 变量，用于记录buf 中已经使用的空间长度。</span><br><span class="line">free 变量，用于记录buf 中还空余的空间，初次分配空间，一般没有空余，在对字符串修改的时候，会有剩余空间出现，这样做是为了杜绝C语言中缓冲区溢出的可能性，当我们需要对一个SDS进行修改的时候，Redis 会在执行拼接操作之前，预先检查给定SDS空间是否足够，如果不够，会先拓展SDS的空间，然后再执行拼接操作。</span><br><span class="line">buf 字符数组，用于记录我们的字符串（记录Redis）。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">list 双端链表</span><br><span class="line"></span><br><span class="line">链表还是常规的普通双端链表，可以支持反向查找和遍历，更方便操作，通过增删节点来灵活地调整链表的长度，双端链表在Redis内部也是被多次使用：</span><br><span class="line"></span><br><span class="line">事务模块使用双端链表依序保存输入的命令。</span><br><span class="line"></span><br><span class="line">服务器模块使用双端链表来保存多个客户端。</span><br><span class="line"></span><br><span class="line">订阅/发送模块使用双端链表来保存订阅模式的多个客户端。</span><br><span class="line"></span><br><span class="line">事件模块使用双端链表来保存时间事件（time event）。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">sortSet</span><br><span class="line"></span><br><span class="line">链表还是常规的普通双端链表，可以支持反向查找和遍历，更方便操作，通过增删节点来灵活地调整链表的长度，双端链表在Redis内部也是被多次使用：</span><br><span class="line"></span><br><span class="line">事务模块使用双端链表依序保存输入的命令。</span><br><span class="line"></span><br><span class="line">服务器模块使用双端链表来保存多个客户端。</span><br><span class="line"></span><br><span class="line">订阅/发送模块使用双端链表来保存订阅模式的多个客户端。</span><br><span class="line"></span><br><span class="line">事件模块使用双端链表来保存时间事件（time event）。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">(红黑树和跳跃表分别是什么)</span><br><span class="line">红黑树：红黑树的查找效率很高，但是在进行重新平衡时，会涉及到大量节点的变化，因此实现和操作起来都比较复杂。</span><br><span class="line"></span><br><span class="line">跳跃表：通过简单的多层索引结构，实现简单，且能达到近似于红黑树的查找效率，插入节点（多层插入）不需要像红黑树那样有额外操作。而且跳跃表还能实现范围查找及输出，而红黑树只支持单个元素查找，对于范围查找效率低。</span><br></pre></td></tr></table></figure>
+<p>​</p>
+</li>
+</ul>
+<ul>
+<li><p>缓存策略</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">FIFO（First In First Out）： 先进先出算法，即先放入缓存的先被移除。</span><br><span class="line">LRU（Least Recently Used）： 最近最少使用算法，使用时间距离现在最久的那个被移除。</span><br><span class="line">LFU（Least Frequently Used）： 最不常用算法，一定时间段内使用次数（频率）最少的那个被移除。</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>redis 集群</p>
+<p><img src="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/20210206122055.png" alt=""></p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">master 读  slave 写</span><br><span class="line"></span><br><span class="line">利用raft 算法进行选举</span><br><span class="line">利用一致性hash 算法进行数据分片</span><br><span class="line"></span><br><span class="line">三机房部署，每个机房有一主一从，即一个 Master 对应一个 Slave ，但是你会发现，机房 1 中的 Master 1 连接的 Slave 在机房 2，机房 2 中的 Master 2 连接的 Slave 在机房 3，机房 3 中的 Master 3 连接的 Slave 在机房 1，这样构成一个环，为什么要这样设计？</span><br><span class="line"></span><br><span class="line">三机房部署（其中一主一从构成一个分片，之间通过异步复制同步数据，一旦某个机房掉线，则分片上位于另一个机房的 slave 会被提升为 master 从而可以继续提供服务） ；每个 master 负责一部分 slot，数目尽量均摊；客户端对于某个 Key 操作先通过公式计算（计算方法见下文）出所映射到的 slot，然后直连某个分片，写请求一律走 master，读请求根据路由规则选择连接的分片节点，</span><br><span class="line"></span><br><span class="line">假设机房 1 的全部机器断电了，1 机房数据都不能访问了吗？这显然是我们不希望的。前面已经说了 Master 负责写，Master 会自动同步到 Slava，如果 Master 写服务宕机，Slave 读服务会被提升为 master ，也就是说机房 1 的数据在机房 2 的 Slava2 上还有备份，数据还在，在宕机的 master 没有恢复前 Slave 要同时承担读写服务，虽然累一点，但是系统仍然能提供服务。</span><br><span class="line"></span><br><span class="line">但是你会发现，单个机房如果距离很远， Master 1 的数据同步到 Slave2 上是跨机房，跨机房同步肯定不如同机房块，这样一来 Slave2 负责的读就会有延迟，Master1 要更新的数据还没有同步到他在另一个机房的备份前，读操作就是不一致的，这样设计牺牲掉一致性（C）。</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>redis 雪崩，穿透，击穿</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">雪崩就是指缓存中大批量热点数据过期后系统涌入大量查询请求，因为大部分数据在Redis层已经失效，请求渗透到数据库层，大批量请求犹如洪水一般涌入，引起数据库压力造成查询堵塞甚至宕机。</span><br><span class="line"></span><br><span class="line">resolve:</span><br><span class="line">1.将缓存失效时间分散开，比如每个key的过期时间是随机，防止同一时间大量数据过期现象发生，这样不会出现同一时间全部请求都落在数据库层，如果缓存数据库是分布式部署，将热点数据均匀分布在不同Redis和数据库中，有效分担压力，别一个人扛。</span><br><span class="line">2. 简单粗暴，让Redis数据永不过期（如果业务准许，比如不用更新的名单类）。当然，如果业务数据准许的情况下可以，比如中奖名单用户，每期用户开奖后，名单不可能会变了，无需更新。</span><br><span class="line"></span><br><span class="line">穿透是指绕过Reids，调用者发起的请求参数（key）在缓存和数据库中都不存在，通过不存在的key，成功穿透到系统底层，大规模不断发起不存在的key检索请求导致系统压力过大最后故障。</span><br><span class="line">(这个遇到还是蛮常见的，比如我们详情页回去这个商品的口碑数据，因为有的商品就是没有符合规则的口碑，会一直击穿redis 调用es， 压测的时候es扛不住)</span><br><span class="line">resolve:</span><br><span class="line">1.分布式布隆过滤器：布隆是BloomFilter音译过来的，Redis 自身支持BloomFilter。</span><br><span class="line">2.返回空值：遇到数据库和Redis都查询不到的值，在Redis里set一个null value，过期时间很短，目的在于同一个key再次请求时直接返回null，避免穿透。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">击穿 (就是一个key 大量的访问，golang 的 sync包可以解决这个问题，单个请求没返回，剩下的请求都会被阻塞，而不是直接查询db)</span><br><span class="line">击穿和穿透概念类似，一般是指一个key被穿透，这个key是热点key，同一个key会被有成千上万次请求，比如微博热点排行榜，key是小时时间戳，value是个list的榜单。每个小时产生一个key，这个key会有百万QPS，如果这个key失效了，就像保险丝熔断，百万QPS直接压垮数据库。</span><br><span class="line"></span><br><span class="line">解决办法：</span><br><span class="line"></span><br><span class="line">业界比较常用的做法，是使用mutex。简单地来说，就是在缓存失效的时候（判断拿出来的值为空），不是立即去load db，而是先使用缓存工具的某些带成功操作返回值的操作（比如Redis的SETNX或者Memcache的ADD）去set一个mutex key，当操作返回成功时，再进行load db的操作并回设缓存；否则，就重试整个get缓存的方法。类似下面的代码：</span><br></pre></td></tr></table></figure>
+<p>​</p>
+</li>
+</ul>
+<ul>
+<li><p>布隆过滤器</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">BloomFilter：即布隆过滤器。可以用于检索一个元素是否在一个集合中。</span><br><span class="line"></span><br><span class="line">特点：</span><br><span class="line">BloomFilter检索一个元素是否在一个集合中有一定的错误率（很低），但不会漏判。</span><br><span class="line"></span><br><span class="line">如果判断一个key不在集合中，那一定不在。</span><br><span class="line">如果判断一个key存在，那不一定真的在。</span><br><span class="line">本质上布隆过滤器是一种数据结构，比较巧妙的概率型数据结构（probabilistic data structure），特点是高效地插入和查询，可以用来告诉你 “某样东西一定不存在或者可能存在”。</span><br><span class="line"></span><br><span class="line">相比于传统的 List、Set、Map 等数据结构，它更高效、占用空间更少，但是缺点是其返回的结果是概率性的，而不是确切的。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">1.布隆过滤器的特点就是不能删除</span><br><span class="line">2.某个内容返回存在不一定存在（hash 碰撞），但是返回不存在就一定不存在。</span><br><span class="line">（识货的使用场景，双十一两个广告红包，用户点击之后红包变灰，如果这个小功能对所有用户，比如每天200w的用户，太浪费了，以天为单位做布隆过滤器，用户点击之后把对应位数置为1，用户下次请求，如果返回是0必然没点过，都是白图，如果是1，有概率没点过（hash碰撞，别人点的），但概率不大）</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>redis 热点数据</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">关于热点数据问题我有话要说，这个问题我早在刚刚学习使用 Redis 时就从已经意识到了，所以在使用时会刻意避免，坚决不会给自己挖坑，热点数据最大的问题会造成 Reids 集群负载不均衡（也就是数据倾斜）导致的故障，这些问题对于 Redis 集群都是致命打击</span><br><span class="line"></span><br><span class="line">识货的热点数据：信息流里面标签的展示依赖一个配置项，信息流本身的qps 就比较高，而且信息流在app中的场景也比较多。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">resolve:</span><br><span class="line"></span><br><span class="line">1.识货的场景就是多生成几个一样的配置，每次过来随机读取</span><br><span class="line">2.对于数据一致性不是那么高的业务，可以将热点 key 缓存到业务机器的本地缓存中，因为是业务端的本地内存中，省去了一次远程的 IO 调用。但是当数据更新时，可能会造成业务和 Redis 数据不一致。(本地缓存也是很好用的)。</span><br></pre></td></tr></table></figure>
+<p>​</p>
+</li>
+</ul>
+<ul>
+<li><p>redis 大key 问题</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">大的标准</span><br><span class="line">1. 大：string 类型 value &gt; 10K，set、list、hash、zset 等集合数据类型中的元素个数 &gt; 1000。</span><br><span class="line">2. 超大： string 类型 value &gt; 100K，set、list、hash、zset 等集合数据类型中的元素个数 &gt; 10000。</span><br><span class="line"></span><br><span class="line">识货的金刚位配置，很大。</span><br><span class="line">拆分，比如20个金刚位，按照顺序拆分成2个配置。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">先说说造成 Reids 集群负载不均衡故障的主要原因：</span><br><span class="line">1. 高访问量的 Key，也就是热 key，根据过去的维护经验一个 key 访问的 QPS 超过 1000 就要高度关注了，比如热门商品，热门话题等。</span><br><span class="line">2. 大 Value，有些 key 访问 QPS 虽然不高，但是由于 value 很大，造成网卡负载较大，网卡流量被打满，单台机器可能出现千兆 / 秒，IO 故障。</span><br><span class="line">3. 热点 Key + 大 Value 同时存在，服务器杀手。</span><br><span class="line"></span><br><span class="line">那么热点 key 或大 Value 会造成哪些故障呢：</span><br><span class="line">1. 数据倾斜问题：大 Value 会导致集群不同节点数据分布不均匀，造成数据倾斜问题，大量读写比例非常高的请求都会落到同一个 redis server 上，该 redis 的负载就会严重升高，容易打挂。</span><br><span class="line">2. QPS 倾斜：分片上的 QPS 不均。</span><br><span class="line">3. 大 Value 会导致 Redis 服务器缓冲区不足，造成 get 超时。</span><br><span class="line">4. 由于 Value 过大，导致机房网卡流量不足。</span><br><span class="line">5. Redis 缓存失效导致数据库层被击穿的连锁反应。</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>redis 热点数据怎么定位（说实话，这个都是dba 在搞的）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">1. 提前获知法：</span><br><span class="line">根据业务，人肉统计 or 系统统计可能会成为热点的数据，如，促销活动商品，热门话题，节假日话题，纪念日活动等。</span><br><span class="line"></span><br><span class="line">2.Redis 客户端收集法：</span><br><span class="line">调用端通过计数的方式统计 key 的请求次数，但是无法预知 key 的个数，代码侵入性强。</span><br><span class="line"></span><br><span class="line">3.Redis 集群代理层统计：</span><br><span class="line">像 Twemproxy，codis 这些基于代理的 Redis 分布式架构，统一的入口，可以在 Proxy 层做收集上报，但是缺点很明显，并非所有的 Redis 集群架构都有 proxy。</span><br><span class="line"></span><br><span class="line">4.Redis 服务端收集：</span><br><span class="line">监控 Redis 单个分片的 QPS，发现 QPS 倾斜到一定程度的节点进行 monitor，获取热点 key， Redis 提供了 monitor 命令，可以统计出一段时间内的某 Redis 节点上的所有命令，分析热点 key，在高并发条件下，会存在内存暴涨和 Redis 性能的隐患，所以此种方法适合在短时间内使用；同样只能统计一个 Redis 节点的热点 key，对于集群需要汇总统计，业务角度讲稍微麻烦一点。</span><br></pre></td></tr></table></figure>
+<p>​</p>
+</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wp.png" alt="chenye2017 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/zp1.png" alt="chenye2017 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+  <div>
+  
+    <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+
+  
+  </div>
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/面试/" rel="tag"><i class="fa fa-tag"></i> 面试</a>
+          
+            <a href="/tags/golang/" rel="tag"><i class="fa fa-tag"></i> golang</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/12/17/es的简单总结/" rel="next" title="es的简单总结">
+                <i class="fa fa-chevron-left"></i> es的简单总结
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+<span class="jiathis_txt">分享到：</span>
+<a class="jiathis_button_fav">收藏夹</a>
+<a class="jiathis_button_copy">复制网址</a>
+<a class="jiathis_button_email">邮件</a>
+<a class="jiathis_button_weixin">微信</a>
+<a class="jiathis_button_qzone">QQ空间</a>
+<a class="jiathis_button_tqq">腾讯微博</a>
+<a class="jiathis_button_douban">豆瓣</a>
+<a class="jiathis_button_share">一键分享</a>
+
+<a href="http://www.jiathis.com/share?uid=2140465" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+var jiathis_config={
+  data_track_clickback:true,
+  summary:"",
+  shortUrl:false,
+  hideMore:false
+}
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/my.png"
+                alt="chenye2017" />
+            
+              <p class="site-author-name" itemprop="name">chenye2017</p>
+              <p class="site-description motion-element" itemprop="description">想用善良改变世界</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">105</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">99</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/chenye2017" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:1967196626@qq.com" target="_blank" title="E-Mail">
+                    
+                      <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://weibo.com/3215254425" target="_blank" title="Weibo">
+                    
+                      <i class="fa fa-fw fa-globe"></i>Weibo</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-crosshairs"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.baidu.com/" title="百度" target="_blank">百度</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.google.com/" title="谷歌" target="_blank">谷歌</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Redis"><span class="nav-number">1.</span> <span class="nav-text">Redis</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">chenye2017</span>
+
+  
+</div>
+
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span> |
+</span>
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.3</div>
+
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count"> | 博客全站共169.0k字</span>
+</div>
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+  
+   <canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.2.0/anime.min.js"></script>
+   <script type="text/javascript" src="/js/src/fireworks.js"></script>
+
+
+
+</body>
+</html>

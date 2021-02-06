@@ -90,7 +90,7 @@
 <meta property="og:description" content="读源码学到的新的语法，补充自己对go的更多了解">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/Image.png">
-<meta property="og:updated_time" content="2021-01-05T13:49:42.968Z">
+<meta property="og:updated_time" content="2021-01-08T08:46:11.660Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="go 小知识点">
 <meta name="twitter:description" content="读源码学到的新的语法，补充自己对go的更多了解">
@@ -473,10 +473,23 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">type Stu struct &#123;</span><br><span class="line">	Name string `json:&quot;name&quot;`</span><br><span class="line">	Age string `json:&quot;age&quot;`</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/*func (t *Stu)String()  string&#123;</span><br><span class="line">	return &quot;11&quot;</span><br><span class="line">&#125;*/</span><br><span class="line"></span><br><span class="line">func main()  &#123;</span><br><span class="line">	str := `</span><br><span class="line">[&#123;&quot;name&quot;:&quot;12&quot;&#125;]</span><br><span class="line">`</span><br><span class="line">	var students []Stu</span><br><span class="line"></span><br><span class="line">	err := json.Unmarshal([]byte(str), &amp;students)</span><br><span class="line"></span><br><span class="line">	for _, v := range students &#123;</span><br><span class="line">		v.Name = &quot;xiugia111&quot;</span><br><span class="line">		v.Age = &quot;1111&quot;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	fmt.Printf(&quot;%+v &quot;, students[0], err)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 为了让修改生效，我们必须让 students []*Stu</span><br><span class="line">// 但这样之后我们打印 []*Stud 就是内存地址，我们需要哥 *Stu 定义 string() 方法，这样就能 fmt // 直接打印了</span><br></pre></td></tr></table></figure>
 <h1 id="Kafka使用"><a href="#Kafka使用" class="headerlink" title="Kafka使用"></a>Kafka使用</h1><h1 id="Es使用-（olivere-elastic-v6，我们的es-是6-x-版本，所用的v6）"><a href="#Es使用-（olivere-elastic-v6，我们的es-是6-x-版本，所用的v6）" class="headerlink" title="Es使用 （olivere/elastic.v6，我们的es 是6.x 版本，所用的v6）"></a>Es使用 （olivere/elastic.v6，我们的es 是6.x 版本，所用的v6）</h1><p>今天在使用es 的时候，想起了之前使用redis 的时候有not found 的判定，找了下 果然这个es 包中也有。只是这个es 包判定not found 用的是方法，原理是 http 请求的code，相比较redis， 感觉这个更靠谱些。</p>
 <h1 id="Time"><a href="#Time" class="headerlink" title="Time"></a>Time</h1><p>time 很实用的一个方法， time.Since 可以获取时间差</p>
+<p><a href="https://www.jianshu.com/p/f809b06144f7" target="_blank" rel="noopener">https://www.jianshu.com/p/f809b06144f7</a>, 时间的很好的一个文章</p>
+<p>timer :  延迟触发，只触发一次。 可以重置</p>
+<p>ticker : 多次执行。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">// timer</span><br><span class="line">        d := time.Duration(time.Second*2)</span><br><span class="line"></span><br><span class="line">        t := time.NewTimer(d)</span><br><span class="line">        defer t.Stop()</span><br><span class="line"></span><br><span class="line">        for &#123;</span><br><span class="line">                &lt;- t.C</span><br><span class="line"></span><br><span class="line">                fmt.Println(&quot;timeout...&quot;)</span><br><span class="line">		// need reset</span><br><span class="line">		t.Reset(time.Second*2), // 如果没有这个reset 就deadlock了</span><br><span class="line">        &#125;</span><br><span class="line"> // ticker , 这个随便获取</span><br><span class="line">  t := time.NewTicker(3*time.Second)</span><br><span class="line">        defer t.Stop()</span><br><span class="line"></span><br><span class="line">        fmt.Println(time.Now())</span><br><span class="line">        time.Sleep(4*time.Second)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        for &#123;</span><br><span class="line"></span><br><span class="line">                select &#123;</span><br><span class="line"></span><br><span class="line">                case &lt;-t.C:</span><br><span class="line"></span><br><span class="line">                        fmt.Println(time.Now())</span><br><span class="line"></span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
 <h1 id="Error"><a href="#Error" class="headerlink" title="Error"></a>Error</h1><p>go 中 error 的处理还是没有总结出什么好的办法，目前想到的就是公用的方法，统一内部自己处理异常，当然也会抛出去，外层就可以不用处理了。</p>
 <p>几种error 可以不处理的场景:</p>
-<p>1.断言失败，又默认值的</p>
-<p>2.调用方法，失败了error有返回，对于int float 这些都有默认的返回值。</p>
+<p>1.断言失败，有默认值的</p>
+<p>2.调用方法，失败了error有返回，对于int float 这些都有默认的返回值。但对于一些结构体，还是要给默认值的，否则可能会是nil</p>
+<p>3.思考一下我在项目中error 的处理方式。一般有问题，都在最底层的服务统一处理，因为一层层的往上抛，感觉日志记录可能重复，详见我的third 包调用 第三方的处理方式。但是我的service中， error 一般都没处理，一般是抛给了 controller 处理，因为我的service 虽然按道理也是公共的，但是调用方其实很少，当时考虑的也不太周到，所以都是交给controller 处理。</p>
+<p>error 几种常见需要解决的问题</p>
+<p>1.wrap ，我经常要 对错误信息添加，比如对发生错误时候的参数进行记录。</p>
+<p>2.判断两个error 是否相等。我们需要注意的是 error 是地址类型 （可以通过 reflect 获取 ），所以两个error 完全相等必须是同一个变量，而不只是 new 里面的内容相等</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">var UserSexNil = errors.New(&quot;未查到该用户信息！&quot;)</span><br><span class="line"></span><br><span class="line">// 然后我们通过 err == UserSexNil 判断</span><br></pre></td></tr></table></figure>
+<p>go 1.13 之后又很完美的方式解决我上面的蛋疼问题</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">fmt.Error(&quot;%w xxx&quot;, errors.New(&quot;old error&quot;)) // 这个新生成的error 就是old error + 自定义的xx信息， 但此时我们要判断是否是old error 生成，需要调用特殊的方法</span><br><span class="line"></span><br><span class="line">errors.Is(newError, oldError)</span><br><span class="line"></span><br><span class="line">当我们要断言某种错误的时候， 这个我其实用的很少，可以通过 errors.As() 来断言获取到对应的内容，因为要赋值</span><br></pre></td></tr></table></figure>
+<p><a href="https://www.flysnow.org/2019/09/06/go1.13-error-wrapping.html" target="_blank" rel="noopener">这篇文章讲的很好</a></p>
+<p>引申: 看了这个想到了怎么对interface 类型执行，可以</p>
 <h1 id="静态文件引入"><a href="#静态文件引入" class="headerlink" title="静态文件引入"></a>静态文件引入</h1><p>php 中对于静态文件引入很容易，定义个相对路径就好了，但是我们go 微服务不可以（不是所有的都不可以）， 我们go 的执行方式是</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">exec /app/&quot;$@&quot; -conf /app/config.yaml</span><br><span class="line"></span><br><span class="line">// 这个 @是个二进制文件（也就是build之后生成的文件），我们在go 中获取到的执行路径就是 当前路径，所以一旦修改了这个二进制文件地址，这个相对路径就不生效了， 所以这块有两种方式</span><br><span class="line">1. 相对路径改成绝对路径，我们把我们的文件也copy到文件中某个位置，然后用绝对路径</span><br><span class="line">2. go build 只会对go 结尾文件生效，我们利用第三方包把我们的静态文件也打包成go 文件，这样我们就能取到这个文件了</span><br><span class="line"></span><br><span class="line">// 对于静态文件打包成go 文件可以试一下这个包</span><br><span class="line">go-bindata， 我其实就用到他的压缩，然后获取内容用的 Asset方法， 可以看一下生成的</span><br></pre></td></tr></table></figure>
 <h1 id="一些思考"><a href="#一些思考" class="headerlink" title="一些思考"></a>一些思考</h1><p>1.一些公共变量在框架init 的时候初始化，但这个变量应该放在哪？我开始是放在main 文件中，但有个很坑爹的时候，service 对于main 中变量引入不了，一来是因为循环依赖（比如 a 依赖b， b反过来也引入a），我们可以开一个单独的包，定义这个公共变量，并且 包含 自身init 函数</p>
@@ -670,7 +683,7 @@ var jiathis_config={
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">104</span>
+                  <span class="site-state-item-count">105</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -681,7 +694,7 @@ var jiathis_config={
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">22</span>
+                  <span class="site-state-item-count">23</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -692,7 +705,7 @@ var jiathis_config={
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">98</span>
+                  <span class="site-state-item-count">99</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -827,7 +840,7 @@ var jiathis_config={
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count"> | 博客全站共163.4k字</span>
+  <span class="post-count"> | 博客全站共169.0k字</span>
 </div>
 
 
