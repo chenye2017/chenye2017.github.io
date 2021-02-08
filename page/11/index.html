@@ -292,6 +292,201 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/28/Linux常用命令总结/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="chenye2017">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/my.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="语法糖的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/11/28/Linux常用命令总结/" itemprop="url">Linux常用命令总结</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-28T01:20:28+08:00">
+                2017-11-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <ol>
+<li>netstat -an  查看网络连接，-a 表示包括tcp和utp，-n表示不用域名代替ip地址 </li>
+<li>ps -ef | grep httpd  查看httpd进程是否在 (注意这个筛选是没有端口号的，你想啊，如果一个脚本就监听一个端口还好，要是类似 nginx apache ,listen 那么多端口，你怎么显示呢)</li>
+<li>ll -a ls-la  展示该目录下所有文件包括隐藏文件</li>
+<li>cd  进入目录，~ 普通用户的家目录 /home/vagrant, root用户 /home</li>
+<li>pwd 展示路径</li>
+<li>mkdir  创建目录</li>
+<li>chmod -R (文件夹)  755 修改权限</li>
+<li>chown root:root 文件名 修改文件所有者和组</li>
+<li>chgrp  修改组</li>
+<li>useradd  添加用户</li>
+<li>passwd 修改密码  （切换到当前用户下就可以修改了哦，不知道怎么修改别的用户的）</li>
+<li>groupadd 添加组 </li>
+<li>touch 新建文件</li>
+<li>echo 11 &gt;&gt; 文件名 把这个内容输出到文件中</li>
+<li>vim  i 修改模式 ：wq 保存  ：q 退出不保存 ：q！强制退出  /  查找  ：num 多少行  ：$末尾  </li>
+<li>cat  查看</li>
+<li>echo 输出，比如输出当前进程号 echo  $$ (PID的值代表的就是进程号)</li>
+<li>export 设置环境变量 export FOO = foo ,让当前环境变量立即生效，source ~/.bash_profile 执行这个脚本文件（source在当前进程中直接执行而不是复制子进程执行）感觉直接在命令行这样export FOO = foo 好像就直接生效了，但是如果修改bash_profile 文件的话，要执行source才能生效</li>
+<li>env 查看环境变量，比如查看刚刚的环境变量是否生效 env | grep FOO </li>
+<li>cp 复制文件  cp 源文件 目标文件 ，如果是文件夹 记得带上 -r 参数</li>
+<li>mv 剪贴文件</li>
+<li>rm -rf 删除文件</li>
+<li>lsof -i|grep 3306 查看端口号</li>
+<li>tar -xjvf  解压</li>
+<li>wc -l 查看行数</li>
+<li>awk   cat /etc/passwd | awk -F ‘:’ ‘{print %1}’  筛选内容</li>
+<li>cut  切割, cut -d ‘:’ -f 1,2   -d 按照什么进行切割，-f 要获取哪些行数，一般这两个搭配着用</li>
+<li>sed  sed -n ‘2p’ /etc/passwd  修改内容，类似程序用的vim</li>
+<li>sort 排序</li>
+<li>unique  经常结合sort 使用，因为unique 只能合并连续的两行</li>
+<li>find  / -name ‘php.ini’  查找文件</li>
+<li>locate  查找文件之前 updatedb</li>
+<li>ln -s  创造软链接</li>
+<li>tail -f </li>
+<li>top 查看cpu啊内存啊之类的占用情况</li>
+<li>df -h 查看服务器硬盘占用，itbasic 服务器就经常磁盘被写满了</li>
+<li>wget 下载</li>
+<li>curl 下载</li>
+</ol>
+<p>常用端口号 ：</p>
+<p>http 80</p>
+<p> https 443</p>
+<p>mysql  3306</p>
+<p>redis 6379</p>
+<p>ssh 22</p>
+<p>~代表家目录，root用户 /root,普通用户/home/用户名</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+  <div>
+  
+  </div>
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+
+
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/28/Linux网络管理/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1103,7 +1298,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">105</span>
+                  <span class="site-state-item-count">106</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1244,7 +1439,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count"> | 博客全站共171.8k字</span>
+  <span class="post-count"> | 博客全站共173.6k字</span>
 </div>
 
 
