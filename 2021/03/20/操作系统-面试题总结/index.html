@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="面试," />
+  <meta name="keywords" content="Hexo, NexT" />
 
 
 
@@ -81,18 +81,17 @@
 
 
 
-<meta name="description" content="关于golang 一些面试题的总结，蛮多涉及到自己的知识盲区，所以总结记录下">
-<meta name="keywords" content="面试">
+<meta name="description" content="想用善良改变世界">
 <meta property="og:type" content="article">
-<meta property="og:title" content="golang 面试题总结">
-<meta property="og:url" content="http://yoursite.com/2021/03/08/golang-面试题总结/index.html">
+<meta property="og:title" content="操作系统 面试题总结">
+<meta property="og:url" content="http://yoursite.com/2021/03/20/操作系统-面试题总结/index.html">
 <meta property="og:site_name" content="语法糖的博客">
-<meta property="og:description" content="关于golang 一些面试题的总结，蛮多涉及到自己的知识盲区，所以总结记录下">
+<meta property="og:description" content="想用善良改变世界">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2021-03-10T14:18:21.617Z">
+<meta property="og:updated_time" content="2021-03-20T12:19:36.421Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="golang 面试题总结">
-<meta name="twitter:description" content="关于golang 一些面试题的总结，蛮多涉及到自己的知识盲区，所以总结记录下">
+<meta name="twitter:title" content="操作系统 面试题总结">
+<meta name="twitter:description" content="想用善良改变世界">
 
 
 
@@ -122,13 +121,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2021/03/08/golang-面试题总结/"/>
+  <link rel="canonical" href="http://yoursite.com/2021/03/20/操作系统-面试题总结/"/>
 
 
 
 
 
-  <title>golang 面试题总结 | 语法糖的博客</title>
+  <title>操作系统 面试题总结 | 语法糖的博客</title>
   
 
 
@@ -293,7 +292,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/03/08/golang-面试题总结/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/03/20/操作系统-面试题总结/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="chenye2017">
@@ -310,7 +309,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">golang 面试题总结</h1>
+          <h1 class="post-title" itemprop="name headline">操作系统 面试题总结</h1>
         
 
         <div class="post-meta">
@@ -322,8 +321,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-03-08T20:35:17+08:00">
-                2021-03-08
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-03-20T20:19:36+08:00">
+                2021-03-20
               </time>
             
 
@@ -332,28 +331,6 @@
             
           </span>
 
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/golang/" itemprop="url" rel="index">
-                    <span itemprop="name">golang</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
           
 
           
@@ -382,33 +359,7 @@
       
 
       
-        <p>关于golang 一些面试题的总结，蛮多涉及到自己的知识盲区，所以总结记录下</p>
-<a id="more"></a>
-<h2 id="网络"><a href="#网络" class="headerlink" title="网络"></a>网络</h2><p>计算机网络</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1.应用层  http</span><br><span class="line">2.传输层 tcp/udp</span><br><span class="line">3.网络层  ip</span><br><span class="line">4.数据链路层</span><br><span class="line">5.物理层</span><br></pre></td></tr></table></figure>
-<p>udp 的特点</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1. UDP 是无连接的，即发送数据之前不需要建立连接(发送数据结束时也没有连接可释放)，减少了开销和发送数据之前的时延。 正因为是无连接的，所以不存在 全双工的探讨（全双工 半双工针对的是连接）。udp 无连接， UDP 支持一对一、一对多、多对一和多对多的交互通信。</span><br><span class="line">2. UDP 使用尽最大努力交付，即不保证可靠交付，主机不需要维持复杂的连接状态表</span><br><span class="line">3. UDP 是面向报文的，发送方的 UDP 对应用程序交下来的报文，在添加首部后就向下交付 IP 层。UDP 对应用层交下来的报文，既不合并，也不拆分，而是保留这些报文的边界。 （关于字节流 和 报文的区别就是，报文是一个个打包好的数据，自己流需要tcp 自己去打包，也就是数据边界，为什么这样设计 https://blog.csdn.net/peanutwzk/article/details/79999936， 讲的很好，tcp 有自己唯一的传输连接，不需要打包，也能好给数据流切片。）</span><br><span class="line">4. UDP 没有拥塞控制，网络出现的拥塞不会使源主机的发送速率降低。这对某些实时应用是很重要的。（tcp 滑动窗口 应答）</span><br><span class="line">5.UDP 的首部开销小，只有8个字节，比 TCP 的20个字节的首部要短 （校验，序列号）</span><br></pre></td></tr></table></figure>
-<p>tcp 的特点</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1.TCP 是面向连接的运输层协议。应用程序在使用 TCP 协议之前，必须先建立 TCP 连接。在传送数据完毕后，必须释放已经建立的 TCP 连接</span><br><span class="line">2. 每一条 TCP 连接只能有两个端点，每一条 TCP 连接只能是点对点的(一对一)， 4元组确定一条tcp 连接</span><br><span class="line">3. TCP 提供可靠交付的服务。通过 TCP 连接传送的数据，无差错 （头部有校验字段）、不丢失（每个包都有ack 包）、不重复 （重复确认会丢弃），并且按序到达 （有序列号）</span><br><span class="line">4. TCP 提供全双工通信。TCP 允许通信双方的应用进程在任何时候都能发送数据。TCP 连接的两端都设有发送缓存和接受缓存，用来临时存放双向通信的数据</span><br><span class="line">5. 面向字节流。TCP 中的“流”指的是流入到进程或从进程流出的字节序列</span><br></pre></td></tr></table></figure>
-<p>简述三次握手</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">1. 服务器进程先创建传输控制块 TCB，并处于监听状态，等待客户端的连接请求 （listen, socket 文件绑定 设备ip + 端口号 port）</span><br><span class="line">2. 客户端创建传输控制块 TCB，并向服务器发出连接请求报文段 (syn_send)</span><br><span class="line">3.服务器收到连接请求报文段后，如同意建立连接，则发送确认报文段 (syn_recv)</span><br><span class="line"> 4.客户端进程收到服务器的确认报文段后，立即回复确认报文段，并进入已建立连接状态 (establish)</span><br><span class="line">5. 服务器收到确认报文段之后，也进入已建立连接状态 (establish)</span><br><span class="line"></span><br><span class="line">为什么是3次不是4次</span><br><span class="line">ack 包中包含了 一次建立连接的请求 syn</span><br><span class="line"></span><br><span class="line">为什么是3次</span><br><span class="line">1，客户端到服务端建立连接请求</span><br><span class="line">2.ack  服务端到客户端连接请求</span><br><span class="line">3. ack</span><br></pre></td></tr></table></figure>
-<p>tcp 释放 </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">4次挥手</span><br><span class="line"></span><br><span class="line">1. 客户端应用进程发出连接释放报文段，并停止再发送数据，进入 FIN-WAIT-1(终止等待1)状态，等待服务器确认</span><br><span class="line">2. 服务器收到连接释放报文段后即发出确认，进入 CLOSE-WAIT(关闭等待)状态，服务器若发送数据，客户端扔要接收</span><br><span class="line">3. 客户端收到来自服务器的确认后，进入 FIN-WAIT-2(终止等待2)状态，等待服务器发出连接释放报文段</span><br><span class="line">4. 服务器没有要发送的数据，发出连接释放报文段，进入 LAST-ACK(最后确认)状态，等待客户端确认</span><br><span class="line">客户端收到连接释放报文段后，发出确认，进入 TIME-WAIT(时间等待)状态，经过时间等待计时器设置的时间 2MSL 后，进入 CLOSED(关闭) 状态</span><br><span class="line">5. 服务器收到客户端报文段后，进入 CLOSED 状态</span><br></pre></td></tr></table></figure>
-<p>time-wait 是什么，为什么是2mls</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">是客户端接收到服务端的信号后等待时间才会释放连接。</span><br><span class="line"></span><br><span class="line">2mls 是数据包在网络上存在的最长时间。我们知道4元组确定一个唯一的tcp 连接，万一发送包之后我们连接断了，这个包按理说不应该到达，而是在网络上有游荡走向毁灭，可是却到了这个新建的tcp连接中，那就完蛋了。</span><br></pre></td></tr></table></figure>
-<p>大量出现time-wait的原因</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">如果在2mls 我们大量的断开连接，就会出现大量的time-wait</span><br><span class="line"></span><br><span class="line">怎么避免</span><br><span class="line">1.我们用更多的4元组生成更多的tcp连接</span><br><span class="line">2. 调整参数，直接回收</span><br><span class="line">3.调整参数，直接发送一个rst包，不等待</span><br></pre></td></tr></table></figure>
-<p>tcp粘包问题的出现</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tcp 面向的字节流。</span><br></pre></td></tr></table></figure>
-<p>socket 建立步骤</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1.创建 socket 文件 （我的理解 进程 ）</span><br><span class="line">2. 绑定 socket 到指定地址和端口</span><br><span class="line">3. 开始监听连接 （listen）</span><br><span class="line">4. 读取客户端输入 (传输数据)</span><br><span class="line">5. 关闭 socket</span><br></pre></td></tr></table></figure>
-<p>http状态码</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">200 success</span><br><span class="line">304 not modified</span><br><span class="line">400 bad request</span><br><span class="line">401 not auth</span><br><span class="line">403 forbidden</span><br><span class="line">404 not found</span><br><span class="line">499 limit rate</span><br><span class="line">500 服务端错误</span><br><span class="line">502 php-fpm 挂了 代理转发</span><br><span class="line">504 超时</span><br></pre></td></tr></table></figure>
-<p>什么是长连接 </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">长连接，指在一个连接上可以连续发送多个数据包，在连接保持期间，如果没有数据包发送，需要双方发链路检测包。 其实我感觉短连接也能发送多个数据包，比如php 里面的短连接也是可以复用的，主要感觉就是需要keep alive 保活。也就是心跳检测。</span><br></pre></td></tr></table></figure>
-<p>https 都干了什么</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">对称加密传输，https.</span><br><span class="line">秘钥 ？ 公钥加密，私钥解密。保证不被窃听。客户端的公钥怎么发送，通过办法ca证书。ca 私钥加密，公钥解密，保证不被修改，我们得到确定的hash值 和 公钥， 我们把 公钥 hash 后和hash 值对比，类似jwt 那种，观察是否被修改了。</span><br></pre></td></tr></table></figure>
-
+        
       
     </div>
     
@@ -463,12 +414,6 @@
 
     <footer class="post-footer">
       
-        <div class="post-tags">
-          
-            <a href="/tags/面试/" rel="tag"><i class="fa fa-tag"></i> 面试</a>
-          
-        </div>
-      
 
       
       
@@ -478,8 +423,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2021/02/08/一些思考/" rel="next" title="一些思考">
-                <i class="fa fa-chevron-left"></i> 一些思考
+              <a href="/2021/03/20/golang-基础面试题总结/" rel="next" title="golang 基础面试题总结">
+                <i class="fa fa-chevron-left"></i> golang 基础面试题总结
               </a>
             
           </div>
@@ -487,6 +432,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2021/03/20/mysql-面试题总结/" rel="prev" title="数据库 面试题总结">
+                数据库 面试题总结 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -564,17 +513,8 @@ var jiathis_config={
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview-wrap sidebar-panel">
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -593,7 +533,7 @@ var jiathis_config={
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">107</span>
+                  <span class="site-state-item-count">113</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -615,7 +555,7 @@ var jiathis_config={
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">99</span>
+                  <span class="site-state-item-count">101</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -686,22 +626,6 @@ var jiathis_config={
       </section>
 
       
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#网络"><span class="nav-number">1.</span> <span class="nav-text">网络</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
-      
 
       
 
@@ -750,7 +674,7 @@ var jiathis_config={
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count"> | 博客全站共176.2k字</span>
+  <span class="post-count"> | 博客全站共188.8k字</span>
 </div>
 
 

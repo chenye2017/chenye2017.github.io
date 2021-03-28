@@ -90,7 +90,7 @@
 <meta property="og:description" content="读源码学到的新的语法，补充自己对go的更多了解">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/Image.png">
-<meta property="og:updated_time" content="2021-01-08T08:46:11.660Z">
+<meta property="og:updated_time" content="2021-03-28T09:59:26.013Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="go 小知识点">
 <meta name="twitter:description" content="读源码学到的新的语法，补充自己对go的更多了解">
@@ -492,6 +492,10 @@
 <p>引申: 看了这个想到了怎么对interface 类型执行，可以</p>
 <h1 id="静态文件引入"><a href="#静态文件引入" class="headerlink" title="静态文件引入"></a>静态文件引入</h1><p>php 中对于静态文件引入很容易，定义个相对路径就好了，但是我们go 微服务不可以（不是所有的都不可以）， 我们go 的执行方式是</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">exec /app/&quot;$@&quot; -conf /app/config.yaml</span><br><span class="line"></span><br><span class="line">// 这个 @是个二进制文件（也就是build之后生成的文件），我们在go 中获取到的执行路径就是 当前路径，所以一旦修改了这个二进制文件地址，这个相对路径就不生效了， 所以这块有两种方式</span><br><span class="line">1. 相对路径改成绝对路径，我们把我们的文件也copy到文件中某个位置，然后用绝对路径</span><br><span class="line">2. go build 只会对go 结尾文件生效，我们利用第三方包把我们的静态文件也打包成go 文件，这样我们就能取到这个文件了</span><br><span class="line"></span><br><span class="line">// 对于静态文件打包成go 文件可以试一下这个包</span><br><span class="line">go-bindata， 我其实就用到他的压缩，然后获取内容用的 Asset方法， 可以看一下生成的</span><br></pre></td></tr></table></figure>
+<h1 id="go-mod"><a href="#go-mod" class="headerlink" title="go.mod"></a>go.mod</h1><p>indirect , 可能是我平时直接 go get 获取的，项目中用不到</p>
+<p>go.sum  <a href="https://studygolang.com/articles/25658" target="_blank" rel="noopener">https://studygolang.com/articles/25658</a>, 这篇文章讲的很好。 go.mod 中只是我们直接import 的文件，go.sum 中存在依赖的依赖。 那串hash 主要用来校验，防止别人修改代码。go 中发布是可以删除tag 修改代码再发布的，这样就会导致你之前依赖的代码可能被别人修改过，而你不知道，这时候go.sum 就会发挥用处。</p>
+<p>go.sum 也是个文件，可能存在conflict， 而且他还是类似 log 日志的那种存在。如果冲突，我们可以都保留，或者保留最新的，反正只是个验证作用。</p>
+<p>如果实在通不过，难道真的是包作者删除 tag，再重新打包？ ~~</p>
 <h1 id="一些思考"><a href="#一些思考" class="headerlink" title="一些思考"></a>一些思考</h1><p>1.一些公共变量在框架init 的时候初始化，但这个变量应该放在哪？我开始是放在main 文件中，但有个很坑爹的时候，service 对于main 中变量引入不了，一来是因为循环依赖（比如 a 依赖b， b反过来也引入a），我们可以开一个单独的包，定义这个公共变量，并且 包含 自身init 函数</p>
 <p>2.今天听大佬分享 公共pool 中对象被耗尽的问题，如何解决？ （最近接的案例就是我们的redis pool 被耗尽了）。1.池子里面对象尽可能给多，2.池子里面对象取出来尽快还回去。</p>
 
@@ -683,7 +687,7 @@ var jiathis_config={
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">107</span>
+                  <span class="site-state-item-count">113</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -705,7 +709,7 @@ var jiathis_config={
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">99</span>
+                  <span class="site-state-item-count">101</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -785,7 +789,7 @@ var jiathis_config={
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#断言"><span class="nav-number">1.</span> <span class="nav-text">断言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Slice"><span class="nav-number">2.</span> <span class="nav-text">Slice</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#channel定义"><span class="nav-number">3.</span> <span class="nav-text">channel定义</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#goroutine的意义"><span class="nav-number">4.</span> <span class="nav-text">goroutine的意义</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#json-序列化的小问题"><span class="nav-number">5.</span> <span class="nav-text">json 序列化的小问题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#url处理"><span class="nav-number">6.</span> <span class="nav-text">url处理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#http-请求"><span class="nav-number">7.</span> <span class="nav-text">http 请求</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#get"><span class="nav-number">7.1.</span> <span class="nav-text">get</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#post"><span class="nav-number">7.2.</span> <span class="nav-text">post</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Response"><span class="nav-number">7.3.</span> <span class="nav-text">Response</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Sort"><span class="nav-number">7.4.</span> <span class="nav-text">Sort</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#runtime-Caller"><span class="nav-number">7.5.</span> <span class="nav-text">runtime.Caller</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#http状态码"><span class="nav-number">7.6.</span> <span class="nav-text">http状态码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#fmt问题"><span class="nav-number">7.7.</span> <span class="nav-text">fmt问题</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Kafka使用"><span class="nav-number">8.</span> <span class="nav-text">Kafka使用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Es使用-（olivere-elastic-v6，我们的es-是6-x-版本，所用的v6）"><span class="nav-number">9.</span> <span class="nav-text">Es使用 （olivere/elastic.v6，我们的es 是6.x 版本，所用的v6）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Time"><span class="nav-number">10.</span> <span class="nav-text">Time</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Error"><span class="nav-number">11.</span> <span class="nav-text">Error</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#静态文件引入"><span class="nav-number">12.</span> <span class="nav-text">静态文件引入</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#一些思考"><span class="nav-number">13.</span> <span class="nav-text">一些思考</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#断言"><span class="nav-number">1.</span> <span class="nav-text">断言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Slice"><span class="nav-number">2.</span> <span class="nav-text">Slice</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#channel定义"><span class="nav-number">3.</span> <span class="nav-text">channel定义</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#goroutine的意义"><span class="nav-number">4.</span> <span class="nav-text">goroutine的意义</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#json-序列化的小问题"><span class="nav-number">5.</span> <span class="nav-text">json 序列化的小问题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#url处理"><span class="nav-number">6.</span> <span class="nav-text">url处理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#http-请求"><span class="nav-number">7.</span> <span class="nav-text">http 请求</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#get"><span class="nav-number">7.1.</span> <span class="nav-text">get</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#post"><span class="nav-number">7.2.</span> <span class="nav-text">post</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Response"><span class="nav-number">7.3.</span> <span class="nav-text">Response</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Sort"><span class="nav-number">7.4.</span> <span class="nav-text">Sort</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#runtime-Caller"><span class="nav-number">7.5.</span> <span class="nav-text">runtime.Caller</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#http状态码"><span class="nav-number">7.6.</span> <span class="nav-text">http状态码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#fmt问题"><span class="nav-number">7.7.</span> <span class="nav-text">fmt问题</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Kafka使用"><span class="nav-number">8.</span> <span class="nav-text">Kafka使用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Es使用-（olivere-elastic-v6，我们的es-是6-x-版本，所用的v6）"><span class="nav-number">9.</span> <span class="nav-text">Es使用 （olivere/elastic.v6，我们的es 是6.x 版本，所用的v6）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Time"><span class="nav-number">10.</span> <span class="nav-text">Time</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Error"><span class="nav-number">11.</span> <span class="nav-text">Error</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#静态文件引入"><span class="nav-number">12.</span> <span class="nav-text">静态文件引入</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#go-mod"><span class="nav-number">13.</span> <span class="nav-text">go.mod</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#一些思考"><span class="nav-number">14.</span> <span class="nav-text">一些思考</span></a></li></ol></div>
             
 
           </div>
@@ -840,7 +844,7 @@ var jiathis_config={
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count"> | 博客全站共176.2k字</span>
+  <span class="post-count"> | 博客全站共188.8k字</span>
 </div>
 
 
