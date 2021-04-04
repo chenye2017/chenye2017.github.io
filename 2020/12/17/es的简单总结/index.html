@@ -89,7 +89,7 @@
 <meta property="og:site_name" content="语法糖的博客">
 <meta property="og:description" content="最近在做商品评论的相关内容，因为数据量比较大，而且后台需要根据内容进行评论匹配的功能，显然用mysql 的 like 不太合适了，我们用的是elasticsearch。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2021-03-28T12:57:50.458Z">
+<meta property="og:updated_time" content="2021-03-30T07:22:38.114Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="es的简单总结">
 <meta name="twitter:description" content="最近在做商品评论的相关内容，因为数据量比较大，而且后台需要根据内容进行评论匹配的功能，显然用mysql 的 like 不太合适了，我们用的是elasticsearch。">
@@ -415,6 +415,12 @@
 <p>部分更新 ：<a href="https://www.elastic.co/guide/cn/elasticsearch/guide/current/partial-updates.html，" target="_blank" rel="noopener">https://www.elastic.co/guide/cn/elasticsearch/guide/current/partial-updates.html，</a> _update 方法，如果没有查询到这个doc( 不同于update_by_query 用的id 索引)， 就更新失败。</p>
 <p>整体更新：<a href="https://www.elastic.co/guide/cn/elasticsearch/guide/current/update-doc.html#update-doc，" target="_blank" rel="noopener">https://www.elastic.co/guide/cn/elasticsearch/guide/current/update-doc.html#update-doc，</a> 这种更新是那种如果不存在就插入，其实还蛮好用的。</p>
 <p>注意上面两种方法参数有一些不一致。</p>
+<p>15.今天在并发更新es 的时候出现错误，归其原因就是并发时候隔离性的问题 （es 控制并发用的乐观锁，每条数据都有个version 记录 ，mysql 也有，mysql 用mvcc 的事务隔离级别完美避开了 并发问题）</p>
+<p>比如同时读取一条数据，同时 update， 到底用哪个</p>
+<p><a href="https://www.jianshu.com/p/7a3652bae8a4" target="_blank" rel="noopener">https://www.jianshu.com/p/7a3652bae8a4</a> 。 es 更新数据的时候会比对 version， 如果version 不一致，就不能更新。但其实如果version 较大，也是可以更新的，用 &amp;version_type=external 比如</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1. version 1 , 1 -&gt;2</span><br><span class="line">2. version 2 , 1 -&gt;3</span><br><span class="line">3. version 3,  1 -&gt;4</span><br><span class="line"></span><br><span class="line">虽然有3条，但其实只用执行最后一条就可以了。</span><br></pre></td></tr></table></figure>
+<p>es 如果对一个字段，重复更新，version 版本号不会改变。</p>
+<p>一旦我们用了 &amp;version_type=external, 我们doc 记录的version 就变成我们传入的version了，我没法控制每次version 的大小 递增（可不可以按照毫秒级别 ? 或者类似雪花算法的模式，一定要是递增模式，但这样还是可能存在覆盖问题，因为但凡带了机器的前缀 ，就会有个优先级）。 目前我最简单的方法就是重试。 这样看来，es 还不能当做数据库使用，同时修改的时候还是会存在并发问题。</p>
 
       
     </div>
@@ -497,8 +503,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2021/02/06/新的起点/" rel="prev" title="新的起点">
-                新的起点 <i class="fa fa-chevron-right"></i>
+              <a href="/2021/02/08/一些思考/" rel="prev" title="一些思考">
+                一些思考 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -597,7 +603,7 @@ var jiathis_config={
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">113</span>
+                  <span class="site-state-item-count">101</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -619,7 +625,7 @@ var jiathis_config={
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">101</span>
+                  <span class="site-state-item-count">99</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -738,7 +744,7 @@ var jiathis_config={
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count"> | 博客全站共188.8k字</span>
+  <span class="post-count"> | 博客全站共167.5k字</span>
 </div>
 
 

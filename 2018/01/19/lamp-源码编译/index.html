@@ -90,7 +90,7 @@
 <meta property="og:description" content="lamp的源码编译安装。！！！注意哦，这里面是lamp，不是lnmp。之前的lamp中，apache和php的交流主要是apache把php作为自身的一个模块，而ngixn是通过cgi，php-fpm进行管理进程（这段话有待考证，因为apache也能使用php-fpm进行管理，并不是php-fpm和apache绑定的。我们那个lamp环境搭建的时候安装好apache,编译php 的时候要指定apx">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://ozys8fka7.bkt.clouddn.com/mysql-status.jpg">
-<meta property="og:updated_time" content="2019-07-31T08:41:07.153Z">
+<meta property="og:updated_time" content="2021-04-04T12:12:51.282Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="lamp 和 lnmp 源码编译">
 <meta name="twitter:description" content="lamp的源码编译安装。！！！注意哦，这里面是lamp，不是lnmp。之前的lamp中，apache和php的交流主要是apache把php作为自身的一个模块，而ngixn是通过cgi，php-fpm进行管理进程（这段话有待考证，因为apache也能使用php-fpm进行管理，并不是php-fpm和apache绑定的。我们那个lamp环境搭建的时候安装好apache,编译php 的时候要指定apx">
@@ -395,7 +395,7 @@
 <p>notice :</p>
 <ul>
 <li><p>（而且后来发现一个问题 apachectl start 这些用不了，应该是按照上篇博客中安装出现的问题，其实还是要解决下，因为在lamp中，刚开始修改php.ini 是很常见的，每次修改都需要apachectl restart 一下还是很方便的)</p>
-<p>​httpd -k start 这戏好用</p>
+<p>httpd -k start 这戏好用</p>
 <p>​其实ps -ef|grep httpd ,也能看到这个httpd 的命令</p>
 </li>
 </ul>
@@ -448,7 +448,7 @@
 </li>
 <li><p>讲道理，上面的编译参数运行不了， –with-config-file-scan-dir=/etc/php.d \，感觉是这个参数在作怪，不太明白这个文件夹中装的啥，反正是开启了一些curl 等的扩展，但实际上好像没有开启，所以需要把屏蔽掉（上面的php 编译参数不太好用，像curl 都没有开启，在项目中用会出错）</p>
 </li>
-<li><p>php 源码包的作用。像pgsql 这些扩展，源码包中都是有的，如果想开启，不用再网上下载，直接去源码包的ext 下面找就好了，然后phpize <figure class="highlight plain"><figcaption><span>php -m 查看是否成功。需要注意的是，一个包编译失败之后，再次编译，最好make clean一下。（pgsql 和 pdo_pgsql 是两个扩展···）(知道pgsql 和 pdo_pgsql 的关系嘛， pgsql 只是一个pgsql 的驱动，pdo_pgsql 只有在他之上，才能和php 进行交互，同理联想mysql, php的mysql引擎是 mysqlnd, pdo_mysql 是在这个引擎之上让php和mysql 进行交互的，感觉我要是用了mysqli扩展是不是不用安装mysqlnd扩展了)</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">   ![](https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/20190711170145.png)</span><br><span class="line"></span><br><span class="line">5. 关于错误信息的输出。php.ini 有不同的两个版本，development, product， 虽然我没有研究过他们的不同，但目前发现最基本的就是，开发版本会把错误信息输出在页面上，但是生产版本不会，是php.ini 中一个选项的原因，生产版本可以把错误信息输出到日志中保存，好像nginx fpm 那种比较复杂，lamp这种直接在apache 的错误日志中就可以找到。（多熟悉lnmp,最好完全切过来，熟悉swoole）</span><br><span class="line"></span><br><span class="line">6. 关于php-fpm的配置。这里拿lnmp 来举例，nginx 接受外来请求，转发到php-fpm (php进程管理器，默认监听端口9000) master 进程长，master 进程分别把请求转发给work进程，woker 进程实现了fast-cgi协议 (默认启动几个woker进程，接受请求，请求接受完不断开链接，接着等待，但是可以设置最大请求数量，当达到最大请求数量的时候进程会重启，防止内存泄漏，感觉类似swoole 的进程模型，只是这里面每次还是会重新加载php脚本，所以每次我们修改代码不需要重启)，内嵌php解释器，需要注意的点就是在上面架构中nginx 只是起到转发的作用，我们需要把一些必要的参数携带上转发给我们的php-fpm，这样我们的php才能正常接收到外来请求（php-fpm和 nginx 通信可以通过sock ，常见 tcp 127.0.0.1:9000, 或者unix socket文件，但是unix文件不能让部署在另一台机器上的php-fpm和这台机器上的nginx通信）</span><br></pre></td></tr></table></figure></p>
+<li><p>php 源码包的作用。像pgsql 这些扩展，源码包中都是有的，如果想开启，不用再网上下载，直接去源码包的ext 下面找就好了，然后phpize <figure class="highlight plain"><figcaption><span>php -m 查看是否成功。需要注意的是，一个包编译失败之后，再次编译，最好make clean一下。（pgsql 和 pdo_pgsql 是两个扩展···）(知道pgsql 和 pdo_pgsql 的关系嘛， pgsql 只是一个pgsql 的驱动，pdo_pgsql 只有在他之上，才能和php 进行交互，同理联想mysql, php的mysql引擎是 mysqlnd, pdo_mysql 是在这个引擎之上让php和mysql 进行交互的，感觉我要是用了mysqli扩展是不是不用安装mysqlnd扩展了)</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">   ![](https://cytuchuang-1256930988.cos.ap-shanghai.myqcloud.com/20190711170145.png)</span><br><span class="line"></span><br><span class="line">5. 关于错误信息的输出。php.ini 有不同的两个版本，development, product， 虽然我没有研究过他们的不同，但目前发现最基本的就是，开发版本会把错误信息输出在页面上，但是生产版本不会，是php.ini 中一个选项的原因，生产版本可以把错误信息输出到日志中保存，好像nginx fpm 那种比较复杂，lamp这种直接在apache 的错误日志中就可以找到。（多熟悉lnmp,最好完全切过来，熟悉swoole）</span><br><span class="line"></span><br><span class="line">6. 关于php-fpm的配置。这里拿lnmp 来举例，nginx 接受外来请求，转发到php-fpm (php进程管理器，默认监听端口9000) master 进程上，master 进程分别把请求转发给work进程，woker 进程实现了fast-cgi协议 (默认启动几个woker进程，接受请求，请求接受完不断开链接，接着等待，但是可以设置最大请求数量，当达到最大请求数量的时候进程会重启，防止内存泄漏，感觉类似swoole 的进程模型，只是这里面每次还是会重新加载php脚本，所以每次我们修改代码不需要重启)，内嵌php解释器，需要注意的点就是在上面架构中nginx 只是起到转发的作用，我们需要把一些必要的参数携带上转发给我们的php-fpm，这样我们的php才能正常接收到外来请求（php-fpm和 nginx 通信可以通过sock ，常见 tcp 127.0.0.1:9000, 或者unix socket文件，但是unix文件不能让部署在另一台机器上的php-fpm和这台机器上的nginx通信）</span><br></pre></td></tr></table></figure></p>
 <pre><code>location ~ \.php {
 </code></pre><p> 36            root  /home/itbasic/new_datatalk/api/;<br> 37            fastcgi_pass   127.0.0.1:9000; // tcp连接<br> 38            fastcgi_index  index.php;<br> 39            access_log logs/access_datatalk_api.log  test;<br> 40            error_log logs/error_datatalk_api.log  error;<br> 41            fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name; </p>
 <h1 id="这个script-filename-将会被传递给php-fpm-php-fpm-也会传递给php"><a href="#这个script-filename-将会被传递给php-fpm-php-fpm-也会传递给php" class="headerlink" title="这个script_filename 将会被传递给php-fpm,php-fpm 也会传递给php"></a>这个script_filename 将会被传递给php-fpm,php-fpm 也会传递给php</h1><h1 id="index-php-api-leave-count-php-能识别这样的连接，并且识别index-php-是脚本-api-leave-count-是uri"><a href="#index-php-api-leave-count-php-能识别这样的连接，并且识别index-php-是脚本-api-leave-count-是uri" class="headerlink" title="/index.php/api/leave/count, php 能识别这样的连接，并且识别index.php 是脚本,/api/leave/count 是uri"></a>/index.php/api/leave/count, php 能识别这样的连接，并且识别index.php 是脚本,/api/leave/count 是uri</h1><p> 42            include        fastcgi_params;<br> 43<br> 44         }<br> 45<br> 46         # 因为前后端分离，后端是在/api下面</p>
@@ -667,7 +667,7 @@ var jiathis_config={
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">113</span>
+                  <span class="site-state-item-count">101</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -689,7 +689,7 @@ var jiathis_config={
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">101</span>
+                  <span class="site-state-item-count">99</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -824,7 +824,7 @@ var jiathis_config={
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count"> | 博客全站共188.8k字</span>
+  <span class="post-count"> | 博客全站共167.5k字</span>
 </div>
 
 
