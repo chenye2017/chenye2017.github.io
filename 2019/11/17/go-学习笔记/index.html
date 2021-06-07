@@ -89,7 +89,7 @@
 <meta property="og:site_name" content="语法糖的博客">
 <meta property="og:description" content="php 活不下去了，┭┮﹏┭┮，开始学习go了，其实还好，多一门语言，多一个视角，~希望2020年识货给我的礼物就是go 和 node 的编写技能">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-07-02T08:12:30.665Z">
+<meta property="og:updated_time" content="2021-06-04T09:35:28.265Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="go 基础变量">
 <meta name="twitter:description" content="php 活不下去了，┭┮﹏┭┮，开始学习go了，其实还好，多一门语言，多一个视角，~希望2020年识货给我的礼物就是go 和 node 的编写技能">
@@ -396,7 +396,13 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">if _,error := test(x , y ); error != nil &#123;</span><br><span class="line">  错误处理</span><br><span class="line">&#125; </span><br><span class="line">:=  ,只有多个变量中有一个是新的，:= 不会报错</span><br><span class="line"></span><br><span class="line">真实因为go 的这种语言机制，导致 if 才能这样用，最多有两个表达式，第二个 值的内容是布尔 （上面 _ 属于匿名）</span><br><span class="line"></span><br><span class="line">还有go 中和 js let 一样，都有块状作用域，比如那个 if 里面赋值的变量，只能在 &#123;&#125; 中使用</span><br></pre></td></tr></table></figure>
 <p>var 和 const 一次性声明多个值</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">var (</span><br><span class="line">	test1 int</span><br><span class="line">	test2 int</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">// 枚举，内部可以用iota</span><br><span class="line">const (</span><br><span class="line">	test2 iota</span><br><span class="line">	test3</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
-<h4 id="循环"><a href="#循环" class="headerlink" title="循环"></a>循环</h4><p>go 中 if 和 for 都是不用括号包裹的</p>
+<h4 id="闭包"><a href="#闭包" class="headerlink" title="闭包"></a>闭包</h4><p>go 中经常用到goroutine</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">for _, v := range []int&#123;1,2,3&#125; &#123;</span><br><span class="line">   // 这里打印v 会出问题</span><br><span class="line">   // 不是我们想要的</span><br><span class="line">    v := v // 临时变量</span><br><span class="line">    go func() &#123;</span><br><span class="line">  	 fmt.Println(v)</span><br><span class="line">&#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><a href="https://mp.weixin.qq.com/s/OLgsdhXGEMltmjcpTW2ICw" target="_blank" rel="noopener">https://mp.weixin.qq.com/s/OLgsdhXGEMltmjcpTW2ICw</a> </p>
+<p>小知识点: </p>
+<p>函数是高等公民： <a href="https://mp.weixin.qq.com/s?__biz=MzAxNzY0NDE3NA==&amp;mid=2247485997&amp;idx=1&amp;sn=e8e966ea60fe337fb9caec61532da332&amp;scene=21#wechat_redirect" target="_blank" rel="noopener">https://mp.weixin.qq.com/s?__biz=MzAxNzY0NDE3NA==&amp;mid=2247485997&amp;idx=1&amp;sn=e8e966ea60fe337fb9caec61532da332&amp;scene=21#wechat_redirect</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">package main</span><br><span class="line"></span><br><span class="line">import &quot;fmt&quot;</span><br><span class="line"></span><br><span class="line">func app() func(string) string &#123;</span><br><span class="line"> t := &quot;Hi&quot;</span><br><span class="line"> c := func(b string) string &#123;</span><br><span class="line">  t = t + &quot; &quot; + b</span><br><span class="line">  return t</span><br><span class="line"> &#125;</span><br><span class="line"> return c</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func main() &#123;</span><br><span class="line"> a := app()</span><br><span class="line"> b := app()</span><br><span class="line"> a(&quot;go&quot;)</span><br><span class="line"> fmt.Println(b(&quot;All&quot;))  // hi All</span><br><span class="line"> fmt.Println(b(&quot;All&quot;))  // hi go all </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">说实话对于这类问题没有深究，只能大致猜到一个原因，这个t 的作用域在同一个闭包中是互通的</span><br></pre></td></tr></table></figure>
+<p>零值可用：</p>
 
       
     </div>
@@ -588,7 +594,7 @@ var jiathis_config={
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">99</span>
+                  <span class="site-state-item-count">100</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -690,7 +696,7 @@ var jiathis_config={
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#变量"><span class="nav-number">1.</span> <span class="nav-text">变量</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#循环"><span class="nav-number">2.</span> <span class="nav-text">循环</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#变量"><span class="nav-number">1.</span> <span class="nav-text">变量</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#闭包"><span class="nav-number">2.</span> <span class="nav-text">闭包</span></a></li></ol></div>
             
 
           </div>
@@ -745,7 +751,7 @@ var jiathis_config={
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count"> | 博客全站共173.0k字</span>
+  <span class="post-count"> | 博客全站共173.5k字</span>
 </div>
 
 
